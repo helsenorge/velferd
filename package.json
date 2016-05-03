@@ -13,11 +13,12 @@
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
     "style-loader": "^0.13.1",
-    "webpack": "^1.13.0"
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
   },
   "devDependencies": {},
   "scripts": {
-    "test": "test"
+    "start": "webpack-dev-server"
   },
   "author": "Direktoratet for e-helse",
   "license": ""
