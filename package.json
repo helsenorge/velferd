@@ -10,6 +10,7 @@
     "url": "https://github.com/ehelse/velferd.git"
   },
   "scripts": {
+    "build": "webpack",
     "start": "node server",
     "lint": "eslint . --ext .js --ext .jsx --ignore-path .gitignore --cache"
   },
