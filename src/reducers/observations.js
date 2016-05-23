@@ -1,11 +1,10 @@
-import { combineReducers } from 'redux';
 import {
   REQUEST_OBSERVATIONS, RECEIVE_OBSERVATIONS,
 } from '../actions/observations';
 
 function observations(state = {
   isFetching: false,
-  data: [],
+  data: null,
 }, action) {
   switch (action.type) {
   case REQUEST_OBSERVATIONS:
@@ -23,7 +22,7 @@ function observations(state = {
   }
 }
 
-function observationsByCode(state = { }, action) {
+export function observationsByCode(state = { }, action) {
   switch (action.type) {
   case REQUEST_OBSERVATIONS:
   case RECEIVE_OBSERVATIONS:
@@ -35,8 +34,3 @@ function observationsByCode(state = { }, action) {
   }
 }
 
-const rootReducer = combineReducers({
-  observationsByCode,
-});
-
-export default rootReducer;
