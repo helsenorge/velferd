@@ -1,25 +1,26 @@
 import React, { Component, PropTypes } from 'react';
+import Chart from '../components/chart.jsx';
 
 class Measurements extends Component {
 
   componentDidMount() {
   }
 
-  formatMeasurement(measurement) {
-    const date = new Date(measurement.resource.effectiveDateTime);
-    return `${date.toLocaleDateString()}: 
-      ${measurement.resource.valueQuantity.value} ${measurement.resource.valueQuantity.unit}`;
+  getDataPoint(item) {
+    const point = {
+      date: item.resource.effectiveDateTime,
+      value: item.resource.valueQuantity.value,
+      unit: item.resource.valueQuantity.unit,
+    };
+    return point;
   }
 
   render() {
+    const points = this.props.data.entry.map(this.getDataPoint);
     return (
-      <ul>
-        {this.props.data.entry.map((measurement, i) =>
-          <li key={i}>
-            {this.formatMeasurement(measurement)}
-          </li>
-        )}
-      </ul>
+      <div>
+        <Chart dataPoints={points} />
+      </div>
     );
   }
 }
