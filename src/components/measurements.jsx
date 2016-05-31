@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import Chart from '../components/chart.jsx';
-import MeasurementList from '../components/measurement-list.jsx';
 
 class Measurements extends Component {
 
@@ -21,7 +20,6 @@ class Measurements extends Component {
     return (
       <div>
         <Chart dataPoints={points} />
-        <MeasurementList dataPoints={points} />
       </div>
     );
   }
