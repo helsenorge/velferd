@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 export const REQUEST_OBSERVATIONS = 'REQUEST_OBSERVATIONS';
 export const RECEIVE_OBSERVATIONS = 'RECEIVE_OBSERVATIONS';
 
