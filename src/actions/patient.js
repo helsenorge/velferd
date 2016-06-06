@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 export const REQUEST_PATIENT = 'REQUEST_PATIENT';
 export const RECEIVE_PATIENT = 'RECEIVE_PATIENT';
 
