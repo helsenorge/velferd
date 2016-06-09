@@ -1,8 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchObservations } from '../actions/observations';
-import Measurements from '../components/measurements.jsx';
-import ObservationCodes from '../constants/observation-codes';
+import Measurement from '../components/measurement.jsx';
 
 class MeasurementsContainer extends Component {
 
@@ -11,40 +10,17 @@ class MeasurementsContainer extends Component {
     dispatch(fetchObservations(fhirUrl, this.props.code, patientId));
   }
 
-  getMeasurementName(code) {
-    switch (code) {
-    case ObservationCodes.weight:
-      return 'Weight';
-    case ObservationCodes.pulse:
-      return 'Pulse';
-    case ObservationCodes.pulseOximeter:
-      return 'Pulse Oximeter';
-    default:
-      return '';
-    }
-  }
-
   render() {
-    const { data, isFetching, lastUpdated } = this.props;
+    const { data, isFetching } = this.props;
     const isEmpty = data === null;
-    const name = this.getMeasurementName(this.props.code);
     return (
       <div>
-        <h3>{name}</h3>
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            <Measurements data={data} />
+            <Measurement data={data} code={this.props.code} />
           </div>
         }
-        <small>
-          {lastUpdated &&
-            <span>
-              Last updated at {new Date(lastUpdated).toLocaleTimeString()}.
-              {' '}
-            </span>
-          }
-        </small>
       </div>
     );
   }

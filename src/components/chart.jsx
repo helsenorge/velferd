@@ -26,12 +26,12 @@ class Chart extends Component {
     };
     const options = {
       showArea: true,
-      showPoint: false,
-      axisX: {
-        labelInterpolationFnc(value, index) {
-          return index % 4 === 0 ? value : null;
-        },
+      showPoint: true,
+      fullWidth: true,
+      chartPadding: {
+        right: 80,
       },
+      labelOffset: 10,
     };
     return (
       <ChartistGraph data={simpleLineChartData} options={options} type={'Line'} />
