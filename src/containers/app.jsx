@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPatient } from '../actions/patient';
-import MeasurementsContainer from '../containers/measurements-container';
+import MeasurementContainer from '../containers/measurement-container';
 import ObservationCodes from '../constants/observation-codes';
 import Header from '../components/header.jsx';
 
@@ -17,9 +17,9 @@ class App extends Component {
     return (
       <div>
         <Header patient={data} fhirUrl={this.props.fhirUrl} />
-        <MeasurementsContainer code={ObservationCodes.weight} />
-        <MeasurementsContainer code={ObservationCodes.pulse} />
-        <MeasurementsContainer code={ObservationCodes.pulseOximeter} />
+        <MeasurementContainer code={ObservationCodes.weight} />
+        <MeasurementContainer code={ObservationCodes.pulse} />
+        <MeasurementContainer code={ObservationCodes.pulseOximeter} />
       </div>
     );
   }
