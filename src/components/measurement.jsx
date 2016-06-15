@@ -37,9 +37,9 @@ class Measurements extends Component {
     const name = this.getMeasurementName(this.props.code);
     return (
       <div className="measurement" >
-        <span className="measurement_name">{name}</span>
-        <span className="measurement_chart"><Chart dataPoints={points} /></span>
-        <span className="measurement_lastValue">{`${last.value} ${last.unit}`}</span>
+        <span className="measurement__name">{name}</span>
+        <span className="measurement__chart"><Chart dataPoints={points} /></span>
+        <span className="measurement__lastValue">{`${last.value} ${last.unit}`}</span>
       </div>
     );
   }

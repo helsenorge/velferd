@@ -4,12 +4,14 @@ import { fetchPatient } from '../actions/patient';
 import MeasurementContainer from '../containers/measurement-container';
 import ObservationCodes from '../constants/observation-codes';
 import Header from '../components/header.jsx';
+import { fetchQuestionnaireResponses } from '../actions/questionnaire-responses';
 
 class App extends Component {
 
   componentDidMount() {
-    const { dispatch, fhirUrl, patientId } = this.props;
+    const { dispatch, fhirUrl, patientId, questionnaireId } = this.props;
     dispatch(fetchPatient(fhirUrl, patientId));
+    dispatch(fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId));
   }
 
   render() {
@@ -28,6 +30,7 @@ class App extends Component {
 App.propTypes = {
   fhirUrl: PropTypes.string.isRequired,
   patientId: PropTypes.string.isRequired,
+  questionnaireId: PropTypes.string.isRequired,
   data: PropTypes.object,
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
@@ -43,11 +46,12 @@ function mapStateToProps(state) {
     data: null,
   };
 
-  const { fhirUrl, patientId } = settings;
+  const { fhirUrl, patientId, questionnaireId } = settings;
 
   return {
     fhirUrl,
     patientId,
+    questionnaireId,
     data,
     isFetching,
   };
