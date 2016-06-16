@@ -32,8 +32,8 @@ class Measurements extends Component {
 
   render() {
     let points = this.props.data.entry.map(this.getDataPoint);
-    points = points.slice(Math.max(points.length - 4, 1));
-    const last = points.pop();
+    points = points.slice(Math.max(points.length - 5, 1));
+    const last = points[points.length - 1];
     const name = this.getMeasurementName(this.props.code);
     return (
       <div className="measurement" >
