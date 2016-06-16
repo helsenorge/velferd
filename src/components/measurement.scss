@@ -3,16 +3,16 @@
 	padding: 1rem;
 	margin: 1rem;	
 
-	.measurement_name {
+	&__name {
       float: left;
 	  width: 10%;
 	  font-weight: 600;
     }
-    .measurement_chart {
+    &__chart {
       display: inline-block;
 	  width: 60%;
     }
-	.measurement_lastValue {
+	&__lastValue {
       float: right;
 	  width: 20%;	 
 	  font-size: 2rem;	  

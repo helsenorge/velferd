@@ -32,14 +32,14 @@ class Measurements extends Component {
 
   render() {
     let points = this.props.data.entry.map(this.getDataPoint);
-    points = points.slice(Math.max(points.length - 4, 1));
-    const last = points.pop();
+    points = points.slice(Math.max(points.length - 5, 1));
+    const last = points[points.length - 1];
     const name = this.getMeasurementName(this.props.code);
     return (
       <div className="measurement" >
-        <span className="measurement_name">{name}</span>
-        <span className="measurement_chart"><Chart dataPoints={points} /></span>
-        <span className="measurement_lastValue">{`${last.value} ${last.unit}`}</span>
+        <span className="measurement__name">{name}</span>
+        <span className="measurement__chart"><Chart dataPoints={points} /></span>
+        <span className="measurement__lastValue">{`${last.value} ${last.unit}`}</span>
       </div>
     );
   }
