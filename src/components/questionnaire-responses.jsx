@@ -37,7 +37,7 @@ class QuestionnaireResponses extends Component {
     return (
       <div className="measurement" >
         <span className="measurement__name">Skjemasvar</span>
-        <span className="measurement__chart"><Chart dataPoints={points} />
+        <span className="measurement__chart"><Chart dataPoints={points} high={15} low={0} />
         </span>
         <span className="measurement__lastValue">{`${last.value}`} poeng</span>
       </div>

@@ -21,6 +21,32 @@ class Measurements extends Component {
     }
   }
 
+  getMeasurementHigh(code) {
+    switch (code) {
+    case ObservationCodes.weight:
+      return 120;
+    case ObservationCodes.pulse:
+      return 150;
+    case ObservationCodes.pulseOximeter:
+      return 100;
+    default:
+      return null;
+    }
+  }
+
+  getMeasurementLow(code) {
+    switch (code) {
+    case ObservationCodes.weight:
+      return 10;
+    case ObservationCodes.pulse:
+      return 50;
+    case ObservationCodes.pulseOximeter:
+      return 50;
+    default:
+      return null;
+    }
+  }
+
   getDataPoint(item) {
     const point = {
       date: item.resource.effectiveDateTime,
@@ -35,10 +61,14 @@ class Measurements extends Component {
     points = points.slice(Math.max(points.length - 5, 1));
     const last = points[points.length - 1];
     const name = this.getMeasurementName(this.props.code);
+    const high = this.getMeasurementHigh(this.props.code);
+    const low = this.getMeasurementLow(this.props.code);
     return (
       <div className="measurement" >
         <span className="measurement__name">{name}</span>
-        <span className="measurement__chart"><Chart dataPoints={points} /></span>
+        <span className="measurement__chart">
+          <Chart dataPoints={points} high={high} low={low} />
+        </span>
         <span className="measurement__lastValue">{`${last.value} ${last.unit}`}</span>
       </div>
     );

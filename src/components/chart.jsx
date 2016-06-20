@@ -47,6 +47,8 @@ class Chart extends Component {
       },
       axisY: {
         showLabel: false,
+        high: this.props.high,
+        low: this.props.low,
       },
       axisX: {
         showGrid: false,
@@ -65,6 +67,8 @@ class Chart extends Component {
 
 Chart.propTypes = {
   dataPoints: PropTypes.array.isRequired,
+  high: PropTypes.number,
+  low: PropTypes.number,
 };
 
 export default Chart;
