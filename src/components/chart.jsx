@@ -8,7 +8,11 @@ class Chart extends Component {
 
   getLabel(item) {
     const date = new Date(item.date);
-    return date.toLocaleDateString();
+    let label = date.toLocaleDateString();
+    if (item.status) {
+      label += `</br>${item.status}`;
+    }
+    return label;
   }
 
   getValue(item) {

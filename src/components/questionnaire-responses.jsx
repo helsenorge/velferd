@@ -8,7 +8,7 @@ class QuestionnaireResponses extends Component {
   }
 
   getStatus(questions) {
-    return questions[0].answer[0].valueCoding.code;
+    return questions[0].answer[0].valueCoding.display;
   }
 
   getScore(questions) {
