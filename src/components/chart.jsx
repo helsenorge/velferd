@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ChartistGraph from 'react-chartist';
+import { formatDate } from './date-helpers.js';
 
 class Chart extends Component {
 
@@ -7,8 +8,8 @@ class Chart extends Component {
   }
 
   getLabel(item) {
-    const date = new Date(item.date);
-    let label = date.toLocaleDateString();
+    let label = formatDate(item.date);
+
     if (item.status) {
       label += `</br>${item.status}`;
     }
@@ -32,8 +33,8 @@ class Chart extends Component {
   }
 
   render() {
-    const labels = this.props.dataPoints.map(this.getLabel);
-    const values = this.props.dataPoints.map(this.getValue);
+    const labels = this.props.dataPoints.map(this.getLabel, this);
+    const values = this.props.dataPoints.map(this.getValue, this);
     const simpleLineChartData = {
       labels,
       series: [
@@ -44,10 +45,11 @@ class Chart extends Component {
       showArea: true,
       showPoint: true,
       lineSmooth: false,
-      fullWidth: true,
+      fullWidth: false,
       chartPadding: {
         right: 80,
         top: 20,
+        bottom: 20,
       },
       axisY: {
         showLabel: false,

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Chart from '../components/chart.jsx';
 import './measurement.scss';
 import ObservationCodes from '../constants/observation-codes';
+import { formatDate } from './date-helpers.js';
 
 class Measurements extends Component {
 
@@ -63,13 +64,17 @@ class Measurements extends Component {
     const name = this.getMeasurementName(this.props.code);
     const high = this.getMeasurementHigh(this.props.code);
     const low = this.getMeasurementLow(this.props.code);
+    const lastDate = formatDate(last.date);
     return (
       <div className="measurement" >
         <span className="measurement__name">{name}</span>
         <span className="measurement__chart">
           <Chart dataPoints={points} high={high} low={low} />
         </span>
-        <span className="measurement__lastValue">{`${last.value} ${last.unit}`}</span>
+        <span className="measurement__lastValue">
+          <div className="measurement__lastValue__value">{`${last.value} ${last.unit}`}</div>
+          <div>{`${lastDate}`}</div>
+        </span>
       </div>
     );
   }

@@ -14,7 +14,9 @@
     }
 	&__lastValue {
       float: right;
-	  width: 20%;	 
-	  font-size: 2rem;	  
+	  width: 20%;	  
+		&__value {		
+			font-size: 2rem;	  
+		}
     }
 }
