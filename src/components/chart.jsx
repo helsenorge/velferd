@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ChartistGraph from 'react-chartist';
+import { formatDate } from './date-helpers.js';
 
 class Chart extends Component {
 
@@ -7,12 +8,29 @@ class Chart extends Component {
   }
 
   getLabel(item) {
-    const date = new Date(item.date);
-    return date.toLocaleDateString();
+    let label = formatDate(item.date);
+
+    if (item.status) {
+      label += `</br>${item.status}`;
+    }
+    return label;
   }
 
-  getValue(item) {
-    return item.value;
+  getValues(dataPoints) {
+    const values = [];
+    dataPoints.forEach((entry) => {
+      for (let i = 0; i < entry.value.length; i++) {
+        const value = entry.value[i];
+
+        if (!values[i]) {
+          values.push([value]);
+        }
+        else {
+          values[i].push(value);
+        }
+      }
+    }, this);
+    return values;
   }
 
   displayPointsPlugin(chart) {
@@ -28,25 +46,26 @@ class Chart extends Component {
   }
 
   render() {
-    const labels = this.props.dataPoints.map(this.getLabel);
-    const values = this.props.dataPoints.map(this.getValue);
+    const labels = this.props.dataPoints.map(this.getLabel, this);
     const simpleLineChartData = {
       labels,
-      series: [
-        values,
-      ],
+      series: this.getValues(this.props.dataPoints),
     };
+
     const options = {
       showArea: true,
       showPoint: true,
       lineSmooth: false,
-      fullWidth: true,
+      fullWidth: false,
       chartPadding: {
         right: 80,
         top: 20,
+        bottom: 20,
       },
       axisY: {
         showLabel: false,
+        high: this.props.high,
+        low: this.props.low,
       },
       axisX: {
         showGrid: false,
@@ -65,6 +84,8 @@ class Chart extends Component {
 
 Chart.propTypes = {
   dataPoints: PropTypes.array.isRequired,
+  high: PropTypes.number,
+  low: PropTypes.number,
 };
 
 export default Chart;
