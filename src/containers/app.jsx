@@ -19,6 +19,7 @@ class App extends Component {
       <div>
         <Header patient={data} fhirUrl={this.props.fhirUrl} />
         <QuestionnaireResponsesContainer questionnaireId={this.props.questionnaireId} />
+        <MeasurementContainer code={ObservationCodes.bloodPressure} />
         <MeasurementContainer code={ObservationCodes.weight} />
         <MeasurementContainer code={ObservationCodes.pulse} />
         <MeasurementContainer code={ObservationCodes.pulseOximeter} />

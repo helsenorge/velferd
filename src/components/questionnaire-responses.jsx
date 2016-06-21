@@ -24,9 +24,10 @@ class QuestionnaireResponses extends Component {
     const questions = item.resource.group.group[0].question;
     const point = {
       date: item.resource.authored,
-      value: this.getScore(questions),
+      value: [],
       status: this.getStatus(questions),
     };
+    point.value.push(this.getScore(questions));
     return point;
   }
 
@@ -38,7 +39,7 @@ class QuestionnaireResponses extends Component {
 
     return (
       <div className="measurement" >
-        <span className="measurement__name">Skjemasvar</span>
+        <span className="measurement__name">Egenvurdering</span>
         <span className="measurement__chart"><Chart dataPoints={points} high={15} low={0} />
         </span>
         <span className="measurement__lastValue">

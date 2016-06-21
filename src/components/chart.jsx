@@ -16,8 +16,21 @@ class Chart extends Component {
     return label;
   }
 
-  getValue(item) {
-    return item.value;
+  getValues(dataPoints) {
+    const values = [];
+    dataPoints.forEach((entry) => {
+      for (let i = 0; i < entry.value.length; i++) {
+        const value = entry.value[i];
+
+        if (!values[i]) {
+          values.push([value]);
+        }
+        else {
+          values[i].push(value);
+        }
+      }
+    }, this);
+    return values;
   }
 
   displayPointsPlugin(chart) {
@@ -34,13 +47,11 @@ class Chart extends Component {
 
   render() {
     const labels = this.props.dataPoints.map(this.getLabel, this);
-    const values = this.props.dataPoints.map(this.getValue, this);
     const simpleLineChartData = {
       labels,
-      series: [
-        values,
-      ],
+      series: this.getValues(this.props.dataPoints),
     };
+
     const options = {
       showArea: true,
       showPoint: true,
