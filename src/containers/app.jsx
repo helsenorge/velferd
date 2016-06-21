@@ -5,6 +5,7 @@ import MeasurementContainer from '../containers/measurement-container';
 import QuestionnaireResponsesContainer from '../containers/questionnaire-responses-container';
 import ObservationCodes from '../constants/observation-codes';
 import Header from '../components/header.jsx';
+import Footer from '../components/footer.jsx';
 
 class App extends Component {
 
@@ -17,12 +18,14 @@ class App extends Component {
     const { data } = this.props;
     return (
       <div>
-        <Header patient={data} fhirUrl={this.props.fhirUrl} />
+        <Header patient={data} />
+        <h4>Pasientens egne tilbakemeldinger og målinger</h4>
         <QuestionnaireResponsesContainer questionnaireId={this.props.questionnaireId} />
         <MeasurementContainer code={ObservationCodes.bloodPressure} />
         <MeasurementContainer code={ObservationCodes.weight} />
         <MeasurementContainer code={ObservationCodes.pulse} />
         <MeasurementContainer code={ObservationCodes.pulseOximeter} />
+        <Footer fhirUrl={this.props.fhirUrl} />
       </div>
     );
   }
