@@ -9,13 +9,11 @@ class Header extends Component {
   render() {
     let name = '';
     if (this.props.patient) {
-      name = `Patient: ${this.getPatientName(this.props.patient)}`;
+      name = `${this.getPatientName(this.props.patient)}`;
     }
-    const api = `API: ${this.props.fhirUrl}`;
     return (
       <header>
-        <h1>Velferdsteknologi App</h1>
-        <p>{api}</p>
+        <h2>Velferdsteknologi App</h2>
         <p>{name}</p>
       </header>
     );
@@ -24,7 +22,6 @@ class Header extends Component {
 
 Header.propTypes = {
   patient: PropTypes.object,
-  fhirUrl: PropTypes.string.isRequired,
 };
 
 export default Header;
