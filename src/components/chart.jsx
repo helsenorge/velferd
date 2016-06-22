@@ -63,9 +63,12 @@ class Chart extends Component {
         bottom: 20,
       },
       axisY: {
-        showLabel: false,
+        showLabel: true,
         high: this.props.high,
         low: this.props.low,
+        labelInterpolationFnc: function formatLabels(value, index, labels) {
+          return index === 0 || index === labels.length - 1 ? value : '';
+        },
       },
       axisX: {
         showGrid: false,

@@ -42,11 +42,11 @@ class Measurements extends Component {
   getMeasurementLow(code) {
     switch (code) {
     case ObservationCodes.weight:
-      return 30;
+      return 40;
     case ObservationCodes.pulse:
       return 50;
     case ObservationCodes.pulseOximeter:
-      return 50;
+      return 80;
     case ObservationCodes.bloodPressure:
       return 50;
     default:
