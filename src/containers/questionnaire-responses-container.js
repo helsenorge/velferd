@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchQuestionnaireResponses } from '../actions/questionnaire-responses';
+import * as questionnaireResponsesActions from '../actions/questionnaire-responses';
 import QuestionnaireResponses from '../components/questionnaire-responses.jsx';
+import { bindActionCreators } from 'redux';
 
 class QuestionnaireResponsesContainer extends Component {
 
   componentDidMount() {
-    const { dispatch, fhirUrl, patientId, questionnaireId } = this.props;
-    dispatch(fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId));
+    const { fhirUrl, patientId, questionnaireId } = this.props;
+    this.props.actions.fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId);
   }
 
   render() {
@@ -33,7 +34,7 @@ QuestionnaireResponsesContainer.propTypes = {
   data: PropTypes.object,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
-  dispatch: PropTypes.func.isRequired,
+  actions: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {
@@ -58,4 +59,10 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(QuestionnaireResponsesContainer);
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(questionnaireResponsesActions, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionnaireResponsesContainer);
