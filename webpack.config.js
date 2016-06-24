@@ -15,6 +15,7 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new webpack.EnvironmentPlugin(['NODE_ENV']),
   ],
   output: {
     filename: '[name].js',
@@ -28,6 +29,11 @@ module.exports = {
       include: path.join(__dirname, 'src'),
     }],
     loaders: [
+      {
+        test: /\.json$/,
+        include: path.join(__dirname, 'src'),
+        loader: 'json',
+      },
       {
         test: /\.jsx?$/,
         include: path.join(__dirname, 'src'),

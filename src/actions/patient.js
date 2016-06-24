@@ -19,7 +19,16 @@ function receivePatient(patientId, json) {
   };
 }
 
+function useMock() {
+  return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
+}
+
 export function fetchPatient(fhirUrl, patientId) {
+  if (useMock()) {
+    const json = require('../mock/patient.json'); // eslint-disable-line
+    return dispatch => dispatch(receivePatient(patientId, json));
+  }
+
   return dispatch => {
     dispatch(requestPatient(patientId));
     const url =

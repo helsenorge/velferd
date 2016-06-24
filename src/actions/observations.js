@@ -21,7 +21,16 @@ function receiveObservations(code, patientId, json) {
   };
 }
 
+function useMock() {
+  return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
+}
+
 export function fetchObservations(fhirUrl, code, patientId) {
+  if (useMock()) {
+    const json = require( `../mock/${code}.observations.json`); // eslint-disable-line
+    return dispatch => dispatch(receiveObservations(code, patientId, json));
+  }
+
   return dispatch => {
     dispatch(requestObservations(code, patientId));
     const url =
