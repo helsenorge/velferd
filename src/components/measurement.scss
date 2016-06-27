@@ -4,19 +4,19 @@
 	margin: 1rem;	
 
 	&__name {
-      float: left;
+    float: left;
 	  width: 10%;
 	  font-weight: 600;
-    }
-    &__chart {
-      display: inline-block;
+  }
+  &__chart {
+    display: inline-block;
 	  width: 60%;
-    }
+  }
 	&__lastValue {
-      float: right;
+    float: right;
 	  width: 20%;	  
-		&__value {		
+	  &__value {		
 			font-size: 2rem;	  
 		}
-    }
+  }
 }

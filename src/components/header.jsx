@@ -1,4 +1,6 @@
 import React, { PropTypes, Component } from 'react';
+import { Link, IndexLink } from 'react-router';
+import './header.scss';
 
 class Header extends Component {
 
@@ -13,8 +15,14 @@ class Header extends Component {
     }
     return (
       <header>
-        <h2>Velferdsteknologi App</h2>
-        <p>{name}</p>
+        <span>{name}</span>
+        <nav>
+          <IndexLink to="/" activeClassName="active">Målinger</IndexLink>
+            {" | "}
+          <Link to="/history" activeClassName="active">Historikk</Link>
+            {" | "}
+          <Link to="/careplan" activeClassName="active">Egenbehandlingsplan</Link>
+        </nav>
       </header>
     );
   }
