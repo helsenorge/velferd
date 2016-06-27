@@ -17,11 +17,11 @@ class Header extends Component {
       <header>
         <span>{name}</span>
         <nav>
-          <IndexLink to="/" activeClassName="active">Målinger</IndexLink>
+          <IndexLink to="/velferd" activeClassName="active">Målinger</IndexLink>
             {" | "}
-          <Link to="/history" activeClassName="active">Historikk</Link>
+          <Link to="/velferd/history" activeClassName="active">Historikk</Link>
             {" | "}
-          <Link to="/careplan" activeClassName="active">Egenbehandlingsplan</Link>
+          <Link to="/velferd/careplan" activeClassName="active">Egenbehandlingsplan</Link>
         </nav>
       </header>
     );

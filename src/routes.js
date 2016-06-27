@@ -6,7 +6,7 @@ import HistoryPage from './components/history-page.jsx';
 import CarePlan from './components/careplan-page.jsx';
 
 export default (
-  <Route path="/" component={App}>
+  <Route path="/velferd" component={App}>
     <IndexRoute component={DashboardPage} />
     <Route path="history" component={HistoryPage} />
     <Route path="careplan" component={CarePlan} />
