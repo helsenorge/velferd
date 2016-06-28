@@ -2,12 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import Chart from '../components/chart.jsx';
 import './measurement.scss';
 import ObservationCodes from '../constants/observation-codes';
-import { formatDate } from './date-helpers.js';
+import { formatDate, filterPointsSince } from './date-helpers.js';
 
 class Measurements extends Component {
-
-  componentDidMount() {
-  }
 
   getMeasurementName(code) {
     switch (code) {
@@ -78,23 +75,33 @@ class Measurements extends Component {
 
   render() {
     let points = this.props.data.entry.map(this.getDataPoint);
-    points = points.slice(Math.max(points.length - 5, 1));
-    const last = points[points.length - 1];
+    points = filterPointsSince(points, 7);
+
     const name = this.getMeasurementName(this.props.code);
-    const high = this.getMeasurementHigh(this.props.code);
-    const low = this.getMeasurementLow(this.props.code);
-    const lastDate = formatDate(last.date);
-    const lastValue = last.value.length > 1 ? last.value.join('/') : last.value;
+    let chart;
+    let lastDate;
+    let lastValue;
+
+    if (points.length > 0) {
+      const last = points[points.length - 1];
+      lastDate = formatDate(last.date);
+      lastValue = last.value.length > 1 ? last.value.join('/') : last.value;
+      lastValue = `${lastValue} ${last.unit}`;
+      chart = (
+        <Chart
+          dataPoints={points}
+          high={this.getMeasurementHigh(this.props.code)}
+          low={this.getMeasurementLow(this.props.code)}
+        />);
+    }
 
     return (
       <div className="measurement" >
         <span className="measurement__name">{name}</span>
-        <span className="measurement__chart">
-          <Chart dataPoints={points} high={high} low={low} />
-        </span>
+        <span className="measurement__chart">{chart}</span>
         <span className="measurement__lastValue">
-          <div className="measurement__lastValue__value">{`${lastValue} ${last.unit}`}</div>
-          <div>{`${lastDate}`}</div>
+          <div>{lastDate}</div>
+          <div className="measurement__lastValue__value">{lastValue}</div>
         </span>
       </div>
     );
