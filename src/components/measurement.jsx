@@ -6,6 +6,14 @@ import { formatDate, filterPointsSince } from './date-helpers.js';
 
 class Measurements extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      daysToShow: 7,
+    };
+  }
+
   getMeasurementName(code) {
     switch (code) {
     case ObservationCodes.weight:
@@ -73,20 +81,17 @@ class Measurements extends Component {
     return point;
   }
 
+  handleRangeClick(value) {
+    this.setState({ daysToShow: value });
+  }
+
   render() {
     let points = this.props.data.entry.map(this.getDataPoint);
-    points = filterPointsSince(points, 7);
-
+    points = filterPointsSince(points, this.state.daysToShow);
     const name = this.getMeasurementName(this.props.code);
     let chart;
-    let lastDate;
-    let lastValue;
 
     if (points.length > 0) {
-      const last = points[points.length - 1];
-      lastDate = formatDate(last.date);
-      lastValue = last.value.length > 1 ? last.value.join('/') : last.value;
-      lastValue = `${lastValue} ${last.unit}`;
       chart = (
         <Chart
           dataPoints={points}
@@ -95,14 +100,40 @@ class Measurements extends Component {
         />);
     }
 
+    let rangeSelector;
+    if (this.props.showRangeSelector) {
+      rangeSelector = (
+        <nav>
+          <a onClick={() => this.handleRangeClick(7)}>Last week</a>
+          {" | "}
+          <a onClick={() => this.handleRangeClick(30)}>Last month</a>
+          {" | "}
+          <a onClick={() => this.handleRangeClick(90)}>Last 3 months</a>
+        </nav>
+      );
+    }
+
+    let lastValueSection;
+    if (this.props.showLastValue && points.length > 0) {
+      const last = points[points.length - 1];
+      const lastDate = formatDate(last.date);
+      const lastValue = last.value.length > 1 ? last.value.join('/') : last.value;
+      lastValueSection = (
+        <span className="measurement__lastValue">
+          <div>{lastDate}</div>
+          <div className="measurement__lastValue__value">{`${lastValue} ${last.unit}`}</div>
+        </span>
+      );
+    }
+
     return (
       <div className="measurement" >
         <span className="measurement__name">{name}</span>
-        <span className="measurement__chart">{chart}</span>
-        <span className="measurement__lastValue">
-          <div>{lastDate}</div>
-          <div className="measurement__lastValue__value">{lastValue}</div>
+        <span className="measurement__chart">
+          {rangeSelector}
+          {chart}
         </span>
+        {lastValueSection}
       </div>
     );
   }
@@ -111,6 +142,8 @@ class Measurements extends Component {
 Measurements.propTypes = {
   data: PropTypes.object.isRequired,
   code: PropTypes.string.isRequired,
+  showRangeSelector: PropTypes.bool,
+  showLastValue: PropTypes.bool,
 };
 
 export default Measurements;
