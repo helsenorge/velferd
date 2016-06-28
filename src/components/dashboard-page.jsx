@@ -4,7 +4,7 @@ import MeasurementContainer from '../containers/measurement-container';
 import QuestionnaireResponsesContainer from '../containers/questionnaire-responses-container';
 import ObservationCodes from '../constants/observation-codes';
 
-class App extends Component {
+class DashboardPage extends Component {
 
   componentDidMount() {
   }
@@ -14,16 +14,16 @@ class App extends Component {
       <div>
         <h4>Pasientens egne tilbakemeldinger og målinger</h4>
         <QuestionnaireResponsesContainer questionnaireId={this.props.questionnaireId} />
-        <MeasurementContainer code={ObservationCodes.bloodPressure} />
-        <MeasurementContainer code={ObservationCodes.weight} />
-        <MeasurementContainer code={ObservationCodes.pulse} />
-        <MeasurementContainer code={ObservationCodes.pulseOximeter} />
+        <MeasurementContainer showLastValue code={ObservationCodes.bloodPressure} />
+        <MeasurementContainer showLastValue code={ObservationCodes.weight} />
+        <MeasurementContainer showLastValue code={ObservationCodes.pulse} />
+        <MeasurementContainer showLastValue code={ObservationCodes.pulseOximeter} />
       </div>
     );
   }
 }
 
-App.propTypes = {
+DashboardPage.propTypes = {
   questionnaireId: PropTypes.string.isRequired,
 };
 
@@ -38,4 +38,4 @@ function mapStateToProps(state) {
 
 export default connect(
   mapStateToProps,
-)(App);
+)(DashboardPage);

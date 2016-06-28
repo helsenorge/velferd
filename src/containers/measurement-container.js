@@ -18,7 +18,12 @@ class MeasurementsContainer extends Component {
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            <Measurement data={data} code={this.props.code} />
+            <Measurement
+              data={data}
+              code={this.props.code}
+              showRangeSelector={this.props.showRangeSelector}
+              showLastValue={this.props.showLastValue}
+            />
           </div>
         }
       </div>
@@ -34,6 +39,8 @@ MeasurementsContainer.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired,
+  showRangeSelector: PropTypes.bool,
+  showLastValue: PropTypes.bool,
 };
 
 function mapStateToProps(state, ownProps) {

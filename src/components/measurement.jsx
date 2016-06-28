@@ -2,11 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import Chart from '../components/chart.jsx';
 import './measurement.scss';
 import ObservationCodes from '../constants/observation-codes';
-import { formatDate } from './date-helpers.js';
+import { formatDate, filterPointsSince } from './date-helpers.js';
 
 class Measurements extends Component {
 
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      daysToShow: 7,
+    };
   }
 
   getMeasurementName(code) {
@@ -76,26 +81,59 @@ class Measurements extends Component {
     return point;
   }
 
+  handleRangeClick(value) {
+    this.setState({ daysToShow: value });
+  }
+
   render() {
     let points = this.props.data.entry.map(this.getDataPoint);
-    points = points.slice(Math.max(points.length - 5, 1));
-    const last = points[points.length - 1];
+    points = filterPointsSince(points, this.state.daysToShow);
     const name = this.getMeasurementName(this.props.code);
-    const high = this.getMeasurementHigh(this.props.code);
-    const low = this.getMeasurementLow(this.props.code);
-    const lastDate = formatDate(last.date);
-    const lastValue = last.value.length > 1 ? last.value.join('/') : last.value;
+    let chart;
+
+    if (points.length > 0) {
+      chart = (
+        <Chart
+          dataPoints={points}
+          high={this.getMeasurementHigh(this.props.code)}
+          low={this.getMeasurementLow(this.props.code)}
+        />);
+    }
+
+    let rangeSelector;
+    if (this.props.showRangeSelector) {
+      rangeSelector = (
+        <nav>
+          <a onClick={() => this.handleRangeClick(7)}>Last week</a>
+          {" | "}
+          <a onClick={() => this.handleRangeClick(30)}>Last month</a>
+          {" | "}
+          <a onClick={() => this.handleRangeClick(90)}>Last 3 months</a>
+        </nav>
+      );
+    }
+
+    let lastValueSection;
+    if (this.props.showLastValue && points.length > 0) {
+      const last = points[points.length - 1];
+      const lastDate = formatDate(last.date);
+      const lastValue = last.value.length > 1 ? last.value.join('/') : last.value;
+      lastValueSection = (
+        <span className="measurement__lastValue">
+          <div>{lastDate}</div>
+          <div className="measurement__lastValue__value">{`${lastValue} ${last.unit}`}</div>
+        </span>
+      );
+    }
 
     return (
       <div className="measurement" >
         <span className="measurement__name">{name}</span>
         <span className="measurement__chart">
-          <Chart dataPoints={points} high={high} low={low} />
+          {rangeSelector}
+          {chart}
         </span>
-        <span className="measurement__lastValue">
-          <div className="measurement__lastValue__value">{`${lastValue} ${last.unit}`}</div>
-          <div>{`${lastDate}`}</div>
-        </span>
+        {lastValueSection}
       </div>
     );
   }
@@ -104,6 +142,8 @@ class Measurements extends Component {
 Measurements.propTypes = {
   data: PropTypes.object.isRequired,
   code: PropTypes.string.isRequired,
+  showRangeSelector: PropTypes.bool,
+  showLastValue: PropTypes.bool,
 };
 
 export default Measurements;

@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { Component } from 'react';
+import MeasurementContainer from '../containers/measurement-container';
+import ObservationCodes from '../constants/observation-codes';
 
-const HistoryPage = function HistoryPage() {
-  return (
-    <div>
-    </div>
-  );
-};
+class HistoryPage extends Component {
+  componentDidMount() {
+  }
+
+  render() {
+    return (
+      <div>
+        <MeasurementContainer code={ObservationCodes.weight} showRangeSelector />
+      </div>
+    );
+  }
+}
 
 export default HistoryPage;
