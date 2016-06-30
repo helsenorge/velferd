@@ -21,8 +21,7 @@ class MeasurementsContainer extends Component {
             <Measurement
               data={data}
               code={this.props.code}
-              showRangeSelector={this.props.showRangeSelector}
-              showLastValue={this.props.showLastValue}
+              daysToShow={this.props.daysToShow}
             />
           </div>
         }
@@ -39,8 +38,7 @@ MeasurementsContainer.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired,
-  showRangeSelector: PropTypes.bool,
-  showLastValue: PropTypes.bool,
+  daysToShow: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state, ownProps) {

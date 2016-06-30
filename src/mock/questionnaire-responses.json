@@ -1,0 +1,719 @@
+{
+  "resourceType": "Bundle",
+  "id": "9b5745ab-d4cd-4902-a832-c27cc8b8388d",
+  "meta": {
+    "lastUpdated": "2016-06-28T11:59:38.753+00:00"
+  },
+  "type": "searchset",
+  "total": 6,
+  "link": [
+    {
+      "relation": "self",
+      "url": "http://continua.cloudapp.net/baseDstu2/QuestionnaireResponse?questionnaire=62763&_sort%3Aasc=authored&patient=1-26++++"
+    }
+  ],
+  "entry": [
+    {
+      "fullUrl": "http://continua.cloudapp.net/baseDstu2/QuestionnaireResponse/62841",
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "id": "62841",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2016-06-16T09:35:19.956+00:00"
+        },
+        "questionnaire": {
+          "reference": "Questionnaire/62763"
+        },
+        "status": "completed",
+        "subject": {
+          "reference": "Patient/1-26"
+        },
+        "author": {
+          "reference": "Patient/1-26"
+        },
+        "authored": "2016-06-23T06:58:25.884Z",
+        "source": {
+          "reference": "Patient/1-26"
+        },
+        "group": {
+          "linkId": "group1",
+          "title": "HelsaMi Hjertesvikt",
+          "group": [
+            {
+              "linkId": "group2",
+              "question": [
+                {
+                  "linkId": "Føler",
+                  "text": "Hvordan føler du deg?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "PustenDin",
+                  "text": "Hvordan er pusten din?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg er mer tungpustet enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "TrettUtmattetSlapp",
+                  "text": "Er du trett, utmattet eller slapp?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – mer enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "Aktivitetsnivå",
+                  "text": "Hvordan er ditt aktivitetsnivå?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg må ha flere pauser enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "HevelseBeina",
+                  "text": "Opplever du hevelse i beina",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "1",
+                        "display": "DÅRLIG – jeg har mye hevelse i beina"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "FølerTilSinns",
+                  "text": "Hvordan føler du deg til sinns?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg føler meg verre enn vanlig"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "http://continua.cloudapp.net/baseDstu2/QuestionnaireResponse/62848",
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "id": "62848",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2016-06-16T09:36:27.659+00:00"
+        },
+        "questionnaire": {
+          "reference": "Questionnaire/62763"
+        },
+        "status": "completed",
+        "subject": {
+          "reference": "Patient/1-26"
+        },
+        "author": {
+          "reference": "Patient/1-26"
+        },
+        "authored": "2016-06-24T06:58:25.884Z",
+        "source": {
+          "reference": "Patient/1-26"
+        },
+        "group": {
+          "linkId": "group1",
+          "title": "HelsaMi Hjertesvikt",
+          "group": [
+            {
+              "linkId": "group2",
+              "question": [
+                {
+                  "linkId": "Føler",
+                  "text": "Hvordan føler du deg?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "1",
+                        "display": "DÅRLIG"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "PustenDin",
+                  "text": "Hvordan er pusten din?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg er mer tungpustet enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "TrettUtmattetSlapp",
+                  "text": "Er du trett, utmattet eller slapp?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "1",
+                        "display": "DÅRLIG – jeg er svært trett, utmattet, slapp"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "Aktivitetsnivå",
+                  "text": "Hvordan er ditt aktivitetsnivå?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg må ha flere pauser enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "HevelseBeina",
+                  "text": "Opplever du hevelse i beina",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "1",
+                        "display": "DÅRLIG – jeg har mye hevelse i beina"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "FølerTilSinns",
+                  "text": "Hvordan føler du deg til sinns?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg føler meg verre enn vanlig"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "http://continua.cloudapp.net/baseDstu2/QuestionnaireResponse/62885",
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "id": "62885",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2016-06-20T08:10:45.149+00:00"
+        },
+        "questionnaire": {
+          "reference": "Questionnaire/62763"
+        },
+        "status": "completed",
+        "subject": {
+          "reference": "Patient/1-26"
+        },
+        "author": {
+          "reference": "Patient/1-26"
+        },
+        "authored": "2016-06-25T06:58:25.884Z",
+        "source": {
+          "reference": "Patient/1-26"
+        },
+        "group": {
+          "linkId": "group1",
+          "title": "HelsaMi Hjertesvikt",
+          "group": [
+            {
+              "linkId": "group2",
+              "question": [
+                {
+                  "linkId": "Føler",
+                  "text": "Hvordan føler du deg?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "3",
+                        "display": "BRA"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "PustenDin",
+                  "text": "Hvordan er pusten din?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg er mer tungpustet enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "TrettUtmattetSlapp",
+                  "text": "Er du trett, utmattet eller slapp?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "3",
+                        "display": "BRA – som vanlig eller bedre"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "Aktivitetsnivå",
+                  "text": "Hvordan er ditt aktivitetsnivå?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg må ha flere pauser enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "HevelseBeina",
+                  "text": "Opplever du hevelse i beina",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "1",
+                        "display": "DÅRLIG – jeg har mye hevelse i beina"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "FølerTilSinns",
+                  "text": "Hvordan føler du deg til sinns?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg føler meg verre enn vanlig"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "http://continua.cloudapp.net/baseDstu2/QuestionnaireResponse/62855",
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "id": "62855",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2016-06-16T09:36:48.917+00:00"
+        },
+        "questionnaire": {
+          "reference": "Questionnaire/62763"
+        },
+        "status": "completed",
+        "subject": {
+          "reference": "Patient/1-26"
+        },
+        "author": {
+          "reference": "Patient/1-26"
+        },
+        "authored": "2016-06-26T06:58:25.884Z",
+        "source": {
+          "reference": "Patient/1-26"
+        },
+        "group": {
+          "linkId": "group1",
+          "title": "HelsaMi Hjertesvikt",
+          "group": [
+            {
+              "linkId": "group2",
+              "question": [
+                {
+                  "linkId": "Føler",
+                  "text": "Hvordan føler du deg?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "1",
+                        "display": "DÅRLIG"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "PustenDin",
+                  "text": "Hvordan er pusten din?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg er mer tungpustet enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "TrettUtmattetSlapp",
+                  "text": "Er du trett, utmattet eller slapp?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "1",
+                        "display": "DÅRLIG – jeg er svært trett, utmattet, slapp"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "Aktivitetsnivå",
+                  "text": "Hvordan er ditt aktivitetsnivå?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg må ha flere pauser enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "HevelseBeina",
+                  "text": "Opplever du hevelse i beina",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "1",
+                        "display": "DÅRLIG – jeg har mye hevelse i beina"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "FølerTilSinns",
+                  "text": "Hvordan føler du deg til sinns?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg føler meg verre enn vanlig"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "http://continua.cloudapp.net/baseDstu2/QuestionnaireResponse/62828",
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "id": "62828",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2016-06-16T09:25:46.152+00:00"
+        },
+        "questionnaire": {
+          "reference": "Questionnaire/62763"
+        },
+        "status": "completed",
+        "subject": {
+          "reference": "Patient/1-26"
+        },
+        "author": {
+          "reference": "Patient/1-26"
+        },
+        "authored": "2016-06-27T06:58:25.884Z",
+        "source": {
+          "reference": "Patient/1-26"
+        },
+        "group": {
+          "linkId": "group1",
+          "title": "HelsaMi Hjertesvikt",
+          "group": [
+            {
+              "linkId": "group2",
+              "question": [
+                {
+                  "linkId": "Føler",
+                  "text": "Hvordan føler du deg?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "PustenDin",
+                  "text": "Hvordan er pusten din?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg er mer tungpustet enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "TrettUtmattetSlapp",
+                  "text": "Er du trett, utmattet eller slapp?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – mer enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "Aktivitetsnivå",
+                  "text": "Hvordan er ditt aktivitetsnivå?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg må ha flere pauser enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "HevelseBeina",
+                  "text": "Opplever du hevelse i beina",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "1",
+                        "display": "DÅRLIG – jeg har mye hevelse i beina"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "FølerTilSinns",
+                  "text": "Hvordan føler du deg til sinns?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg føler meg verre enn vanlig"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    },
+    {
+      "fullUrl": "http://continua.cloudapp.net/baseDstu2/QuestionnaireResponse/62877",
+      "resource": {
+        "resourceType": "QuestionnaireResponse",
+        "id": "62877",
+        "meta": {
+          "versionId": "1",
+          "lastUpdated": "2016-06-20T08:09:25.246+00:00"
+        },
+        "questionnaire": {
+          "reference": "Questionnaire/62763"
+        },
+        "status": "completed",
+        "subject": {
+          "reference": "Patient/1-26"
+        },
+        "author": {
+          "reference": "Patient/1-26"
+        },
+        "authored": "2016-06-28T06:58:25.884Z",
+        "source": {
+          "reference": "Patient/1-26"
+        },
+        "group": {
+          "linkId": "group1",
+          "title": "HelsaMi Hjertesvikt",
+          "group": [
+            {
+              "linkId": "group2",
+              "question": [
+                {
+                  "linkId": "Føler",
+                  "text": "Hvordan føler du deg?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "3",
+                        "display": "BRA"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "PustenDin",
+                  "text": "Hvordan er pusten din?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg er mer tungpustet enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "TrettUtmattetSlapp",
+                  "text": "Er du trett, utmattet eller slapp?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "3",
+                        "display": "BRA – som vanlig eller bedre"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "Aktivitetsnivå",
+                  "text": "Hvordan er ditt aktivitetsnivå?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg må ha flere pauser enn vanlig"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "HevelseBeina",
+                  "text": "Opplever du hevelse i beina",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "1",
+                        "display": "DÅRLIG – jeg har mye hevelse i beina"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "linkId": "FølerTilSinns",
+                  "text": "Hvordan føler du deg til sinns?",
+                  "answer": [
+                    {
+                      "valueCoding": {
+                        "system": "unknownSystem",
+                        "code": "2",
+                        "display": "LITT DÅRLIG – jeg føler meg verre enn vanlig"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "search": {
+        "mode": "match"
+      }
+    }
+  ]
+}

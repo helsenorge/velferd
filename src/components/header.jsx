@@ -19,8 +19,6 @@ class Header extends Component {
         <nav>
           <IndexLink to="/velferd" activeClassName="active">Målinger</IndexLink>
             {" | "}
-          <Link to="/velferd/history" activeClassName="active">Historikk</Link>
-            {" | "}
           <Link to="/velferd/careplan" activeClassName="active">Egenbehandlingsplan</Link>
         </nav>
       </header>

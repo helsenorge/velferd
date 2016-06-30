@@ -6,18 +6,45 @@ import ObservationCodes from '../constants/observation-codes';
 
 class DashboardPage extends Component {
 
-  componentDidMount() {
+  constructor(props) {
+    super(props);
+    this.state = {
+      daysToShow: 7,
+    };
+  }
+
+  handleRangeClick(value) {
+    this.setState({ daysToShow: value });
   }
 
   render() {
     return (
       <div>
         <h4>Pasientens egne tilbakemeldinger og målinger</h4>
+        <nav>
+          <a onClick={() => this.handleRangeClick(7)}>Last week</a>
+          {" | "}
+          <a onClick={() => this.handleRangeClick(30)}>Last month</a>
+          {" | "}
+          <a onClick={() => this.handleRangeClick(90)}>Last 3 months</a>
+        </nav>
         <QuestionnaireResponsesContainer questionnaireId={this.props.questionnaireId} />
-        <MeasurementContainer showLastValue code={ObservationCodes.bloodPressure} />
-        <MeasurementContainer showLastValue code={ObservationCodes.weight} />
-        <MeasurementContainer showLastValue code={ObservationCodes.pulse} />
-        <MeasurementContainer showLastValue code={ObservationCodes.pulseOximeter} />
+        <MeasurementContainer
+          daysToShow={this.state.daysToShow}
+          code={ObservationCodes.bloodPressure}
+        />
+        <MeasurementContainer
+          daysToShow={this.state.daysToShow}
+          code={ObservationCodes.weight}
+        />
+        <MeasurementContainer
+          daysToShow={this.state.daysToShow}
+          code={ObservationCodes.pulse}
+        />
+        <MeasurementContainer
+          daysToShow={this.state.daysToShow}
+          code={ObservationCodes.pulseOximeter}
+        />
       </div>
     );
   }

@@ -19,7 +19,16 @@ function receivetQuestionnaireResponses(patientId, json) {
   };
 }
 
+function useMock() {
+  return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
+}
+
 export function fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId) {
+  if (useMock()) {
+    const json = require( `../mock/questionnaire-responses.json`); // eslint-disable-line
+    return dispatch => dispatch(receivetQuestionnaireResponses(patientId, json));
+  }
+
   return dispatch => {
     dispatch(requestQuestionnaireResponses(patientId));
     const url =
