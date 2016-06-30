@@ -19,7 +19,7 @@ class QuestionnaireResponsesContainer extends Component {
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            <QuestionnaireResponses data={data} />
+            <QuestionnaireResponses data={data} daysToShow={this.props.daysToShow} />
           </div>
         }
       </div>
@@ -35,6 +35,7 @@ QuestionnaireResponsesContainer.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   actions: PropTypes.object.isRequired,
+  daysToShow: PropTypes.number.isRequired,
 };
 
 function mapStateToProps(state) {

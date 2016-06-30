@@ -28,7 +28,11 @@ class DashboardPage extends Component {
           {" | "}
           <a onClick={() => this.handleRangeClick(90)}>Last 3 months</a>
         </nav>
-        <QuestionnaireResponsesContainer questionnaireId={this.props.questionnaireId} />
+        <br />
+        <QuestionnaireResponsesContainer
+          daysToShow={this.state.daysToShow}
+          questionnaireId={this.props.questionnaireId}
+        />
         <MeasurementContainer
           daysToShow={this.state.daysToShow}
           code={ObservationCodes.bloodPressure}

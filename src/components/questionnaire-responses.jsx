@@ -30,7 +30,7 @@ class QuestionnaireResponses extends Component {
 
   render() {
     let points = this.props.data.entry.map(this.getDataPoint, this);
-    points = filterPointsSince(points, 7);
+    points = filterPointsSince(points, this.props.daysToShow);
 
     let chart;
     let lastDate;
@@ -61,6 +61,7 @@ class QuestionnaireResponses extends Component {
 
 QuestionnaireResponses.propTypes = {
   data: PropTypes.object.isRequired,
+  daysToShow: PropTypes.number.isRequired,
 };
 
 export default QuestionnaireResponses;
