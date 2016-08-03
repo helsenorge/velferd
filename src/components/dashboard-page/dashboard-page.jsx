@@ -13,8 +13,21 @@ class DashboardPage extends Component {
     };
   }
 
+  handleBackClick() {
+    const { fromDate, toDate } = this.state;
+    fromDate.setDate(fromDate.getDate() - 14);
+    toDate.setDate(toDate.getDate() - 14);
+    this.setState({ fromDate: new Date(fromDate), toDate: new Date(toDate) });
+  }
+
+  handleForwardClick() {
+    const { fromDate, toDate } = this.state;
+    fromDate.setDate(fromDate.getDate() + 14);
+    toDate.setDate(toDate.getDate() + 14);
+    this.setState({ fromDate: new Date(fromDate), toDate: new Date(toDate) });
+  }
+
   handleRangeClick() {
-    // this.setState({ daysToShow: value });
   }
 
   render() {
@@ -22,11 +35,13 @@ class DashboardPage extends Component {
       <div>
         <h4>Pasientens egne tilbakemeldinger og målinger</h4>
         <nav>
-          <a onClick={() => this.handleRangeClick(7)}>Last 2 weeks</a>
+          <a onClick={() => this.handleBackClick()}>&lt;&lt;&nbsp;&nbsp;&nbsp;</a>
+          <a onClick={() => this.handleForwardClick()}>&gt;&gt;&nbsp;&nbsp;&nbsp;</a>
+          <a onClick={() => this.handleRangeClick(14)}>14 days</a>
           {" | "}
-          <a onClick={() => this.handleRangeClick(30)}>Last month</a>
+          <a onClick={() => this.handleRangeClick(30)}>1 month</a>
           {" | "}
-          <a onClick={() => this.handleRangeClick(90)}>Last 3 months</a>
+          <a onClick={() => this.handleRangeClick(90)}>3 months</a>
         </nav>
         <br />
         <MeasurementContainer
