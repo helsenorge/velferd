@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import ChartistGraph from 'react-chartist';
-import { formatDate } from './date-helpers.js';
+import { formatDate } from '../date-helpers/date-helpers.js';
 
 class Chart extends Component {
 

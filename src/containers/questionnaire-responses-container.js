@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as questionnaireResponsesActions from '../actions/questionnaire-responses';
-import QuestionnaireResponses from '../components/questionnaire-responses.jsx';
+import QuestionnaireResponses from
+  '../components/questionaire-responses/questionnaire-responses.jsx';
 import { bindActionCreators } from 'redux';
 
 class QuestionnaireResponsesContainer extends Component {

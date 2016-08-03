@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import MeasurementContainer from '../containers/measurement-container';
-import QuestionnaireResponsesContainer from '../containers/questionnaire-responses-container';
-import ObservationCodes from '../constants/observation-codes';
+import MeasurementContainer from '../../containers/measurement-container';
+import QuestionnaireResponsesContainer from '../../containers/questionnaire-responses-container';
+import ObservationCodes from '../../constants/observation-codes';
 
 class DashboardPage extends Component {
 

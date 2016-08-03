@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import Chart from '../components/chart.jsx';
-import { formatDate, filterPointsSince } from './date-helpers.js';
-import './measurement.scss';
+import Chart from '../chart/chart.jsx';
+import { formatDate, filterPointsSince } from '../date-helpers/date-helpers.js';
+import '../measurement/measurement.scss';
 
 class QuestionnaireResponses extends Component {
 
