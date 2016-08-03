@@ -1,32 +1,24 @@
 import React, { Component, PropTypes } from 'react';
 import ChartistGraph from 'react-chartist';
+import Chartist from 'chartist';
 import { formatDate } from '../date-helpers/date-helpers.js';
 
 class Chart extends Component {
-
-  componentDidMount() {
-  }
-
-  getLabel(item) {
-    let label = formatDate(item.date);
-
-    if (item.status) {
-      label += `</br>${item.status}`;
-    }
-    return label;
-  }
 
   getValues(dataPoints) {
     const values = [];
     dataPoints.forEach((entry) => {
       for (let i = 0; i < entry.value.length; i++) {
-        const value = entry.value[i];
+        const dateTime = new Date(entry.date).getTime();
+        const data = {
+          x: Math.floor(dateTime / 1000),
+          y: entry.value[i] };
 
         if (!values[i]) {
-          values.push([value]);
+          values.push([data]);
         }
         else {
-          values[i].push(value);
+          values[i].push(data);
         }
       }
     }, this);
@@ -46,41 +38,33 @@ class Chart extends Component {
   }
 
   render() {
-    const labels = this.props.dataPoints.map(this.getLabel, this);
-    const simpleLineChartData = {
-      labels,
+    const data = {
       series: this.getValues(this.props.dataPoints),
     };
 
     const options = {
-      showArea: true,
       showPoint: true,
       lineSmooth: false,
-      fullWidth: false,
-      chartPadding: {
-        right: 80,
-        top: 20,
-        bottom: 20,
-      },
       axisY: {
-        showLabel: true,
         high: this.props.high,
         low: this.props.low,
-        labelInterpolationFnc: function formatLabels(value, index, labels) {
-          return index === 0 || index === labels.length - 1 ? value : '';
-        },
       },
       axisX: {
-        showGrid: false,
+        type: Chartist.FixedScaleAxis,
+        low: Math.floor(this.props.fromDate.getTime() / 1000),
+        high: Math.floor(this.props.toDate.getTime() / 1000),
+        divisor: 14,
+        labelInterpolationFnc(value) {
+          return formatDate(new Date(value * 1000));
+        },
       },
-      labelOffset: 10,
       plugins: [
         this.displayPointsPlugin,
       ],
     };
 
     return (
-      <ChartistGraph data={simpleLineChartData} options={options} type={'Line'} />
+      <ChartistGraph data={data} options={options} type={'Line'} />
     );
   }
 }
@@ -89,6 +73,8 @@ Chart.propTypes = {
   dataPoints: PropTypes.array.isRequired,
   high: PropTypes.number,
   low: PropTypes.number,
+  fromDate: React.PropTypes.instanceOf(Date).isRequired,
+  toDate: React.PropTypes.instanceOf(Date).isRequired,
 };
 
 export default Chart;

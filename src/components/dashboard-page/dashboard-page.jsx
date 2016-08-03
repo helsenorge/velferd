@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import MeasurementContainer from '../../containers/measurement-container';
-import QuestionnaireResponsesContainer from '../../containers/questionnaire-responses-container';
 import ObservationCodes from '../../constants/observation-codes';
 
 class DashboardPage extends Component {
@@ -9,12 +8,13 @@ class DashboardPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      daysToShow: 7,
+      fromDate: new Date(2016, 5, 19),
+      toDate: new Date(2016, 6, 3),
     };
   }
 
-  handleRangeClick(value) {
-    this.setState({ daysToShow: value });
+  handleRangeClick() {
+    // this.setState({ daysToShow: value });
   }
 
   render() {
@@ -22,31 +22,31 @@ class DashboardPage extends Component {
       <div>
         <h4>Pasientens egne tilbakemeldinger og målinger</h4>
         <nav>
-          <a onClick={() => this.handleRangeClick(7)}>Last week</a>
+          <a onClick={() => this.handleRangeClick(7)}>Last 2 weeks</a>
           {" | "}
           <a onClick={() => this.handleRangeClick(30)}>Last month</a>
           {" | "}
           <a onClick={() => this.handleRangeClick(90)}>Last 3 months</a>
         </nav>
         <br />
-        <QuestionnaireResponsesContainer
-          daysToShow={this.state.daysToShow}
-          questionnaireId={this.props.questionnaireId}
-        />
         <MeasurementContainer
-          daysToShow={this.state.daysToShow}
+          fromDate={this.state.fromDate}
+          toDate={this.state.toDate}
           code={ObservationCodes.bloodPressure}
         />
         <MeasurementContainer
-          daysToShow={this.state.daysToShow}
+          fromDate={this.state.fromDate}
+          toDate={this.state.toDate}
           code={ObservationCodes.weight}
         />
         <MeasurementContainer
-          daysToShow={this.state.daysToShow}
+          fromDate={this.state.fromDate}
+          toDate={this.state.toDate}
           code={ObservationCodes.pulse}
         />
         <MeasurementContainer
-          daysToShow={this.state.daysToShow}
+          fromDate={this.state.fromDate}
+          toDate={this.state.toDate}
           code={ObservationCodes.pulseOximeter}
         />
       </div>

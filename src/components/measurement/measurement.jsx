@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Chart from '../chart/chart.jsx';
 import './measurement.scss';
 import ObservationCodes from '../../constants/observation-codes';
-import { formatDate, filterPointsSince } from '../date-helpers/date-helpers.js';
+import { formatDate, filterPoints } from '../date-helpers/date-helpers.js';
 
 class Measurements extends Component {
 
@@ -75,7 +75,7 @@ class Measurements extends Component {
 
   render() {
     let points = this.props.data.entry.map(this.getDataPoint);
-    points = filterPointsSince(points, this.props.daysToShow);
+    points = filterPoints(points, this.props.fromDate, this.props.toDate);
     const name = this.getMeasurementName(this.props.code);
     let chart;
 
@@ -85,6 +85,8 @@ class Measurements extends Component {
           dataPoints={points}
           high={this.getMeasurementHigh(this.props.code)}
           low={this.getMeasurementLow(this.props.code)}
+          fromDate={this.props.fromDate}
+          toDate={this.props.toDate}
         />);
     }
 
@@ -116,7 +118,8 @@ class Measurements extends Component {
 Measurements.propTypes = {
   data: PropTypes.object.isRequired,
   code: PropTypes.string.isRequired,
-  daysToShow: PropTypes.number.isRequired,
+  fromDate: React.PropTypes.instanceOf(Date).isRequired,
+  toDate: React.PropTypes.instanceOf(Date).isRequired,
 };
 
 export default Measurements;
