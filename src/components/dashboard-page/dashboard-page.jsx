@@ -2,46 +2,71 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import MeasurementContainer from '../../containers/measurement-container';
 import ObservationCodes from '../../constants/observation-codes';
+import { formatDate } from '../date-helpers/date-helpers.js';
 
 class DashboardPage extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      fromDate: new Date(2016, 5, 19),
-      toDate: new Date(2016, 6, 3),
-    };
+
+    const dayRange = 7;
+
+    const toDate = new Date();
+    toDate.setHours(0, 0, 0, 0);
+    toDate.setDate(toDate.getDate() + 1);
+
+    const fromDate = new Date(toDate.getTime());
+    fromDate.setDate(fromDate.getDate() - dayRange);
+
+    this.state = { fromDate, toDate, dayRange };
   }
 
   handleBackClick() {
-    const { fromDate, toDate } = this.state;
-    fromDate.setDate(fromDate.getDate() - 14);
-    toDate.setDate(toDate.getDate() - 14);
+    const { fromDate, toDate, dayRange } = this.state;
+    fromDate.setDate(fromDate.getDate() - dayRange);
+    toDate.setDate(toDate.getDate() - dayRange);
     this.setState({ fromDate: new Date(fromDate), toDate: new Date(toDate) });
   }
 
   handleForwardClick() {
-    const { fromDate, toDate } = this.state;
-    fromDate.setDate(fromDate.getDate() + 14);
-    toDate.setDate(toDate.getDate() + 14);
+    const { fromDate, toDate, dayRange } = this.state;
+    fromDate.setDate(fromDate.getDate() + dayRange);
+    toDate.setDate(toDate.getDate() + dayRange);
     this.setState({ fromDate: new Date(fromDate), toDate: new Date(toDate) });
   }
 
-  handleRangeClick() {
+  handleRangeClick(days) {
+    const { toDate, dayRange } = this.state;
+
+    if (days !== dayRange) {
+      const fromDate = new Date(toDate.getTime());
+      fromDate.setDate(fromDate.getDate() - days);
+      this.setState({ fromDate: new Date(fromDate), dayRange: days });
+    }
   }
 
   render() {
+    const to = new Date(this.state.toDate.getTime());
+    to.setDate(to.getDate() - 1);
     return (
       <div>
         <h4>Pasientens egne tilbakemeldinger og målinger</h4>
         <nav>
-          <a onClick={() => this.handleBackClick()}>&lt;&lt;&nbsp;&nbsp;&nbsp;</a>
-          <a onClick={() => this.handleForwardClick()}>&gt;&gt;&nbsp;&nbsp;&nbsp;</a>
+          <a onClick={() => this.handleRangeClick(7)}>7 days</a>
+          {" | "}
           <a onClick={() => this.handleRangeClick(14)}>14 days</a>
           {" | "}
-          <a onClick={() => this.handleRangeClick(30)}>1 month</a>
+          <a onClick={() => this.handleRangeClick(30)}>30 days</a>
           {" | "}
-          <a onClick={() => this.handleRangeClick(90)}>3 months</a>
+          <a onClick={() => this.handleRangeClick(90)}>90 days</a>
+        </nav>
+        <br />
+        <nav>
+          <a onClick={() => this.handleBackClick()}>&lt;&lt;&nbsp;&nbsp;</a>
+          <span>{formatDate(this.state.fromDate)}</span>
+          {" --- "}
+          <span>{formatDate(to)}</span>
+          <a onClick={() => this.handleForwardClick()}>&nbsp;&nbsp;&gt;&gt;</a>
         </nav>
         <br />
         <MeasurementContainer

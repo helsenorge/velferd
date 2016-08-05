@@ -25,6 +25,19 @@ class Chart extends Component {
     return values;
   }
 
+  getNumberofColumns() {
+    const timeDiff = Math.abs(this.props.toDate.getTime() - this.props.fromDate.getTime());
+    const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    if (days >= 90) {
+      return 3;
+    }
+    else if (days >= 30) {
+      return 4;
+    }
+    return days;
+  }
+
   displayPointsPlugin(chart) {
     chart.on('draw', (data) => {
       if (data.type === 'point') {
@@ -53,7 +66,7 @@ class Chart extends Component {
         type: Chartist.FixedScaleAxis,
         low: Math.floor(this.props.fromDate.getTime() / 1000),
         high: Math.floor(this.props.toDate.getTime() / 1000),
-        divisor: 14,
+        divisor: this.getNumberofColumns(),
         labelInterpolationFnc(value) {
           return formatDate(new Date(value * 1000));
         },
