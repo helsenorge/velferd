@@ -50,7 +50,7 @@ class DashboardPage extends Component {
     to.setDate(to.getDate() - 1);
     return (
       <div>
-        <h4>Pasientens egne tilbakemeldinger og målinger</h4>
+        <h4>Resultater</h4>
         <nav>
           <a onClick={() => this.handleRangeClick(7)}>7 days</a>
           {" | "}
