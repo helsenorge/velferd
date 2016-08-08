@@ -52,8 +52,16 @@ class Chart extends Component {
   }
 
   render() {
+    const series = this.getValues(this.props.dataPoints);
+    const referenceValues = {
+      name: 'referenceValues',
+      data: [
+        { x: Math.floor(this.props.fromDate.getTime() / 1000), y: this.props.highReference },
+        { x: Math.floor(this.props.toDate.getTime() / 1000), y: this.props.highReference },
+      ] };
+    series.push(referenceValues);
     const data = {
-      series: this.getValues(this.props.dataPoints),
+      series,
     };
 
     const options = {
@@ -62,6 +70,7 @@ class Chart extends Component {
       axisY: {
         high: this.props.high,
         low: this.props.low,
+        onlyInteger: true,
       },
       axisX: {
         type: Chartist.FixedScaleAxis,
@@ -70,6 +79,14 @@ class Chart extends Component {
         divisor: this.getNumberofColumns(),
         labelInterpolationFnc(value) {
           return formatDate(new Date(value * 1000));
+        },
+      },
+      series: {
+        referenceValues: {
+          showPoint: false,
+          showArea: true,
+          showLine: false,
+          areaBase: this.props.lowReference,
         },
       },
       plugins: [
@@ -85,8 +102,10 @@ class Chart extends Component {
 
 Chart.propTypes = {
   dataPoints: PropTypes.array.isRequired,
-  high: PropTypes.number,
-  low: PropTypes.number,
+  high: PropTypes.number.isRequired,
+  low: PropTypes.number.isRequired,
+  highReference: PropTypes.number.isRequired,
+  lowReference: PropTypes.number.isRequired,
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
 };

@@ -51,6 +51,36 @@ class Measurements extends Component {
     }
   }
 
+  getMeasurementHighReference(code) {
+    switch (code) {
+    case ObservationCodes.weight:
+      return 90;
+    case ObservationCodes.pulse:
+      return 70;
+    case ObservationCodes.pulseOximeter:
+      return 100;
+    case ObservationCodes.bloodPressure:
+      return 110;
+    default:
+      return null;
+    }
+  }
+
+  getMeasurementLowReference(code) {
+    switch (code) {
+    case ObservationCodes.weight:
+      return 80;
+    case ObservationCodes.pulse:
+      return 60;
+    case ObservationCodes.pulseOximeter:
+      return 90;
+    case ObservationCodes.bloodPressure:
+      return 70;
+    default:
+      return null;
+    }
+  }
+
   getDataPoint(item) {
     const point = {
       date: item.resource.effectiveDateTime,
@@ -85,6 +115,8 @@ class Measurements extends Component {
           dataPoints={points}
           high={this.getMeasurementHigh(this.props.code)}
           low={this.getMeasurementLow(this.props.code)}
+          highReference={this.getMeasurementHighReference(this.props.code)}
+          lowReference={this.getMeasurementLowReference(this.props.code)}
           fromDate={this.props.fromDate}
           toDate={this.props.toDate}
         />);
