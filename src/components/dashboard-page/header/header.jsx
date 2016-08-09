@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import { formatDate } from '../../date-helpers/date-helpers.js';
 import ZoomButtons from './zoombuttons/zoombuttons.jsx';
+import Range from './range/range.jsx';
 import './header.scss';
 
 const Header = (props) => {
@@ -12,8 +12,6 @@ const Header = (props) => {
     handleSingleForwardClick,
     fromDate,
     toDate } = props;
-  const to = new Date(toDate.getTime());
-  to.setDate(to.getDate() - 1);
 
   return (
     <header className="dashboard-header">
@@ -21,15 +19,14 @@ const Header = (props) => {
       <ZoomButtons
         handleRangeClick={handleRangeClick}
       />
-      <nav>
-        <a onClick={() => handleBackClick()}>&lt;&lt;&nbsp;&nbsp;</a>
-        <a onClick={() => handleSingleBackClick()}>&lt;&nbsp;&nbsp;</a>
-        <span>{formatDate(fromDate)}</span>
-        {" --- "}
-        <span>{formatDate(to)}</span>
-        <a onClick={() => handleSingleForwardClick()}>&nbsp;&nbsp;&gt;</a>
-        <a onClick={() => handleForwardClick()}>&nbsp;&nbsp;&gt;&gt;</a>
-      </nav>
+      <Range
+        handleBackClick={handleBackClick}
+        handleSingleBackClick={handleSingleBackClick}
+        handleForwardClick={handleForwardClick}
+        handleSingleForwardClick={handleSingleForwardClick}
+        fromDate={fromDate}
+        toDate={toDate}
+      />
     </header>
   );
 };

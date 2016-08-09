@@ -3,7 +3,7 @@ import './pageheader.scss';
 
 const PageHeader = () => (
   <header className="pageheader">
-    <h1>Avstandsoppfølging</h1>
+    <h1 className="pageheader__heading">Avstandsoppfølging</h1>
   </header>
 );
 
