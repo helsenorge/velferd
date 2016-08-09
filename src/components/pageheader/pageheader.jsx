@@ -1,14 +1,14 @@
 import React, { PropTypes } from 'react';
-import './header.scss';
+import './pageheader.scss';
 
-const Header = () => (
+const PageHeader = () => (
   <header className="pageheader">
     <h1>Avstandsoppfølging</h1>
   </header>
 );
 
-Header.propTypes = {
+PageHeader.propTypes = {
   patient: PropTypes.object,
 };
 
-export default Header;
+export default PageHeader;

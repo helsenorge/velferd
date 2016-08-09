@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPatient } from '../actions/patient';
-import Header from '../components/header/header.jsx';
+import PageHeader from '../components/pageheader/pageheader.jsx';
 import Footer from '../components/footer/footer.jsx';
 
 class App extends Component {
@@ -15,7 +15,7 @@ class App extends Component {
     const { data } = this.props;
     return (
       <div>
-        <Header patient={data} />
+        <PageHeader patient={data} />
         {this.props.children}
         <Footer fhirUrl={this.props.fhirUrl} />
       </div>
