@@ -26,17 +26,17 @@ class Chart extends Component {
     return values;
   }
 
-  getNumberofColumns() {
+  getDaysShown() {
     const timeDiff = Math.abs(this.props.toDate.getTime() - this.props.fromDate.getTime());
-    const days = Math.ceil(timeDiff / (1000 * 3600 * 24));
+    return Math.ceil(timeDiff / (1000 * 3600 * 24));
+  }
 
-    if (days >= 90) {
-      return 3;
+  getNumberofColumns(daysShown) {
+    if (daysShown >= 90) {
+      return 14;
     }
-    else if (days >= 30) {
-      return 4;
-    }
-    return days;
+
+    return daysShown;
   }
 
   displayPointsPlugin(chart) {
@@ -64,8 +64,10 @@ class Chart extends Component {
       series,
     };
 
+    const daysShown = this.getDaysShown();
+
     const options = {
-      showPoint: true,
+      showPoint: daysShown <= 14,
       lineSmooth: false,
       axisY: {
         high: this.props.high,
@@ -76,7 +78,7 @@ class Chart extends Component {
         type: Chartist.FixedScaleAxis,
         low: Math.floor(this.props.fromDate.getTime() / 1000),
         high: Math.floor(this.props.toDate.getTime() / 1000),
-        divisor: this.getNumberofColumns(),
+        divisor: this.getNumberofColumns(daysShown),
         labelInterpolationFnc(value) {
           return formatDate(new Date(value * 1000));
         },
