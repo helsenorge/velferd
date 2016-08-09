@@ -1,0 +1,20 @@
+.pagemenu {
+  background: rgba(0,0,0,0.20);
+  flex: 0 0 8rem;
+
+  &__list {
+    margin-top: 5rem;
+    list-style-type: none;
+    padding: 0;
+  }
+
+  &__link {
+    border-bottom: 1px solid #979797;
+    padding: 1rem;
+    word-break: break-word;
+
+    &--active {
+      background: #F4F4F5;
+    }
+  }
+}
