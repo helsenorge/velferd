@@ -22,6 +22,8 @@ class DashboardPage extends Component {
     this.state = { fromDate, toDate, dayRange };
     this.handleBackClick = this.handleBackClick.bind(this);
     this.handleForwardClick = this.handleForwardClick.bind(this);
+    this.handleSingleBackClick = this.handleSingleBackClick.bind(this);
+    this.handleSingleForwardClick = this.handleSingleForwardClick.bind(this);
     this.handleRangeClick = this.handleRangeClick.bind(this);
   }
 
