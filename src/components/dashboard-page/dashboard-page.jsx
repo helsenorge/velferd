@@ -26,17 +26,26 @@ class DashboardPage extends Component {
   }
 
   handleBackClick() {
-    const { fromDate, toDate, dayRange } = this.state;
-    fromDate.setDate(fromDate.getDate() - dayRange);
-    toDate.setDate(toDate.getDate() - dayRange);
+    this.moveDates(- this.state.dayRange);
+  }
+
+  handleSingleBackClick() {
+    this.moveDates(-1);
+  }
+
+  moveDates(days) {
+    const { fromDate, toDate } = this.state;
+    fromDate.setDate(fromDate.getDate() + days);
+    toDate.setDate(toDate.getDate() + days);
     this.setState({ fromDate: new Date(fromDate), toDate: new Date(toDate) });
   }
 
   handleForwardClick() {
-    const { fromDate, toDate, dayRange } = this.state;
-    fromDate.setDate(fromDate.getDate() + dayRange);
-    toDate.setDate(toDate.getDate() + dayRange);
-    this.setState({ fromDate: new Date(fromDate), toDate: new Date(toDate) });
+    this.moveDates(this.state.dayRange);
+  }
+
+  handleSingleForwardClick() {
+    this.moveDates(1);
   }
 
   handleRangeClick(days) {
@@ -58,6 +67,8 @@ class DashboardPage extends Component {
           handleRangeClick={this.handleRangeClick}
           handleForwardClick={this.handleForwardClick}
           handleBackClick={this.handleBackClick}
+          handleSingleForwardClick={this.handleSingleForwardClick}
+          handleSingleBackClick={this.handleSingleBackClick}
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
         />
