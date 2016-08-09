@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPatient } from '../actions/patient';
-import Header from '../components/header/header.jsx';
-import Footer from '../components/footer/footer.jsx';
+import Header from './header/header.jsx';
+import Footer from './footer/footer.jsx';
 
 class App extends Component {
 

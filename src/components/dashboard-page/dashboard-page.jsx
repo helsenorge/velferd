@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import MeasurementContainer from '../../containers/measurement-container';
+import MeasurementContainer from '../measurement/measurement-container';
 import ObservationCodes from '../../constants/observation-codes';
 import { formatDate } from '../date-helpers/date-helpers.js';
 
