@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { formatDate } from '../../../date-helpers/date-helpers.js';
+import './range.scss';
 
 const Range = (props) => {
   const {
@@ -14,15 +15,37 @@ const Range = (props) => {
   const to = new Date(toDate.getTime());
   to.setDate(to.getDate() - 1);
 
+  const dates = [];
+
+  for (let d = new Date(fromDate); d.getTime() < toDate.getTime(); d.setDate(d.getDate() + 1)) {
+    dates.push(new Date(d));
+  }
+
+  const dateButtons = dates.map((date) => (
+    <button className="range__button">
+      {formatDate(date)}
+    </button>
+  ));
+
   return (
-    <nav>
-      <a onClick={() => handleBackClick()}>&lt;&lt;&nbsp;&nbsp;</a>
-      <a onClick={() => handleSingleBackClick()}>&lt;&nbsp;&nbsp;</a>
-      <span>{formatDate(fromDate)}</span>
-      {" --- "}
-      <span>{formatDate(to)}</span>
-      <a onClick={() => handleSingleForwardClick()}>&nbsp;&nbsp;&gt;</a>
-      <a onClick={() => handleForwardClick()}>&nbsp;&nbsp;&gt;&gt;</a>
+    <nav className="range">
+      <button
+        className="range__button range__button--rev"
+        onClick={() => handleBackClick()}
+      />
+      <button
+        className="range__button range__button--rev-single"
+        onClick={() => handleSingleBackClick()}
+      />
+      {dateButtons}
+      <button
+        className="range__button range__button--fwd-single"
+        onClick={() => handleSingleForwardClick()}
+      />
+      <button
+        className="range__button range__button--fwd"
+        onClick={() => handleForwardClick()}
+      />
     </nav>
     );
 };

@@ -11,6 +11,18 @@
   padding: 0.8rem 1rem;
   font-size: 1rem;
   margin-left: 5px;
+  cursor: pointer;
+  border: 2px solid white;
+
+  &:hover,
+  &:focus {
+    border: 2px solid #807A70;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
 
   &--active {
     background: #F4F4F5;

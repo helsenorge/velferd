@@ -73,6 +73,7 @@ class DashboardPage extends Component {
           handleSingleBackClick={this.handleSingleBackClick}
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
+          activeRange={this.state.dayRange}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}
