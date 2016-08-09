@@ -62,7 +62,7 @@ class DashboardPage extends Component {
     const to = new Date(this.state.toDate.getTime());
     to.setDate(to.getDate() - 1);
     return (
-      <div>
+      <div className="dashboard-page">
         <Header
           handleRangeClick={this.handleRangeClick}
           handleForwardClick={this.handleForwardClick}

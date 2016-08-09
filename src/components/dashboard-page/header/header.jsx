@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
 import { formatDate } from '../../date-helpers/date-helpers.js';
+import ZoomButtons from './zoombuttons/zoombuttons.jsx';
+import './header.scss';
 
 const Header = (props) => {
   const {
@@ -14,17 +16,11 @@ const Header = (props) => {
   to.setDate(to.getDate() - 1);
 
   return (
-    <header>
-      <h2 className="dashboard__heading">Resultater</h2>
-      <nav>
-        <a onClick={() => handleRangeClick(7)}>7 days</a>
-        {" | "}
-        <a onClick={() => handleRangeClick(14)}>14 days</a>
-        {" | "}
-        <a onClick={() => handleRangeClick(30)}>30 days</a>
-        {" | "}
-        <a onClick={() => handleRangeClick(90)}>90 days</a>
-      </nav>
+    <header className="dashboard-header">
+      <h2 className="dashboard-header__heading">Resultater</h2>
+      <ZoomButtons
+        handleRangeClick={handleRangeClick}
+      />
       <nav>
         <a onClick={() => handleBackClick()}>&lt;&lt;&nbsp;&nbsp;</a>
         <a onClick={() => handleSingleBackClick()}>&lt;&nbsp;&nbsp;</a>
