@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import MeasurementContainer from '../measurement/measurement-container';
 import ObservationCodes from '../../constants/observation-codes';
 import { formatDate } from '../date-helpers/date-helpers.js';
+import './dashboard-page.scss';
 
 class DashboardPage extends Component {
 
