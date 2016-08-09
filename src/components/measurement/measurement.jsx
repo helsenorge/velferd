@@ -88,7 +88,7 @@ class Measurements extends Component {
     case ObservationCodes.pulse:
       return 'bpm';
     case ObservationCodes.pulseOximeter:
-      return '%25';
+      return '%';
     case ObservationCodes.bloodPressure:
       return 'mm Hg';
     default:
