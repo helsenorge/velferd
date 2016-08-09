@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import MeasurementContainer from '../measurement/measurement-container';
 import ObservationCodes from '../../constants/observation-codes';
-import { formatDate } from '../date-helpers/date-helpers.js';
+import Header from './header/header.jsx';
 import './dashboard-page.scss';
 
 class DashboardPage extends Component {
@@ -20,6 +20,9 @@ class DashboardPage extends Component {
     fromDate.setDate(fromDate.getDate() - dayRange);
 
     this.state = { fromDate, toDate, dayRange };
+    this.handleBackClick = this.handleBackClick.bind(this);
+    this.handleForwardClick = this.handleForwardClick.bind(this);
+    this.handleRangeClick = this.handleRangeClick.bind(this);
   }
 
   handleBackClick() {
@@ -51,25 +54,13 @@ class DashboardPage extends Component {
     to.setDate(to.getDate() - 1);
     return (
       <div>
-        <h4>Resultater</h4>
-        <nav>
-          <a onClick={() => this.handleRangeClick(7)}>7 days</a>
-          {" | "}
-          <a onClick={() => this.handleRangeClick(14)}>14 days</a>
-          {" | "}
-          <a onClick={() => this.handleRangeClick(30)}>30 days</a>
-          {" | "}
-          <a onClick={() => this.handleRangeClick(90)}>90 days</a>
-        </nav>
-        <br />
-        <nav>
-          <a onClick={() => this.handleBackClick()}>&lt;&lt;&nbsp;&nbsp;</a>
-          <span>{formatDate(this.state.fromDate)}</span>
-          {" --- "}
-          <span>{formatDate(to)}</span>
-          <a onClick={() => this.handleForwardClick()}>&nbsp;&nbsp;&gt;&gt;</a>
-        </nav>
-        <br />
+        <Header
+          handleRangeClick={this.handleRangeClick}
+          handleForwardClick={this.handleForwardClick}
+          handleBackClick={this.handleBackClick}
+          fromDate={this.state.fromDate}
+          toDate={this.state.toDate}
+        />
         <MeasurementContainer
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
