@@ -1,6 +1,12 @@
-nav {
-    float: right;
-    .active {
-      color: teal;
-    }
+.pageheader {
+  background: #91ACB7;
+
+  h1 {
+    margin: 0;
+    margin-left: 10rem;
+    padding: 2rem;
+    color: #fff;
+    font-weight: 400;
+    font-size: 1.5rem;
+  }
 }
