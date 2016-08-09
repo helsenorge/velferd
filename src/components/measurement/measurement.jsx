@@ -81,6 +81,21 @@ class Measurements extends Component {
     }
   }
 
+  getUnit(code) {
+    switch (code) {
+    case ObservationCodes.weight:
+      return 'kg';
+    case ObservationCodes.pulse:
+      return 'bpm';
+    case ObservationCodes.pulseOximeter:
+      return '%25';
+    case ObservationCodes.bloodPressure:
+      return 'mm Hg';
+    default:
+      return null;
+    }
+  }
+
   getDataPoint(item) {
     const point = {
       date: item.resource.effectiveDateTime,
@@ -107,6 +122,9 @@ class Measurements extends Component {
     let points = this.props.data.entry.map(this.getDataPoint);
     points = filterPoints(points, this.props.fromDate, this.props.toDate);
     const name = this.getMeasurementName(this.props.code);
+    const highReference = this.getMeasurementHighReference(this.props.code);
+    const lowReference = this.getMeasurementLowReference(this.props.code);
+
     let chart;
 
     if (points.length > 0) {
@@ -115,16 +133,29 @@ class Measurements extends Component {
           dataPoints={points}
           high={this.getMeasurementHigh(this.props.code)}
           low={this.getMeasurementLow(this.props.code)}
-          highReference={this.getMeasurementHighReference(this.props.code)}
-          lowReference={this.getMeasurementLowReference(this.props.code)}
+          highReference={highReference}
+          lowReference={lowReference}
           fromDate={this.props.fromDate}
           toDate={this.props.toDate}
         />);
     }
 
+    const unit = this.getUnit(this.props.code);
+    const referenceValue = `${lowReference} - ${highReference} ${unit}`;
+
+    const description = (
+      <div className="measurement__description">
+        <div className="measurement__description__heading">{name}</div>
+        <div className="measurement__description__heading">{unit}</div>
+        <br />
+        <div>Pasientens idealnivå:</div>
+        <div className="measurement__description__referenceValue">{referenceValue}</div>
+      </div>
+    );
+
     return (
       <div className="measurement" >
-        <span className="measurement__name">{name}</span>
+        {description}
         <span className="measurement__chart">
           {chart}
         </span>

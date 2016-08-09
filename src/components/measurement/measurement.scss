@@ -3,13 +3,25 @@
 	padding: 1rem;
 	margin: 1rem;	
 
-	&__name {
-    float: left;
-	  width: 10%;
-	  font-weight: 600;
+	&__description {
+		display: inline-block;
+		vertical-align: top;
+	  width: 15%;
+		font-size: .7rem;
+
+		&__heading {
+			font-size: 1rem;
+			font-weight: 600;
+		}
+
+		&__referenceValue {		
+			font-size: .8rem;
+			font-weight: 600;  
+		}
   }
+
   &__chart {
     display: inline-block;
-	  width: 90%;
+	  width: 85%;
   }
 }
