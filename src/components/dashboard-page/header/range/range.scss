@@ -1,3 +1,5 @@
+$iconmargin: -0.3rem;
+
 .range {
   display: flex;
   flex-direction: row;
@@ -15,8 +17,15 @@
 
 .range__button--fwd .icon {
   transform: rotate(180deg);
+  &:last-child {
+    margin-left: $iconmargin;
+  }
 }
 
 .range__button--fwd-single .icon {
   transform: rotate(180deg);
+}
+
+.range__button--rev .icon:first-child {
+  margin-right: $iconmargin;
 }

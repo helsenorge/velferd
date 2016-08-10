@@ -1,17 +1,4 @@
-const monthNames = [
-  'januar',
-  'februar',
-  'mars',
-  'april',
-  'mai',
-  'juni',
-  'juli',
-  'august',
-  'september',
-  'oktober',
-  'november',
-  'desember',
-];
+import monthNames from '../../constants/month-names.js';
 
 export function formatDate(date) {
   const dateObject = new Date(date);

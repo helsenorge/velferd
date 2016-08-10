@@ -23,8 +23,8 @@ const Range = (props) => {
     dates.push(new Date(d));
   }
 
-  const dateButtons = dates.map((date) => (
-    <button className="range__button">
+  const dateButtons = dates.map((date, index) => (
+    <button className="range__button" key={index}>
       <div className="range__date">{getDate(date)}.</div>
       <div className="range__month">{getMonth(date)}</div>
     </button>
