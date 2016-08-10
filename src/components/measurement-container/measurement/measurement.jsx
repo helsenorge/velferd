@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react';
-import Chart from '../chart/chart.jsx';
+import Chart from './chart/chart.jsx';
 import './measurement.scss';
-import ObservationCodes from '../../constants/observation-codes';
-import { filterPoints } from '../../helpers/date-helpers.js';
+import ObservationCodes from '../../../constants/observation-codes';
+import { filterPoints } from '../../../helpers/date-helpers.js';
 
 class Measurements extends Component {
 

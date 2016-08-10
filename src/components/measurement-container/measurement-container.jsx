@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchObservations } from '../../actions/observations';
-import Measurement from './measurement.jsx';
+import Measurement from './measurement/measurement.jsx';
 
 class MeasurementsContainer extends Component {
 
