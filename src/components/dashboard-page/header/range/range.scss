@@ -11,21 +11,12 @@
   flex: 0 1 auto;
   font-size: 1rem;
   cursor: pointer;
+}
 
-  &--rev:before {
-    content: "<<";
-  }
+.range__button--fwd .icon {
+  transform: rotate(180deg);
+}
 
-  &--rev-single:before {
-    content: "<";
-  }
-
-  &--fwd-single:before {
-    content: ">";
-  }
-
-  &--fwd:before {
-    content: ">>";
-  }
-
+.range__button--fwd-single .icon {
+  transform: rotate(180deg);
 }

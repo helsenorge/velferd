@@ -44,6 +44,10 @@ module.exports = {
         loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
         include: path.join(__dirname, 'src'),
       },
+      {
+        test: /\.svg$/,
+        loader: 'svg-sprite?',
+      },
     ],
   },
 };

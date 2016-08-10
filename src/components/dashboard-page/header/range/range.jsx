@@ -1,6 +1,8 @@
 import React, { PropTypes } from 'react';
 import { getMonth, getDate } from '../../../date-helpers/date-helpers.js';
 import './range.scss';
+import Icon from '../../../icon/icon.jsx';
+import chevron from '../../../../../svg/chevron-left.svg';
 
 const Range = (props) => {
   const {
@@ -33,20 +35,34 @@ const Range = (props) => {
       <button
         className="range__button range__button--rev"
         onClick={() => handleBackClick()}
-      />
+      >
+        <Icon glyph={chevron} />
+        <Icon glyph={chevron} />
+      </button>
+
       <button
         className="range__button range__button--rev-single"
         onClick={() => handleSingleBackClick()}
-      />
+      >
+        <Icon glyph={chevron} />
+      </button>
+
       {dateButtons}
+
       <button
         className="range__button range__button--fwd-single"
         onClick={() => handleSingleForwardClick()}
-      />
+      >
+        <Icon glyph={chevron} />
+      </button>
+
       <button
         className="range__button range__button--fwd"
         onClick={() => handleForwardClick()}
-      />
+      >
+        <Icon glyph={chevron} />
+        <Icon glyph={chevron} />
+      </button>
     </nav>
     );
 };
