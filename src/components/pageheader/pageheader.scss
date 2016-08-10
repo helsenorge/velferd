@@ -1,5 +1,7 @@
+@import '../../variables';
+
 .pageheader {
-  background: #91acb7;
+  background: $cornflower-blue;
 
   &__heading {
     margin: 0;

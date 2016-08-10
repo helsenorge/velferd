@@ -1,5 +1,7 @@
+@import './variables';
+
 body {
-  background: #f4f4f5;
+  background: $page-background;
   font-family: Helvetica;
 
   div {
