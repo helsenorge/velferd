@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { formatDate } from '../../../date-helpers/date-helpers.js';
+import { getMonth, getDate } from '../../../date-helpers/date-helpers.js';
 import './range.scss';
 
 const Range = (props) => {
@@ -23,7 +23,8 @@ const Range = (props) => {
 
   const dateButtons = dates.map((date) => (
     <button className="range__button">
-      {formatDate(date)}
+      <div className="range__date">{getDate(date)}.</div>
+      <div className="range__month">{getMonth(date)}</div>
     </button>
   ));
 

@@ -19,6 +19,16 @@ export function formatDate(date) {
   return dateString;
 }
 
+export function getMonth(date) {
+  const dateObject = new Date(date);
+  return monthNames[dateObject.getMonth()];
+}
+
+export function getDate(date) {
+  const dateObject = new Date(date);
+  return dateObject.getDate();
+}
+
 export function filterPoints(points, fromDate, toDate) {
   return points.filter(item =>
     new Date(item.date).valueOf() > fromDate.valueOf() &&
