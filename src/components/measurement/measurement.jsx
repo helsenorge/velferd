@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Chart from '../chart/chart.jsx';
 import './measurement.scss';
 import ObservationCodes from '../../constants/observation-codes';
-import { filterPoints } from '../date-helpers/date-helpers.js';
+import { filterPoints } from '../../helpers/date-helpers.js';
 
 class Measurements extends Component {
 

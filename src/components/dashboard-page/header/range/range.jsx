@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { getMonth, getDate } from '../../../date-helpers/date-helpers.js';
+import { getMonth, getDate } from '../../../../helpers/date-helpers.js';
 import './range.scss';
 import Icon from '../../../icon/icon.jsx';
 import chevron from '../../../../../svg/chevron-left.svg';

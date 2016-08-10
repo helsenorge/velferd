@@ -1,4 +1,4 @@
-import monthNames from '../../constants/month-names.js';
+import monthNames from '../constants/month-names.js';
 
 export function formatDate(date) {
   const dateObject = new Date(date);
