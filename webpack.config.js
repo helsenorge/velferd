@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const StylelintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   debug: true,
@@ -16,6 +17,10 @@ module.exports = {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.EnvironmentPlugin(['NODE_ENV']),
+    new StylelintPlugin({
+      failOnError: true,
+      quiet: false,
+    }),
   ],
   output: {
     filename: '[name].js',
