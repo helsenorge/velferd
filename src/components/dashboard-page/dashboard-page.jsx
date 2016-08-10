@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import MeasurementContainer from '../measurement-container/measurement-container.jsx';
+import QuestionnaireResponsesContainer from
+  '../questionnaire-responses-container/questionnaire-responses-container';
 import ObservationCodes from '../../constants/observation-codes';
 import Header from './header/header.jsx';
 import './dashboard-page.scss';
@@ -74,6 +76,11 @@ class DashboardPage extends Component {
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
           activeRange={this.state.dayRange}
+        />
+        <QuestionnaireResponsesContainer
+          fromDate={this.state.fromDate}
+          toDate={this.state.toDate}
+          questionnaireId={this.props.questionnaireId}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}

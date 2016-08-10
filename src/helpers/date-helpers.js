@@ -22,3 +22,10 @@ export function filterPoints(points, fromDate, toDate) {
     new Date(item.date).valueOf() < toDate.valueOf()
   );
 }
+
+export function filterEntries(entries, fromDate, toDate) {
+  return entries.filter(item =>
+      new Date(item.resource.authored).valueOf() > fromDate.valueOf() &&
+      new Date(item.resource.authored).valueOf() < toDate.valueOf()
+    );
+}

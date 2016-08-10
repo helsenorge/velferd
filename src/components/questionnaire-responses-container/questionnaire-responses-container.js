@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import * as questionnaireResponsesActions from '../../actions/questionnaire-responses';
-import QuestionnaireResponses from './questionnaire-responses.jsx';
+import QuestionnaireResponses from './questionnaire-responses/questionnaire-responses.jsx';
 import { bindActionCreators } from 'redux';
 
 class QuestionnaireResponsesContainer extends Component {
@@ -19,7 +19,11 @@ class QuestionnaireResponsesContainer extends Component {
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            <QuestionnaireResponses data={data} daysToShow={this.props.daysToShow} />
+            <QuestionnaireResponses
+              data={data}
+              fromDate={this.props.fromDate}
+              toDate={this.props.toDate}
+            />
           </div>
         }
       </div>
@@ -35,7 +39,8 @@ QuestionnaireResponsesContainer.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   actions: PropTypes.object.isRequired,
-  daysToShow: PropTypes.number.isRequired,
+  fromDate: React.PropTypes.instanceOf(Date).isRequired,
+  toDate: React.PropTypes.instanceOf(Date).isRequired,
 };
 
 function mapStateToProps(state) {
