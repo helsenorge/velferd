@@ -97,7 +97,9 @@ class Chart extends Component {
     };
 
     return (
-      <ChartistGraph data={data} options={options} type={'Line'} />
+      <span className="measurement-chart">
+        <ChartistGraph data={data} options={options} type={'Line'} />
+      </span>
     );
   }
 }

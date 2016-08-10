@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import Chart from './chart/chart.jsx';
+import Description from './description/description.jsx';
 import './measurement.scss';
 import ObservationCodes from '../../../constants/observation-codes';
 import { filterPoints } from '../../../helpers/date-helpers.js';
@@ -9,13 +10,13 @@ class Measurements extends Component {
   getMeasurementName(code) {
     switch (code) {
     case ObservationCodes.weight:
-      return 'Weight';
+      return 'Vekt';
     case ObservationCodes.pulse:
-      return 'Pulse';
+      return 'Puls';
     case ObservationCodes.pulseOximeter:
-      return 'Pulse Oximeter';
+      return 'Puls oksymeter';
     case ObservationCodes.bloodPressure:
-      return 'Blood Pressure';
+      return 'Blodtrykk';
     default:
       return '';
     }
@@ -143,22 +144,10 @@ class Measurements extends Component {
     const unit = this.getUnit(this.props.code);
     const referenceValue = `${lowReference} - ${highReference} ${unit}`;
 
-    const description = (
-      <div className="measurement__description">
-        <div className="measurement__description__heading">{name}</div>
-        <div className="measurement__description__heading">{unit}</div>
-        <br />
-        <div>Pasientens idealnivå:</div>
-        <div className="measurement__description__referenceValue">{referenceValue}</div>
-      </div>
-    );
-
     return (
-      <div className="measurement" >
-        {description}
-        <span className="measurement__chart">
-          {chart}
-        </span>
+      <div className="measurement">
+        <Description name={name} unit={unit} referenceValue={referenceValue} />
+        {chart}
       </div>
     );
   }

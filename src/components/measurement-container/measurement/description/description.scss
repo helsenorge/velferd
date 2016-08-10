@@ -1,0 +1,25 @@
+@import '../../../../constants/constants';
+
+.measurement-description {
+  background: $cornflower-blue;
+  flex: 0 0 10rem;
+  padding: 1rem;
+  display: inline-block;
+  vertical-align: top;
+
+  &__heading {
+    font-size: 1.25rem;
+    font-weight: 400;
+    margin: 0;
+  }
+
+  &__reference-heading {
+    font-size: 0.7rem;
+    margin-bottom: 0.3rem;
+  }
+
+  &__reference-value {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+}
