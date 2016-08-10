@@ -1,27 +1,27 @@
 .measurement {
-	background-color:#fff;
-	padding: 1rem;
-	margin: 1rem 0;
+  background-color: #fff;
+  padding: 1rem;
+  margin: 1rem 0;
 
-	&__description {
-		display: inline-block;
-		vertical-align: top;
-	  width: 15%;
-		font-size: .7rem;
+  &__description {
+    display: inline-block;
+    vertical-align: top;
+    width: 15%;
+    font-size: 0.7rem;
 
-		&__heading {
-			font-size: 1rem;
-			font-weight: 600;
-		}
+    &__heading {
+      font-size: 1rem;
+      font-weight: 600;
+    }
 
-		&__referenceValue {		
-			font-size: .8rem;
-			font-weight: 600;  
-		}
+    &__referenceValue {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
   }
 
   &__chart {
     display: inline-block;
-	  width: 85%;
+    width: 85%;
   }
 }

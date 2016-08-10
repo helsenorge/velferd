@@ -16,16 +16,15 @@
 
   &:hover,
   &:focus {
-    border: 2px solid #807A70;
+    border: 2px solid #807a70;
   }
 
   &:focus {
     outline: none;
   }
 
-
   &--active {
-    background: #F4F4F5;
-    border: 2px solid #807A70;
+    background: #f4f4f5;
+    border: 2px solid #807a70;
   }
 }

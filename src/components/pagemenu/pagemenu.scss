@@ -1,5 +1,5 @@
 .pagemenu {
-  background: rgba(0,0,0,0.20);
+  background: rgba(0, 0, 0, 0.2);
   flex: 0 0 8rem;
 
   &__list {
@@ -14,7 +14,7 @@
     word-break: break-word;
 
     &--active {
-      background: #F4F4F5;
+      background: #f4f4f5;
     }
   }
 }
