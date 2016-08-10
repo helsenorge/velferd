@@ -3,9 +3,11 @@
 .measurement-description {
   background: $cornflower-blue;
   flex: 0 0 10rem;
+  display: flex;
+  flex-direction: column;
   padding: 1rem;
-  display: inline-block;
-  vertical-align: top;
+  margin-right: 1rem;
+  justify-content: space-between;
 
   &__heading {
     font-size: 1.25rem;
@@ -16,6 +18,7 @@
   &__reference-heading {
     font-size: 0.7rem;
     margin-bottom: 0.3rem;
+    font-weight: 400;
   }
 
   &__reference-value {

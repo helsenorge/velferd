@@ -32,37 +32,43 @@ const Range = (props) => {
 
   return (
     <nav className="range">
-      <button
-        className="range__button range__button--rev"
-        onClick={() => handleBackClick()}
-      >
-        <Icon glyph={chevron} />
-        <Icon glyph={chevron} />
-      </button>
+      <div className="range__controls">
+        <button
+          className="range__button range__button--rev"
+          onClick={() => handleBackClick()}
+        >
+          <Icon glyph={chevron} />
+          <Icon glyph={chevron} />
+        </button>
 
-      <button
-        className="range__button range__button--rev-single"
-        onClick={() => handleSingleBackClick()}
-      >
-        <Icon glyph={chevron} />
-      </button>
+        <button
+          className="range__button range__button--rev"
+          onClick={() => handleSingleBackClick()}
+        >
+          <Icon glyph={chevron} />
+        </button>
+      </div>
 
-      {dateButtons}
+      <div className="range__date-buttons">
+        {dateButtons}
+      </div>
 
-      <button
-        className="range__button range__button--fwd-single"
-        onClick={() => handleSingleForwardClick()}
-      >
-        <Icon glyph={chevron} />
-      </button>
+      <div className="range__controls">
+        <button
+          className="range__button range__button--fwd"
+          onClick={() => handleSingleForwardClick()}
+        >
+          <Icon glyph={chevron} />
+        </button>
 
-      <button
-        className="range__button range__button--fwd"
-        onClick={() => handleForwardClick()}
-      >
-        <Icon glyph={chevron} />
-        <Icon glyph={chevron} />
-      </button>
+        <button
+          className="range__button range__button--fwd"
+          onClick={() => handleForwardClick()}
+        >
+          <Icon glyph={chevron} />
+          <Icon glyph={chevron} />
+        </button>
+      </div>
     </nav>
     );
 };

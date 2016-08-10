@@ -126,10 +126,12 @@ class Measurements extends Component {
     const highReference = this.getMeasurementHighReference(this.props.code);
     const lowReference = this.getMeasurementLowReference(this.props.code);
 
-    let chart;
+    const unit = this.getUnit(this.props.code);
+    const referenceValue = `${lowReference} - ${highReference} ${unit}`;
 
-    if (points.length > 0) {
-      chart = (
+    return (
+      <div className="measurement">
+        <Description name={name} unit={unit} referenceValue={referenceValue} />
         <Chart
           dataPoints={points}
           high={this.getMeasurementHigh(this.props.code)}
@@ -138,16 +140,7 @@ class Measurements extends Component {
           lowReference={lowReference}
           fromDate={this.props.fromDate}
           toDate={this.props.toDate}
-        />);
-    }
-
-    const unit = this.getUnit(this.props.code);
-    const referenceValue = `${lowReference} - ${highReference} ${unit}`;
-
-    return (
-      <div className="measurement">
-        <Description name={name} unit={unit} referenceValue={referenceValue} />
-        {chart}
+        />
       </div>
     );
   }

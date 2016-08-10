@@ -3,16 +3,32 @@ $iconmargin: -0.3rem;
 .range {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  margin: 1rem 1rem 1rem 10rem;
+  margin: 1rem 0 1rem 13rem;
 }
 
 .range__button {
+  padding: 0;
   background: transparent;
   border: none;
-  flex: 0 1 auto;
+  flex: 0 0 auto;
   font-size: 1rem;
   cursor: pointer;
+}
+
+.range__date-buttons {
+  flex: 1 1 auto;
+  margin: 0 4rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.range__controls {
+  display: flex;
+}
+
+.range__button--fwd:first-child,
+.range__button--rev:first-child {
+  margin-right: 0.5rem;
 }
 
 .range__button--fwd .icon {
@@ -21,10 +37,6 @@ $iconmargin: -0.3rem;
   &:last-child {
     margin-left: $iconmargin;
   }
-}
-
-.range__button--fwd-single .icon {
-  transform: rotate(180deg);
 }
 
 .range__button--rev .icon:first-child {

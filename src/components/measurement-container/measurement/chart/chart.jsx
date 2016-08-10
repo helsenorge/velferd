@@ -95,11 +95,10 @@ class Chart extends Component {
         this.displayPointsPlugin,
       ],
     };
-
     return (
-      <span className="measurement-chart">
+      <div className="measurement-chart">
         <ChartistGraph data={data} options={options} type={'Line'} />
-      </span>
+      </div>
     );
   }
 }

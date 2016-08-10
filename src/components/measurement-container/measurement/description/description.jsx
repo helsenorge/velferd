@@ -3,11 +3,14 @@ import './description.scss';
 
 const Description = ({ name, unit, referenceValue }) => (
   <div className="measurement-description">
-    <h3 className="measurement-description__heading">{name}</h3>
-    <div className="measurement-description__heading">{unit}</div>
-    <br />
-    <div className="measurement-description__reference-heading">Pasientens idealnivå:</div>
-    <div className="measurement-description__reference-value">{referenceValue}</div>
+    <div>
+      <h3 className="measurement-description__heading">{name}</h3>
+      <span className="measurement-description__heading">{unit}</span>
+    </div>
+    <div>
+      <h4 className="measurement-description__reference-heading">Pasientens idealnivå:</h4>
+      <span className="measurement-description__reference-value">{referenceValue}</span>
+    </div>
   </div>
 );
 
