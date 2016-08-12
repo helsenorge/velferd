@@ -2,8 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Chart from './chart/chart.jsx';
 import Description from './description/description.jsx';
 import './measurement.scss';
-import ObservationCodes from '../../../constants/observation-codes';
-import { filterPoints } from '../../../helpers/date-helpers.js';
+import ObservationCodes from '../../../../constants/observation-codes';
 
 class Measurements extends Component {
 
@@ -121,7 +120,6 @@ class Measurements extends Component {
 
   render() {
     let points = this.props.data.entry.map(this.getDataPoint);
-    points = filterPoints(points, this.props.fromDate, this.props.toDate);
     const name = this.getMeasurementName(this.props.code);
     const highReference = this.getMeasurementHighReference(this.props.code);
     const lowReference = this.getMeasurementLowReference(this.props.code);

@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { filterEntries } from '../../../helpers/date-helpers.js';
+import { filterEntries } from '../../../../helpers/date-helpers.js';
 import './questionnaire-responses.scss';
 
 class QuestionnaireResponses extends Component {
@@ -55,7 +55,7 @@ class QuestionnaireResponses extends Component {
     const rows = this.getRows(questions, fromDate, toDate);
 
     return (
-      <div className="questionnaire" >
+      <div className="questionnaire-repsonses" >
         <table>
           <tbody>
             {rows}
