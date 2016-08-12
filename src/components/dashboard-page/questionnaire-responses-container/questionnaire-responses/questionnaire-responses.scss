@@ -1,3 +1,65 @@
+@import '../../../../constants/constants';
+
 .questionnaire-responses {
+  margin: 1rem 0;
   display: flex;
+
+  &__table-container {
+    background: #fff;
+    flex: 1 1 auto;
+    padding: 1rem 4rem 1rem 0.5rem;
+  }
+}
+
+.questionnaire-responses-table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+
+  td {
+    border-right: 1px solid $pale-slate;
+    border-bottom: 1px solid $pale-slate;
+    position: relative;
+  }
+
+  td:first-child {
+    border-bottom: 1px solid transparent;
+  }
+
+  td:first-child::after,
+  td:last-child::after {
+    content: "";
+    position: absolute;
+    width: 25px;
+    height: 1px;
+    background: $pale-slate;
+    right: 0;
+    bottom: -1px;
+  }
+
+  td:last-child::after {
+    right: -25px;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+
+    &:last-child::after,
+    &:first-child::after {
+      content: initial;
+    }
+  }
+
+  &__question {
+    width: 4rem;
+    word-break: break-word;
+    font-size: 0.75rem;
+    padding: 0.5rem;
+    padding-left: 0;
+  }
+
+  &__data {
+    text-align: center;
+    width: calc(100% - 4rem / 7);
+  }
 }

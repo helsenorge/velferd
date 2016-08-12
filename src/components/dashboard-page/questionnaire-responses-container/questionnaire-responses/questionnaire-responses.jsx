@@ -1,6 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { filterEntries } from '../../../../helpers/date-helpers.js';
 import './questionnaire-responses.scss';
+import Description from './../../description/description.jsx';
+import Icon from '../../../icon/icon.jsx';
+import ansikt1 from '../../../../../svg/ansikt-1.svg';
+import ansikt2 from '../../../../../svg/ansikt-2.svg';
+import ansikt3 from '../../../../../svg/ansikt-3.svg';
+
 
 class QuestionnaireResponses extends Component {
 
@@ -30,7 +36,11 @@ class QuestionnaireResponses extends Component {
       if (questions.hasOwnProperty(key)) {
         const question = questions[key];
         const cells = this.getCells(question, fromDate, toDate);
-        rows.push(<tr key={key}><td>{question.text}</td>{cells}</tr>);
+        rows.push(
+          <tr key={key}>
+            <td className="questionnaire-responses-table__question">{question.text}</td>
+            {cells}
+          </tr>);
       }
     });
     return rows;
@@ -42,10 +52,27 @@ class QuestionnaireResponses extends Component {
           d.getTime() < toDate.getTime();
           d.setDate(d.getDate() + 1)) {
       const date = d.toLocaleDateString();
-      const value = question.answers[date];
-      cells.push(<td>{value}</td>);
+      const value = this.getIcon(question.answers[date]);
+      cells.push(
+        <td className="questionnaire-responses-table__data">
+          <Icon glyph={value} width={20} height={20} />
+        </td>
+        );
     }
     return cells;
+  }
+
+  getIcon(value) {
+    switch (value) {
+    case '1':
+      return ansikt1;
+    case '2':
+      return ansikt2;
+    case '3':
+      return ansikt3;
+    default:
+      return null;
+    }
   }
 
   render() {
@@ -55,12 +82,15 @@ class QuestionnaireResponses extends Component {
     const rows = this.getRows(questions, fromDate, toDate);
 
     return (
-      <div className="questionnaire-repsonses" >
-        <table>
-          <tbody>
-            {rows}
-          </tbody>
-        </table>
+      <div className="questionnaire-responses">
+        <Description name="Egenvurdering" />
+        <div className="questionnaire-responses__table-container">
+          <table className="questionnaire-responses-table">
+            <tbody>
+              {rows}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
