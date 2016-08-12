@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import { getMonth, getDate } from '../../../../helpers/date-helpers.js';
 import './range.scss';
 import Icon from '../../../icon/icon.jsx';
@@ -12,6 +13,7 @@ const Range = (props) => {
     handleSingleForwardClick,
     fromDate,
     toDate,
+    activeRange,
   } = props;
 
   const to = new Date(toDate.getTime());
@@ -29,6 +31,8 @@ const Range = (props) => {
       <div className="range__month">{getMonth(date)}</div>
     </button>
   ));
+
+  const rangeClasses = classNames('range__date-buttons', `range__date-buttons--${activeRange}`);
 
   return (
     <nav className="range">
@@ -49,7 +53,7 @@ const Range = (props) => {
         </button>
       </div>
 
-      <div className="range__date-buttons">
+      <div className={rangeClasses}>
         {dateButtons}
       </div>
 
@@ -80,6 +84,7 @@ Range.propTypes = {
   handleSingleBackClick: React.PropTypes.func.isRequired,
   fromDate: PropTypes.instanceOf(Date).isRequired,
   toDate: PropTypes.instanceOf(Date).isRequired,
+  activeRange: PropTypes.number.isRequired,
 };
 
 export default Range;
