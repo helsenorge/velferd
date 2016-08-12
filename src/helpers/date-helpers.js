@@ -29,3 +29,16 @@ export function filterEntries(entries, fromDate, toDate) {
       new Date(item.resource.authored).valueOf() < toDate.valueOf()
     );
 }
+
+export function calculateDateRange(startDate, endDate) {
+  const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
+  return Math.ceil(timeDiff / (1000 * 3600 * 24));
+}
+
+export function getNumberofColumnsinChart(dateRange) {
+  if (dateRange >= 90) {
+    return 14;
+  }
+
+  return dateRange;
+}

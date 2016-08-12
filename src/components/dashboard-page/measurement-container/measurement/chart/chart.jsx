@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import ChartistGraph from 'react-chartist';
 import Chartist from 'chartist';
-import { formatDate } from '../../../../../helpers/date-helpers.js';
+import { formatDate, calculateDateRange, getNumberofColumnsinChart }
+  from '../../../../../helpers/date-helpers.js';
 import './chart.scss';
 
 class Chart extends Component {
@@ -24,19 +25,6 @@ class Chart extends Component {
       }
     }, this);
     return values;
-  }
-
-  getDaysShown() {
-    const timeDiff = Math.abs(this.props.toDate.getTime() - this.props.fromDate.getTime());
-    return Math.ceil(timeDiff / (1000 * 3600 * 24));
-  }
-
-  getNumberofColumns(daysShown) {
-    if (daysShown >= 90) {
-      return 14;
-    }
-
-    return daysShown;
   }
 
   displayPointsPlugin(chart) {
@@ -64,10 +52,10 @@ class Chart extends Component {
       series,
     };
 
-    const daysShown = this.getDaysShown();
+    const dateRange = calculateDateRange(this.props.fromDate, this.props.toDate);
 
     const options = {
-      showPoint: daysShown <= 14,
+      showPoint: dateRange <= 14,
       lineSmooth: false,
       axisY: {
         high: this.props.high,
@@ -78,7 +66,7 @@ class Chart extends Component {
         type: Chartist.FixedScaleAxis,
         low: Math.floor(this.props.fromDate.getTime() / 1000),
         high: Math.floor(this.props.toDate.getTime() / 1000),
-        divisor: this.getNumberofColumns(daysShown),
+        divisor: getNumberofColumnsinChart(dateRange),
         labelInterpolationFnc(value) {
           return formatDate(new Date(value * 1000));
         },
