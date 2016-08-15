@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
-import { getMonth, getDate } from '../../../../helpers/date-helpers.js';
+import { getMonth, getDate, calculateDateRange, getNumberofColumnsinChart }
+  from '../../../../helpers/date-helpers.js';
 import './range.scss';
 import Icon from '../../../icon/icon.jsx';
 import chevron from '../../../../../svg/chevron-left.svg';
@@ -21,7 +22,12 @@ const Range = (props) => {
 
   const dates = [];
 
-  for (let d = new Date(fromDate); d.getTime() < toDate.getTime(); d.setDate(d.getDate() + 1)) {
+  const dateRange = calculateDateRange(fromDate, toDate);
+  const cols = getNumberofColumnsinChart(dateRange);
+  const valuesPerCell = Math.floor(dateRange / cols);
+
+  for (let d = new Date(fromDate);
+    d.getTime() < toDate.getTime(); d.setDate(d.getDate() + valuesPerCell)) {
     dates.push(new Date(d));
   }
 

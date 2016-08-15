@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import { filterEntries } from '../../../../helpers/date-helpers.js';
+import { filterEntries, calculateDateRange, getNumberofColumnsinChart }
+  from '../../../../helpers/date-helpers.js';
 import './questionnaire-responses.scss';
 import Description from './../../description/description.jsx';
 import Icon from '../../../icon/icon.jsx';
@@ -32,10 +33,16 @@ class QuestionnaireResponses extends Component {
 
   getRows(questions, fromDate, toDate) {
     const rows = [];
+    const dateRange = calculateDateRange(fromDate, toDate);
+    const cols = getNumberofColumnsinChart(dateRange);
+    const valuesPerCell = Math.floor(dateRange / cols);
+
     Object.keys(questions).forEach((key) => {
       if (questions.hasOwnProperty(key)) {
         const question = questions[key];
-        const cells = this.getCells(question, fromDate, toDate);
+        const values = this.getValues(question, fromDate, toDate);
+        const cells = this.getCells(values, valuesPerCell);
+
         rows.push(
           <tr key={key}>
             <td className="questionnaire-responses-table__question">{question.text}</td>
@@ -46,18 +53,42 @@ class QuestionnaireResponses extends Component {
     return rows;
   }
 
-  getCells(question, fromDate, toDate) {
-    const cells = [];
-    for (let d = new Date(fromDate);
-          d.getTime() < toDate.getTime();
-          d.setDate(d.getDate() + 1)) {
+  getValues(question, fromDate, toDate) {
+    const values = [];
+    for (let d = new Date(fromDate); d.getTime() < toDate.getTime(); d.setDate(d.getDate() + 1)) {
       const date = d.toLocaleDateString();
-      const value = this.getIcon(question.answers[date]);
-      cells.push(
-        <td className="questionnaire-responses-table__data">
-          <Icon glyph={value} width={20} height={20} />
-        </td>
+      let value = question.answers[date];
+      if (!value) value = 'empty';
+      values.push(value);
+    }
+    return values;
+  }
+
+  getCells(values, valuesPerCell) {
+    let count = 0;
+    const cells = [];
+    let cellValue;
+
+    for (let i = 0; i < values.length; i++) {
+      count ++;
+      const value = values[i];
+
+      if (value && value !== 'empty') {
+        if (!cellValue || value > cellValue) {
+          cellValue = value;
+        }
+      }
+
+      if (count === valuesPerCell || i === value.length - 1) {
+        const val = this.getIcon(cellValue);
+        cells.push(
+          <td className="questionnaire-responses-table__data">
+            <Icon glyph={val} width={20} height={20} />
+          </td>
         );
+        count = 0;
+        cellValue = null;
+      }
     }
     return cells;
   }
