@@ -1,4 +1,6 @@
 @import './constants/constants';
+@import './constants/chartist-settings';
+@import '../node_modules/chartist/dist/scss/chartist.scss';
 
 body {
   background: $page-background;
