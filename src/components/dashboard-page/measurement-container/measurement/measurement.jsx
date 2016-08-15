@@ -1,21 +1,21 @@
 import React, { Component, PropTypes } from 'react';
-import Chart from '../components/chart.jsx';
+import Chart from './chart/chart.jsx';
+import Description from './../../description/description.jsx';
 import './measurement.scss';
-import ObservationCodes from '../constants/observation-codes';
-import { formatDate, filterPointsSince } from './date-helpers.js';
+import ObservationCodes from '../../../../constants/observation-codes';
 
 class Measurements extends Component {
 
   getMeasurementName(code) {
     switch (code) {
     case ObservationCodes.weight:
-      return 'Weight';
+      return 'Vekt';
     case ObservationCodes.pulse:
-      return 'Pulse';
+      return 'Puls';
     case ObservationCodes.pulseOximeter:
-      return 'Pulse Oximeter';
+      return 'Puls oksymeter';
     case ObservationCodes.bloodPressure:
-      return 'Blood Pressure';
+      return 'Blodtrykk';
     default:
       return '';
     }
@@ -51,6 +51,51 @@ class Measurements extends Component {
     }
   }
 
+  getMeasurementHighReference(code) {
+    switch (code) {
+    case ObservationCodes.weight:
+      return 90;
+    case ObservationCodes.pulse:
+      return 70;
+    case ObservationCodes.pulseOximeter:
+      return 100;
+    case ObservationCodes.bloodPressure:
+      return 110;
+    default:
+      return null;
+    }
+  }
+
+  getMeasurementLowReference(code) {
+    switch (code) {
+    case ObservationCodes.weight:
+      return 80;
+    case ObservationCodes.pulse:
+      return 60;
+    case ObservationCodes.pulseOximeter:
+      return 90;
+    case ObservationCodes.bloodPressure:
+      return 70;
+    default:
+      return null;
+    }
+  }
+
+  getUnit(code) {
+    switch (code) {
+    case ObservationCodes.weight:
+      return 'kg';
+    case ObservationCodes.pulse:
+      return 'bpm';
+    case ObservationCodes.pulseOximeter:
+      return '%';
+    case ObservationCodes.bloodPressure:
+      return 'mm Hg';
+    default:
+      return null;
+    }
+  }
+
   getDataPoint(item) {
     const point = {
       date: item.resource.effectiveDateTime,
@@ -75,39 +120,25 @@ class Measurements extends Component {
 
   render() {
     let points = this.props.data.entry.map(this.getDataPoint);
-    points = filterPointsSince(points, this.props.daysToShow);
     const name = this.getMeasurementName(this.props.code);
-    let chart;
+    const highReference = this.getMeasurementHighReference(this.props.code);
+    const lowReference = this.getMeasurementLowReference(this.props.code);
 
-    if (points.length > 0) {
-      chart = (
+    const unit = this.getUnit(this.props.code);
+    const referenceValue = `${lowReference} - ${highReference} ${unit}`;
+
+    return (
+      <div className="measurement">
+        <Description name={name} unit={unit} referenceValue={referenceValue} />
         <Chart
           dataPoints={points}
           high={this.getMeasurementHigh(this.props.code)}
           low={this.getMeasurementLow(this.props.code)}
-        />);
-    }
-
-    let lastValueSection;
-    if (points.length > 0) {
-      const last = points[points.length - 1];
-      const lastDate = formatDate(last.date);
-      const lastValue = last.value.length > 1 ? last.value.join('/') : last.value;
-      lastValueSection = (
-        <span className="measurement__lastValue">
-          <div>{lastDate}</div>
-          <div className="measurement__lastValue__value">{`${lastValue} ${last.unit}`}</div>
-        </span>
-      );
-    }
-
-    return (
-      <div className="measurement" >
-        <span className="measurement__name">{name}</span>
-        <span className="measurement__chart">
-          {chart}
-        </span>
-        {lastValueSection}
+          highReference={highReference}
+          lowReference={lowReference}
+          fromDate={this.props.fromDate}
+          toDate={this.props.toDate}
+        />
       </div>
     );
   }
@@ -116,7 +147,8 @@ class Measurements extends Component {
 Measurements.propTypes = {
   data: PropTypes.object.isRequired,
   code: PropTypes.string.isRequired,
-  daysToShow: PropTypes.number.isRequired,
+  fromDate: React.PropTypes.instanceOf(Date).isRequired,
+  toDate: React.PropTypes.instanceOf(Date).isRequired,
 };
 
 export default Measurements;

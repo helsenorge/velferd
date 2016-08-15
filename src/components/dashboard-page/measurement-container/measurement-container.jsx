@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchObservations } from '../actions/observations';
-import Measurement from '../components/measurement.jsx';
+import { fetchObservations } from '../../../actions/observations';
+import Measurement from './measurement/measurement.jsx';
 
 class MeasurementsContainer extends Component {
 
@@ -21,7 +21,8 @@ class MeasurementsContainer extends Component {
             <Measurement
               data={data}
               code={this.props.code}
-              daysToShow={this.props.daysToShow}
+              fromDate={this.props.fromDate}
+              toDate={this.props.toDate}
             />
           </div>
         }
@@ -38,7 +39,8 @@ MeasurementsContainer.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired,
-  daysToShow: PropTypes.number.isRequired,
+  fromDate: React.PropTypes.instanceOf(Date).isRequired,
+  toDate: React.PropTypes.instanceOf(Date).isRequired,
 };
 
 function mapStateToProps(state, ownProps) {

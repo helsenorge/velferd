@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const StylelintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   debug: true,
@@ -13,6 +14,11 @@ module.exports = {
   },
   target: 'web',
   plugins: [
+    new StylelintPlugin({
+      failOnError: false,
+      quiet: false,
+      syntax: 'scss',
+    }),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.EnvironmentPlugin(['NODE_ENV']),
@@ -35,14 +41,18 @@ module.exports = {
         loader: 'json',
       },
       {
+        test: /\.scss$/,
+        loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
+        include: path.join(__dirname, 'src'),
+      },
+      {
         test: /\.jsx?$/,
         include: path.join(__dirname, 'src'),
         loader: 'react-hot!babel',
       },
       {
-        test: /\.scss$/,
-        loaders: ['style', 'css?sourceMap', 'sass?sourceMap'],
-        include: path.join(__dirname, 'src'),
+        test: /\.svg$/,
+        loader: 'svg-sprite?',
       },
     ],
   },

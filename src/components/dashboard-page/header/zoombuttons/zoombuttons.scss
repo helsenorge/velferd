@@ -1,0 +1,32 @@
+@import '../../../../constants/constants';
+
+.zoombuttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.zoombuttons__button {
+  flex: 0 0 auto;
+  background: #fff;
+  border: 0;
+  color: #000;
+  padding: 0.8rem 1rem;
+  font-size: 1rem;
+  margin-left: 5px;
+  cursor: pointer;
+  border: 2px solid white;
+
+  &:hover,
+  &:focus {
+    border: 2px solid #807a70;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &--active {
+    background: $page-background;
+    border: 2px solid #807a70;
+  }
+}

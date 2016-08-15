@@ -1,0 +1,56 @@
+$iconmargin: -0.3rem;
+
+.range {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem 0 1rem 13rem;
+}
+
+.range__button {
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.range__date-buttons {
+  flex: 1 1 auto;
+  margin-left: 2.1rem;
+  margin-right: 1rem;
+  display: flex;
+  justify-content: space-between;
+
+  .range__button {
+    flex: 0 0 calc(100% / 7);
+  }
+
+  &--14 {
+    margin-right: 1.2rem;
+
+    .range__button {
+      flex: 0 0 calc(100% / 14);
+    }
+  }
+}
+
+.range__controls {
+  display: flex;
+}
+
+.range__button--fwd:first-child,
+.range__button--rev:first-child {
+  margin-right: 0.5rem;
+}
+
+.range__button--fwd .icon {
+  transform: rotate(180deg);
+
+  &:last-child {
+    margin-left: $iconmargin;
+  }
+}
+
+.range__button--rev .icon:first-child {
+  margin-right: $iconmargin;
+}

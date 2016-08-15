@@ -1,8 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPatient } from '../actions/patient';
-import Header from '../components/header.jsx';
-import Footer from '../components/footer.jsx';
+import PageHeader from '../components/pageheader/pageheader.jsx';
+import PageMenu from '../components/pagemenu/pagemenu.jsx';
+import Footer from '../components/footer/footer.jsx';
+import './app.scss';
 
 class App extends Component {
 
@@ -15,8 +17,13 @@ class App extends Component {
     const { data } = this.props;
     return (
       <div>
-        <Header patient={data} />
-        {this.props.children}
+        <PageHeader patient={data} />
+        <div className="flexcontainer">
+          <PageMenu />
+          <article className="main">
+            {this.props.children}
+          </article>
+        </div>
         <Footer fhirUrl={this.props.fhirUrl} />
       </div>
     );
