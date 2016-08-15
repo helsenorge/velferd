@@ -1,0 +1,22 @@
+.measurement {
+	background-color: whitesmoke;
+	padding: 1rem;
+	margin: 1rem;	
+
+	&__name {
+    float: left;
+	  width: 10%;
+	  font-weight: 600;
+  }
+  &__chart {
+    display: inline-block;
+	  width: 70%;
+  }
+	&__lastValue {
+    float: right;
+	  width: 20%;	  
+	  &__value {		
+			font-size: 2rem;	  
+		}
+  }
+}
