@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const WebPackDevServer = require('webpack-dev-server');
-const config = require('../webpack.config');
+const config = require('../webpack.config.dev');
+/* eslint-disable no-console */
 
 new WebPackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
@@ -21,9 +22,9 @@ new WebPackDevServer(webpack(config), {
     chunks: false,
     chunkModules: false,
   },
-}).listen(8080, 'localhost', function(err) {
+}).listen(8080, 'localhost', (err) => {
   if (err) {
-    return console.log(err);
+    console.log(err);
   }
   console.log('Listening on localhost:8080');
 });
