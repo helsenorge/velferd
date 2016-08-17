@@ -98,6 +98,7 @@ class DashboardPage extends Component {
         <QuestionnaireResponsesContainer
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
+          selectedDate={this.state.selectedDate}
           questionnaireId={this.props.questionnaireId}
         />
         <MeasurementContainer

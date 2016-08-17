@@ -61,5 +61,9 @@
   &__data {
     text-align: center;
     width: calc(100% - 4rem / 7);
+
+    &--selected {
+      background: $transparent-astronaut;
+    }
   }
 }
