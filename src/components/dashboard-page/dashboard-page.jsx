@@ -21,12 +21,15 @@ class DashboardPage extends Component {
     const fromDate = new Date(toDate.getTime());
     fromDate.setDate(fromDate.getDate() - dayRange);
 
-    this.state = { fromDate, toDate, dayRange };
+    const selectedDate = null;
+
+    this.state = { fromDate, toDate, dayRange, selectedDate };
     this.handleBackClick = this.handleBackClick.bind(this);
     this.handleForwardClick = this.handleForwardClick.bind(this);
     this.handleSingleBackClick = this.handleSingleBackClick.bind(this);
     this.handleSingleForwardClick = this.handleSingleForwardClick.bind(this);
     this.handleRangeClick = this.handleRangeClick.bind(this);
+    this.handleDateClick = this.handleDateClick.bind(this);
   }
 
   handleBackClick() {
@@ -62,6 +65,20 @@ class DashboardPage extends Component {
     }
   }
 
+  handleDateClick(date) {
+    const { selectedDate } = this.state;
+
+    if (!selectedDate) {
+      this.setState({ selectedDate: date });
+    }
+    else if (selectedDate.valueOf() === date.valueOf()) {
+      this.setState({ selectedDate: null });
+    }
+    else {
+      this.setState({ selectedDate: date });
+    }
+  }
+
   render() {
     const to = new Date(this.state.toDate.getTime());
     to.setDate(to.getDate() - 1);
@@ -73,6 +90,7 @@ class DashboardPage extends Component {
           handleBackClick={this.handleBackClick}
           handleSingleForwardClick={this.handleSingleForwardClick}
           handleSingleBackClick={this.handleSingleBackClick}
+          handleDateClick={this.handleDateClick}
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
           activeRange={this.state.dayRange}
@@ -85,21 +103,25 @@ class DashboardPage extends Component {
         <MeasurementContainer
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
+          selectedDate={this.state.selectedDate}
           code={ObservationCodes.bloodPressure}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
+          selectedDate={this.state.selectedDate}
           code={ObservationCodes.weight}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
+          selectedDate={this.state.selectedDate}
           code={ObservationCodes.pulse}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
+          selectedDate={this.state.selectedDate}
           code={ObservationCodes.pulseOximeter}
         />
       </div>

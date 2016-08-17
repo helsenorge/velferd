@@ -138,6 +138,7 @@ class Measurements extends Component {
           lowReference={lowReference}
           fromDate={this.props.fromDate}
           toDate={this.props.toDate}
+          selectedDate={this.props.selectedDate}
         />
       </div>
     );
@@ -149,6 +150,7 @@ Measurements.propTypes = {
   code: PropTypes.string.isRequired,
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
+  selectedDate: React.PropTypes.instanceOf(Date),
 };
 
 export default Measurements;
