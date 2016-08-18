@@ -1,3 +1,5 @@
+@import '../../../../../constants/constants';
+
 .measurement-chart {
   flex: 1 0 auto;
   background: #fff;
@@ -5,15 +7,15 @@
 }
 
 .ct-series .ct-line {
-  stroke: #2a327a;
+  stroke: $astronaut;
   stroke-width: 2px;
 }
 
 .ct-series .ct-point {
-  stroke: #2a327a;
+  stroke: $astronaut;
   stroke-width: 5px;
 }
 
 .ct-series .ct-area {
-  fill: #2a327a;
+  fill: $astronaut;
 }
