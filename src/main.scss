@@ -1,8 +1,10 @@
 @import './constants/constants';
+@import './constants/chartist-settings';
+@import '../node_modules/chartist/dist/scss/chartist.scss';
 
 body {
   background: $page-background;
-  font-family: Helvetica;
+  font-family: 'Open Sans', sans serif;
 
   div {
     color: black;

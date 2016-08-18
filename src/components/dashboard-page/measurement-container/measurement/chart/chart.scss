@@ -4,18 +4,18 @@
   flex: 1 0 auto;
   background: #fff;
   padding: 1rem 4rem 1rem 1.75rem;
-}
 
-.ct-series .ct-line {
-  stroke: $astronaut;
-  stroke-width: 2px;
-}
+  .ct-series .ct-line {
+    stroke: $astronaut;
+    stroke-width: 2px;
+  }
 
-.ct-series .ct-point {
-  stroke: $astronaut;
-  stroke-width: 5px;
-}
+  .ct-series .ct-point {
+    stroke: $astronaut;
+    stroke-width: 5px;
+  }
 
-.ct-series .ct-area {
-  fill: $astronaut;
+  .ct-series .ct-area {
+    fill: $astronaut;
+  }
 }
