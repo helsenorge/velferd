@@ -23,6 +23,7 @@ class MeasurementsContainer extends Component {
               code={this.props.code}
               fromDate={this.props.fromDate}
               toDate={this.props.toDate}
+              selectedDate={this.props.selectedDate}
             />
           </div>
         }
@@ -41,6 +42,7 @@ MeasurementsContainer.propTypes = {
   dispatch: PropTypes.func.isRequired,
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
+  selectedDate: React.PropTypes.instanceOf(Date),
 };
 
 function mapStateToProps(state, ownProps) {

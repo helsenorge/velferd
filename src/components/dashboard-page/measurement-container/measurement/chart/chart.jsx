@@ -27,6 +27,27 @@ class Chart extends Component {
     return values;
   }
 
+  getSelectedDateData(selectedDate) {
+    const to = new Date(selectedDate.getTime());
+    to.setDate(to.getDate() + 1);
+
+    return {
+      name: 'selectedColumn',
+      data: [
+        { x: Math.floor(selectedDate.getTime() / 1000), y: this.props.high },
+        { x: Math.floor(to.getTime() / 1000), y: this.props.high },
+      ] };
+  }
+
+  getReferenceValuesData() {
+    return {
+      name: 'referenceValues',
+      data: [
+        { x: Math.floor(this.props.fromDate.getTime() / 1000), y: this.props.highReference },
+        { x: Math.floor(this.props.toDate.getTime() / 1000), y: this.props.highReference },
+      ] };
+  }
+
   displayPointsPlugin(chart) {
     chart.on('draw', (data) => {
       if (data.type === 'point') {
@@ -40,32 +61,30 @@ class Chart extends Component {
   }
 
   render() {
-    const series = this.getValues(this.props.dataPoints);
-    const referenceValues = {
-      name: 'referenceValues',
-      data: [
-        { x: Math.floor(this.props.fromDate.getTime() / 1000), y: this.props.highReference },
-        { x: Math.floor(this.props.toDate.getTime() / 1000), y: this.props.highReference },
-      ] };
-    series.push(referenceValues);
+    const { dataPoints, fromDate, toDate, lowReference, low, high, selectedDate } = this.props;
+    const series = this.getValues(dataPoints);
+    series.push(this.getReferenceValuesData());
+
+    if (selectedDate) series.push(this.getSelectedDateData(selectedDate));
+
     const data = {
       series,
     };
 
-    const dateRange = calculateDateRange(this.props.fromDate, this.props.toDate);
+    const dateRange = calculateDateRange(fromDate, toDate);
 
     const options = {
       showPoint: dateRange <= 14,
       lineSmooth: false,
       axisY: {
-        high: this.props.high,
-        low: this.props.low,
+        high,
+        low,
         onlyInteger: true,
       },
       axisX: {
         type: Chartist.FixedScaleAxis,
-        low: Math.floor(this.props.fromDate.getTime() / 1000),
-        high: Math.floor(this.props.toDate.getTime() / 1000),
+        low: Math.floor(fromDate.getTime() / 1000),
+        high: Math.floor(toDate.getTime() / 1000),
         divisor: getNumberofColumnsinChart(dateRange),
         labelInterpolationFnc(value) {
           return formatDate(new Date(value * 1000));
@@ -76,7 +95,13 @@ class Chart extends Component {
           showPoint: false,
           showArea: true,
           showLine: false,
-          areaBase: this.props.lowReference,
+          areaBase: lowReference,
+        },
+        selectedColumn: {
+          showPoint: false,
+          showArea: true,
+          showLine: false,
+          areaBase: low,
         },
       },
       plugins: [
@@ -99,6 +124,7 @@ Chart.propTypes = {
   lowReference: PropTypes.number.isRequired,
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
+  selectedDate: React.PropTypes.instanceOf(Date),
 };
 
 export default Chart;

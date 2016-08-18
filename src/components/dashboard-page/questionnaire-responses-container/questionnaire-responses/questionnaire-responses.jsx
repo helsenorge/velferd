@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import classNames from 'classnames';
 import { filterEntries, calculateDateRange, getNumberofColumnsinChart }
   from '../../../../helpers/date-helpers.js';
 import './questionnaire-responses.scss';
@@ -31,17 +32,23 @@ class QuestionnaireResponses extends Component {
     return questions;
   }
 
-  getRows(questions, fromDate, toDate) {
+  getRows(questions, fromDate, toDate, selectedDate) {
     const rows = [];
     const dateRange = calculateDateRange(fromDate, toDate);
     const cols = getNumberofColumnsinChart(dateRange);
     const valuesPerCell = Math.floor(dateRange / cols);
 
+    let selectedCellIndex = null;
+
+    if (selectedDate && valuesPerCell === 1) {
+      selectedCellIndex = calculateDateRange(fromDate, selectedDate);
+    }
+
     Object.keys(questions).forEach((key) => {
       if (questions.hasOwnProperty(key)) {
         const question = questions[key];
         const values = this.getValues(question, fromDate, toDate);
-        const cells = this.getCells(values, valuesPerCell);
+        const cells = this.getCells(values, valuesPerCell, selectedCellIndex);
 
         rows.push(
           <tr key={key}>
@@ -64,7 +71,7 @@ class QuestionnaireResponses extends Component {
     return values;
   }
 
-  getCells(values, valuesPerCell) {
+  getCells(values, valuesPerCell, selectedCellIndex) {
     let count = 0;
     const cells = [];
     let cellValue;
@@ -74,15 +81,20 @@ class QuestionnaireResponses extends Component {
       const value = values[i];
 
       if (value && value !== 'empty') {
-        if (!cellValue || value > cellValue) {
+        if (!cellValue || value < cellValue) {
           cellValue = value;
         }
       }
 
       if (count === valuesPerCell || i === value.length - 1) {
         const val = this.getIcon(cellValue);
+        const cellClasses = classNames(
+          'questionnaire-responses-table__data',
+          { 'questionnaire-responses-table__data--selected':
+            selectedCellIndex !== null && selectedCellIndex === i });
+
         cells.push(
-          <td className="questionnaire-responses-table__data">
+          <td className={cellClasses}>
             <Icon glyph={val} width={20} height={20} />
           </td>
         );
@@ -107,10 +119,10 @@ class QuestionnaireResponses extends Component {
   }
 
   render() {
-    const { data, fromDate, toDate } = this.props;
+    const { data, fromDate, toDate, selectedDate } = this.props;
     const entries = filterEntries(data.entry, fromDate, toDate);
     const questions = this.getQuestions(entries);
-    const rows = this.getRows(questions, fromDate, toDate);
+    const rows = this.getRows(questions, fromDate, toDate, selectedDate);
 
     return (
       <div className="questionnaire-responses">
@@ -131,6 +143,7 @@ QuestionnaireResponses.propTypes = {
   data: PropTypes.object.isRequired,
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
+  selectedDate: React.PropTypes.instanceOf(Date),
 };
 
 export default QuestionnaireResponses;

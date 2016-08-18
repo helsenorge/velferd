@@ -12,6 +12,7 @@ const Range = (props) => {
     handleSingleBackClick,
     handleForwardClick,
     handleSingleForwardClick,
+    handleDateClick,
     fromDate,
     toDate,
     activeRange,
@@ -32,7 +33,7 @@ const Range = (props) => {
   }
 
   const dateButtons = dates.map((date, index) => (
-    <button className="range__button" key={index}>
+    <button className="range__button" key={index} onClick={() => handleDateClick(date)}>
       <div className="range__date">{getDate(date)}.</div>
       <div className="range__month">{getMonth(date)}</div>
     </button>
@@ -88,6 +89,7 @@ Range.propTypes = {
   handleSingleForwardClick: React.PropTypes.func.isRequired,
   handleBackClick: React.PropTypes.func.isRequired,
   handleSingleBackClick: React.PropTypes.func.isRequired,
+  handleDateClick: PropTypes.func.isRequired,
   fromDate: PropTypes.instanceOf(Date).isRequired,
   toDate: PropTypes.instanceOf(Date).isRequired,
   activeRange: PropTypes.number.isRequired,
