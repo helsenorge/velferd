@@ -76,6 +76,7 @@ class Chart extends Component {
     const options = {
       showPoint: dateRange <= 14,
       lineSmooth: false,
+      height: '250px',
       axisY: {
         high,
         low,
