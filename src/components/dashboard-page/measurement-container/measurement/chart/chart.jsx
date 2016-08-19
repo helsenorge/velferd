@@ -49,6 +49,25 @@ class Chart extends Component {
   }
 
   displayPointsPlugin(chart) {
+    chart.on('created', (data) => {
+      const chartRect = data.chartRect;
+      const defs = data.svg.querySelector('defs') || data.svg.elem('defs');
+      const width = chartRect.width();
+      const height = chartRect.height();
+
+      defs
+        .elem('clipPath', {
+          id: 'chart-mask',
+        })
+        .elem('rect', {
+          x: chartRect.x1,
+          y: chartRect.y2,
+          width,
+          height,
+          fill: 'white',
+        });
+    });
+
     chart.on('draw', (data) => {
       if (data.type === 'point') {
         data.group.elem('text', {
@@ -56,6 +75,11 @@ class Chart extends Component {
           y: data.y - 10,
           style: 'text-anchor: middle',
         }, 'ct-label').text(data.value.y);
+      }
+      if (data.type === 'line' || data.type === 'point') {
+        data.element.attr({
+          'clip-path': 'url(#chart-mask)',
+        });
       }
     });
   }
