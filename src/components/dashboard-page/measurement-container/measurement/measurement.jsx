@@ -129,7 +129,12 @@ class Measurements extends Component {
 
     return (
       <div className="measurement">
-        <Description name={name} unit={unit} referenceValue={referenceValue} />
+        <Description
+          name={name}
+          unit={unit}
+          referenceValue={referenceValue}
+          icon={this.props.icon}
+        />
         <Chart
           dataPoints={points}
           high={this.getMeasurementHigh(this.props.code)}
@@ -151,6 +156,7 @@ Measurements.propTypes = {
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
+  icon: PropTypes.string,
 };
 
 export default Measurements;

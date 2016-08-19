@@ -126,7 +126,7 @@ class QuestionnaireResponses extends Component {
 
     return (
       <div className="questionnaire-responses">
-        <Description name="Egenvurdering" />
+        <Description name="Egenvurdering" icon={this.props.icon} />
         <div className="questionnaire-responses__table-container">
           <table className="questionnaire-responses-table">
             <tbody>
@@ -144,6 +144,7 @@ QuestionnaireResponses.propTypes = {
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
+  icon: React.PropTypes.string,
 };
 
 export default QuestionnaireResponses;

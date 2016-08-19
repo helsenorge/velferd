@@ -19,6 +19,7 @@ class MeasurementsContainer extends Component {
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             <Measurement
+              icon={this.props.icon}
               data={data}
               code={this.props.code}
               fromDate={this.props.fromDate}
@@ -43,6 +44,7 @@ MeasurementsContainer.propTypes = {
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
+  icon: React.PropTypes.string,
 };
 
 function mapStateToProps(state, ownProps) {
