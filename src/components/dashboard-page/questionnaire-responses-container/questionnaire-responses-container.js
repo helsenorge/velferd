@@ -24,6 +24,7 @@ class QuestionnaireResponsesContainer extends Component {
               fromDate={this.props.fromDate}
               toDate={this.props.toDate}
               selectedDate={this.props.selectedDate}
+              icon={this.props.icon}
             />
           </div>
         }
@@ -43,6 +44,7 @@ QuestionnaireResponsesContainer.propTypes = {
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
+  icon: React.PropTypes.string,
 };
 
 function mapStateToProps(state) {

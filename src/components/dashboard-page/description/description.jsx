@@ -15,6 +15,9 @@ const Description = ({ name, unit, referenceValue, icon }) => {
       </div>
       );
   }
+  else {
+    referenceMarkup = (<div></div>);
+  }
 
   if (unit) {
     unitMarkup = (
