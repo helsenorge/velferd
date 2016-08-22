@@ -23,7 +23,14 @@ export function filterPoints(points, fromDate, toDate) {
   );
 }
 
-export function filterEntries(entries, fromDate, toDate) {
+export function filterObservations(entries, date) {
+  return entries.filter(item =>
+      new Date(item.resource.effectiveDateTime).setHours(0, 0, 0, 0).valueOf()
+        === date.valueOf()
+    );
+}
+
+export function filterQuestionnaireResponses(entries, fromDate, toDate) {
   return entries.filter(item =>
       new Date(item.resource.authored).valueOf() > fromDate.valueOf() &&
       new Date(item.resource.authored).valueOf() < toDate.valueOf()

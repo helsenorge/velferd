@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import { filterEntries, calculateDateRange, getNumberofColumnsinChart }
+import { filterQuestionnaireResponses, calculateDateRange, getNumberofColumnsinChart }
   from '../../../../helpers/date-helpers.js';
 import './questionnaire-responses.scss';
 import Description from './../../description/description.jsx';
@@ -120,7 +120,7 @@ class QuestionnaireResponses extends Component {
 
   render() {
     const { data, fromDate, toDate, selectedDate } = this.props;
-    const entries = filterEntries(data.entry, fromDate, toDate);
+    const entries = filterQuestionnaireResponses(data.entry, fromDate, toDate);
     const questions = this.getQuestions(entries);
     const rows = this.getRows(questions, fromDate, toDate, selectedDate);
 

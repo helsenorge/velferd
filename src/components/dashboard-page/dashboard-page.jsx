@@ -91,7 +91,12 @@ class DashboardPage extends Component {
 
     let summary;
     if (this.state.selectedDate !== null) {
-      summary = (<SummaryContainer date={this.state.selectedDate} />);
+      summary = (
+        <SummaryContainer
+          date={this.state.selectedDate}
+          codes={[ObservationCodes.bloodPressure, ObservationCodes.weight,
+            ObservationCodes.pulse, ObservationCodes.pulseOximeter]}
+        />);
     }
 
     return (
