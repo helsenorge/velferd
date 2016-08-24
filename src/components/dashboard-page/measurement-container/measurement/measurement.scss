@@ -2,3 +2,10 @@
   margin: 1rem 0;
   display: flex;
 }
+
+.measurement__chart {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 0 auto;
+  margin-right: 0.1rem;
+}

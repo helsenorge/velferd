@@ -5,7 +5,7 @@ import './header.scss';
 
 const Header = (props) => (
   <header className="dashboard-header">
-    <h2 className="dashboard-header__heading">Resultater</h2>
+    <h2 className="dashboard-header__heading">Egenvurdering og målinger</h2>
     <ZoomButtons {...props} />
     <Range {...props} />
   </header>

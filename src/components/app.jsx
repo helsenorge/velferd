@@ -17,12 +17,14 @@ class App extends Component {
     const { data } = this.props;
     return (
       <div>
-        <PageHeader patient={data} />
         <div className="flexcontainer">
           <PageMenu />
-          <article className="main">
-            {this.props.children}
-          </article>
+          <div>
+            <PageHeader patient={data} />
+            <article className="main">
+              {this.props.children}
+            </article>
+          </div>
         </div>
         <Footer fhirUrl={this.props.fhirUrl} />
       </div>

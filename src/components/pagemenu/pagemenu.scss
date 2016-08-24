@@ -1,8 +1,8 @@
 @import '../../constants/constants';
 
 .pagemenu {
-  background: rgba(0, 0, 0, 0.2);
-  flex: 0 0 8rem;
+  background: #D7D7D2;
+  flex: 0 0 12rem;
 
   &__list {
     margin-top: 5rem;
@@ -11,12 +11,18 @@
   }
 
   &__link {
-    border-bottom: 1px solid #979797;
-    padding: 1rem;
+    padding: 1rem 1rem 0;
     word-break: break-word;
+    text-transform: uppercase;
 
     &--active {
-      background: $page-background;
+      background: #EFEFEC;
     }
   }
+
+  &__text {
+    border-bottom: 1px solid #D1D1CC;
+    padding-bottom: 1rem;
+  }
 }
+

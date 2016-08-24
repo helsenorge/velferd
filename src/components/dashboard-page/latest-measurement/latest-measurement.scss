@@ -1,0 +1,12 @@
+@import '../../../constants/constants';
+
+.latest-measurement {
+  flex: 0 1 9rem;
+  background: #258686;
+  color: #fff;
+  padding: 0.5rem;
+
+  &__date {
+    font-weight: 300;
+  }
+}
