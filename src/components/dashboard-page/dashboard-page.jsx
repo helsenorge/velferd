@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import MeasurementContainer from './measurement-container/measurement-container.jsx';
 import QuestionnaireResponsesContainer from
   './questionnaire-responses-container/questionnaire-responses-container';
-import SummaryContainer from './summary-container/summary-container.jsx';
 import ObservationCodes from '../../constants/observation-codes';
 import Header from './header/header.jsx';
 import './dashboard-page.scss';
@@ -89,16 +88,6 @@ class DashboardPage extends Component {
     const to = new Date(this.state.toDate.getTime());
     to.setDate(to.getDate() - 1);
 
-    let summary;
-    if (this.state.selectedDate !== null) {
-      summary = (
-        <SummaryContainer
-          date={this.state.selectedDate}
-          codes={[ObservationCodes.bloodPressure, ObservationCodes.weight,
-            ObservationCodes.pulse, ObservationCodes.pulseOximeter]}
-        />);
-    }
-
     return (
       <div className="dashboard-page">
         <Header
@@ -112,7 +101,6 @@ class DashboardPage extends Component {
           toDate={this.state.toDate}
           activeRange={this.state.dayRange}
         />
-        {summary}
         <QuestionnaireResponsesContainer
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
