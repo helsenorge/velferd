@@ -87,6 +87,7 @@ class DashboardPage extends Component {
   render() {
     const to = new Date(this.state.toDate.getTime());
     to.setDate(to.getDate() - 1);
+
     return (
       <div className="dashboard-page">
         <Header

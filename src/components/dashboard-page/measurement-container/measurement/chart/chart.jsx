@@ -49,6 +49,25 @@ class Chart extends Component {
   }
 
   displayPointsPlugin(chart) {
+    chart.on('created', (data) => {
+      const chartRect = data.chartRect;
+      const defs = data.svg.querySelector('defs') || data.svg.elem('defs');
+      const width = chartRect.width();
+      const height = chartRect.height();
+
+      defs
+        .elem('clipPath', {
+          id: 'chart-mask',
+        })
+        .elem('rect', {
+          x: chartRect.x1,
+          y: chartRect.y2,
+          width,
+          height,
+          fill: 'white',
+        });
+    });
+
     chart.on('draw', (data) => {
       if (data.type === 'point') {
         data.group.elem('text', {
@@ -56,6 +75,14 @@ class Chart extends Component {
           y: data.y - 10,
           style: 'text-anchor: middle',
         }, 'ct-label').text(data.value.y);
+      }
+      if (data.type === 'line' ||
+          data.type === 'point' ||
+          data.type === 'text' ||
+          data.type === 'area') {
+        data.element.attr({
+          'clip-path': 'url(#chart-mask)',
+        });
       }
     });
   }
@@ -76,12 +103,22 @@ class Chart extends Component {
     const options = {
       showPoint: dateRange <= 14,
       lineSmooth: false,
+      showArea: true,
+      chartPadding: {
+        top: 0,
+        right: 0,
+        bottom: -30,
+        left: 0,
+      },
       axisY: {
         high,
         low,
         onlyInteger: true,
+        showGrid: false,
+        showLabel: true,
       },
       axisX: {
+        showLabel: false,
         type: Chartist.FixedScaleAxis,
         low: Math.floor(fromDate.getTime() / 1000),
         high: Math.floor(toDate.getTime() / 1000),
@@ -93,7 +130,7 @@ class Chart extends Component {
       series: {
         referenceValues: {
           showPoint: false,
-          showArea: true,
+          showArea: false,
           showLine: false,
           areaBase: lowReference,
         },
@@ -110,7 +147,7 @@ class Chart extends Component {
     };
     return (
       <div className="measurement-chart">
-        <ChartistGraph data={data} options={options} type={'Line'} />
+        <ChartistGraph data={data} options={options} type={'Line'} className="ct-double-octave" />
       </div>
     );
   }

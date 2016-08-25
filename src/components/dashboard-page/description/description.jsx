@@ -1,43 +1,24 @@
 import React, { PropTypes } from 'react';
 import './description.scss';
-import Icon from '../../icon/icon.jsx';
 
-const Description = ({ name, unit, referenceValue, icon }) => {
+const Description = ({ name, unit, referenceValue }) => {
   let referenceMarkup;
-  let unitMarkup;
-  let iconMarkup;
 
   if (referenceValue) {
     referenceMarkup = (
-      <div>
-        <h4 className="measurement-description__reference-heading">Pasientens idealnivå:</h4>
-        <span className="measurement-description__reference-value">{referenceValue}</span>
-      </div>
+      <span className="measurement-description__reference-value">
+        Pasientens idealnivå: {referenceValue}
+      </span>
       );
   }
   else {
-    referenceMarkup = (<div></div>);
+    referenceMarkup = null;
   }
 
-  if (unit) {
-    unitMarkup = (
-      <span className="measurement-description__heading">{unit}</span>
-      );
-  }
-
-  if (icon) {
-    iconMarkup = (
-      <Icon glyph={icon} className="measurement-description__icon" />
-      );
-  }
 
   return (
     <div className="measurement-description">
-      <div>
-        <h3 className="measurement-description__heading">{name}</h3>
-        {unitMarkup}
-      </div>
-      {iconMarkup}
+      <h3 className="measurement-description__heading">{name} {unit ? `(${unit})` : null}</h3>
       {referenceMarkup}
     </div>);
 };
@@ -46,7 +27,6 @@ Description.propTypes = {
   name: PropTypes.string.isRequired,
   unit: PropTypes.string,
   referenceValue: PropTypes.string,
-  icon: PropTypes.string,
 };
 
 export default Description;

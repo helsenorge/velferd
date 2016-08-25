@@ -1,25 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import Chart from './chart/chart.jsx';
 import Description from './../../description/description.jsx';
+import LatestMeasurement from './../../latest-measurement/latest-measurement.jsx';
 import './measurement.scss';
 import ObservationCodes from '../../../../constants/observation-codes';
+import { getMeasurementName } from '../../../../helpers/observation-helpers';
+
 
 class Measurements extends Component {
-
-  getMeasurementName(code) {
-    switch (code) {
-    case ObservationCodes.weight:
-      return 'Vekt';
-    case ObservationCodes.pulse:
-      return 'Puls';
-    case ObservationCodes.pulseOximeter:
-      return 'Puls oksymeter';
-    case ObservationCodes.bloodPressure:
-      return 'Blodtrykk';
-    default:
-      return '';
-    }
-  }
 
   getMeasurementHigh(code) {
     switch (code) {
@@ -120,7 +108,7 @@ class Measurements extends Component {
 
   render() {
     let points = this.props.data.entry.map(this.getDataPoint);
-    const name = this.getMeasurementName(this.props.code);
+    const name = getMeasurementName(this.props.code);
     const highReference = this.getMeasurementHighReference(this.props.code);
     const lowReference = this.getMeasurementLowReference(this.props.code);
 
@@ -129,21 +117,28 @@ class Measurements extends Component {
 
     return (
       <div className="measurement">
-        <Description
+        <div className="measurement__chart">
+          <Description
+            name={name}
+            unit={unit}
+            referenceValue={referenceValue}
+            icon={this.props.icon}
+          />
+          <Chart
+            dataPoints={points}
+            high={this.getMeasurementHigh(this.props.code)}
+            low={this.getMeasurementLow(this.props.code)}
+            highReference={highReference}
+            lowReference={lowReference}
+            fromDate={this.props.fromDate}
+            toDate={this.props.toDate}
+            selectedDate={this.props.selectedDate}
+          />
+        </div>
+        <LatestMeasurement
           name={name}
           unit={unit}
           referenceValue={referenceValue}
-          icon={this.props.icon}
-        />
-        <Chart
-          dataPoints={points}
-          high={this.getMeasurementHigh(this.props.code)}
-          low={this.getMeasurementLow(this.props.code)}
-          highReference={highReference}
-          lowReference={lowReference}
-          fromDate={this.props.fromDate}
-          toDate={this.props.toDate}
-          selectedDate={this.props.selectedDate}
         />
       </div>
     );

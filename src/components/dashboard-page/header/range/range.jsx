@@ -8,9 +8,7 @@ import chevron from '../../../../../svg/chevron-left.svg';
 
 const Range = (props) => {
   const {
-    handleBackClick,
     handleSingleBackClick,
-    handleForwardClick,
     handleSingleForwardClick,
     handleDateClick,
     fromDate,
@@ -46,17 +44,10 @@ const Range = (props) => {
       <div className="range__controls">
         <button
           className="range__button range__button--rev"
-          onClick={() => handleBackClick()}
-        >
-          <Icon glyph={chevron} />
-          <Icon glyph={chevron} />
-        </button>
-
-        <button
-          className="range__button range__button--rev"
           onClick={() => handleSingleBackClick()}
         >
           <Icon glyph={chevron} />
+          Forrige
         </button>
       </div>
 
@@ -69,14 +60,7 @@ const Range = (props) => {
           className="range__button range__button--fwd"
           onClick={() => handleSingleForwardClick()}
         >
-          <Icon glyph={chevron} />
-        </button>
-
-        <button
-          className="range__button range__button--fwd"
-          onClick={() => handleForwardClick()}
-        >
-          <Icon glyph={chevron} />
+          Neste
           <Icon glyph={chevron} />
         </button>
       </div>
@@ -85,9 +69,7 @@ const Range = (props) => {
 };
 
 Range.propTypes = {
-  handleForwardClick: React.PropTypes.func.isRequired,
   handleSingleForwardClick: React.PropTypes.func.isRequired,
-  handleBackClick: React.PropTypes.func.isRequired,
   handleSingleBackClick: React.PropTypes.func.isRequired,
   handleDateClick: PropTypes.func.isRequired,
   fromDate: PropTypes.instanceOf(Date).isRequired,

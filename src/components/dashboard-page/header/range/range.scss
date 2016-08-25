@@ -1,9 +1,7 @@
-$iconmargin: -0.3rem;
-
 .range {
+  margin-top: 1rem;
   display: flex;
   flex-direction: row;
-  margin: 1rem 0 1rem 13rem;
 }
 
 .range__button {
@@ -12,6 +10,41 @@ $iconmargin: -0.3rem;
   border: none;
   font-size: 1rem;
   cursor: pointer;
+
+  &--rev,
+  &--fwd {
+    display: flex;
+    width: 7rem;
+    color: #fff;
+    background: #4A4A4A;
+    border-radius: 100px;
+    font-weight: 300;
+    padding: 1rem 1.2rem;
+    justify-content: space-between;
+    align-items: center;
+
+    .icon {
+      fill: #fff;
+    }
+  }
+
+  &--rev {
+    margin-right: 1rem;
+  }
+
+  &--fwd {
+    margin-left: 2rem;
+  }
+}
+
+.range__date {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+.range__month {
+  font-size: 1rem;
+  font-weight: 300;
 }
 
 .range__date-buttons {
@@ -38,19 +71,6 @@ $iconmargin: -0.3rem;
   display: flex;
 }
 
-.range__button--fwd:first-child,
-.range__button--rev:first-child {
-  margin-right: 0.5rem;
-}
-
 .range__button--fwd .icon {
   transform: rotate(180deg);
-
-  &:last-child {
-    margin-left: $iconmargin;
-  }
-}
-
-.range__button--rev .icon:first-child {
-  margin-right: $iconmargin;
 }
