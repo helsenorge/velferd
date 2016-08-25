@@ -76,7 +76,10 @@ class Chart extends Component {
           style: 'text-anchor: middle',
         }, 'ct-label').text(data.value.y);
       }
-      if (data.type === 'line' || data.type === 'point') {
+      if (data.type === 'line' ||
+          data.type === 'point' ||
+          data.type === 'text' ||
+          data.type === 'area') {
         data.element.attr({
           'clip-path': 'url(#chart-mask)',
         });
@@ -100,13 +103,22 @@ class Chart extends Component {
     const options = {
       showPoint: dateRange <= 14,
       lineSmooth: false,
-      height: '250px',
+      showArea: true,
+      chartPadding: {
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0,
+      },
       axisY: {
         high,
         low,
         onlyInteger: true,
+        showGrid: false,
+        showLabel: true,
       },
       axisX: {
+        showLabel: false,
         type: Chartist.FixedScaleAxis,
         low: Math.floor(fromDate.getTime() / 1000),
         high: Math.floor(toDate.getTime() / 1000),
@@ -118,7 +130,7 @@ class Chart extends Component {
       series: {
         referenceValues: {
           showPoint: false,
-          showArea: true,
+          showArea: false,
           showLine: false,
           areaBase: lowReference,
         },
@@ -135,7 +147,7 @@ class Chart extends Component {
     };
     return (
       <div className="measurement-chart">
-        <ChartistGraph data={data} options={options} type={'Line'} />
+        <ChartistGraph data={data} options={options} type={'Line'} className="ct-double-octave" />
       </div>
     );
   }

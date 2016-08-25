@@ -1,7 +1,7 @@
 @import '../../constants/constants';
 
 .pagemenu {
-  background: #D7D7D2;
+  background: #e5e5e1;
   flex: 0 0 12rem;
 
   &__list {
@@ -16,7 +16,7 @@
     text-transform: uppercase;
 
     &--active {
-      background: #EFEFEC;
+      background: linear-gradient(#969692, #C7C7BE 20%, #C7C7BE);
     }
   }
 

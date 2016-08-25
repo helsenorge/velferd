@@ -1,20 +1,29 @@
 @import '../../../../../constants/constants';
 
 .measurement-chart {
-  flex: 1 0 auto;
   background: #fff;
+  flex: 1 1 auto;
+  padding-left: 8rem;
 
   .ct-series .ct-line {
-    stroke: $astronaut;
+    stroke: #2C9F9E;
     stroke-width: 2px;
   }
 
   .ct-series .ct-point {
-    stroke: $astronaut;
+    stroke: #2C9F9E;
     stroke-width: 5px;
   }
 
   .ct-series .ct-area {
-    fill: $astronaut;
+    fill: #38AA68;
+    //opacity: 0.3;
+  }
+  //rgba(56,170,104,30)
+//rgba(56,170,130,30)
+  .ct-grid {
+    stroke: #EFEFED;
+    stroke-width: 2px;
+    stroke-dasharray: inherit;
   }
 }
