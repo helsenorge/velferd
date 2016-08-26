@@ -70,7 +70,7 @@
         "text": "Patient"
       },
       "member": {
-        "reference": "Patient/1"
+        "reference": "Patient/1-26"
       }
     },
     {
