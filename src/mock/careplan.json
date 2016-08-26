@@ -1,0 +1,186 @@
+{
+  "resourceType": "CarePlan",
+  "id": "examplePlan",
+  "text": {
+    "status": "additional",
+    "div": "<div>Sample care plan</div>"
+  },
+  "contained": [
+    {
+      "resourceType": "Practitioner",
+      "id": "pr1",
+      "name": {
+        "family": [
+          "Tor"
+        ],
+        "given": [
+          "Doc"
+        ]
+      }
+    },
+    {
+      "resourceType": "Organization",
+      "id": "org1",
+      "name": "Response center"
+    },
+    {
+      "resourceType": "Goal",
+      "id": "ideal-weight-goal",
+      "extension": [
+        {
+          "extension": [
+            {
+              "url": "goal-target.measure",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "29463-7",
+                    "display": "Body weight"
+                  }
+                ]
+              }
+            },
+            {
+              "url": "goal-target.detail",
+              "valueQuantity": {
+                "value": 80,
+                "system": "http://units-of-measure.org",
+                "code": "kg"
+              }
+            }
+          ],
+          "url": "http://hl7.org/fhir/StructureDefinition/goal-target"
+        }
+      ]
+    }
+  ],
+  "subject": {
+    "reference": "Patient/1-26"
+  },
+  "status": "active",
+  "author": [
+    {
+      "reference": "#pr1"
+    }
+  ],
+  "participant": [
+    {
+      "role": {
+        "text": "Patient"
+      },
+      "member": {
+        "reference": "Patient/1"
+      }
+    },
+    {
+      "role": {
+        "text": "GP"
+      },
+      "member": {
+        "reference": "#pr1"
+      }
+    },
+    {
+      "role": {
+        "text": "Response Center"
+      },
+      "member": {
+        "reference": "#org1"
+      }
+    }
+  ],
+  "category": {
+    "coding": [
+      {
+        "system": "http://loinc.org",
+        "code": "LP173737-0"
+      }
+    ]
+  },
+  "goal": [
+    {
+      "reference": "#ideal-weight-goal"
+    }
+  ],
+  "activity": [
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "green"
+            }
+          ]
+        },
+        "status": "in-progress",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "observation"
+            }
+          ]
+        },
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 1,
+            "period": 1,
+            "periodUnits": "wk"
+          }
+        },
+        "extension": [
+          {
+            "url": "http://ehelse.no/fhir/vft",
+            "valueReference": {
+              "reference": "Questionnaire/62763"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "green"
+            }
+          ]
+        },
+        "status": "in-progress",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "observation"
+            }
+          ]
+        },
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 1,
+            "period": 1,
+            "periodUnits": "wk"
+          }
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "urn:std:iso:11073:10101",
+              "code": "188736",
+              "display": "MDC_MASS_BODY_ACTUAL"
+            }
+          ]
+        },
+        "goal": [
+            {
+              "reference": "#ideal-weight-goal"
+            }
+          ]
+      }
+    }
+  ]
+}
