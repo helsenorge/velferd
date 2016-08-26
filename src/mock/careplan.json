@@ -53,6 +53,16 @@
           "url": "http://hl7.org/fhir/StructureDefinition/goal-target"
         }
       ]
+    },
+    {
+      "resourceType": "Condition",
+      "id": "no-fever-condition",
+      "notes": "No fever"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "no-fatigue-condition",
+      "notes": "No fatigue"
     }
   ],
   "subject": {
@@ -114,6 +124,14 @@
             }
           ]
         },
+        "reasonReference": [
+          {
+            "reference": "#no-fever-condition"            
+          },
+          {
+            "reference": "#no-fatigue-condition"            
+          }
+        ],
         "status": "in-progress",
         "category": {
           "coding": [
