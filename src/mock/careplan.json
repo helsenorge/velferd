@@ -181,6 +181,50 @@
             }
           ]
       }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "green"
+            }
+          ]
+        },
+        "status": "in-progress",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "procedure"
+            }
+          ]
+        },
+        "description": "Keep phisycally active"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "green"
+            }
+          ]
+        },
+        "status": "in-progress",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "drug"
+            }
+          ]
+        },
+        "description": "Take c vitamin every day."
+      }
     }
   ]
 }
