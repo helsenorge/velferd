@@ -115,6 +115,7 @@ class Measurements extends Component {
     const unit = this.getUnit(this.props.code);
     const referenceValue = `${lowReference} - ${highReference} ${unit}`;
 
+    const latestValue = this.getDataPoint(this.props.data.entry[0]);
     return (
       <div className="measurement">
         <div className="measurement__chart">
@@ -136,9 +137,7 @@ class Measurements extends Component {
           />
         </div>
         <LatestMeasurement
-          name={name}
-          unit={unit}
-          referenceValue={referenceValue}
+          data={latestValue}
         />
       </div>
     );
