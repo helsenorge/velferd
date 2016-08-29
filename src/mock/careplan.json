@@ -63,6 +63,36 @@
       "resourceType": "Condition",
       "id": "stable-condition",
       "notes": "Stabil form ingen økning i tretthet, tungpusthet, hevelser eller vekt"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "heavy-breath-condition",
+      "notes": "Mer tungpust enn vanlig"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "tired-condition",
+      "notes": "Økende trett og sliten"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "leg-swelling-condition",
+      "notes": "Økende hevelse i beina"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "weight-gain-condition",
+      "notes": "Gått opp > 2 kg i vekt de siste tre dager"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "worse-cough-condition",
+      "notes": "Forverring av hoste"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "fever-condition",
+      "notes": "Feber"
     }
   ],
   "subject": {
@@ -286,6 +316,150 @@
           ]
         },
         "description": "Ta dine faste medisiner som foreskrevet / avtalt med lege!"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "yellow"
+            }
+          ]
+        },
+        "reasonReference": [
+          {
+            "reference": "#heavy-breath-condition"            
+          },
+          {
+            "reference": "#tired-condition"            
+          },
+          {
+            "reference": "#leg-swelling-condition"            
+          },
+          {
+            "reference": "#weight-gain-condition"            
+          },
+          {
+            "reference": "#worse-cough-condition"            
+          },
+          {
+            "reference": "#fever-condition"            
+          }
+        ],
+        "status": "not-started",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "observation"
+            }
+          ]
+        },
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 1,
+            "period": 1,
+            "periodUnits": "wk"
+          }
+        },
+        "extension": [
+          {
+            "url": "http://ehelse.no/fhir/vft",
+            "valueReference": {
+              "reference": "Questionnaire/62763"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "yellow"
+            }
+          ]
+        },
+        "status": "not-started",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "procedure"
+            }
+          ]
+        },
+        "description": "Ta det med ro"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "yellow"
+            }
+          ]
+        },
+        "status": "not-started",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "procedure"
+            }
+          ]
+        },
+        "description": "Vei deg hver dag"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "yellow"
+            }
+          ]
+        },
+        "status": "not-started",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "procedure"
+            }
+          ]
+        },
+        "description": "Drikk minst 1.5 liter væske hver dag, men ikke mer enn 2 liter"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "yellow"
+            }
+          ]
+        },
+        "status": "not-started",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "drug"
+            }
+          ]
+        },
+        "description": "Vanndrivende"
       }
     }
   ]
