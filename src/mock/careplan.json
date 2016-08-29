@@ -57,12 +57,12 @@
     {
       "resourceType": "Condition",
       "id": "no-fever-condition",
-      "notes": "No fever"
+      "notes": "Feberfri"
     },
     {
       "resourceType": "Condition",
-      "id": "no-fatigue-condition",
-      "notes": "No fatigue"
+      "id": "stable-condition",
+      "notes": "Stabil form ingen økning i tretthet, tungpusthet, hevelser eller vekt"
     }
   ],
   "subject": {
@@ -126,10 +126,10 @@
         },
         "reasonReference": [
           {
-            "reference": "#no-fever-condition"            
+            "reference": "#stable-condition"            
           },
           {
-            "reference": "#no-fatigue-condition"            
+            "reference": "#no-fever-condition"            
           }
         ],
         "status": "in-progress",
@@ -219,7 +219,51 @@
             }
           ]
         },
-        "description": "Keep phisycally active"
+        "description": "Ta dine faste medisiner"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "green"
+            }
+          ]
+        },
+        "status": "in-progress",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "procedure"
+            }
+          ]
+        },
+        "description": "Sørg for riktig kosthold og regelmessige måltider"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "green"
+            }
+          ]
+        },
+        "status": "in-progress",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "procedure"
+            }
+          ]
+        },
+        "description": "Hold deg i aktivitet"
       }
     },
     {
@@ -241,7 +285,7 @@
             }
           ]
         },
-        "description": "Take c vitamin every day."
+        "description": "Ta dine faste medisiner som foreskrevet / avtalt med lege!"
       }
     }
   ]
