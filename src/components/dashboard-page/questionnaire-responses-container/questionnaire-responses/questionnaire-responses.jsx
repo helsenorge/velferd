@@ -94,7 +94,7 @@ class QuestionnaireResponses extends Component {
             selectedCellIndex !== null && selectedCellIndex === i });
 
         cells.push(
-          <td className={cellClasses}>
+          <td className={cellClasses} key={i}>
             <Icon glyph={val} width={20} height={20} />
           </td>
         );

@@ -8,7 +8,7 @@ const Header = (props) => (
   <header className="dashboard-header">
     <h2 className="dashboard-header__heading">Egenvurdering og målinger</h2>
     <div className="dashboard-header__flexwrap">
-      <Report />
+      <Report {...props} />
       <ZoomButtons {...props} />
     </div>
     <Range {...props} />
