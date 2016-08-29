@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import './report.scss';
 import Collapse from 'react-collapse';
 import iconChevron from '../../../../../svg/chevron-left.svg';
 import Icon from '../../../icon/icon.jsx';
 import classNames from 'classnames';
+import { formatDate } from '../../../../helpers/date-helpers.js';
 
 class Report extends Component {
   constructor(props) {
@@ -32,7 +33,10 @@ class Report extends Component {
         </button>
         <Collapse isOpened={this.state.expanded}>
           <div className="report__expander">
-            <h3 className="report__header">Oppsummering for 15.juni - 29.juni 2016</h3>
+            <h3 className="report__header">
+              Oppsummering for&nbsp;
+               {formatDate(this.props.fromDate)} - {formatDate(this.props.toDate)} 2016
+            </h3>
             <p className="report__paragraph">
               <b>Blodtrykk</b> har variert mellom [min-verdi] og
                [max-verdi] og har et gjennomsnitt på [gjennomsnittlig verdi].
@@ -53,5 +57,10 @@ class Report extends Component {
       );
   }
 }
+
+Report.propTypes = {
+  fromDate: PropTypes.instanceOf(Date).isRequired,
+  toDate: PropTypes.instanceOf(Date).isRequired,
+};
 
 export default Report;
