@@ -3,6 +3,7 @@
 .questionnaire-responses {
   margin: 1rem 0;
   display: flex;
+  flex-wrap: wrap;
 
   &__table-container {
     background: #fff;
@@ -51,9 +52,8 @@
   }
 
   &__question {
-    width: 4rem;
+    width: 9rem;
     word-break: break-word;
-    font-size: 0.75rem;
     padding: 0.5rem;
     padding-left: 0;
   }
