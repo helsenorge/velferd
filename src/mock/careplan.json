@@ -93,6 +93,16 @@
       "resourceType": "Condition",
       "id": "fever-condition",
       "notes": "Feber"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "worse-heavy-breath-condition",
+      "notes": "Mye verre i pusten"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "worse-tired-condition",
+      "notes": "Må du hvile/sove flere ganger i løpet av dagen?"
     }
   ],
   "subject": {
@@ -447,6 +457,150 @@
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "yellow"
+            }
+          ]
+        },
+        "status": "not-started",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "drug"
+            }
+          ]
+        },
+        "description": "Vanndrivende"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "red"
+            }
+          ]
+        },
+        "reasonReference": [
+          {
+            "reference": "#worse-heavy-breath-condition"            
+          },
+          {
+            "reference": "#worse-tired-condition"            
+          },
+          {
+            "reference": "#leg-swelling-condition"            
+          },
+          {
+            "reference": "#weight-gain-condition"            
+          },
+          {
+            "reference": "#worse-cough-condition"            
+          },
+          {
+            "reference": "#fever-condition"            
+          }
+        ],
+        "status": "not-started",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "observation"
+            }
+          ]
+        },
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 1,
+            "period": 1,
+            "periodUnits": "wk"
+          }
+        },
+        "extension": [
+          {
+            "url": "http://ehelse.no/fhir/vft",
+            "valueReference": {
+              "reference": "Questionnaire/62763"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "red"
+            }
+          ]
+        },
+        "status": "not-started",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "procedure"
+            }
+          ]
+        },
+        "description": "Ta det med ro"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "red"
+            }
+          ]
+        },
+        "status": "not-started",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "procedure"
+            }
+          ]
+        },
+        "description": "Vei deg hver dag"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "red"
+            }
+          ]
+        },
+        "status": "not-started",
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "procedure"
+            }
+          ]
+        },
+        "description": "Drikk minst 1.5 liter væske hver dag, men ikke mer enn 2 liter"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": {
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "red"
             }
           ]
         },
