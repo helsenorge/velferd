@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchCarePlan } from '../../actions/care-plan';
 import Phase from './phase/phase.jsx';
 import { getPhase } from './care-plan.js';
+import ReasonCodes from '../../constants/reason-codes';
 
 class CarePlanPage extends Component {
 
@@ -13,11 +14,11 @@ class CarePlanPage extends Component {
 
   getPhaseName(reasonCode) {
     switch (reasonCode) {
-    case 'green':
+    case ReasonCodes.green:
       return 'Stabil fase av hjertesvikt';
-    case 'yellow':
+    case ReasonCodes.yellow:
       return 'Moderat forverring av hertesvikt';
-    case 'red':
+    case ReasonCodes.red:
       return 'Alvorlig forverring av hjertesvikt';
     default:
       return null;
@@ -55,11 +56,11 @@ function mapStateToProps(state) {
   const phases = [];
 
   if (carePlan.data) {
-    const greenPhase = getPhase(carePlan.data.entry[0].resource, 'green');
+    const greenPhase = getPhase(carePlan.data.entry[0].resource, ReasonCodes.green);
     phases.push(greenPhase);
-    const yellowPhase = getPhase(carePlan.data.entry[0].resource, 'yellow');
+    const yellowPhase = getPhase(carePlan.data.entry[0].resource, ReasonCodes.yellow);
     phases.push(yellowPhase);
-    const redPhase = getPhase(carePlan.data.entry[0].resource, 'red');
+    const redPhase = getPhase(carePlan.data.entry[0].resource, ReasonCodes.red);
     phases.push(redPhase);
   }
 
