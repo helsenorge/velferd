@@ -25,7 +25,7 @@ function useMock() {
 
 export function fetchCarePlan(fhirUrl, patientId) {
   if (useMock()) {
-    const json = require( `../mock/careplan.json`); // eslint-disable-line
+    const json = require( `../mock/care-plan.json`); // eslint-disable-line
     return dispatch => dispatch(receiveCarePlan(patientId, json));
   }
 
