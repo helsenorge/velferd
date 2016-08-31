@@ -39,12 +39,13 @@ class Chart extends Component {
       ] };
   }
 
-  getReferenceValuesData() {
+  getReferenceValuesData(value) {
     return {
       name: 'referenceValues',
+      className: 'ref-values-series',
       data: [
-        { x: Math.floor(this.props.fromDate.getTime() / 1000), y: this.props.highReference },
-        { x: Math.floor(this.props.toDate.getTime() / 1000), y: this.props.highReference },
+        { x: Math.floor(this.props.fromDate.getTime() / 1000), y: value },
+        { x: Math.floor(this.props.toDate.getTime() / 1000), y: value },
       ] };
   }
 
@@ -88,9 +89,11 @@ class Chart extends Component {
   }
 
   render() {
-    const { dataPoints, fromDate, toDate, lowReference, low, high, selectedDate } = this.props;
+    const { dataPoints, fromDate, toDate, lowReference, highReference,
+      low, high, selectedDate } = this.props;
     const series = this.getValues(dataPoints);
-    series.push(this.getReferenceValuesData());
+    series.push(this.getReferenceValuesData(highReference));
+    series.push(this.getReferenceValuesData(lowReference));
 
     if (selectedDate) series.push(this.getSelectedDateData(selectedDate));
 
@@ -131,8 +134,7 @@ class Chart extends Component {
         referenceValues: {
           showPoint: false,
           showArea: false,
-          showLine: false,
-          areaBase: lowReference,
+          showLine: true,
         },
         selectedColumn: {
           showPoint: false,
