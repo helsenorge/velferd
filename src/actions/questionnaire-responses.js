@@ -32,7 +32,7 @@ export function fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId)
   return dispatch => {
     dispatch(requestQuestionnaireResponses(patientId));
     const url =
-    `${fhirUrl}/QuestionnaireResponse?_sort:asc=authored&patient=${patientId}
+    `${fhirUrl}/QuestionnaireResponse?_count=500&_sort:asc=authored&patient=${patientId}
     &questionnaire=${questionnaireId}`;
     return fetch(url)
       .then(response => response.json())
