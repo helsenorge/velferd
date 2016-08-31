@@ -14,12 +14,12 @@
   font-size: 1.125rem;
   margin-left: 5px;
   cursor: pointer;
-  color: #4A4A4A;
+  color: #4a4a4a;
   border-radius: 100px;
 
   &:hover,
   &:focus {
-    background: #E5E5E1;
+    background: #e5e5e1;
   }
 
   &:focus {
@@ -27,7 +27,7 @@
   }
 
   &--active {
-    background: #E5E5E1;
+    background: #e5e5e1;
   }
 }
 

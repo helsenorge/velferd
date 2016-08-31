@@ -22,12 +22,12 @@
     text-transform: uppercase;
 
     &--active {
-      background: linear-gradient(#969692, #C7C7BE 20%, #C7C7BE);
+      background: linear-gradient(#969692, #c7c7be 20%, #c7c7be);
     }
   }
 
   &__text {
-    border-bottom: 1px solid #D1D1CC;
+    border-bottom: 1px solid #d1d1cc;
     padding-bottom: 1rem;
   }
 }
