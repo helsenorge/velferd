@@ -26,16 +26,24 @@ class CarePlanPage extends Component {
   }
 
   render() {
+    const { phases, isFetching } = this.props;
+    const isEmpty = phases.length === 0;
     return (
       <div>
-        {this.props.phases.map((phase) =>
-          <Phase
-            name={this.getPhaseName(phase.reasonCode)}
-            symptoms={phase.symptoms}
-            actions={phase.actions}
-            medications={phase.medications}
-          />
-        )}
+        {isEmpty
+          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+          : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
+            {phases.map((phase, i) =>
+              <Phase
+                key={i}
+                name={this.getPhaseName(phase.reasonCode)}
+                symptoms={phase.symptoms}
+                actions={phase.actions}
+                medications={phase.medications}
+              />
+            )}
+          </div>
+        }
       </div>
     );
   }
@@ -46,30 +54,36 @@ CarePlanPage.propTypes = {
   patientId: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
-  phases: PropTypes.array.isFetching,
+  phases: PropTypes.array.isRequired,
 };
 
 function mapStateToProps(state) {
   const { carePlan, settings } = state;
   const { fhirUrl, patientId } = settings;
+  const {
+    isFetching,
+    data,
+  } = carePlan || {
+    isFetching: true,
+    data: null,
+  };
 
   const phases = [];
 
-  if (carePlan.data) {
-    const greenPhase = getPhase(carePlan.data.entry[0].resource, ReasonCodes.green);
+  if (data) {
+    const greenPhase = getPhase(data.entry[0].resource, ReasonCodes.green);
     phases.push(greenPhase);
-    const yellowPhase = getPhase(carePlan.data.entry[0].resource, ReasonCodes.yellow);
+    const yellowPhase = getPhase(data.entry[0].resource, ReasonCodes.yellow);
     phases.push(yellowPhase);
-    const redPhase = getPhase(carePlan.data.entry[0].resource, ReasonCodes.red);
+    const redPhase = getPhase(data.entry[0].resource, ReasonCodes.red);
     phases.push(redPhase);
   }
 
   return {
     fhirUrl,
     patientId,
-    carePlan,
     phases,
-  };
+    isFetching };
 }
 
 export default connect(mapStateToProps)(CarePlanPage);
