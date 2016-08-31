@@ -18,8 +18,16 @@ export function getPhase(resource, reasonCode) {
     && activity.detail.extension[0].valueReference.reference.startsWith('Questionnaire')
     );
 
+  const containedResources = {};
+
+  resource.contained.filter(res => res.resourceType === 'Condition')
+    .forEach(res => {
+      containedResources[res.id] = res.notes;
+    });
+
   const questionnaire = questionnaireObservations[0];
-  const symptoms = questionnaire.detail.reasonReference.map(ref => ref.reference);
+  const symptoms = questionnaire.detail.reasonReference.map(
+    ref => containedResources[ref.reference.substring(1)]);
 
   return {
     reasonCode,

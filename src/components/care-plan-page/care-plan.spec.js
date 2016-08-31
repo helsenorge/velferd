@@ -3,9 +3,9 @@ import { getPhase } from './care-plan.js';
 import data from '../../mock/care-plan.json';
 
 describe('careplan phase', () => {
-  it('should have a name', () => {
+  it('should have a reason code', () => {
     const phase = getPhase(data, 'green');
-    expect(phase.name).to.equal('green');
+    expect(phase.reasonCode).to.equal('green');
   });
 
   it('should have a list of symptoms', () => {
