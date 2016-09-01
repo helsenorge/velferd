@@ -75,6 +75,7 @@ class Chart extends Component {
           x: data.x,
           y: data.y - 10,
           style: 'text-anchor: middle',
+          'clip-path': 'url(#chart-mask)',
         }, 'ct-label').text(data.value.y);
       }
       if (data.type === 'line' ||
