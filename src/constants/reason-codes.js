@@ -1,5 +1,5 @@
 export default {
   green: 'green',
-  yellow: 'green',
-  red: 'green',
+  yellow: 'yellow',
+  red: 'red',
 };

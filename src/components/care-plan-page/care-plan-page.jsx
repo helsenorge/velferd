@@ -17,7 +17,7 @@ class CarePlanPage extends Component {
     case ReasonCodes.green:
       return 'Stabil fase av hjertesvikt';
     case ReasonCodes.yellow:
-      return 'Moderat forverring av hertesvikt';
+      return 'Moderat forverring av hjertesvikt';
     case ReasonCodes.red:
       return 'Alvorlig forverring av hjertesvikt';
     default:
