@@ -3,12 +3,17 @@
 .questionnaire-responses {
   margin: 1rem 0;
   display: flex;
-  flex-wrap: wrap;
 
   &__table-container {
     background: #fff;
     flex: 1 1 auto;
-    padding: 1rem 4rem 1rem 0.5rem;
+    padding-left: 1rem;
+    overflow: hidden;
+  }
+
+  &__chart {
+    flex: 1 1 auto;
+    margin-right: 0.1rem;
   }
 }
 
@@ -18,8 +23,8 @@
   width: 100%;
 
   td {
-    border-right: 1px solid $pale-slate;
-    border-bottom: 1px solid $pale-slate;
+    border-right: 2px solid #efefed;
+    border-bottom: 2px solid #efefed;
     position: relative;
   }
 
@@ -32,8 +37,8 @@
     content: "";
     position: absolute;
     width: 25px;
-    height: 1px;
-    background: $pale-slate;
+    height: 2px;
+    background: #efefed;
     right: 0;
     bottom: -1px;
   }

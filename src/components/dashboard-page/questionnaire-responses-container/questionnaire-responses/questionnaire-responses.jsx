@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import { filterQuestionnaireResponses, calculateDateRange, getNumberofColumnsinChart }
   from '../../../../helpers/date-helpers.js';
 import './questionnaire-responses.scss';
+import LatestMeasurement from './../../latest-measurement/latest-measurement.jsx';
 import Description from './../../description/description.jsx';
 import Icon from '../../../icon/icon.jsx';
 import ansikt1 from '../../../../../svg/ansikt-1.svg';
@@ -126,14 +127,19 @@ class QuestionnaireResponses extends Component {
 
     return (
       <div className="questionnaire-responses">
-        <Description name="Egenvurdering" icon={this.props.icon} />
-        <div className="questionnaire-responses__table-container">
-          <table className="questionnaire-responses-table">
-            <tbody>
-              {rows}
-            </tbody>
-          </table>
+        <div className="questionnaire-responses__chart">
+          <Description name="Egenvurdering" icon={this.props.icon} />
+          <div className="questionnaire-responses__table-container">
+            <table className="questionnaire-responses-table">
+              <tbody>
+                {rows}
+              </tbody>
+            </table>
+          </div>
         </div>
+        <LatestMeasurement
+          data={{ date: '2012', value: '', unit: '' }}
+        />
       </div>
     );
   }

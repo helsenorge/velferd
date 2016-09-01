@@ -6,23 +6,27 @@
   padding-left: 8rem;
 
   .ct-series .ct-line {
-    stroke: #2C9F9E;
+    stroke: #2c9f9e;
     stroke-width: 2px;
   }
 
+  .ref-values-series .ct-line {
+    stroke-dasharray: 3px 6px;
+  }
+
   .ct-series .ct-point {
-    stroke: #2C9F9E;
+    stroke: #2c9f9e;
     stroke-width: 5px;
   }
 
   .ct-series .ct-area {
-    fill: #38AA68;
+    fill: #38aa68;
     //opacity: 0.3;
   }
   //rgba(56,170,104,30)
-//rgba(56,170,130,30)
+  //rgba(56,170,130,30)
   .ct-grid {
-    stroke: #EFEFED;
+    stroke: #efefed;
     stroke-width: 2px;
     stroke-dasharray: inherit;
   }

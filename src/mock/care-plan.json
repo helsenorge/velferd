@@ -156,14 +156,14 @@
   "activity": [
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "green"
             }
           ]
-        },
+        }],
         "reasonReference": [
           {
             "reference": "#stable-condition"            
@@ -200,14 +200,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "green"
             }
           ]
-        },
+        }],
         "status": "in-progress",
         "category": {
           "coding": [
@@ -242,14 +242,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "green"
             }
           ]
-        },
+        }],
         "status": "in-progress",
         "category": {
           "coding": [
@@ -264,14 +264,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "green"
             }
           ]
-        },
+        }],
         "status": "in-progress",
         "category": {
           "coding": [
@@ -286,14 +286,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "green"
             }
           ]
-        },
+        }],
         "status": "in-progress",
         "category": {
           "coding": [
@@ -308,14 +308,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "green"
             }
           ]
-        },
+        }],
         "status": "in-progress",
         "category": {
           "coding": [
@@ -330,14 +330,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "yellow"
             }
           ]
-        },
+        }],
         "reasonReference": [
           {
             "reference": "#heavy-breath-condition"            
@@ -386,14 +386,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "yellow"
             }
           ]
-        },
+        }],
         "status": "not-started",
         "category": {
           "coding": [
@@ -408,14 +408,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "yellow"
             }
           ]
-        },
+        }],
         "status": "not-started",
         "category": {
           "coding": [
@@ -430,14 +430,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "yellow"
             }
           ]
-        },
+        }],
         "status": "not-started",
         "category": {
           "coding": [
@@ -452,14 +452,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "yellow"
             }
           ]
-        },
+        }],
         "status": "not-started",
         "category": {
           "coding": [
@@ -474,14 +474,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "red"
             }
           ]
-        },
+        }],
         "reasonReference": [
           {
             "reference": "#worse-heavy-breath-condition"            
@@ -530,14 +530,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "red"
             }
           ]
-        },
+        }],
         "status": "not-started",
         "category": {
           "coding": [
@@ -552,14 +552,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "red"
             }
           ]
-        },
+        }],
         "status": "not-started",
         "category": {
           "coding": [
@@ -574,14 +574,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "red"
             }
           ]
-        },
+        }],
         "status": "not-started",
         "category": {
           "coding": [
@@ -596,14 +596,14 @@
     },
     {
       "detail": {
-        "reasonCode": {
+        "reasonCode": [{
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
               "code": "red"
             }
           ]
-        },
+        }],
         "status": "not-started",
         "category": {
           "coding": [
