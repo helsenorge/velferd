@@ -4,6 +4,10 @@ import { fetchCarePlan } from '../../actions/care-plan';
 import Phase from './phase/phase.jsx';
 import { getPhase } from './care-plan.js';
 import ReasonCodes from '../../constants/reason-codes';
+import './care-plan-page.scss';
+import ansikt1 from '../../../svg/ansikt-1.svg';
+import ansikt2 from '../../../svg/ansikt-2.svg';
+import ansikt3 from '../../../svg/ansikt-3-fff.svg';
 
 class CarePlanPage extends Component {
 
@@ -29,18 +33,37 @@ class CarePlanPage extends Component {
     const { phases, isFetching } = this.props;
     const isEmpty = phases.length === 0;
     return (
-      <div>
+      <div className="care-plan-page">
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            {phases.map((phase, i) =>
-              <Phase
-                key={i}
-                name={this.getPhaseName(phase.reasonCode)}
-                symptoms={phase.symptoms}
-                actions={phase.actions}
-                medications={phase.medications}
-              />
+            {phases.map((phase, i) => {
+              let icon;
+              switch (i) {
+              case 0:
+                icon = ansikt1;
+                break;
+              case 1:
+                icon = ansikt2;
+                break;
+              case 2:
+                icon = ansikt3;
+                break;
+              default:
+                icon = ansikt1;
+                break;
+              }
+              return (
+                <Phase
+                  glyph={icon}
+                  key={i}
+                  name={this.getPhaseName(phase.reasonCode)}
+                  symptoms={phase.symptoms}
+                  actions={phase.actions}
+                  medications={phase.medications}
+                />
+                );
+            }
             )}
           </div>
         }
