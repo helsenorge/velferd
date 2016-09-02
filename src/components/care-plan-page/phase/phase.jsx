@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import List from './list/list.jsx';
+import './phase.scss';
 
 const Phase = ({ name, symptoms, actions, medications }) => (
   <div>
