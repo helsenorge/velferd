@@ -7,7 +7,7 @@ import ReasonCodes from '../../constants/reason-codes';
 import './care-plan-page.scss';
 import ansikt1 from '../../../svg/ansikt-1.svg';
 import ansikt2 from '../../../svg/ansikt-2.svg';
-import ansikt3 from '../../../svg/ansikt-3-fff.svg';
+import ansikt3 from '../../../svg/ansikt-3.svg';
 
 class CarePlanPage extends Component {
 
