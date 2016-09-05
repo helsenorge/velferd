@@ -23,8 +23,8 @@
   width: 100%;
 
   td {
-    border-right: 2px solid #efefed;
-    border-bottom: 2px solid #efefed;
+    border-right: 2px solid $desert-storm;
+    border-bottom: 2px solid $desert-storm;
     position: relative;
   }
 
@@ -38,7 +38,7 @@
     position: absolute;
     width: 25px;
     height: 2px;
-    background: #efefed;
+    background: $desert-storm;
     right: 0;
     bottom: -1px;
   }

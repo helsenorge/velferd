@@ -1,6 +1,8 @@
+@import "../../../../constants/constants";
+
 .report {
   &__expanderbutton {
-    color: #36818b;
+    color: $paradiso;
     font-size: 1.125rem;
     background: transparent;
     border: 0;
@@ -26,7 +28,7 @@
   }
 
   &__chevron {
-    fill: #36818b;
+    fill: $paradiso;
     margin-left: 1rem;
     transform: rotate(270deg);
 

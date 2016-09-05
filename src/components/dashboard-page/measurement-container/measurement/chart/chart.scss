@@ -6,7 +6,7 @@
   padding-left: 8rem;
 
   .ct-series .ct-line {
-    stroke: #2c9f9e;
+    stroke: $jungle-green;
     stroke-width: 2px;
   }
 
@@ -15,18 +15,16 @@
   }
 
   .ct-series .ct-point {
-    stroke: #2c9f9e;
+    stroke: $jungle-green;
     stroke-width: 5px;
   }
 
   .ct-series .ct-area {
-    fill: #38aa68;
-    //opacity: 0.3;
+    fill: $chateau-green;
   }
-  //rgba(56,170,104,30)
-  //rgba(56,170,130,30)
+
   .ct-grid {
-    stroke: #efefed;
+    stroke: $desert-storm;
     stroke-width: 2px;
     stroke-dasharray: inherit;
   }

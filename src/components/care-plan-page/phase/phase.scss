@@ -1,3 +1,5 @@
+@import "../../../constants/constants";
+
 .care-plan-table {
   width: 90%;
   max-width: 80rem;
@@ -6,15 +8,15 @@
   border-collapse: collapse;
 
   &:nth-of-type(1) &__caption {
-    background: #43D5B7;
+    background: $turquoise;
   }
 
   &:nth-of-type(2) &__caption {
-    background: #C6BD66;
+    background: $laser;
   }
 
   &:nth-of-type(3) &__caption {
-    background: #E96B61;
+    background: $burnt-sienna;
   }
 
   &__caption {
@@ -42,7 +44,7 @@
     padding: 0.5rem 1rem;
 
     &:not(:last-of-type) {
-      border-right: 2px solid #ebebeb;
+      border-right: 2px solid $page-background;
     }
   }
 

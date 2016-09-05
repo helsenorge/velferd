@@ -14,12 +14,12 @@
   font-size: 1.125rem;
   margin-left: 5px;
   cursor: pointer;
-  color: #4a4a4a;
+  color: $tundora;
   border-radius: 100px;
 
   &:hover,
   &:focus {
-    background: #e5e5e1;
+    background: $cararra;
   }
 
   &:focus {
@@ -27,7 +27,7 @@
   }
 
   &--active {
-    background: #e5e5e1;
+    background: $cararra;
   }
 }
 

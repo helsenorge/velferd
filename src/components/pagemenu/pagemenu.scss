@@ -1,7 +1,7 @@
 @import '../../constants/constants';
 
 .pagemenu {
-  background: #e5e5e1;
+  background: $cararra;
   flex: 0 0 12rem;
   z-index: 2;
 
@@ -28,7 +28,7 @@
   }
 
   &__text {
-    border-bottom: 1px solid #d1d1cc;
+    border-bottom: 1px solid $quill-gray;
     padding-bottom: 1rem;
   }
 }
