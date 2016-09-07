@@ -9,11 +9,12 @@ import chevron from '../../../../../svg/chevron-left.svg';
 class Range extends Component {
   constructor(props) {
     super(props);
-    this.state = { sticky: false };
     this.scrollListener = this.scrollListener.bind(this);
+    this.addClone = this.addClone.bind(this);
   }
 
   componentDidMount() {
+    this.addClone();
     window.addEventListener('scroll', this.scrollListener);
   }
 
@@ -21,12 +22,18 @@ class Range extends Component {
     window.removeEventListener('scroll', this.scrollListener);
   }
 
-  scrollListener(evt) {
-    if (evt.target.scrollingElement.scrollTop > 235) {
-      this.setState({ sticky: true });
+  addClone() {
+    this.clone = this.refs.range.cloneNode(true);
+    this.clone.classList.add('range--sticky');
+    this.refs.range.parentNode.insertBefore(this.clone, null);
+  }
+
+  scrollListener() {
+    if (window.scrollY > this.refs.range.offsetTop) {
+      this.clone.classList.add('range--show');
     }
     else {
-      this.setState({ sticky: false });
+      this.clone.classList.remove('range--show');
     }
   }
 
@@ -62,14 +69,13 @@ class Range extends Component {
     ));
     const rangeClasses = classNames({
       range: true,
-      'range--sticky': this.state.sticky,
     });
     const rangeDateClasses = classNames(
       'range__date-buttons',
       `range__date-buttons--${activeRange}`
     );
     return (
-      <nav className={rangeClasses}>
+      <nav className={rangeClasses} ref="range">
         <div className="range__controls">
           <button
             className="range__button range__button--rev"
