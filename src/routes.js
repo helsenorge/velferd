@@ -8,5 +8,6 @@ export default (
   <Route path="/velferd" component={App}>
     <IndexRoute component={DashboardPage} />
     <Route path="careplan" component={CarePlan} />
+    <Route path="loggedin" />
   </Route>
 );
