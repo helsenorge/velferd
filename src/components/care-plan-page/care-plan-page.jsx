@@ -12,8 +12,8 @@ import ansikt3 from '../../../svg/ansikt-3.svg';
 class CarePlanPage extends Component {
 
   componentDidMount() {
-    const { dispatch, fhirUrl, patientId } = this.props;
-    dispatch(fetchCarePlan(fhirUrl, patientId));
+    const { dispatch, fhirUrl, patientId, token } = this.props;
+    dispatch(fetchCarePlan(fhirUrl, patientId, token));
   }
 
   getPhaseName(reasonCode) {
@@ -78,10 +78,11 @@ CarePlanPage.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   phases: PropTypes.array.isRequired,
+  token: React.PropTypes.string,
 };
 
 function mapStateToProps(state) {
-  const { carePlan, settings } = state;
+  const { carePlan, settings, auth } = state;
   const { fhirUrl, patientId } = settings;
   const {
     isFetching,
@@ -106,7 +107,9 @@ function mapStateToProps(state) {
     fhirUrl,
     patientId,
     phases,
-    isFetching };
+    isFetching,
+    token: auth.token,
+  };
 }
 
 export default connect(mapStateToProps)(CarePlanPage);

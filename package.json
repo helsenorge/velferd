@@ -55,7 +55,6 @@
     "eslint-plugin-import": "^1.8.0",
     "eslint-plugin-jsx-a11y": "^1.2.0",
     "eslint-plugin-react": "^5.1.1",
-    "isomorphic-fetch": "^2.2.1",
     "json-loader": "^0.5.4",
     "mocha": "^3.0.2",
     "node-sass": "^3.7.0",
@@ -70,6 +69,7 @@
     "stylelint-webpack-plugin": "^0.3.0",
     "svg-sprite-loader": "0.0.26",
     "webpack": "^1.13.0",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "whatwg-fetch": "^1.0.0"
   }
 }

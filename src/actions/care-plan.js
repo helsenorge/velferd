@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import { get } from '../helpers/api';
 
 export const REQUEST_CAREPLAN = 'REQUEST_CAREPLAN';
 export const RECEIVE_CAREPLAN = 'RECEIVE_CAREPLAN';
@@ -23,7 +23,7 @@ function useMock() {
   return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
 }
 
-export function fetchCarePlan(fhirUrl, patientId) {
+export function fetchCarePlan(fhirUrl, patientId, token) {
   if (useMock()) {
     const json = require( `../mock/care-plan.json`); // eslint-disable-line
     return dispatch => dispatch(receiveCarePlan(patientId, json));
@@ -33,7 +33,7 @@ export function fetchCarePlan(fhirUrl, patientId) {
     dispatch(requestCarePlan(patientId));
     const url =
     `${fhirUrl}/CarePlan?subject=${patientId}`;
-    return fetch(url)
+    return get(url, token)
       .then(response => response.json())
       .then(json => dispatch(receiveCarePlan(patientId, json)));
   };

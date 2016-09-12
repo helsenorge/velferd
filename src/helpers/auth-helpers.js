@@ -4,7 +4,7 @@ const ehelseLabAuthUri = 'http://access.ehelselab.com/authorize';
 
 const ehelseLabParams = {
   client_id: 'avstand',
-  redirect_uri: 'http://apps.ehelselab.com/velferd/loggedin',
+  redirect_uri: 'http://apps.ehelselab.com/velferd/',
   response_type: 'token',
   scope: 'patient/*.*',
   nonce: '6130755535249629',

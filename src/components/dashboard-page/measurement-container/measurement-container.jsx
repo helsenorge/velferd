@@ -6,8 +6,8 @@ import Measurement from './measurement/measurement.jsx';
 class MeasurementsContainer extends Component {
 
   componentDidMount() {
-    const { dispatch, fhirUrl, patientId } = this.props;
-    dispatch(fetchObservations(fhirUrl, this.props.code, patientId));
+    const { dispatch, fhirUrl, patientId, token } = this.props;
+    dispatch(fetchObservations(fhirUrl, this.props.code, patientId, token));
   }
 
   render() {
@@ -45,10 +45,11 @@ MeasurementsContainer.propTypes = {
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
   icon: React.PropTypes.string,
+  token: React.PropTypes.string,
 };
 
 function mapStateToProps(state, ownProps) {
-  const { observationsByCode, settings } = state;
+  const { observationsByCode, settings, auth } = state;
   const {
     isFetching,
     lastUpdated,
@@ -66,6 +67,7 @@ function mapStateToProps(state, ownProps) {
     data,
     isFetching,
     lastUpdated,
+    token: auth.token,
   };
 }
 
