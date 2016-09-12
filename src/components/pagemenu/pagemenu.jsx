@@ -5,33 +5,29 @@ import './pagemenu.scss';
 const PageMenu = () => (
   <nav className="pagemenu">
     <ul className="pagemenu__list">
-      <li>
+      <li className="pagemenu__list-item">
         <IndexLink
           to="/velferd"
           className="pagemenu__link"
           activeClassName="pagemenu__link--active"
         >
-          <div className="pagemenu__text">
             Egenvurdering og målinger
-          </div>
         </IndexLink>
       </li>
-      <li className="pagemenu__link">
-        <div className="pagemenu__text">Hendelser</div>
+      <li className="pagemenu__list-item">
+        <a href="#" className="pagemenu__link">Hendelser</a>
       </li>
-      <li>
+      <li className="pagemenu__list-item">
         <Link
           to="/velferd/careplan"
           className="pagemenu__link"
           activeClassName="pagemenu__link--active"
         >
-          <div className="pagemenu__text">
             Egenbehandlingsplan
-          </div>
         </Link>
       </li>
-      <li className="pagemenu__link">
-        <div className="pagemenu__text">Meldinger</div>
+      <li className="pagemenu__list-item">
+        <a href="#" className="pagemenu__link">Meldinger</a>
       </li>
     </ul>
   </nav>
