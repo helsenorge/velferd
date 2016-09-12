@@ -34,6 +34,7 @@ class CarePlanPage extends Component {
     const isEmpty = phases.length === 0;
     return (
       <div className="care-plan-page">
+        <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
