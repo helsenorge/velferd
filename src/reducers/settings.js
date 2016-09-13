@@ -1,3 +1,7 @@
+import {
+  SET_FHIR_URL, SET_AUTHENTICATE,
+} from '../actions/settings';
+
 
 export function settings(state = {
   authenticate: false,
@@ -6,6 +10,14 @@ export function settings(state = {
   questionnaireId: '62763',
 }, action) {
   switch (action.type) {
+  case SET_FHIR_URL:
+    return Object.assign({}, state, {
+      fhirUrl: action.url,
+    });
+  case SET_AUTHENTICATE:
+    return Object.assign({}, state, {
+      authenticate: action.authenticate,
+    });
   default:
     return state;
   }
