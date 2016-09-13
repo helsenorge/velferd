@@ -7,9 +7,6 @@ const PageHeader = () => (
       Tora Hansen 1230399 12345 hjertesvikt
     </span>
     <span>
-      Responssenter: Lorem Ipsum Trondheim
-    </span>
-    <span>
       Innlogget som: Anna Fos Eieb (lege), Lillesand legekontor
     </span>
   </header>
