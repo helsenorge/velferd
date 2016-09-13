@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch';
+import { get } from '../helpers/api';
 
 export const REQUEST_OBSERVATIONS = 'REQUEST_OBSERVATIONS';
 export const RECEIVE_OBSERVATIONS = 'RECEIVE_OBSERVATIONS';
@@ -25,7 +25,7 @@ function useMock() {
   return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
 }
 
-export function fetchObservations(fhirUrl, code, patientId) {
+export function fetchObservations(fhirUrl, code, patientId, token) {
   if (useMock()) {
     const json = require( `../mock/${code}.observations.json`); // eslint-disable-line
     return dispatch => dispatch(receiveObservations(code, patientId, json));
@@ -35,7 +35,7 @@ export function fetchObservations(fhirUrl, code, patientId) {
     dispatch(requestObservations(code, patientId));
     const url =
     `${fhirUrl}/Observation?_count=500&_sort:asc=date&code=${code}&patient=${patientId}`;
-    return fetch(url)
+    return get(url, token)
       .then(response => response.json())
       .then(json => dispatch(receiveObservations(code, patientId, json)));
   };

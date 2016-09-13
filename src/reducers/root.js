@@ -4,6 +4,7 @@ import { settings } from './settings';
 import { patient } from './patient';
 import { questionnaireResponses } from './questionnaire-responses';
 import { carePlan } from './care-plan';
+import { auth } from './auth';
 
 const rootReducer = combineReducers({
   observationsByCode,
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   patient,
   questionnaireResponses,
   carePlan,
+  auth,
 });
 
 export default rootReducer;
