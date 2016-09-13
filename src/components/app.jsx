@@ -13,7 +13,7 @@ class App extends Component {
     const { dispatch, fhirUrl, patientId, authenticate, token } = this.props;
 
     if (this.accessAllowed(authenticate, token)) {
-      dispatch(fetchPatient(fhirUrl, patientId, token));
+      dispatch(fetchPatient(fhirUrl, patientId));
     }
   }
 
@@ -21,7 +21,7 @@ class App extends Component {
     const { dispatch, fhirUrl, patientId, authenticate, token, data } = nextProps;
 
     if (this.accessAllowed(authenticate, token) && data === null) {
-      dispatch(fetchPatient(fhirUrl, patientId, token));
+      dispatch(fetchPatient(fhirUrl, patientId));
     }
   }
 

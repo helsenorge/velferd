@@ -7,8 +7,8 @@ import { bindActionCreators } from 'redux';
 class QuestionnaireResponsesContainer extends Component {
 
   componentDidMount() {
-    const { fhirUrl, patientId, questionnaireId, token } = this.props;
-    this.props.actions.fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId, token);
+    const { fhirUrl, patientId, questionnaireId } = this.props;
+    this.props.actions.fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId);
   }
 
   render() {
@@ -45,11 +45,10 @@ QuestionnaireResponsesContainer.propTypes = {
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
   icon: React.PropTypes.string,
-  token: React.PropTypes.string,
 };
 
 function mapStateToProps(state) {
-  const { questionnaireResponses, settings, auth } = state;
+  const { questionnaireResponses, settings } = state;
   const {
     isFetching,
     lastUpdated,
@@ -67,7 +66,6 @@ function mapStateToProps(state) {
     data,
     isFetching,
     lastUpdated,
-    token: auth.token,
   };
 }
 
