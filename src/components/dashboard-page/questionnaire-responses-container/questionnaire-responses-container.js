@@ -7,17 +7,17 @@ import { bindActionCreators } from 'redux';
 class QuestionnaireResponsesContainer extends Component {
 
   componentDidMount() {
-    const { fhirUrl, patientId, questionnaireId, token } = this.props;
-    this.props.actions.fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId, token);
+    const { fhirUrl, patientId, questionnaireId } = this.props;
+    this.props.actions.fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId);
   }
 
   render() {
     const { data, isFetching } = this.props;
-    const isEmpty = data === null;
+    const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
     return (
       <div>
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+          ? (isFetching ? <h2>Loading...</h2> : null)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             <QuestionnaireResponses
               data={data}
@@ -45,11 +45,10 @@ QuestionnaireResponsesContainer.propTypes = {
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
   icon: React.PropTypes.string,
-  token: React.PropTypes.string,
 };
 
 function mapStateToProps(state) {
-  const { questionnaireResponses, settings, auth } = state;
+  const { questionnaireResponses, settings } = state;
   const {
     isFetching,
     lastUpdated,
@@ -67,7 +66,6 @@ function mapStateToProps(state) {
     data,
     isFetching,
     lastUpdated,
-    token: auth.token,
   };
 }
 

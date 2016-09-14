@@ -6,17 +6,17 @@ import Measurement from './measurement/measurement.jsx';
 class MeasurementsContainer extends Component {
 
   componentDidMount() {
-    const { dispatch, fhirUrl, patientId, token } = this.props;
-    dispatch(fetchObservations(fhirUrl, this.props.code, patientId, token));
+    const { dispatch, fhirUrl, patientId } = this.props;
+    dispatch(fetchObservations(fhirUrl, this.props.code, patientId));
   }
 
   render() {
     const { data, isFetching } = this.props;
-    const isEmpty = data === null;
+    const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
     return (
       <div>
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+          ? (isFetching ? <h2>Loading...</h2> : null)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             <Measurement
               icon={this.props.icon}
@@ -45,11 +45,10 @@ MeasurementsContainer.propTypes = {
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
   icon: React.PropTypes.string,
-  token: React.PropTypes.string,
 };
 
 function mapStateToProps(state, ownProps) {
-  const { observationsByCode, settings, auth } = state;
+  const { observationsByCode, settings } = state;
   const {
     isFetching,
     lastUpdated,
@@ -67,7 +66,6 @@ function mapStateToProps(state, ownProps) {
     data,
     isFetching,
     lastUpdated,
-    token: auth.token,
   };
 }
 

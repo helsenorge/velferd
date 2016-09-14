@@ -12,8 +12,8 @@ import ansikt3 from '../../../svg/ansikt-3.svg';
 class CarePlanPage extends Component {
 
   componentDidMount() {
-    const { dispatch, fhirUrl, patientId, token } = this.props;
-    dispatch(fetchCarePlan(fhirUrl, patientId, token));
+    const { dispatch, fhirUrl, patientId } = this.props;
+    dispatch(fetchCarePlan(fhirUrl, patientId));
   }
 
   getPhaseName(reasonCode) {
@@ -35,7 +35,7 @@ class CarePlanPage extends Component {
     return (
       <div className="care-plan-page">
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+          ? (isFetching ? <h2>Loading...</h2> : null)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             {phases.map((phase, i) => {
               let icon;
@@ -78,11 +78,10 @@ CarePlanPage.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   phases: PropTypes.array.isRequired,
-  token: React.PropTypes.string,
 };
 
 function mapStateToProps(state) {
-  const { carePlan, settings, auth } = state;
+  const { carePlan, settings } = state;
   const { fhirUrl, patientId } = settings;
   const {
     isFetching,
@@ -94,7 +93,9 @@ function mapStateToProps(state) {
 
   const phases = [];
 
-  if (data) {
+  const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
+
+  if (!isEmpty) {
     const greenPhase = getPhase(data.entry[0].resource, ReasonCodes.green);
     phases.push(greenPhase);
     const yellowPhase = getPhase(data.entry[0].resource, ReasonCodes.yellow);
@@ -108,7 +109,6 @@ function mapStateToProps(state) {
     patientId,
     phases,
     isFetching,
-    token: auth.token,
   };
 }
 
