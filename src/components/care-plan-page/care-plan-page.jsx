@@ -35,7 +35,7 @@ class CarePlanPage extends Component {
     return (
       <div className="care-plan-page">
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <h2>Empty.</h2>)
+          ? (isFetching ? <h2>Loading...</h2> : null)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             {phases.map((phase, i) => {
               let icon;
@@ -93,7 +93,9 @@ function mapStateToProps(state) {
 
   const phases = [];
 
-  if (data) {
+  const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
+
+  if (!isEmpty) {
     const greenPhase = getPhase(data.entry[0].resource, ReasonCodes.green);
     phases.push(greenPhase);
     const yellowPhase = getPhase(data.entry[0].resource, ReasonCodes.yellow);
