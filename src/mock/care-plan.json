@@ -56,53 +56,78 @@
     },
     {
       "resourceType": "Condition",
-      "id": "no-fever-condition",
-      "notes": "Feberfri"
+      "id": "green-condition-1",
+      "notes": "Stabil form, feberfri"
     },
     {
       "resourceType": "Condition",
-      "id": "stable-condition",
-      "notes": "Stabil form ingen økning i tretthet, tungpusthet, hevelser eller vekt"
+      "id": "green-condition-2",
+      "notes": "Ingen tungpust"
     },
     {
       "resourceType": "Condition",
-      "id": "heavy-breath-condition",
-      "notes": "Mer tungpust enn vanlig"
+      "id": "green-condition-3",
+      "notes": "Ingen tretthet"
     },
     {
       "resourceType": "Condition",
-      "id": "tired-condition",
-      "notes": "Økende trett og sliten"
+      "id": "green-condition-4",
+      "notes": "Ingen hevelser i beina"
     },
     {
       "resourceType": "Condition",
-      "id": "leg-swelling-condition",
+      "id": "green-condition-5",
+      "notes": "Tilfreds og rolig"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "yellow-condition-1",
+      "notes": "Lavt aktivitetsnivå, feber"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "yellow-condition-2",
+      "notes": "Mer tungpust enn vanlig, forverring av hoste"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "yellow-condition-3",
+      "notes": "Trett og sliten"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "yellow-condition-4",
       "notes": "Økende hevelse i beina"
     },
     {
       "resourceType": "Condition",
-      "id": "weight-gain-condition",
-      "notes": "Gått opp > 2 kg i vekt de siste tre dager"
+      "id": "yellow-condition-5",
+      "notes": "Rastløs, urolig"
     },
     {
       "resourceType": "Condition",
-      "id": "worse-cough-condition",
-      "notes": "Forverring av hoste"
+      "id": "red-condition-1",
+      "notes": "Lavt aktivitetsnivå, feber"
     },
     {
       "resourceType": "Condition",
-      "id": "fever-condition",
-      "notes": "Feber"
+      "id": "red-condition-2",
+      "notes": "Mye verre i pusten, forverring av hoste"
     },
     {
       "resourceType": "Condition",
-      "id": "worse-heavy-breath-condition",
-      "notes": "Mye verre i pusten"
+      "id": "red-condition-3",
+      "notes": "Må hvile/sove flere ganger i løpet av dagen"
     },
     {
       "resourceType": "Condition",
-      "id": "worse-tired-condition",
-      "notes": "Må du hvile/sove flere ganger i løpet av dagen?"
+      "id": "red-condition-4",
+      "notes": "Økende hevelse i beina"
+    },
+    {
+      "resourceType": "Condition",
+      "id": "red-condition-5",
+      "notes": "Irritabel, stresset"
     }
   ],
   "subject": {
@@ -166,10 +191,19 @@
         }],
         "reasonReference": [
           {
-            "reference": "#stable-condition"            
+            "reference": "#green-condition-1"            
           },
           {
-            "reference": "#no-fever-condition"            
+            "reference": "#green-condition-2"            
+          },
+          {
+            "reference": "#green-condition-3"            
+          },
+          {
+            "reference": "#green-condition-4"            
+          },
+          {
+            "reference": "#green-condition-5"            
           }
         ],
         "category": {
@@ -256,7 +290,7 @@
             }
           ]
         },
-        "description": "Ta dine faste medisiner"
+        "description": "Ta dine faste medisiner som avtalt/foreskrevet med legen"
       }
     },
     {
@@ -319,7 +353,7 @@
             }
           ]
         },
-        "description": "Ta dine faste medisiner som foreskrevet / avtalt med lege!"
+        "description": "Vanndrivende: Burinex, 2mg, 1 gang daglig"
       }
     },
     {
@@ -334,22 +368,19 @@
         }],
         "reasonReference": [
           {
-            "reference": "#heavy-breath-condition"            
+            "reference": "#yellow-condition-1"            
           },
           {
-            "reference": "#tired-condition"            
+            "reference": "#yellow-condition-2"            
           },
           {
-            "reference": "#leg-swelling-condition"            
+            "reference": "#yellow-condition-3"            
           },
           {
-            "reference": "#weight-gain-condition"            
+            "reference": "#yellow-condition-4"            
           },
           {
-            "reference": "#worse-cough-condition"            
-          },
-          {
-            "reference": "#fever-condition"            
+            "reference": "#yellow-condition-5"            
           }
         ],
         "category": {
@@ -458,7 +489,28 @@
             }
           ]
         },
-        "description": "Vanndrivende"
+        "description": "Vanndrivende: Burinex, 2mg, 2 ganger daglig"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": [{
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "yellow"
+            }
+          ]
+        }],
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "drug"
+            }
+          ]
+        },
+        "description": "Inhalasjonsmedisin: Ventolin, 0,2 mg, inntil 4-6 dager"
       }
     },
     {
@@ -473,22 +525,19 @@
         }],
         "reasonReference": [
           {
-            "reference": "#worse-heavy-breath-condition"            
+            "reference": "#red-condition-1"            
           },
           {
-            "reference": "#worse-tired-condition"            
+            "reference": "#red-condition-2"            
           },
           {
-            "reference": "#leg-swelling-condition"            
+            "reference": "#red-condition-3"            
           },
           {
-            "reference": "#weight-gain-condition"            
+            "reference": "#red-condition-4"            
           },
           {
-            "reference": "#worse-cough-condition"            
-          },
-          {
-            "reference": "#fever-condition"            
+            "reference": "#red-condition-5"            
           }
         ],
         "category": {
@@ -597,7 +646,28 @@
             }
           ]
         },
-        "description": "Vanndrivende"
+        "description": "Vanndrivende: Burinex, 2mg, 2 ganger daglig"
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": [{
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "red"
+            }
+          ]
+        }],
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "drug"
+            }
+          ]
+        },
+        "description": "Inhalasjonsmedisin: Ventolin, 0,2 mg, inntil 4-6 dager"
       }
     }
   ]
