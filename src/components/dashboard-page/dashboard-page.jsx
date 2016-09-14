@@ -17,7 +17,7 @@ class DashboardPage extends Component {
   constructor(props) {
     super(props);
 
-    const dayRange = 7;
+    const dayRange = 14;
 
     const toDate = new Date();
     toDate.setHours(0, 0, 0, 0);
