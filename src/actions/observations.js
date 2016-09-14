@@ -1,4 +1,5 @@
 import { get } from '../helpers/api';
+import { discardAuthToken } from '../actions/auth';
 
 export const REQUEST_OBSERVATIONS = 'REQUEST_OBSERVATIONS';
 export const RECEIVE_OBSERVATIONS = 'RECEIVE_OBSERVATIONS';
@@ -25,13 +26,20 @@ function useMock() {
   return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
 }
 
-export function fetchObservations(fhirUrl, code, patientId, token) {
+export function fetchObservations(fhirUrl, code, patientId) {
   if (useMock()) {
     const json = require( `../mock/${code}.observations.json`); // eslint-disable-line
     return dispatch => dispatch(receiveObservations(code, patientId, json));
   }
 
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { token, expiration } = getState().auth;
+    const { authenticate } = getState().settings;
+
+    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+      return dispatch(discardAuthToken());
+    }
+
     dispatch(requestObservations(code, patientId));
     const url =
     `${fhirUrl}/Observation?_count=500&_sort:asc=date&code=${code}&patient=${patientId}`;

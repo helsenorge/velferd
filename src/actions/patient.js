@@ -1,4 +1,5 @@
 import { get } from '../helpers/api';
+import { discardAuthToken } from '../actions/auth';
 
 export const REQUEST_PATIENT = 'REQUEST_PATIENT';
 export const RECEIVE_PATIENT = 'RECEIVE_PATIENT';
@@ -23,13 +24,20 @@ function useMock() {
   return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
 }
 
-export function fetchPatient(fhirUrl, patientId, token) {
+export function fetchPatient(fhirUrl, patientId) {
   if (useMock()) {
     const json = require('../mock/patient.json'); // eslint-disable-line
     return dispatch => dispatch(receivePatient(patientId, json));
   }
 
-  return dispatch => {
+  return (dispatch, getState) => {
+    const { token, expiration } = getState().auth;
+    const { authenticate } = getState().settings;
+
+    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+      return dispatch(discardAuthToken());
+    }
+
     dispatch(requestPatient(patientId));
     const url =
     `${fhirUrl}/Patient/${patientId}`;

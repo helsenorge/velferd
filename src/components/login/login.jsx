@@ -13,7 +13,11 @@ class Login extends Component {
   processHash(hash) {
     const token = hash.substring(hash.indexOf('#access_token=') + '#access_token='.length,
       hash.indexOf('&'));
-    this.props.dispatch(setAuthToken(token));
+    const expiresIn = hash.substring(hash.indexOf('expires_in=') + 'expires_in='.length);
+    const expires = new Date();
+    expires.setSeconds(expires.getSeconds() + parseInt(expiresIn, 10));
+
+    this.props.dispatch(setAuthToken(token, expires));
   }
 
   render() {
