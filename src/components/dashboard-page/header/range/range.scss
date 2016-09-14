@@ -1,6 +1,7 @@
 @import '../../../../constants/constants';
 
 .range {
+  width: 100%;
   margin-top: 1rem;
   display: flex;
   flex-direction: row;
@@ -34,16 +35,14 @@
   &--fwd {
     display: flex;
     width: 7rem;
-    color: #fff;
-    background: $tundora;
-    border-radius: 100px;
+    color: #097A7A;
     font-weight: 300;
     padding: 1rem 1.2rem;
     justify-content: space-between;
     align-items: center;
 
     .icon {
-      fill: #fff;
+      fill: #097A7A;
     }
   }
 
@@ -75,6 +74,11 @@
 
   .range__button {
     flex: 0 0 calc(100% / 7);
+    border-left: 1px solid #E1E1E1;
+
+    &:last-child {
+      border-right: 1px solid #E1E1E1;
+    }
   }
 
   &--14 {

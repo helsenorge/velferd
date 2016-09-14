@@ -9,12 +9,30 @@ const ZoomButtons = ({ handleRangeClick, activeRange }) => {
       zoombuttons__button: true,
       'zoombuttons__button--active': range === activeRange,
     });
+    let rangeString = '';
+    switch (range) {
+    case 14:
+      rangeString = '2 uker';
+      break;
+    case 30:
+      rangeString = '1 måned';
+      break;
+    case 90:
+      rangeString = '3 måneder';
+      break;
+    case 180:
+      rangeString = '6 måneder';
+      break;
+    default:
+      rangeString = '';
+      break;
+    }
     return (<button
       className={className}
       onClick={() => handleRangeClick(range)}
       key={index}
     >
-      {range} dager
+      {rangeString}
     </button>);
   });
 
