@@ -29,7 +29,7 @@ class Range extends Component {
   }
 
   scrollListener() {
-    if (window.scrollY > this.refs.range.offsetTop) {
+    if (window.scrollY > this.refs.range.offsetTop - 15) {
       this.clone.classList.add('range--show');
     }
     else {
