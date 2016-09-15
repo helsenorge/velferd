@@ -2,32 +2,30 @@
 
 .zoombuttons {
   display: flex;
-  align-self: flex-end;
+  margin-left: 10rem;
 }
 
 .zoombuttons__button {
   flex: 0 0 auto;
-  background: transparent;
   border: 0;
-  color: #000;
+  color: #097A7A;
   padding: 0.8rem 1rem;
-  font-size: 1.125rem;
+  font-size: 1rem;
   margin-left: 5px;
   cursor: pointer;
-  color: $tundora;
-  border-radius: 100px;
+  background: transparent;
+  text-transform: uppercase;
 
   &:hover,
-  &:focus {
-    background: $cararra;
+  &:focus,
+  &--active {
+    background: #343434;
+    color: #fff;
+    font-weight: 300;
   }
 
   &:focus {
     outline: none;
-  }
-
-  &--active {
-    background: $cararra;
   }
 }
 

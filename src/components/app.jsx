@@ -38,15 +38,11 @@ class App extends Component {
 
     return (
       <div>
-        <div className="flexcontainer">
-          <PageMenu />
-          <div>
-            <PageHeader patient={data} />
-            <article className="main">
-              {this.props.children}
-            </article>
-          </div>
-        </div>
+        <PageHeader patient={data} />
+        <PageMenu />
+        <article className="main">
+          {this.props.children}
+        </article>
         <Footer fhirUrl={this.props.fhirUrl} />
       </div>
     );

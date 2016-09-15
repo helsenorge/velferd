@@ -34,7 +34,6 @@ class Report extends Component {
         <Collapse isOpened={this.state.expanded}>
           <div className="report__expander">
             <h3 className="report__header">
-              Oppsummering for&nbsp;
                {formatDate(this.props.fromDate)} - {formatDate(this.props.toDate)} 2016
             </h3>
             <p className="report__paragraph">
@@ -51,6 +50,7 @@ class Report extends Component {
             <p className="report__paragraph">
               4. august ble det startet en antibiotikakur med xx.
             </p>
+            <button className="report__copybutton">Kopier tekst</button>
           </div>
         </Collapse>
       </div>

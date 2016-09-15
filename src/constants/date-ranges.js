@@ -1,1 +1,1 @@
-export const dateranges = [7, 14, 30, 90];
+export const dateranges = [14, 30, 90, 180];

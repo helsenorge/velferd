@@ -1,6 +1,7 @@
 @import '../../../../constants/constants';
 
 .range {
+  width: 100%;
   margin-top: 1rem;
   display: flex;
   flex-direction: row;
@@ -9,13 +10,12 @@
     display: none;
     position: fixed;
     top: -17px;
-    left: 12rem;
-    width: calc(100% - 16rem);
+    left: 0;
     z-index: 1;
+    width: calc(100% - 8rem);
     background: $page-background;
-    padding: 1rem 2rem;
+    padding: 1rem 4rem;
     box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
-    transition: box-shadow 0.1s ease-in-out;
   }
 
   &--show {
@@ -34,17 +34,10 @@
   &--fwd {
     display: flex;
     width: 7rem;
-    color: #fff;
-    background: $tundora;
-    border-radius: 100px;
+    color: #097A7A;
     font-weight: 300;
-    padding: 1rem 1.2rem;
     justify-content: space-between;
     align-items: center;
-
-    .icon {
-      fill: #fff;
-    }
   }
 
   &--rev {
@@ -75,6 +68,11 @@
 
   .range__button {
     flex: 0 0 calc(100% / 7);
+    border-left: 1px solid #E1E1E1;
+
+    &:last-child {
+      border-right: 1px solid #E1E1E1;
+    }
   }
 
   &--14 {

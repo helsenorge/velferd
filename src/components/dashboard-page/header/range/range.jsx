@@ -4,7 +4,7 @@ import { getMonth, getDate, calculateDateRange, getNumberofColumnsinChart }
   from '../../../../helpers/date-helpers.js';
 import './range.scss';
 import Icon from '../../../icon/icon.jsx';
-import chevron from '../../../../../svg/chevron-left.svg';
+import pil from '../../../../../svg/pil-venstre.svg';
 
 class Range extends Component {
   constructor(props) {
@@ -29,7 +29,7 @@ class Range extends Component {
   }
 
   scrollListener() {
-    if (window.scrollY > this.refs.range.offsetTop) {
+    if (window.scrollY > this.refs.range.offsetTop - 15) {
       this.clone.classList.add('range--show');
     }
     else {
@@ -81,7 +81,7 @@ class Range extends Component {
             className="range__button range__button--rev"
             onClick={() => handleSingleBackClick()}
           >
-            <Icon glyph={chevron} />
+            <Icon glyph={pil} width={51} height={51} />
             Forrige
           </button>
         </div>
@@ -96,7 +96,7 @@ class Range extends Component {
             onClick={() => handleSingleForwardClick()}
           >
             Neste
-            <Icon glyph={chevron} />
+            <Icon glyph={pil} width={51} height={51} />
           </button>
         </div>
       </nav>

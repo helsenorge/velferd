@@ -1,35 +1,35 @@
 @import '../../constants/constants';
 
 .pagemenu {
-  background: $cararra;
-  flex: 0 0 12rem;
-  z-index: 2;
-
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
+  background: #CCE8D9;
+  padding: 0 10rem;
+  font-size: 1.125rem;
 
   &__list {
-    margin-top: 5rem;
     list-style-type: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__list-item {
+    flex: 1 0 auto;
+    display: flex;
   }
 
   &__link {
-    display: block;
-    padding: 1rem 1rem 0;
-    word-break: break-word;
+    flex: 1;
+    padding: 1rem 0;
+    text-align: center;
+    color: #2C2C2C;
+    text-decoration: none;
     text-transform: uppercase;
 
-    &--active {
-      background: linear-gradient(#969692, #c7c7be 20%, #c7c7be);
+    &--active,
+    &:hover {
+      background: #a6d9be;
     }
-  }
-
-  &__text {
-    border-bottom: 1px solid $quill-gray;
-    padding-bottom: 1rem;
   }
 }
 

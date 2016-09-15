@@ -3,7 +3,12 @@ import './pageheader.scss';
 
 const PageHeader = () => (
   <header className="pageheader">
-    <h1 className="pageheader__heading">Avstandsoppfølging</h1>
+    <span>
+      Tora Hansen 1230399 12345 hjertesvikt
+    </span>
+    <span>
+      Innlogget som: Anna Fos Eieb (lege), Lillesand legekontor
+    </span>
   </header>
 );
 
