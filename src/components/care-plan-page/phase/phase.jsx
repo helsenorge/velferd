@@ -1,29 +1,49 @@
 import React, { PropTypes } from 'react';
 import Icon from '../../icon/icon.jsx';
+import TextInput from '../../text-input/text-input.jsx';
 import './phase.scss';
 
-const Phase = ({ name, symptoms, actions, medications, glyph }) => {
+const Phase = ({ edit, name, phase, glyph, onChange }) => {
+  const getValue = (i, type, value) => {
+    if (edit) {
+      return (
+        <TextInput
+          onChange={onChange}
+          name={`${phase.reasonCode}-${type}-${i}`}
+          value={value}
+        />
+      );
+    }
+    return value;
+  };
+
   const getRows = () => {
-    const numRows = Math.max(symptoms.length, actions.length, medications.length);
+    const numRows = Math.max(phase.symptoms.length, phase.actions.length, phase.medications.length);
     const rows = [];
     for (let i = 0; i < numRows; i++) {
       rows.push((
         <tr className="care-plan-table__row">
           <td className="care-plan-table__cell">
-            {symptoms[i] !== undefined ?
-              (<span className="care-plan-table__celltext">{symptoms[i]}</span>)
+            {phase.symptoms[i] !== undefined ?
+              (<span className="care-plan-table__celltext">
+                {getValue(i, 'symptoms', phase.symptoms[i])}
+              </span>)
               : null
             }
           </td>
           <td className="care-plan-table__cell">
-            {actions[i] !== undefined ?
-              (<span className="care-plan-table__celltext">{actions[i]}</span>)
+            {phase.actions[i] !== undefined ?
+              (<span className="care-plan-table__celltext">
+                {getValue(i, 'actions', phase.actions[i])}
+              </span>)
               : null
             }
           </td>
           <td className="care-plan-table__cell">
-            {medications[i] !== undefined ?
-              (<span className="care-plan-table__celltext">{medications[i]}</span>)
+            {phase.medications[i] !== undefined ?
+              (<span className="care-plan-table__celltext">
+                {getValue(i, 'medications', phase.medications[i])}
+              </span>)
               : null
             }
           </td>
@@ -61,11 +81,11 @@ const Phase = ({ name, symptoms, actions, medications, glyph }) => {
 };
 
 Phase.propTypes = {
+  edit: PropTypes.bool.isRequired,
   name: PropTypes.string.isRequired,
-  symptoms: PropTypes.array.isRequired,
-  actions: PropTypes.array.isRequired,
-  medications: PropTypes.array.isRequired,
+  phase: PropTypes.object.isRequired,
   glyph: PropTypes.string,
+  onChange: React.PropTypes.func.isRequired,
 };
 
 export default Phase;

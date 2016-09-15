@@ -11,9 +11,25 @@ import ansikt3 from '../../../svg/ansikt-3.svg';
 
 class CarePlanPage extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.updatePhaseState = this.updatePhaseState.bind(this);
+
+    this.state = {
+      phases: Object.assign([], props.phases),
+    };
+  }
+
   componentDidMount() {
     const { dispatch, fhirUrl, patientId } = this.props;
     dispatch(fetchCarePlan(fhirUrl, patientId));
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.state = {
+      phases: Object.assign([], nextProps.phases),
+    };
   }
 
   getPhaseName(reasonCode) {
@@ -29,8 +45,32 @@ class CarePlanPage extends Component {
     }
   }
 
+  getPhaseIndex(reasonCode) {
+    switch (reasonCode) {
+    case ReasonCodes.green:
+      return 0;
+    case ReasonCodes.yellow:
+      return 1;
+    case ReasonCodes.red:
+      return 2;
+    default:
+      return null;
+    }
+  }
+
+  updatePhaseState(event) {
+    const ids = event.target.name.split('-');
+    const phases = this.state.phases;
+    const index = this.getPhaseIndex(ids[0]);
+
+    phases[index][ids[1]][ids[2]] = event.target.value;
+    return this.setState({ phases });
+  }
+
   render() {
-    const { phases, isFetching } = this.props;
+    const { isFetching } = this.props;
+    const phases = this.state.phases;
+
     const isEmpty = phases.length === 0;
     return (
       <div className="care-plan-page">
@@ -56,12 +96,12 @@ class CarePlanPage extends Component {
               }
               return (
                 <Phase
+                  edit={false}
                   glyph={icon}
                   key={i}
                   name={this.getPhaseName(phase.reasonCode)}
-                  symptoms={phase.symptoms}
-                  actions={phase.actions}
-                  medications={phase.medications}
+                  phase={phase}
+                  onChange={this.updatePhaseState}
                 />
                 );
             }
