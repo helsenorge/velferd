@@ -25,4 +25,15 @@ describe('careplan phase', () => {
     expect(phase.medications).to.not.equal(undefined);
     expect(phase.medications.length).gt(0);
   });
+
+  it('should have a list of measurements', () => {
+    const phase = getPhase(data, 'green');
+    expect(phase.measurements).to.not.equal(undefined);
+    expect(phase.measurements.length).gt(0);
+  });
+
+  it('should have a questionnaire', () => {
+    const phase = getPhase(data, 'green');
+    expect(phase.questionnaireId).to.equal('62763');
+  });
 });
