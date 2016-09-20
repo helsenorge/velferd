@@ -3,7 +3,7 @@ import Icon from '../../icon/icon.jsx';
 import TextInput from '../../text-input/text-input.jsx';
 import './phase.scss';
 
-const Phase = ({ edit, name, phase, glyph, onChange }) => {
+const Phase = ({ edit, name, phase, glyph, onChange, saving }) => {
   const getValue = (i, type, value) => {
     if (edit) {
       return (
@@ -11,6 +11,7 @@ const Phase = ({ edit, name, phase, glyph, onChange }) => {
           onChange={onChange}
           name={`${phase.reasonCode}-${type}-${i}`}
           value={value}
+          disabled={saving}
         />
       );
     }
@@ -86,6 +87,7 @@ Phase.propTypes = {
   phase: PropTypes.object.isRequired,
   glyph: PropTypes.string,
   onChange: React.PropTypes.func.isRequired,
+  saving: React.PropTypes.bool.isRequired,
 };
 
 export default Phase;

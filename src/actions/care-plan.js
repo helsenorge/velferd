@@ -4,7 +4,7 @@ import ObservationCodes from '../constants/observation-codes';
 
 export const REQUEST_CAREPLAN = 'REQUEST_CAREPLAN';
 export const RECEIVE_CAREPLAN = 'RECEIVE_CAREPLAN';
-export const REQUEST_SAVE_CAREPLAN = 'REQUEST_SAVE_CAREPLAN';
+export const COMPLETE_SAVE_CAREPLAN = 'COMPLETE_SAVE_CAREPLAN';
 
 function requestCarePlan(patientId) {
   return {
@@ -22,9 +22,11 @@ function receiveCarePlan(patientId, json) {
   };
 }
 
-function requestSaveCarePlan() {
+function completeSaveCarePlan(saveCompleted, error) {
   return {
-    type: REQUEST_SAVE_CAREPLAN,
+    type: COMPLETE_SAVE_CAREPLAN,
+    saveCompleted,
+    error,
   };
 }
 
@@ -106,8 +108,6 @@ function buildCondition(symptom, reasonCode, number) {
 
 export function saveCarePlan(fhirUrl, patientId, phases) {
   return (dispatch, getState) => {
-    dispatch(requestSaveCarePlan());
-
     const { data } = getState().carePlan;
     const resource = Object.assign({}, data.entry[0].resource);
 
@@ -155,6 +155,10 @@ export function saveCarePlan(fhirUrl, patientId, phases) {
     resource.contained = contained;
 
     return put(url, resource)
-      .then(response => console.log('response', response));
+      .then(() => {
+        dispatch(completeSaveCarePlan(true));
+        dispatch(fetchCarePlan(fhirUrl, patientId));
+      })
+      .catch(error => dispatch(completeSaveCarePlan(false, `Saving failed. ${error}`)));
   };
 }

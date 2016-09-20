@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchCarePlan } from '../../actions/care-plan';
+import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
 import Phase from './phase/phase.jsx';
 import { getPhase } from './care-plan.js';
 import ReasonCodes from '../../constants/reason-codes';
@@ -15,9 +15,13 @@ class CarePlanPage extends Component {
     super(props);
 
     this.updatePhaseState = this.updatePhaseState.bind(this);
+    this.saveCarePlan = this.saveCarePlan.bind(this);
+    this.editCarePlan = this.editCarePlan.bind(this);
 
     this.state = {
       phases: Object.assign([], props.phases),
+      edit: false,
+      saving: false,
     };
   }
 
@@ -27,9 +31,13 @@ class CarePlanPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.state = {
-      phases: Object.assign([], nextProps.phases),
-    };
+    if (!nextProps.saveCompleted) {
+      this.setState({ phases: Object.assign([], nextProps.phases) });
+    }
+
+    if (nextProps.saveCompleted) {
+      this.setState({ saving: false, edit: false });
+    }
   }
 
   getPhaseName(reasonCode) {
@@ -67,14 +75,29 @@ class CarePlanPage extends Component {
     return this.setState({ phases });
   }
 
+  editCarePlan(event) {
+    event.preventDefault();
+    this.setState({ edit: true });
+  }
+
+  saveCarePlan(event) {
+    const { dispatch, fhirUrl, patientId } = this.props;
+    event.preventDefault();
+    this.setState({ saving: true });
+    dispatch(saveCarePlan(fhirUrl, patientId, this.state.phases));
+  }
+
   render() {
-    const { isFetching } = this.props;
-    const phases = this.state.phases;
+    const { isFetching, error } = this.props;
+    const { phases, edit, saving } = this.state;
 
     const isEmpty = phases.length === 0;
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
+        {error && <p>{error}</p>}
+        {!edit && <button onClick={this.editCarePlan}>Rediger</button>}
+        {edit && <button onClick={this.saveCarePlan} disabled={saving}>Lagre</button>}
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : null)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
@@ -96,7 +119,8 @@ class CarePlanPage extends Component {
               }
               return (
                 <Phase
-                  edit={false}
+                  edit={edit}
+                  saving={saving}
                   glyph={icon}
                   key={i}
                   name={this.getPhaseName(phase.reasonCode)}
@@ -117,26 +141,22 @@ CarePlanPage.propTypes = {
   fhirUrl: PropTypes.string.isRequired,
   patientId: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
+  saveCompleted: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
   phases: PropTypes.array.isRequired,
+  error: PropTypes.string,
 };
 
 function mapStateToProps(state) {
   const { carePlan, settings } = state;
   const { fhirUrl, patientId } = settings;
-  const {
-    isFetching,
-    data,
-  } = carePlan || {
-    isFetching: true,
-    data: null,
-  };
+  const { isFetching, data, saveCompleted, error } = carePlan
+    || { isFetching: true, data: null, saveCompleted: null };
 
   const phases = [];
-
   const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
 
-  if (!isEmpty) {
+  if (!saveCompleted && !isEmpty) {
     const greenPhase = getPhase(data.entry[0].resource, ReasonCodes.green);
     phases.push(greenPhase);
     const yellowPhase = getPhase(data.entry[0].resource, ReasonCodes.yellow);
@@ -150,6 +170,8 @@ function mapStateToProps(state) {
     patientId,
     phases,
     isFetching,
+    saveCompleted,
+    error,
   };
 }
 
