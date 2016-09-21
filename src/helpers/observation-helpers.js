@@ -14,3 +14,18 @@ export function getMeasurementName(code) {
     return '';
   }
 }
+
+export function getUnit(code) {
+  switch (code) {
+  case ObservationCodes.weight:
+    return 'kg';
+  case ObservationCodes.pulse:
+    return 'bpm';
+  case ObservationCodes.pulseOximeter:
+    return '%';
+  case ObservationCodes.bloodPressure:
+    return 'mm Hg';
+  default:
+    return null;
+  }
+}

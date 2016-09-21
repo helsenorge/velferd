@@ -1,11 +1,11 @@
-function getMeasurements(activities) {
+function getMeasurements(activities, goals) {
   return activities
     .filter(activity => activity.detail.category.coding[0].code === 'observation'
     && activity.detail.code)
     .map(activity => (
       {
         code: activity.detail.code.coding[0].code,
-        goal: activity.detail.goal,
+        goal: goals[activity.detail.goal[0].reference.substring(1)],
       }));
 }
 
@@ -37,18 +37,21 @@ export function getPhase(resource, reasonCode) {
 
   const actions = getActions(activities);
   const medications = getMedications(activities);
-  const measurements = getMeasurements(activities);
+
+  const goals = {};
+  resource.contained.filter(res => res.resourceType === 'Goal')
+    .forEach(res => (goals[res.id] = res.extension));
+  const measurements = getMeasurements(activities, goals);
+
   const questionnaire = getQuestionnaire(activities);
 
-  const containedResources = {};
+  const conditions = {};
   resource.contained.filter(res => res.resourceType === 'Condition')
-    .forEach(res => {
-      containedResources[res.id] = res.notes;
-    });
+    .forEach(res => (conditions[res.id] = res.notes));
 
   const symptoms = !questionnaire ? []
     : questionnaire.detail.reasonReference.map(
-    ref => containedResources[ref.reference.substring(1)]);
+    ref => conditions[ref.reference.substring(1)]);
 
   let questionnaireId;
   if (questionnaire) {
