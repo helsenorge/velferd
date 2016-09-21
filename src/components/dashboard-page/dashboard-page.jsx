@@ -5,6 +5,7 @@ import QuestionnaireResponsesContainer from
   './questionnaire-responses-container/questionnaire-responses-container';
 import ObservationCodes from '../../constants/observation-codes';
 import Header from './header/header.jsx';
+import ToTheTop from './to-the-top/to-the-top.jsx';
 import './dashboard-page.scss';
 import iconEgenvurdering from '../../../svg/ikon-egenvurdering.svg';
 import iconblodtrykk from '../../../svg/ikon-blodtrykk.svg';
@@ -135,6 +136,7 @@ class DashboardPage extends Component {
           selectedDate={this.state.selectedDate}
           code={ObservationCodes.pulseOximeter}
         />
+        <ToTheTop />
       </div>
     );
   }

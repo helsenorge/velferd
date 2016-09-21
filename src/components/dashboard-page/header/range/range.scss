@@ -27,7 +27,7 @@
   padding: 0;
   background: transparent;
   border: none;
-  font-size: 1rem;
+  font-size: 1.125rem;
   cursor: pointer;
 
   &--rev,
@@ -35,7 +35,6 @@
     display: flex;
     width: 7rem;
     color: #097A7A;
-    font-weight: 300;
     justify-content: space-between;
     align-items: center;
   }
@@ -61,8 +60,8 @@
 
 .range__date-buttons {
   flex: 1 1 auto;
-  margin-left: 2.1rem;
-  margin-right: 1rem;
+  margin-left: 2.5rem;
+  margin-right: 2.7rem;
   display: flex;
   justify-content: space-between;
 
@@ -76,7 +75,7 @@
   }
 
   &--14 {
-    margin-right: 1.2rem;
+    margin-right: 2.7rem;
 
     .range__button {
       flex: 0 0 calc(100% / 14);
