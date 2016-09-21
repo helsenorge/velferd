@@ -16,7 +16,7 @@ TextInput.propTypes = {
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,
   value: PropTypes.string,
-  disabled: PropTypes.string,
+  disabled: PropTypes.bool,
 };
 
 export default TextInput;

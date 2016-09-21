@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import Icon from '../../icon/icon.jsx';
-import TextInput from '../../text-input/text-input.jsx';
+import Icon from '../../../icon/icon.jsx';
+import TextInput from '../../../text-input/text-input.jsx';
 import './phase.scss';
 
 const Phase = ({ edit, name, phase, glyph, onChange, saving }) => {

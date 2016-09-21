@@ -1,13 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
-import Phase from './phase/phase.jsx';
-import { getPhase } from './care-plan.js';
+import CarePlan from './care-plan/care-plan.jsx';
 import ReasonCodes from '../../constants/reason-codes';
+import { getPhase } from './care-plan-page.js';
 import './care-plan-page.scss';
-import ansikt1 from '../../../svg/ansikt-1.svg';
-import ansikt2 from '../../../svg/ansikt-2.svg';
-import ansikt3 from '../../../svg/ansikt-3.svg';
 
 class CarePlanPage extends Component {
 
@@ -37,19 +34,6 @@ class CarePlanPage extends Component {
 
     if (nextProps.saveCompleted) {
       this.setState({ saving: false, edit: false });
-    }
-  }
-
-  getPhaseName(reasonCode) {
-    switch (reasonCode) {
-    case ReasonCodes.green:
-      return 'Stabil fase av hjertesvikt';
-    case ReasonCodes.yellow:
-      return 'Moderat forverring av hjertesvikt';
-    case ReasonCodes.red:
-      return 'Alvorlig forverring av hjertesvikt';
-    default:
-      return null;
     }
   }
 
@@ -90,8 +74,8 @@ class CarePlanPage extends Component {
   render() {
     const { isFetching, error } = this.props;
     const { phases, edit, saving } = this.state;
-
     const isEmpty = phases.length === 0;
+
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
@@ -100,37 +84,12 @@ class CarePlanPage extends Component {
         {edit && <button onClick={this.saveCarePlan} disabled={saving}>Lagre</button>}
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : null)
-          : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            {phases.map((phase, i) => {
-              let icon;
-              switch (i) {
-              case 0:
-                icon = ansikt1;
-                break;
-              case 1:
-                icon = ansikt2;
-                break;
-              case 2:
-                icon = ansikt3;
-                break;
-              default:
-                icon = ansikt1;
-                break;
-              }
-              return (
-                <Phase
-                  edit={edit}
-                  saving={saving}
-                  glyph={icon}
-                  key={i}
-                  name={this.getPhaseName(phase.reasonCode)}
-                  phase={phase}
-                  onChange={this.updatePhaseState}
-                />
-                );
-            }
-            )}
-          </div>
+          : <CarePlan
+            phases={phases}
+            edit={edit}
+            saving={saving}
+            onChange={this.updatePhaseState}
+          />
         }
       </div>
     );
