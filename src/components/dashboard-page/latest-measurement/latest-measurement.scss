@@ -2,42 +2,24 @@
 
 .latest-measurement {
   flex: 0 0 9rem;
-  background: linear-gradient($paradiso, $paradiso-light);
-  color: #fff;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-
-  &__headingwrapper {
-    align-self: flex-start;
-  }
+  background: #8CC7B4;
+  color: #272727;
+  padding: 1.375rem;
 
   &__heading {
     font-size: 1rem;
-    font-weight: 400;
-    margin: 0;
+    text-transform: uppercase;
+    margin: 0 0 1rem;
   }
 
   &__date {
-    text-align: center;
-    font-weight: 300;
-  }
-
-  &__valuewrapper {
-    align-self: flex-start;
+    margin-bottom: 1.625rem;
   }
 
   &__value {
     font-size: 3.3125rem;
-    font-weight: 200;
-    text-align: center;
-  }
-
-  &__unit {
-    text-align: center;
     font-weight: 300;
+    word-break: break-word;
   }
 }
 

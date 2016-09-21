@@ -7,7 +7,7 @@ const LatestMeasurement = ({ data }) => {
   let formattedValue = value;
 
   if (value.length > 1) {
-    formattedValue = (<span><div>{value[0]}/</div><div>{value[1]}</div></span>);
+    formattedValue = (<span>{value[0]}/<br />{value[1]}</span>);
   }
   return (
     <div className="latest-measurement">
@@ -18,8 +18,8 @@ const LatestMeasurement = ({ data }) => {
         </div>
       </div>
       <div className="latest-measurement__valuewrapper">
-        <div className="latest-measurement__value">{formattedValue}</div>
-        <div className="latest-measurement__unit">{unit}</div>
+        <span className="latest-measurement__value">{formattedValue}</span>
+        <span className="latest-measurement__unit">{unit}</span>
       </div>
     </div>
     );
