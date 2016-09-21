@@ -81,8 +81,8 @@ class Range extends Component {
             className="range__button range__button--rev"
             onClick={() => handleSingleBackClick()}
           >
-            <Icon glyph={pil} width={51} height={51} />
-            Forrige
+            <Icon className="range__arrow" glyph={pil} width={51} height={51} />
+            <span className="range__text--rev">Eldre</span>
           </button>
         </div>
 
@@ -95,8 +95,8 @@ class Range extends Component {
             className="range__button range__button--fwd"
             onClick={() => handleSingleForwardClick()}
           >
-            Neste
-            <Icon glyph={pil} width={51} height={51} />
+            <span className="range__text">Nyere</span>
+            <Icon className="range__arrow--fwd" glyph={pil} width={51} height={51} />
           </button>
         </div>
       </nav>

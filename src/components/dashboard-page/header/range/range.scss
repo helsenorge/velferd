@@ -35,7 +35,6 @@
     display: flex;
     width: 7rem;
     color: #097A7A;
-    justify-content: space-between;
     align-items: center;
   }
 
@@ -44,6 +43,7 @@
   }
 
   &--fwd {
+    justify-content: space-between;
     margin-left: 2rem;
   }
 }
@@ -87,6 +87,10 @@
   display: flex;
 }
 
-.range__button--fwd .icon {
+.range__text--rev {
+  margin-left: 10px;
+}
+
+.range__arrow--fwd {
   transform: rotate(180deg);
 }
