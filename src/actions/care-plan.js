@@ -96,6 +96,7 @@ function buildObservationActivityCondition(reasonCode, measurement) {
       measurement.code, getObservationCodingDisplay(measurement.code))],
   };
   activity.detail.goal = measurement.goal;
+  return activity;
 }
 
 function buildCondition(symptom, reasonCode, number) {

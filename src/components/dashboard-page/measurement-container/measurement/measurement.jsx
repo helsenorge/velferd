@@ -4,8 +4,7 @@ import Description from './../../description/description.jsx';
 import LatestMeasurement from './../../latest-measurement/latest-measurement.jsx';
 import './measurement.scss';
 import ObservationCodes from '../../../../constants/observation-codes';
-import { getMeasurementName } from '../../../../helpers/observation-helpers';
-
+import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
 
 class Measurements extends Component {
 
@@ -69,21 +68,6 @@ class Measurements extends Component {
     }
   }
 
-  getUnit(code) {
-    switch (code) {
-    case ObservationCodes.weight:
-      return 'kg';
-    case ObservationCodes.pulse:
-      return 'bpm';
-    case ObservationCodes.pulseOximeter:
-      return '%';
-    case ObservationCodes.bloodPressure:
-      return 'mm Hg';
-    default:
-      return null;
-    }
-  }
-
   getDataPoint(item) {
     const point = {
       date: item.resource.effectiveDateTime,
@@ -112,7 +96,7 @@ class Measurements extends Component {
     const highReference = this.getMeasurementHighReference(this.props.code);
     const lowReference = this.getMeasurementLowReference(this.props.code);
 
-    const unit = this.getUnit(this.props.code);
+    const unit = getUnit(this.props.code);
     const referenceValue = `${lowReference} - ${highReference} ${unit}`;
 
     const latestValue = this.getDataPoint(this.props.data.entry[0]);

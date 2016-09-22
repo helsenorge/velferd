@@ -43,10 +43,17 @@
             },
             {
               "url": "goal-target.detail",
-              "valueQuantity": {
-                "value": 80,
-                "system": "http://units-of-measure.org",
-                "code": "kg"
+              "valueRange": {
+                "low": {
+                  "value": 60,
+                  "system": "http://unitsofmeasure.org",
+                  "code": "kg"
+                },
+                "high": {
+                  "value": 80,
+                  "system": "http://unitsofmeasure.org",
+                  "code": "kg"
+                }
               }
             }
           ],

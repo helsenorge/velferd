@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { getPhase } from './care-plan.js';
+import { getPhase } from './care-plan-page.js';
 import data from '../../mock/care-plan.json';
 
 describe('careplan phase', () => {
