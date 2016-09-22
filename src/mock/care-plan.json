@@ -25,7 +25,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "green-goal-1",
+      "id": "ideal-weight-goal",
       "extension": [
         {
           "extension": [
@@ -63,7 +63,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "green-goal-2",
+      "id": "ideal-pulse-goal",
       "extension": [
         {
           "extension": [
@@ -101,7 +101,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "yellow-goal-1",
+      "id": "ideal-bloodpressure-goal",
       "extension": [
         {
           "extension": [
@@ -110,9 +110,9 @@
               "valueCodeableConcept": {
                 "coding": [
                   {
-                    "system": "http://loinc.org",
-                    "code": "29463-7",
-                    "display": "Body weight"
+                    "system": "urn:std:iso:11073:10101",
+                    "code": "150021",
+                    "display": "MDC_PRESS_BLD_NONINV_SYS"
                   }
                 ]
               }
@@ -121,26 +121,22 @@
               "url": "goal-target.detail",
               "valueRange": {
                 "low": {
-                  "value": 73,
-                  "system": "http://unitsofmeasure.org",
-                  "code": "kg"
+                  "value": 60,
+                  "system": "urn:std:iso:11073:10101",
+                  "code": "266016",
+                  "unit":"mmHg"
                 },
                 "high": {
-                  "value": 79,
-                  "system": "http://unitsofmeasure.org",
-                  "code": "kg"
+                  "value": 180,
+                  "system": "urn:std:iso:11073:10101",
+                  "code": "266016",
+                  "unit":"mmHg"
                 }
               }
             }
           ],
           "url": "http://hl7.org/fhir/StructureDefinition/goal-target"
-        }
-      ]
-    },
-    {
-      "resourceType": "Goal",
-      "id": "red-goal-1",
-      "extension": [
+        },
         {
           "extension": [
             {
@@ -148,9 +144,9 @@
               "valueCodeableConcept": {
                 "coding": [
                   {
-                    "system": "http://loinc.org",
-                    "code": "29463-7",
-                    "display": "Body weight"
+                    "system": "urn:std:iso:11073:10101",
+                    "code": "150022",
+                    "display": "MDC_PRESS_BLD_NONINV_DIA"
                   }
                 ]
               }
@@ -159,14 +155,16 @@
               "url": "goal-target.detail",
               "valueRange": {
                 "low": {
-                  "value": 70,
-                  "system": "http://unitsofmeasure.org",
-                  "code": "kg"
+                  "value": 50,
+                  "system": "urn:std:iso:11073:10101",
+                  "code": "266016",
+                  "unit":"mmHg"
                 },
                 "high": {
-                  "value": 82,
-                  "system": "http://unitsofmeasure.org",
-                  "code": "kg"
+                  "value": 100,
+                  "system": "urn:std:iso:11073:10101",
+                  "code": "266016",
+                  "unit":"mmHg"
                 }
               }
             }
@@ -383,7 +381,7 @@
         },
         "goal": [
             {
-              "reference": "#green-goal-1"
+              "reference": "#ideal-weight-goal"
             }
           ]
       }
@@ -424,7 +422,7 @@
         },
         "goal": [
             {
-              "reference": "#green-goal-2"
+              "reference": "#ideal-pulse-goal"
             }
           ]
       }
@@ -563,47 +561,6 @@
             }
           }
         ]
-      }
-    },
-    {
-      "detail": {
-        "reasonCode": [{
-          "coding": [
-            {
-              "system": "http://ehelse.no/fhir/vft",
-              "code": "yellow"
-            }
-          ]
-        }],
-        "category": {
-          "coding": [
-            {
-              "system": "http://hl7.org/fhir/care-plan-activity-category",
-              "code": "observation"
-            }
-          ]
-        },
-        "scheduledTiming": {
-          "repeat": {
-            "frequency": 1,
-            "period": 1,
-            "periodUnits": "wk"
-          }
-        },
-        "code": {
-          "coding": [
-            {
-              "system": "urn:std:iso:11073:10101",
-              "code": "188736",
-              "display": "MDC_MASS_BODY_ACTUAL"
-            }
-          ]
-        },
-        "goal": [
-            {
-              "reference": "#yellow-goal-1"
-            }
-          ]
       }
     },
     {
@@ -761,47 +718,6 @@
             }
           }
         ]
-      }
-    },
-    {
-      "detail": {
-        "reasonCode": [{
-          "coding": [
-            {
-              "system": "http://ehelse.no/fhir/vft",
-              "code": "red"
-            }
-          ]
-        }],
-        "category": {
-          "coding": [
-            {
-              "system": "http://hl7.org/fhir/care-plan-activity-category",
-              "code": "observation"
-            }
-          ]
-        },
-        "scheduledTiming": {
-          "repeat": {
-            "frequency": 1,
-            "period": 1,
-            "periodUnits": "wk"
-          }
-        },
-        "code": {
-          "coding": [
-            {
-              "system": "urn:std:iso:11073:10101",
-              "code": "188736",
-              "display": "MDC_MASS_BODY_ACTUAL"
-            }
-          ]
-        },
-        "goal": [
-            {
-              "reference": "#red-goal-1"
-            }
-          ]
       }
     },
     {
