@@ -10,11 +10,12 @@ class Range extends Component {
   constructor(props) {
     super(props);
     this.scrollListener = this.scrollListener.bind(this);
-    this.addClone = this.addClone.bind(this);
+    this.addPlaceholder = this.addPlaceholder.bind(this);
+    this.removePlaceholder = this.removePlaceholder.bind(this);
+    this.state = { sticky: false };
   }
 
   componentDidMount() {
-    this.addClone();
     window.addEventListener('scroll', this.scrollListener);
   }
 
@@ -22,18 +23,33 @@ class Range extends Component {
     window.removeEventListener('scroll', this.scrollListener);
   }
 
-  addClone() {
-    this.clone = this.refs.range.cloneNode(true);
-    this.clone.classList.add('range--sticky');
-    this.refs.range.parentNode.insertBefore(this.clone, null);
+  addPlaceholder() {
+    // get height of range element
+    const height = this.refs.range.offsetHeight;
+    // add placeholder element to keep the height in DOM
+    const placeholder = document.createElement('div');
+    placeholder.style.height = `${height}px`;
+    placeholder.style.width = '100%';
+    // store placeholder so it can be removed later
+    this.setState({ placeholder });
+    // insert placeholder
+    this.refs.range.parentNode.insertBefore(this.state.placeholder, this.refs.range);
+  }
+
+  removePlaceholder() {
+    this.state.placeholder.remove();
   }
 
   scrollListener() {
-    if (window.scrollY > this.refs.range.offsetTop - 15) {
-      this.clone.classList.add('range--show');
+    if (window.scrollY > this.refs.range.offsetTop && !this.state.sticky) {
+      this.setState({ sticky: true, offsetTop: this.refs.range.offsetTop });
+      this.addPlaceholder();
+      this.refs.range.classList.add('range--sticky');
     }
-    else {
-      this.clone.classList.remove('range--show');
+    else if (window.scrollY < this.state.offsetTop && this.state.sticky) {
+      this.refs.range.classList.remove('range--sticky');
+      this.removePlaceholder();
+      this.setState({ sticky: false });
     }
   }
 

@@ -72,6 +72,7 @@ class DashboardPage extends Component {
   }
 
   handleDateClick(date) {
+    console.log(date);
     const { selectedDate } = this.state;
 
     if (!selectedDate) {
