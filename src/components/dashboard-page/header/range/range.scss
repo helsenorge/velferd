@@ -5,12 +5,13 @@
   padding-top: 1rem;
   display: flex;
   flex-direction: row;
+  z-index: 10;
 
   &--sticky {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1;
+
     width: calc(100% - 8rem);
     background: $page-background;
     padding: 1rem 4rem;
