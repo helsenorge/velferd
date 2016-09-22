@@ -25,7 +25,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "ideal-weight-goal",
+      "id": "green-goal-1",
       "extension": [
         {
           "extension": [
@@ -45,12 +45,126 @@
               "url": "goal-target.detail",
               "valueRange": {
                 "low": {
-                  "value": 60,
+                  "value": 75,
                   "system": "http://unitsofmeasure.org",
                   "code": "kg"
                 },
                 "high": {
+                  "value": 77,
+                  "system": "http://unitsofmeasure.org",
+                  "code": "kg"
+                }
+              }
+            }
+          ],
+          "url": "http://hl7.org/fhir/StructureDefinition/goal-target"
+        }
+      ]
+    },
+    {
+      "resourceType": "Goal",
+      "id": "green-goal-2",
+      "extension": [
+        {
+          "extension": [
+            {
+              "url": "goal-target.measure",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "urn:std:iso:11073:10101",
+                    "code": "149530",
+                    "display": "MDC_PULS_OXIM_PULS_RATE"
+                  }
+                ]
+              }
+            },
+            {
+              "url": "goal-target.detail",
+              "valueRange": {
+                "low": {
+                  "value": 60,
+                  "system": "http://unitsofmeasure.org",
+                  "code": "bpm"
+                },
+                "high": {
                   "value": 80,
+                  "system": "http://unitsofmeasure.org",
+                  "code": "bpm"
+                }
+              }
+            }
+          ],
+          "url": "http://hl7.org/fhir/StructureDefinition/goal-target"
+        }
+      ]
+    },
+    {
+      "resourceType": "Goal",
+      "id": "yellow-goal-1",
+      "extension": [
+        {
+          "extension": [
+            {
+              "url": "goal-target.measure",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "29463-7",
+                    "display": "Body weight"
+                  }
+                ]
+              }
+            },
+            {
+              "url": "goal-target.detail",
+              "valueRange": {
+                "low": {
+                  "value": 73,
+                  "system": "http://unitsofmeasure.org",
+                  "code": "kg"
+                },
+                "high": {
+                  "value": 79,
+                  "system": "http://unitsofmeasure.org",
+                  "code": "kg"
+                }
+              }
+            }
+          ],
+          "url": "http://hl7.org/fhir/StructureDefinition/goal-target"
+        }
+      ]
+    },
+    {
+      "resourceType": "Goal",
+      "id": "red-goal-1",
+      "extension": [
+        {
+          "extension": [
+            {
+              "url": "goal-target.measure",
+              "valueCodeableConcept": {
+                "coding": [
+                  {
+                    "system": "http://loinc.org",
+                    "code": "29463-7",
+                    "display": "Body weight"
+                  }
+                ]
+              }
+            },
+            {
+              "url": "goal-target.detail",
+              "valueRange": {
+                "low": {
+                  "value": 70,
+                  "system": "http://unitsofmeasure.org",
+                  "code": "kg"
+                },
+                "high": {
+                  "value": 82,
                   "system": "http://unitsofmeasure.org",
                   "code": "kg"
                 }
@@ -180,11 +294,6 @@
       }
     ]
   },
-  "goal": [
-    {
-      "reference": "#ideal-weight-goal"
-    }
-  ],
   "activity": [
     {
       "detail": {
@@ -274,7 +383,48 @@
         },
         "goal": [
             {
-              "reference": "#ideal-weight-goal"
+              "reference": "#green-goal-1"
+            }
+          ]
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": [{
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "green"
+            }
+          ]
+        }],
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "observation"
+            }
+          ]
+        },
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 1,
+            "period": 1,
+            "periodUnits": "wk"
+          }
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "urn:std:iso:11073:10101",
+              "code": "149530",
+              "display": "MDC_PULS_OXIM_PULS_RATE"
+            }
+          ]
+        },
+        "goal": [
+            {
+              "reference": "#green-goal-2"
             }
           ]
       }
@@ -413,6 +563,47 @@
             }
           }
         ]
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": [{
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "yellow"
+            }
+          ]
+        }],
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "observation"
+            }
+          ]
+        },
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 1,
+            "period": 1,
+            "periodUnits": "wk"
+          }
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "urn:std:iso:11073:10101",
+              "code": "188736",
+              "display": "MDC_MASS_BODY_ACTUAL"
+            }
+          ]
+        },
+        "goal": [
+            {
+              "reference": "#yellow-goal-1"
+            }
+          ]
       }
     },
     {
@@ -570,6 +761,47 @@
             }
           }
         ]
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": [{
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
+              "code": "red"
+            }
+          ]
+        }],
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "observation"
+            }
+          ]
+        },
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 1,
+            "period": 1,
+            "periodUnits": "wk"
+          }
+        },
+        "code": {
+          "coding": [
+            {
+              "system": "urn:std:iso:11073:10101",
+              "code": "188736",
+              "display": "MDC_MASS_BODY_ACTUAL"
+            }
+          ]
+        },
+        "goal": [
+            {
+              "reference": "#red-goal-1"
+            }
+          ]
       }
     },
     {
