@@ -2,11 +2,15 @@ function getMeasurements(activities, goals) {
   return activities
     .filter(activity => activity.detail.category.coding[0].code === 'observation'
     && activity.detail.code)
-    .map(activity => (
-      {
+    .map(activity => {
+      const goalReference = activity.detail.goal[0].reference;
+      console.log(activity);
+      return {
         code: activity.detail.code.coding[0].code,
-        goal: goals[activity.detail.goal[0].reference.substring(1)],
-      }));
+        goalReference,
+        goal: goals[goalReference.substring(1)],
+      };
+    });
 }
 
 function getActions(activities) {
