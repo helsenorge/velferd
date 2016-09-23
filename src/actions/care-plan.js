@@ -95,7 +95,7 @@ function buildObservationActivityCondition(reasonCode, measurement) {
   activity.detail.code = { coding: [buildCoding('urn:std:iso:11073:10101',
       measurement.code, getObservationCodingDisplay(measurement.code))],
   };
-  activity.detail.goal = measurement.goal;
+  activity.detail.goal = [{ reference: measurement.goalReference }];
   return activity;
 }
 
