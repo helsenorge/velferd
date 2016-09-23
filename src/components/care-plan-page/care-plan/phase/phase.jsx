@@ -5,7 +5,7 @@ import { getMeasurementName, getUnit } from '../../../../helpers/observation-hel
 
 import './phase.scss';
 
-const Phase = ({ edit, name, phase, glyph, onChange, saving }) => {
+const Phase = ({ edit, name, phase, glyph, onChange, saving, deleteCarePlanItem }) => {
   const getMeasurementDisplayValue = (measurement) => {
     const name = getMeasurementName(measurement.code);
     const unit = getUnit(measurement.code);
@@ -23,13 +23,17 @@ const Phase = ({ edit, name, phase, glyph, onChange, saving }) => {
 
   const getValue = (i, type, value) => {
     if (edit) {
+      const name = `${phase.reasonCode}-${type}-${i}`;
       return (
-        <TextInput
-          onChange={onChange}
-          name={`${phase.reasonCode}-${type}-${i}`}
-          value={value}
-          disabled={saving}
-        />
+        <div>
+          <TextInput
+            onChange={onChange}
+            name={name}
+            value={value}
+            disabled={saving}
+          />
+          <button onClick={() => deleteCarePlanItem(name)}>Delete</button>
+        </div>
       );
     }
     return value;
@@ -119,6 +123,7 @@ Phase.propTypes = {
   glyph: PropTypes.string,
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
+  deleteCarePlanItem: React.PropTypes.func.isRequired,
 };
 
 export default Phase;
