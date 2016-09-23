@@ -61,6 +61,7 @@ class Range extends Component {
       fromDate,
       toDate,
       activeRange,
+      selectedDate,
     } = this.props;
 
     const to = new Date(toDate.getTime());
@@ -77,12 +78,19 @@ class Range extends Component {
       dates.push(new Date(d));
     }
 
-    const dateButtons = dates.map((date, index) => (
-      <button className="range__button" key={index} onClick={() => handleDateClick(date)}>
-        <div className="range__date">{getDate(date)}.</div>
-        <div className="range__month">{getMonth(date)}</div>
-      </button>
-    ));
+    const dateButtons = dates.map((date, index) => {
+      const selected = selectedDate !== null && date.getTime() === selectedDate.getTime();
+      const btnClass = classNames({
+        'range__button--selected': selected,
+        range__button: true,
+      });
+      return (
+        <button className={btnClass} key={index} onClick={() => handleDateClick(date)}>
+          <div className="range__date">{getDate(date)}.</div>
+          <div className="range__month">{getMonth(date)}</div>
+        </button>
+      );
+    });
     const rangeClasses = classNames({
       range: true,
     });
@@ -126,6 +134,7 @@ Range.propTypes = {
   handleDateClick: PropTypes.func.isRequired,
   fromDate: PropTypes.instanceOf(Date).isRequired,
   toDate: PropTypes.instanceOf(Date).isRequired,
+  selectedDate: PropTypes.instanceOf(Date),
   activeRange: PropTypes.number.isRequired,
 };
 

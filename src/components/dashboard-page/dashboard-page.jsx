@@ -115,6 +115,7 @@ class DashboardPage extends Component {
           handleDateClick={this.handleDateClick}
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
+          selectedDate={this.state.selectedDate}
           activeRange={this.state.dayRange}
         />
         <QuestionnaireResponsesContainer
