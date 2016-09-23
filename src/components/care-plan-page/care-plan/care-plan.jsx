@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import Phase from './phase/phase.jsx';
+import List from './list/list.jsx';
+import './care-plan.scss';
 import ReasonCodes from '../../../constants/reason-codes';
 import ansikt1 from '../../../../svg/ansikt-1.svg';
 import ansikt2 from '../../../../svg/ansikt-2.svg';
@@ -9,11 +10,11 @@ class CarePlan extends Component {
   getPhaseName(reasonCode) {
     switch (reasonCode) {
     case ReasonCodes.green:
-      return 'Stabil fase av hjertesvikt';
+      return 'Stabil';
     case ReasonCodes.yellow:
-      return 'Moderat forverring av hjertesvikt';
+      return 'Moderat forverring';
     case ReasonCodes.red:
-      return 'Alvorlig forverring av hjertesvikt';
+      return 'Alvorlig forverring';
     default:
       return null;
     }
@@ -35,23 +36,43 @@ class CarePlan extends Component {
   render() {
     const { phases, edit, saving, onChange } = this.props;
 
+    const headings = phases.map((phase) =>
+      <h3 className="care-plan__heading">{this.getPhaseName(phase.reasonCode)}</h3>
+    );
+    const symptoms = phases.map((phase) =>
+      <List
+        items={phase.symptoms}
+        measurements={phase.measurements}
+        heading="Symptomer"
+        edit={edit}
+        saving={saving}
+        onChange={onChange}
+      />
+    );
+    const actions = phases.map((phase) =>
+      <List
+        items={phase.actions}
+        heading="Hva gjør du?"
+        edit={edit}
+        saving={saving}
+        onChange={onChange}
+      />
+    );
+    const medications = phases.map((phase) =>
+      <List
+        items={phase.medications}
+        heading="Medisiner"
+        edit={edit}
+        saving={saving}
+        onChange={onChange}
+      />
+      );
     return (
-      <div>
-        {phases.map((phase, i) => {
-          let icon = this.getPhaseIcon(i);
-          return (
-            <Phase
-              edit={edit}
-              saving={saving}
-              glyph={icon}
-              key={i}
-              name={this.getPhaseName(phase.reasonCode)}
-              phase={phase}
-              onChange={onChange}
-            />
-            );
-        }
-        )}
+      <div className="care-plan">
+        {headings}
+        {symptoms}
+        {actions}
+        {medications}
       </div>
     );
   }

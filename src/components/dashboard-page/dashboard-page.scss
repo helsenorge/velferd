@@ -9,6 +9,7 @@
     bottom: 0;
     background: rgba(0, 0, 0, 0.04);
     display: none;
+    pointer-events: none;
 
     &--active {
       display: block;

@@ -35,80 +35,44 @@ const Phase = ({ edit, name, phase, glyph, onChange, saving }) => {
     return value;
   };
 
-  const getRows = () => {
-    const numRows = Math.max(phase.symptoms.length, phase.actions.length, phase.medications.length);
-    const rows = [];
-    for (let i = 0; i < numRows; i++) {
-      rows.push((
-        <tr className="care-plan-table__row">
-          <td className="care-plan-table__cell">
-            {phase.symptoms[i] !== undefined ?
-              (<span className="care-plan-table__celltext">
-                {getValue(i, 'symptoms', phase.symptoms[i])}
-              </span>)
-              : null
-            }
-          </td>
-          <td className="care-plan-table__cell">
-            {phase.actions[i] !== undefined ?
-              (<span className="care-plan-table__celltext">
-                {getValue(i, 'actions', phase.actions[i])}
-              </span>)
-              : null
-            }
-          </td>
-          <td className="care-plan-table__cell">
-            {phase.medications[i] !== undefined ?
-              (<span className="care-plan-table__celltext">
-                {getValue(i, 'medications', phase.medications[i])}
-              </span>)
-              : null
-            }
-          </td>
-        </tr>
-        ));
-    }
+  const symptoms = phase.symptoms.map((el, i) =>
+    <li>{getValue(i, 'symptoms', phase.symptoms[i])}</li>
+  );
 
-    for (let i = 0; i < phase.measurements.length; i++) {
-      rows.push((
-        <tr className="care-plan-table__row">
-          <td className="care-plan-table__cell">
-            <span className="care-plan-table__celltext">
-              {getMeasurementDisplayValue(phase.measurements[i])}
-            </span>
-          </td>
-          <td className="care-plan-table__cell"></td>
-          <td className="care-plan-table__cell"></td>
-        </tr>
-        ));
-    }
-    return rows;
-  };
+  const measurements = phase.measurements.map((el) =>
+    <li>{getMeasurementDisplayValue(el)}</li>
+  );
 
-  let rows = getRows();
+  const actions = phase.actions.map((el, i) =>
+    <li>{getValue(i, 'actions', phase.actions[i])}</li>
+  );
+
+  const medications = phase.medications.map((el, i) =>
+    <li>{getValue(i, 'medications', phase.medications[i])}</li>
+  );
+
   return (
-    <table className="care-plan-table">
-      <caption className="care-plan-table__caption">
-        <Icon className="care-plan-table__icon" glyph={glyph} />
-        {name}
-      </caption>
-      <thead>
-        <tr>
-          <th scope="col" className="care-plan-table__header">
-            Symptomer
-          </th>
-          <th scope="col" className="care-plan-table__header">
-            Hva gjør du
-          </th>
-          <th scope="col" className="care-plan-table__header">
-            Medikamentell Behandling
-          </th>
-        </tr>
-      </thead>
-      <tbody className="care-plan-table__body">
-        {rows}
-      </tbody>
-    </table>
+    <div className="care-plan-phase">
+      <div className="care-plan-phase__header">
+        <Icon className="care-plan-phase__icon" glyph={glyph} />
+        <h3>{name}</h3>
+      </div>
+      <div className="care-plan-phase__content">
+        <h4>Symptomer</h4>
+        <ul className="care-plan-phase__list">
+          {symptoms}
+          {measurements}
+        </ul>
+        <h4>Hva gjør du</h4>
+        <ul className="care-plan-phase__list">
+          {actions}
+        </ul>
+        <h5>Medisiner</h5>
+        <ul className="care-plan-phase__list">
+          {medications}
+        </ul>
+      </div>
+    </div>
   );
 };
 
