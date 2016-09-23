@@ -5,7 +5,8 @@ import { getMeasurementName, getUnit } from '../../../../helpers/observation-hel
 
 import './phase.scss';
 
-const Phase = ({ edit, name, phase, glyph, onChange, saving, deleteCarePlanItem }) => {
+const Phase = (
+  { edit, name, phase, glyph, onChange, saving, deleteCarePlanItem, addCarePlanItem }) => {
   const getMeasurementDisplayValue = (measurement) => {
     const name = getMeasurementName(measurement.code);
     const unit = getUnit(measurement.code);
@@ -86,6 +87,29 @@ const Phase = ({ edit, name, phase, glyph, onChange, saving, deleteCarePlanItem 
         </tr>
         ));
     }
+
+    if (edit) {
+      rows.push((
+        <tr className="care-plan-table__row">
+          <td className="care-plan-table__cell">
+            <button onClick={() => addCarePlanItem(phase.reasonCode, 'symptoms')}>
+              Legg til symptom
+            </button>
+          </td>
+          <td className="care-plan-table__cell">
+            <button onClick={() => addCarePlanItem(phase.reasonCode, 'actions')}>
+              Legg til tiltak
+            </button>
+          </td>
+          <td className="care-plan-table__cell">
+            <button onClick={() => addCarePlanItem(phase.reasonCode, 'medications')}>
+              Legg til medisinering
+            </button>
+          </td>
+        </tr>
+      ));
+    }
+
     return rows;
   };
 
@@ -124,6 +148,7 @@ Phase.propTypes = {
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
   deleteCarePlanItem: React.PropTypes.func.isRequired,
+  addCarePlanItem: React.PropTypes.func.isRequired,
 };
 
 export default Phase;

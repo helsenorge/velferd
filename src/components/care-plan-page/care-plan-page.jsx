@@ -15,6 +15,7 @@ class CarePlanPage extends Component {
     this.saveCarePlan = this.saveCarePlan.bind(this);
     this.editCarePlan = this.editCarePlan.bind(this);
     this.deleteCarePlanItem = this.deleteCarePlanItem.bind(this);
+    this.addCarePlanItem = this.addCarePlanItem.bind(this);
 
     this.state = {
       phases: Object.assign([], props.phases),
@@ -69,6 +70,14 @@ class CarePlanPage extends Component {
     return this.setState({ phases });
   }
 
+  addCarePlanItem(reasonCode, type) {
+    const phases = this.state.phases;
+    const index = this.getPhaseIndex(reasonCode);
+
+    phases[index][type].push('');
+    return this.setState({ phases });
+  }
+
   editCarePlan(event) {
     event.preventDefault();
     this.setState({ edit: true });
@@ -100,6 +109,7 @@ class CarePlanPage extends Component {
             saving={saving}
             onChange={this.updatePhaseState}
             deleteCarePlanItem={this.deleteCarePlanItem}
+            addCarePlanItem={this.addCarePlanItem}
           />
         }
       </div>

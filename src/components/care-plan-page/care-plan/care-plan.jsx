@@ -33,7 +33,7 @@ class CarePlan extends Component {
   }
 
   render() {
-    const { phases, edit, saving, onChange, deleteCarePlanItem } = this.props;
+    const { phases, edit, saving, onChange, deleteCarePlanItem, addCarePlanItem } = this.props;
 
     return (
       <div>
@@ -49,6 +49,7 @@ class CarePlan extends Component {
               phase={phase}
               onChange={onChange}
               deleteCarePlanItem={deleteCarePlanItem}
+              addCarePlanItem={addCarePlanItem}
             />
             );
         }
@@ -64,6 +65,7 @@ CarePlan.propTypes = {
   edit: PropTypes.bool.isRequired,
   saving: React.PropTypes.bool.isRequired,
   deleteCarePlanItem: React.PropTypes.func.isRequired,
+  addCarePlanItem: React.PropTypes.func.isRequired,
 };
 
 export default CarePlan;
