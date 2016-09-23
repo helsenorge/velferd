@@ -34,37 +34,52 @@ class CarePlan extends Component {
   }
 
   render() {
-    const { phases, edit, saving, onChange } = this.props;
+    const { phases, edit, saving, onChange, deleteCarePlanItem, addCarePlanItem } = this.props;
 
-    const headings = phases.map((phase) =>
-      <h3 className="care-plan__heading">{this.getPhaseName(phase.reasonCode)}</h3>
+    const headings = phases.map((phase, i) =>
+      <h3 key={i} className="care-plan__heading">{this.getPhaseName(phase.reasonCode)}</h3>
     );
-    const symptoms = phases.map((phase) =>
+    const symptoms = phases.map((phase, i) =>
       <List
+        key={i}
         items={phase.symptoms}
         measurements={phase.measurements}
         heading="Symptomer"
         edit={edit}
         saving={saving}
         onChange={onChange}
+        deleteCarePlanItem={deleteCarePlanItem}
+        addCarePlanItem={addCarePlanItem}
+        type="symptoms"
+        reasonCode={phase.reasonCode}
       />
     );
-    const actions = phases.map((phase) =>
+    const actions = phases.map((phase, i) =>
       <List
+        key={i}
         items={phase.actions}
         heading="Hva gjør du?"
         edit={edit}
         saving={saving}
         onChange={onChange}
+        deleteCarePlanItem={deleteCarePlanItem}
+        addCarePlanItem={addCarePlanItem}
+        type="actions"
+        reasonCode={phase.reasonCode}
       />
     );
-    const medications = phases.map((phase) =>
+    const medications = phases.map((phase, i) =>
       <List
+        key={i}
         items={phase.medications}
         heading="Medisiner"
         edit={edit}
         saving={saving}
         onChange={onChange}
+        deleteCarePlanItem={deleteCarePlanItem}
+        addCarePlanItem={addCarePlanItem}
+        type="medications"
+        reasonCode={phase.reasonCode}
       />
       );
     return (
@@ -83,6 +98,8 @@ CarePlan.propTypes = {
   onChange: React.PropTypes.func.isRequired,
   edit: PropTypes.bool.isRequired,
   saving: React.PropTypes.bool.isRequired,
+  deleteCarePlanItem: React.PropTypes.func.isRequired,
+  addCarePlanItem: React.PropTypes.func.isRequired,
 };
 
 export default CarePlan;

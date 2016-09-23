@@ -4,7 +4,6 @@ function getMeasurements(activities, goals) {
     && activity.detail.code)
     .map(activity => {
       const goalReference = activity.detail.goal[0].reference;
-      console.log(activity);
       return {
         code: activity.detail.code.coding[0].code,
         goalReference,
