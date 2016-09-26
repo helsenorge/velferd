@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
+import Icon from '../icon/icon.jsx';
+import iconEdit from '../../../svg/ikon-rediger.svg';
 import ReasonCodes from '../../constants/reason-codes';
 import { getPhase } from './care-plan-page.js';
 import './care-plan-page.scss';
@@ -94,13 +96,30 @@ class CarePlanPage extends Component {
     const { isFetching, error } = this.props;
     const { phases, edit, saving } = this.state;
     const isEmpty = phases.length === 0;
-
+    const editButton = (
+      <button
+        onClick={this.editCarePlan}
+        className="care-plan-page__button care-plan-page__button--edit"
+      >
+        <Icon glyph={iconEdit} />
+        Rediger
+      </button>);
+    const saveButton = (
+      <button
+        onClick={this.saveCarePlan}
+        className="care-plan-page__button care-plan-page__button--save"
+        disabled={saving}
+      >
+        Lagre
+      </button>);
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
         {error && <p>{error}</p>}
-        {!edit && <button onClick={this.editCarePlan}>Rediger</button>}
-        {edit && <button onClick={this.saveCarePlan} disabled={saving}>Lagre</button>}
+        <div className="care-plan-page__controls">
+          {!edit && editButton}
+          {edit && saveButton}
+        </div>
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : null)
           : <CarePlan

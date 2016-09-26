@@ -8,4 +8,15 @@
     font-weight: 300;
     text-align: center;
   }
+
+  &__controls {
+    text-align: right;
+    margin-left: auto;
+    margin-bottom: 2rem;
+  }
+
+  &__button {
+    color: #097A7A;
+    font-size: 1.125rem;
+  }
 }
