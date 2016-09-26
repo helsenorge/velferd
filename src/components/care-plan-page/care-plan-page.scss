@@ -42,9 +42,6 @@
     transform: rotateX(180deg);
   }
 
-  &__front {
-  }
-
   &__card--flipped {
     transform: rotateX(180deg);
   }
@@ -75,6 +72,7 @@
     &--save {
       background: #269392;
       color: #fff;
+      min-width: 90px;
     }
   }
 
@@ -82,4 +80,184 @@
     margin-top: 2.625rem;
     font-size: 1.125rem;
   }
+
+  .atom_spinner_circular {
+    display: inline-block;
+  }
+
+/* Some variables which control the animation */
+$startstop-scale: 0.3; //0.333333;
+$delta-scale: 0.7; // 0.7
+$startstop-opacity: 0.5; //0.4
+$delta-opacity: 1;
+$duration: 1.2s;
+$delay1: 0s;
+$delay2: 0.15s;
+$delay3: 0.30s;
+$delay4: 0.45s;
+$delay5: 0.60s;
+$delay6: 0.75s;
+$delay7: 0.90s;
+$delay8: 1.05s;
+
+
+.atom_spinner_circular {
+
+    .spinner {
+        /* centering */
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        font-size: 0.71rem; /* Fontsize controls the overall size of the spinner - change it to scale spinner up or down */
+        width: 3em;
+        height: 3em;
+
+
+        div {
+            position: absolute;
+            top: 0em;
+            width: 1em;
+            height: 1em;
+            transform: scale($startstop-scale);
+
+            border-radius: 1rem;
+            background: #000;
+
+            &.s1 {
+                top: 0;
+                left: 1em;
+                /* name, duration, delay, iteration-count, direction, easing-function, fill-mode */
+                animation: pils0 $duration $delay1 infinite normal ease-in-out both;
+            }
+
+            &.s2 {
+                top: 0.3em;
+                left: 1.7em;
+                animation: pils1 $duration $delay2 infinite normal ease-in-out both;
+            }
+
+            &.s3 {
+                top: 1em;
+                left: 2em;
+                animation: pils2 $duration $delay3 infinite normal ease-in-out both;
+            }
+
+            &.s4 {
+                top: 1.7em;
+                left: 1.7em;
+                animation: pils3 $duration $delay4 infinite normal ease-in-out both;
+            }
+
+            &.s5 {
+                top: 2em;
+                left: 1em;
+                animation: pils4 $duration $delay5 infinite normal ease-in-out both;
+            }
+            &.s6 {
+                top: 1.7em;
+                left: 0.3em;
+                animation: pils5 $duration $delay6 infinite normal ease-in-out both;
+            }
+            &.s7 {
+                top: 1em;
+                left: 0;
+                animation: pils6 $duration $delay7 infinite normal ease-in-out both;
+            }
+            &.s8 {
+                top: 0.3em;
+                left: 0.3em;
+                animation: pils7 $duration $delay8 infinite normal ease-in-out both;
+            }
+        }
+    }
+
+    &.small {
+        .spinner {
+            font-size: 0.5rem;
+        }
+    }
+
+    &.white {
+        .spinner div {
+            background: #fff;
+        }
+    }
+
+    &.princess {
+        .spinner div {
+            background: #f8d;
+        }
+    }
+
+    &.pride {
+        .spinner .s1 { background: #000; }
+        .spinner .s2 { background: #f00; }
+        .spinner .s3 { background: #f90; }
+        .spinner .s4 { background: #ff0; }
+        .spinner .s5 { background: #0f0; }
+        .spinner .s6 { background: #08f; }
+        .spinner .s7 { background: #00f; }
+        .spinner .s8 { background: #d0d; }
+    }
+}
+
+
+// Yes, there are eight identical keyframe declarations here. Not very DRY.
+// Chrome goes crazy when you assign the same keyframes to multiple animations
+// for multiple elements when those animations specify different delays.
+
+@keyframes pils0 {
+    0%  {transform: scale($startstop-scale);}
+    10% {transform: scale($delta-scale);        opacity: $delta-opacity;}
+    60% {transform: scale($startstop-scale);    opacity: $startstop-opacity;}
+    99% {                                       opacity: $startstop-opacity;}
+}
+@keyframes pils1 {
+    0% {transform: scale($startstop-scale);}
+    10% {transform: scale($delta-scale);        opacity: $delta-opacity;}
+    60% {transform: scale($startstop-scale);    opacity: $startstop-opacity;}
+    99% {                                       opacity: $startstop-opacity;}
+}
+@keyframes pils2 {
+    0% {transform: scale($startstop-scale);}
+    10% {transform: scale($delta-scale);        opacity: $delta-opacity;}
+    60% {transform: scale($startstop-scale);    opacity: $startstop-opacity;}
+    99% {                                       opacity: $startstop-opacity;}
+}
+@keyframes pils3 {
+    0% {transform: scale($startstop-scale);}
+    10% {transform: scale($delta-scale);        opacity: $delta-opacity;}
+    60% {transform: scale($startstop-scale);    opacity: $startstop-opacity;}
+    99% {                                       opacity: $startstop-opacity;}
+}
+@keyframes pils4 {
+    0% {transform: scale($startstop-scale);}
+    10% {transform: scale($delta-scale);        opacity: $delta-opacity;}
+    60% {transform: scale($startstop-scale);    opacity: $startstop-opacity;}
+    99% {                                       opacity: $startstop-opacity;}
+}
+@keyframes pils5 {
+    0% {transform: scale($startstop-scale);}
+    10% {transform: scale($delta-scale);        opacity: $delta-opacity;}
+    60% {transform: scale($startstop-scale);    opacity: $startstop-opacity;}
+    99% {                                       opacity: $startstop-opacity;}
+}
+@keyframes pils6 {
+    0% {transform: scale($startstop-scale);}
+    10% {transform: scale($delta-scale);        opacity: $delta-opacity;}
+    60% {transform: scale($startstop-scale);    opacity: $startstop-opacity;}
+    99% {                                       opacity: $startstop-opacity;}
+}
+@keyframes pils7 {
+    0% {transform: scale($startstop-scale);}
+    10% {transform: scale($delta-scale);        opacity: $delta-opacity;}
+    60% {transform: scale($startstop-scale);    opacity: $startstop-opacity;}
+    99% {                                       opacity: $startstop-opacity;}
+}
+
+
+
+
+
+
 }

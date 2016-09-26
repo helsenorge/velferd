@@ -123,6 +123,18 @@ class CarePlanPage extends Component {
               </button>
             </div>
             <div className="care-plan-page__back">
+              {saving ? (<div className="atom_spinner_circular">
+                <div className="spinner">
+                  <div className="s1"></div>
+                  <div className="s2"></div>
+                  <div className="s3"></div>
+                  <div className="s4"></div>
+                  <div className="s5"></div>
+                  <div className="s6"></div>
+                  <div className="s7"></div>
+                  <div className="s8"></div>
+                </div>
+              </div>) : null}
               <button
                 onClick={this.saveCarePlan}
                 className="care-plan-page__button care-plan-page__button--save"
