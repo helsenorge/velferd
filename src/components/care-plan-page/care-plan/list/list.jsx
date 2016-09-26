@@ -17,11 +17,12 @@ const List = (
   }) => {
   const getValue = (i, value) => {
     if (edit) {
+      const name = `${reasonCode}-${type}-${i}`;
       return (
         <div>
           <TextInput
             onChange={onChange}
-            name="a"
+            name={name}
             value={value}
             disabled={saving}
           />
