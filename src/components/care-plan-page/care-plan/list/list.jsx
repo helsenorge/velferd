@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import TextInput from '../../../text-input/text-input.jsx';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
 
@@ -14,6 +15,7 @@ const List = (
     addCarePlanItem,
     reasonCode,
     type,
+    className,
   }) => {
   const getValue = (i, value) => {
     if (edit) {
@@ -48,10 +50,10 @@ const List = (
   };
 
   const measurementsList = measurements !== undefined ? measurements : [];
-
+  const headerClass = classNames('care-plan__listheading', className);
   return (
     <div className="care-plan__list">
-      <h3 className="care-plan__listheading">{heading}</h3>
+      <h3 className={headerClass}>{heading}</h3>
       <ul className="care-plan__listitems">
         {items.map((item, i) => <li>{getValue(i, item)}</li>)}
         {measurementsList.map((item) => <li>{getMeasurementDisplayValue(item)}</li>)}
@@ -68,6 +70,7 @@ export default List;
 List.propTypes = {
   edit: PropTypes.bool.isRequired,
   heading: PropTypes.string.isRequired,
+  className: PropTypes.string,
   items: PropTypes.array.isRequired,
   measurements: PropTypes.array,
   onChange: React.PropTypes.func.isRequired,

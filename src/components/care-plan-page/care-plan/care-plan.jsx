@@ -71,6 +71,7 @@ class CarePlan extends Component {
     const medications = phases.map((phase, i) =>
       <List
         key={i}
+        className="care-plan__listheading--medisiner"
         items={phase.medications}
         heading="Medisiner"
         edit={edit}
