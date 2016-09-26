@@ -96,7 +96,7 @@ class CarePlanPage extends Component {
     const { isFetching, error } = this.props;
     const { phases, edit, saving } = this.state;
     const isEmpty = phases.length === 0;
-    const editButton = (
+    const editControl = (
       <button
         onClick={this.editCarePlan}
         className="care-plan-page__button care-plan-page__button--edit"
@@ -104,21 +104,30 @@ class CarePlanPage extends Component {
         <Icon glyph={iconEdit} />
         Rediger
       </button>);
-    const saveButton = (
-      <button
-        onClick={this.saveCarePlan}
-        className="care-plan-page__button care-plan-page__button--save"
-        disabled={saving}
-      >
-        Lagre
-      </button>);
+    const saveControl = (
+      <div>
+        <button
+          onClick={this.saveCarePlan}
+          className="care-plan-page__button care-plan-page__button--save"
+          disabled={saving}
+        >
+          Lagre
+        </button>
+        <button
+          onClick={this.saveCarePlan}
+          className="care-plan-page__button care-plan-page__button--cancel"
+          disabled={saving}
+        >
+          Avbryt
+        </button>
+      </div>);
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
         {error && <p>{error}</p>}
         <div className="care-plan-page__controls">
-          {!edit && editButton}
-          {edit && saveButton}
+          {!edit && editControl}
+          {edit && saveControl}
         </div>
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : null)
