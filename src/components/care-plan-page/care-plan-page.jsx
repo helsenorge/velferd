@@ -1,9 +1,10 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
+import classNames from 'classnames';
 import CarePlan from './care-plan/care-plan.jsx';
 import Icon from '../icon/icon.jsx';
-import iconEdit from '../../../svg/ikon-rediger.svg';
+import iconPrint from '../../../svg/ikon-print.svg';
 import ReasonCodes from '../../constants/reason-codes';
 import { getPhase } from './care-plan-page.js';
 import './care-plan-page.scss';
@@ -96,38 +97,48 @@ class CarePlanPage extends Component {
     const { isFetching, error } = this.props;
     const { phases, edit, saving } = this.state;
     const isEmpty = phases.length === 0;
-    const editControl = (
-      <button
-        onClick={this.editCarePlan}
-        className="care-plan-page__button care-plan-page__button--edit"
-      >
-        <Icon glyph={iconEdit} />
-        Rediger
-      </button>);
-    const saveControl = (
-      <div>
-        <button
-          onClick={this.saveCarePlan}
-          className="care-plan-page__button care-plan-page__button--save"
-          disabled={saving}
-        >
-          Lagre
-        </button>
-        <button
-          onClick={this.saveCarePlan}
-          className="care-plan-page__button care-plan-page__button--cancel"
-          disabled={saving}
-        >
-          Avbryt
-        </button>
-      </div>);
+    const cardClasses = classNames({
+      'care-plan-page__card': true,
+      'care-plan-page__card--flipped': edit,
+    });
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
         {error && <p>{error}</p>}
         <div className="care-plan-page__controls">
-          {!edit && editControl}
-          {edit && saveControl}
+          <div className={cardClasses}>
+            <div className="care-plan-page__front">
+              <button
+                onClick={this.editCarePlan}
+                className="care-plan-page__button care-plan-page__button--edit"
+              >
+                <Icon glyph={iconPrint} />
+                Skriv ut egenbehandlingsplan
+              </button>
+              <button
+                onClick={this.editCarePlan}
+                className="care-plan-page__button care-plan-page__button--edit"
+              >
+                Rediger
+              </button>
+            </div>
+            <div className="care-plan-page__back">
+              <button
+                onClick={this.saveCarePlan}
+                className="care-plan-page__button care-plan-page__button--save"
+                disabled={saving}
+              >
+                Lagre
+              </button>
+              <button
+                onClick={this.saveCarePlan}
+                className="care-plan-page__button care-plan-page__button--cancel"
+                disabled={saving}
+              >
+                Avbryt
+              </button>
+            </div>
+          </div>
         </div>
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : null)
@@ -140,6 +151,9 @@ class CarePlanPage extends Component {
             addCarePlanItem={this.addCarePlanItem}
           />
         }
+        <div className="care-plan-page__lastupdated">
+          Sist oppdatert: 30.02.2016 kl. 11.34 av Anna For Eieb (lege)
+        </div>
       </div>
     );
   }

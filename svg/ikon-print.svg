@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="46px" height="46px" viewBox="0 0 46 46" enable-background="new 0 0 46 46" xml:space="preserve">
+<line fill="none" stroke="#D1CFCF" stroke-width="1.5" stroke-miterlimit="10" x1="27.511" y1="-35.948" x2="19.574" y2="-35.948"/>
+<rect x="16.042" y="-59.81" fill="none" stroke="#D1CFCF" stroke-width="1.5" stroke-miterlimit="10" width="15" height="6.81"/>
+<rect x="16.042" y="-40.792" fill="none" stroke="#D1CFCF" stroke-width="1.5" stroke-miterlimit="10" width="15" height="9.277"/>
+<line fill="none" stroke="#D1CFCF" stroke-width="1.5" stroke-miterlimit="10" x1="13.308" y1="-40.792" x2="33.777" y2="-40.792"/>
+<g>
+	<polyline fill="none" stroke="#D1CFCF" stroke-width="1.5" stroke-miterlimit="10" points="15.792,-35.948 7.542,-35.948 
+		7.542,-53 39.542,-53 39.542,-35.948 31.292,-35.948 	"/>
+	<circle fill="none" stroke="#D1CFCF" stroke-width="1.5" stroke-miterlimit="10" cx="32.181" cy="-48.041" r="1.691"/>
+</g>
+<path fill="#5E5F5F" d="M31.792,15.416V8.606h-16.5v6.811h-8.5v18.553h8.5v4.434h16.5v-4.434h8.5V15.416H31.792z M16.792,10.106
+	h13.5v5.311h-13.5V10.106z M30.292,36.903h-13.5v-7.777h13.5V36.903z M38.792,32.469h-7v-3.344h1.984v-1.5H13.308v1.5h1.984v3.344
+	h-7V16.916h30.5V32.469z M32.181,23.568c1.347,0,2.441-1.095,2.441-2.441s-1.095-2.441-2.441-2.441s-2.441,1.095-2.441,2.441
+	S30.834,23.568,32.181,23.568z M32.181,20.185c0.52,0,0.941,0.422,0.941,0.941s-0.422,0.941-0.941,0.941s-0.941-0.422-0.941-0.941
+	S31.661,20.185,32.181,20.185z M27.511,32.469h-7.937v1.5h7.937V32.469z"/>
+<text transform="matrix(1 0 0 1 -47.5397 -24.6668)" fill="#D6CECE" font-family="'MyriadPro-Regular'" font-size="12">Stroke</text>
+<text transform="matrix(1 0 0 1 -92.8508 44.1665)" fill="#D6CECE" font-family="'MyriadPro-Regular'" font-size="12">Outlined stroke</text>
+<polygon fill-rule="evenodd" clip-rule="evenodd" fill="#5E5F5F" points="126.507,-34.136 110.489,-34.136 110.489,-55.655 
+	125.229,-55.655 126.893,-57.155 108.989,-57.155 108.989,-32.636 128.007,-32.636 128.007,-49.789 126.507,-48.438 "/>
+<path fill-rule="evenodd" clip-rule="evenodd" fill="#5E5F5F" d="M116.229-43.304l3.863-0.937l-2.581-2.839l-1.373,3.677
+	C116.113-43.345,116.229-43.304,116.229-43.304z M131.839-60.062l2.677,2.973l-13.673,12.311l-2.677-2.973L131.839-60.062z"/>
+<rect x="109.785" y="-56.401" fill="none" stroke="#A898AB" stroke-width="1.5" stroke-miterlimit="10" width="17.465" height="22.984"/>
+</svg>
