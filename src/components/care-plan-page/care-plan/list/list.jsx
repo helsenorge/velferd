@@ -39,12 +39,12 @@ const List = (
     if (measurement.goal.length > 1) {
       const valueRange1 = measurement.goal[0].extension[1].valueRange;
       const valueRange2 = measurement.goal[1].extension[1].valueRange;
-      return `${name}: ${valueRange1.low.value}/${valueRange2.low.value} -
-      ${valueRange1.high.value}/${valueRange2.high.value} ${unit}`;
+      return (<span><b>{name}:</b> {valueRange1.low.value}/{valueRange2.low.value} -
+      {valueRange1.high.value}/{valueRange2.high.value} {unit}</span>);
     }
 
     const valueRange = measurement.goal[0].extension[1].valueRange;
-    return `${name}: ${valueRange.low.value}-${valueRange.high.value} ${unit}`;
+    return (<span><b>{name}:</b> {valueRange.low.value}-{valueRange.high.value} {unit}</span>);
   };
 
   const measurementsList = measurements !== undefined ? measurements : [];
