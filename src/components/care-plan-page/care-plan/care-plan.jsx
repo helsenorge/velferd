@@ -55,6 +55,7 @@ class CarePlan extends Component {
         deleteCarePlanItem={deleteCarePlanItem}
         addCarePlanItem={addCarePlanItem}
         type="symptoms"
+        addButtonText="symptom"
         reasonCode={phase.reasonCode}
       />
     );
@@ -69,6 +70,7 @@ class CarePlan extends Component {
         deleteCarePlanItem={deleteCarePlanItem}
         addCarePlanItem={addCarePlanItem}
         type="actions"
+        addButtonText="tiltak"
         reasonCode={phase.reasonCode}
       />
     );
@@ -84,6 +86,7 @@ class CarePlan extends Component {
         deleteCarePlanItem={deleteCarePlanItem}
         addCarePlanItem={addCarePlanItem}
         type="medications"
+        addButtonText="medisinering"
         reasonCode={phase.reasonCode}
       />
       );

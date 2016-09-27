@@ -20,6 +20,7 @@ const List = (
     reasonCode,
     type,
     className,
+    addButtonText,
   }) => {
   const getValue = (i, value) => {
     if (edit) {
@@ -108,7 +109,7 @@ const List = (
             className="care-plan__addbutton"
             onClick={() => addCarePlanItem(reasonCode, type)}
           >
-            Legg til symptom
+            Legg til {addButtonText}
             <Icon className="care-plan__add-icon" glyph={iconPlus} />
           </button>
           ) : null}
@@ -132,4 +133,5 @@ List.propTypes = {
   addCarePlanItem: React.PropTypes.func.isRequired,
   reasonCode: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,
+  addButtonText: React.PropTypes.string.isRequired,
 };

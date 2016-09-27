@@ -17,6 +17,11 @@
     float: right;
     height: 20px;
     width: 20px;
+    transition: 1s;
+
+    &--active {
+      transform: rotate(180deg);
+    }
   }
 
   &__heading {
