@@ -1,6 +1,6 @@
 import { get, put } from '../helpers/api';
 import { discardAuthToken } from '../actions/auth';
-import ObservationCodes from '../constants/observation-codes';
+import { getObservationCodingDisplay } from '../helpers/observation-helpers';
 
 export const REQUEST_CAREPLAN = 'REQUEST_CAREPLAN';
 export const RECEIVE_CAREPLAN = 'RECEIVE_CAREPLAN';
@@ -56,21 +56,6 @@ export function fetchCarePlan(fhirUrl, patientId) {
   };
 }
 
-function getObservationCodingDisplay(code) {
-  switch (code) {
-  case ObservationCodes.weight:
-    return 'MDC_MASS_BODY_ACTUAL';
-  case ObservationCodes.pulse:
-    return 'MDC_PULS_OXIM_PULS_RATE';
-  case ObservationCodes.pulseOximeter:
-    return 'MDC_PULS_OXIM_SAT_O2';
-  case ObservationCodes.bloodPressure:
-    return 'MDC_PRESS_BLD_NONINV';
-  default:
-    return null;
-  }
-}
-
 function buildCoding(system, code, display) {
   return { system, code, display };
 }
@@ -89,14 +74,50 @@ function buildActivity(description, reasonCode, category) {
   };
 }
 
+function buildTarget(goal) {
+  return {
+    extension: [
+      {
+        url: 'goal-target.measure',
+        valueCodeableConcept: {
+          coding: [buildCoding(
+            'urn:std:iso:11073:10101', goal.code, getObservationCodingDisplay(goal.code))],
+        },
+      },
+      {
+        url: 'goal-target.detail',
+        valueRange: { low: goal.low, high: goal.high },
+      },
+    ],
+    url: 'http://hl7.org/fhir/StructureDefinition/goal-target',
+  };
+}
+
+function buildObservationGoal(reasonCode, measurement) {
+  const extension = [];
+
+  measurement.goal.forEach(goal => {
+    const target = buildTarget(goal);
+    extension.push(target);
+  });
+
+  return {
+    resourceType: 'Goal',
+    id: `${reasonCode}-goal-${measurement.code}`,
+    extension,
+  };
+}
+
 function buildObservationActivityCondition(reasonCode, measurement) {
   const activity = buildActivity('', reasonCode, 'observation');
   activity.detail.scheduledTiming = { repeat: { frequency: 1, period: 1, periodUnits: 'wk' } };
   activity.detail.code = { coding: [buildCoding('urn:std:iso:11073:10101',
       measurement.code, getObservationCodingDisplay(measurement.code))],
   };
-  activity.detail.goal = [{ reference: measurement.goalReference }];
-  return activity;
+
+  const goal = buildObservationGoal(reasonCode, measurement);
+  activity.detail.goal = [{ reference: `#${goal.id}` }];
+  return { activity, goal };
 }
 
 function buildCondition(symptom, reasonCode, number) {
@@ -115,7 +136,8 @@ export function saveCarePlan(fhirUrl, patientId, phases) {
     const id = resource.id;
     const url = `${fhirUrl}/CarePlan/${id}`;
     const activities = [];
-    const contained = resource.contained.filter(res => res.resourceType !== 'Condition');
+    const contained = resource.contained.filter(res => res.resourceType !== 'Condition'
+      && res.resourceType !== 'Goal');
 
     phases.forEach(phase => {
       // Actions
@@ -130,8 +152,9 @@ export function saveCarePlan(fhirUrl, patientId, phases) {
       });
       // Measurements
       phase.measurements.forEach(measurement => {
-        const activity = buildObservationActivityCondition(phase.reasonCode, measurement);
-        activities.push(activity);
+        const data = buildObservationActivityCondition(phase.reasonCode, measurement);
+        activities.push(data.activity);
+        contained.push(data.goal);
       });
       // Questionnaire
       const activity = buildActivity('', phase.reasonCode, 'observation');

@@ -4,10 +4,18 @@ function getMeasurements(activities, goals) {
     && activity.detail.code)
     .map(activity => {
       const goalReference = activity.detail.goal[0].reference;
+      const goal = goals[goalReference.substring(1)].map(g => {
+        const range = g.extension[1].valueRange;
+        return {
+          code: g.extension[0].valueCodeableConcept.coding[0].code,
+          high: range.high,
+          low: range.low,
+        };
+      });
+
       return {
         code: activity.detail.code.coding[0].code,
-        goalReference,
-        goal: goals[goalReference.substring(1)],
+        goal,
       };
     });
 }
