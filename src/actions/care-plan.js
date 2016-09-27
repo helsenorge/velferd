@@ -128,16 +128,30 @@ function buildCondition(symptom, reasonCode, number) {
   };
 }
 
-export function saveCarePlan(fhirUrl, patientId, phases) {
+function buildGoal(id, description) {
+  return {
+    resourceType: 'Goal',
+    id,
+    description,
+  };
+}
+
+export function saveCarePlan(fhirUrl, patientId, carePlan) {
   return (dispatch, getState) => {
     const { data } = getState().carePlan;
     const resource = Object.assign({}, data.entry[0].resource);
+    const phases = carePlan.phases;
 
     const id = resource.id;
     const url = `${fhirUrl}/CarePlan/${id}`;
     const activities = [];
     const contained = resource.contained.filter(res => res.resourceType !== 'Condition'
       && res.resourceType !== 'Goal');
+
+    // Patient Goal
+    const goal = buildGoal('patient-goal', carePlan.patientGoal);
+    contained.push(goal);
+    resource.goal = [{ reference: `#${goal.id}` }];
 
     phases.forEach(phase => {
       // Actions

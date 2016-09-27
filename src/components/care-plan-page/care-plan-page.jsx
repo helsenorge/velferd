@@ -12,7 +12,7 @@ class CarePlanPage extends Component {
   constructor(props) {
     super(props);
 
-    this.updatePhaseState = this.updatePhaseState.bind(this);
+    this.updateCarePlanState = this.updateCarePlanState.bind(this);
     this.saveCarePlan = this.saveCarePlan.bind(this);
     this.editCarePlan = this.editCarePlan.bind(this);
     this.deleteCarePlanItem = this.deleteCarePlanItem.bind(this);
@@ -54,20 +54,27 @@ class CarePlanPage extends Component {
     }
   }
 
-  updatePhaseState(event) {
-    const ids = event.target.name.split('-');
+  updateCarePlanState(event) {
     const carePlan = this.state.carePlan;
-    const index = this.getPhaseIndex(ids[0]);
 
-    if (ids[1] === 'measurements') {
-      const measurement = carePlan.phases[index][ids[1]][ids[2]];
-      const goal = measurement.goal[[ids[3]]];
-      const item = goal[ids[4]];
-      item.value = event.target.value;
+    if (event.target.name === 'patient-goal') {
+      carePlan.patientGoal = event.target.value;
     }
     else {
-      carePlan.phases[index][ids[1]][ids[2]] = event.target.value;
+      const ids = event.target.name.split('-');
+      const index = this.getPhaseIndex(ids[0]);
+
+      if (ids[1] === 'measurements') {
+        const measurement = carePlan.phases[index][ids[1]][ids[2]];
+        const goal = measurement.goal[[ids[3]]];
+        const item = goal[ids[4]];
+        item.value = event.target.value;
+      }
+      else {
+        carePlan.phases[index][ids[1]][ids[2]] = event.target.value;
+      }
     }
+
     return this.setState({ carePlan });
   }
 
@@ -101,7 +108,7 @@ class CarePlanPage extends Component {
     const { dispatch, fhirUrl, patientId } = this.props;
     event.preventDefault();
     this.setState({ saving: true });
-    dispatch(saveCarePlan(fhirUrl, patientId, this.state.carePlan.phases));
+    dispatch(saveCarePlan(fhirUrl, patientId, this.state.carePlan));
   }
 
   render() {
@@ -127,7 +134,7 @@ class CarePlanPage extends Component {
             patientGoal={carePlan.patientGoal}
             edit={edit}
             saving={saving}
-            onChange={this.updatePhaseState}
+            onChange={this.updateCarePlanState}
             deleteCarePlanItem={this.deleteCarePlanItem}
             addCarePlanItem={this.addCarePlanItem}
           />
