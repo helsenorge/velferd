@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import TextInput from '../../../text-input/text-input.jsx';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
+import Icon from '../../../icon/icon.jsx';
+import iconDelete from '../../../../../svg/delete.svg';
+import iconPlus from '../../../../../svg/plus.svg';
+import './list.scss';
 
 const List = (
   {
@@ -21,14 +25,17 @@ const List = (
     if (edit) {
       const name = `${reasonCode}-${type}-${i}`;
       return (
-        <div>
+        <div className="input-field">
           <TextInput
             onChange={onChange}
             name={name}
             value={value}
             disabled={saving}
           />
-          <button onClick={() => deleteCarePlanItem(name)}>Delete</button>
+          <button className="input-field__delete" onClick={() => deleteCarePlanItem(name)}>
+            <Icon className="input-field__icon" glyph={iconDelete} />
+            <span className="input-field__delete-text">Delete</span>
+          </button>
         </div>
       );
     }
@@ -36,20 +43,23 @@ const List = (
   };
 
   const getMeasurementEditControl = (label, low, high, i, j) => (
-    <div>
-      <div><b>{label}</b></div>
-      <TextInput
-        onChange={onChange}
-        name={`${reasonCode}-measurements-${i}-${j}-low`}
-        value={low}
-        disabled={saving}
-      />-
-      <TextInput
-        onChange={onChange}
-        name={`${reasonCode}-measurements-${i}-${j}-high`}
-        value={high}
-        disabled={saving}
-      />
+    <div className="measurement-control">
+      <label className="measurement-control__label">{label}</label>
+      <div className="measurement-control__inputs">
+        <TextInput
+          onChange={onChange}
+          name={`${reasonCode}-measurements-${i}-${j}-low`}
+          value={low}
+          disabled={saving}
+        />
+        –
+        <TextInput
+          onChange={onChange}
+          name={`${reasonCode}-measurements-${i}-${j}-high`}
+          value={high}
+          disabled={saving}
+        />
+      </div>
     </div>
     );
 
@@ -93,11 +103,17 @@ const List = (
       <h3 className={headerClass}>{heading}</h3>
       <ul className="care-plan__listitems">
         {items.map((item, i) => <li>{getValue(i, item)}</li>)}
+        {edit ? (
+          <button
+            className="care-plan__addbutton"
+            onClick={() => addCarePlanItem(reasonCode, type)}
+          >
+            Legg til symptom
+            <Icon className="care-plan__add-icon" glyph={iconPlus} />
+          </button>
+          ) : null}
         {measurementsList.map((item, i) => <li>{getMeasurementItem(i, item)}</li>)}
       </ul>
-      {edit ? (
-        <button onClick={() => addCarePlanItem(reasonCode, type)}>Legg til element</button>
-        ) : null}
     </div>
     );
 };

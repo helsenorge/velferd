@@ -1,0 +1,42 @@
+.input-field {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+
+  &__icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  &__delete-text {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .text-input {
+    flex: 1 0 auto;
+  }
+}
+
+.measurement-control {
+  margin-top: 1.625rem;
+  margin-right: 3rem;
+
+  &__inputs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .text-input {
+    width: 30%;
+  }
+
+  &__label {
+    font-weight: 600;
+  }
+}

@@ -2,10 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import List from './list/list.jsx';
 import Goal from '../../goal/goal.jsx';
 import './care-plan.scss';
+import Icon from '../../icon/icon.jsx';
 import ReasonCodes from '../../../constants/reason-codes';
-import ansikt1 from '../../../../svg/ansikt-1.svg';
-import ansikt2 from '../../../../svg/ansikt-2.svg';
-import ansikt3 from '../../../../svg/ansikt-3.svg';
+import face1 from '../../../../svg/face1.svg';
+import face2 from '../../../../svg/face2.svg';
+import face3 from '../../../../svg/face3.svg';
 
 class CarePlan extends Component {
   getPhaseName(reasonCode) {
@@ -24,13 +25,13 @@ class CarePlan extends Component {
   getPhaseIcon(i) {
     switch (i) {
     case 0:
-      return ansikt1;
+      return face1;
     case 1:
-      return ansikt2;
+      return face2;
     case 2:
-      return ansikt3;
+      return face3;
     default:
-      return ansikt1;
+      return face1;
     }
   }
 
@@ -39,7 +40,10 @@ class CarePlan extends Component {
       deleteCarePlanItem, addCarePlanItem } = this.props;
 
     const headings = phases.map((phase, i) =>
-      <h3 key={i} className="care-plan__heading">{this.getPhaseName(phase.reasonCode)}</h3>
+      <h3 key={i} className="care-plan__heading">
+        <Icon glyph={this.getPhaseIcon(i)} className="care-plan__icon" />
+        {this.getPhaseName(phase.reasonCode)}
+      </h3>
     );
     const symptoms = phases.map((phase, i) =>
       <List

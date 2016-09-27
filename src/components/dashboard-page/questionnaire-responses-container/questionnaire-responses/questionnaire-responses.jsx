@@ -6,9 +6,9 @@ import './questionnaire-responses.scss';
 import LatestMeasurement from './../../latest-measurement/latest-measurement.jsx';
 import Description from './../../description/description.jsx';
 import Icon from '../../../icon/icon.jsx';
-import ansikt1 from '../../../../../svg/ansikt-1.svg';
-import ansikt2 from '../../../../../svg/ansikt-2.svg';
-import ansikt3 from '../../../../../svg/ansikt-3.svg';
+import ansikt1 from '../../../../../svg/face1.svg';
+import ansikt2 from '../../../../../svg/face2.svg';
+import ansikt3 from '../../../../../svg/face3.svg';
 
 
 class QuestionnaireResponses extends Component {
