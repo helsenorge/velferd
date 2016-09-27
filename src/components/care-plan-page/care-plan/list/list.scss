@@ -1,0 +1,8 @@
+.input-field {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  .text-input {
+    flex: 1 0 auto;
+  }
+}

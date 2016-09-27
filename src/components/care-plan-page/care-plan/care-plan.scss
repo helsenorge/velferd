@@ -13,16 +13,23 @@
     padding: 1rem;
 
     &:nth-child(1) {
-      background: #EAEFE6;
+      background: #DFEED3;
     }
 
     &:nth-child(2) {
-      background: #F4EFE3;
+      background: #F5E8C2;
     }
 
     &:nth-child(3) {
-      background: #F2E5DE;
+      background: #EDCAB9;
     }
+  }
+
+  &__icon {
+    margin-right: 0.75rem;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
   }
 
   &__listheading {
@@ -48,8 +55,8 @@
   }
 
   &__list {
-    padding: 0 1rem;
-    flex: 0 0 calc(100% / 3 - 4rem);
+    padding-left: 3.5rem;
+    flex: 0 0 calc(100% / 3 - 5.5rem);
     background: #fff;
 
     &:nth-child(7)::before,

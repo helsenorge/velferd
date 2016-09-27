@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import TextInput from '../../../text-input/text-input.jsx';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
+import './list.scss';
 
 const List = (
   {
@@ -21,7 +22,7 @@ const List = (
     if (edit) {
       const name = `${reasonCode}-${type}-${i}`;
       return (
-        <div>
+        <div className="input-field">
           <TextInput
             onChange={onChange}
             name={name}

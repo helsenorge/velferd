@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import './text-input.scss';
 
 const TextInput = ({ name, onChange, placeholder, value, disabled }) => (
   <input
@@ -8,6 +9,7 @@ const TextInput = ({ name, onChange, placeholder, value, disabled }) => (
     value={value}
     onChange={onChange}
     disabled={disabled}
+    className="text-input"
   />
 );
 
