@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import List from './list/list.jsx';
+import Goal from '../../goal/goal.jsx';
 import './care-plan.scss';
 import ReasonCodes from '../../../constants/reason-codes';
 import ansikt1 from '../../../../svg/ansikt-1.svg';
@@ -34,7 +35,8 @@ class CarePlan extends Component {
   }
 
   render() {
-    const { phases, edit, saving, onChange, deleteCarePlanItem, addCarePlanItem } = this.props;
+    const { phases, patientGoal, edit, saving, onChange,
+      deleteCarePlanItem, addCarePlanItem } = this.props;
 
     const headings = phases.map((phase, i) =>
       <h3 key={i} className="care-plan__heading">{this.getPhaseName(phase.reasonCode)}</h3>
@@ -84,11 +86,14 @@ class CarePlan extends Component {
       />
       );
     return (
-      <div className="care-plan">
-        {headings}
-        {symptoms}
-        {actions}
-        {medications}
+      <div>
+        <Goal patientGoal={patientGoal} />
+        <div className="care-plan">
+          {headings}
+          {symptoms}
+          {actions}
+          {medications}
+        </div>
       </div>
     );
   }
@@ -96,6 +101,7 @@ class CarePlan extends Component {
 
 CarePlan.propTypes = {
   phases: PropTypes.array.isRequired,
+  patientGoal: PropTypes.string,
   onChange: React.PropTypes.func.isRequired,
   edit: PropTypes.bool.isRequired,
   saving: React.PropTypes.bool.isRequired,

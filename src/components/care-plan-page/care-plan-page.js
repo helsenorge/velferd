@@ -79,3 +79,15 @@ export function getPhase(resource, reasonCode) {
     actions,
     medications };
 }
+
+export function getPatientGoal(resource) {
+  if (resource.goal.length > 0) {
+    const ref = resource.goal[0].reference.substring(1);
+    const goal = resource.contained.filter(res => res.resourceType === 'Goal' && res.id === ref);
+
+    if (goal.length > 0) {
+      return goal[0].description;
+    }
+  }
+  return '';
+}
