@@ -15,13 +15,22 @@ const List = (
     items,
     heading,
     measurements,
-    deleteCarePlanItem,
     addCarePlanItem,
     reasonCode,
     type,
+    deleteCarePlanItem,
     className,
     addButtonText,
   }) => {
+  const animateAndDelete = (name, event) => {
+    const node = event.currentTarget.parentNode;
+    node.addEventListener('animationend', () => {
+      deleteCarePlanItem(name);
+    });
+
+    node.classList.add('input-field--deleting');
+  };
+
   const getValue = (i, value) => {
     if (edit) {
       const name = `${reasonCode}-${type}-${i}`;
@@ -33,7 +42,10 @@ const List = (
             value={value}
             disabled={saving}
           />
-          <button className="input-field__delete" onClick={() => deleteCarePlanItem(name)}>
+          <button
+            className="input-field__delete"
+            onClick={(event) => animateAndDelete(name, event)}
+          >
             <Icon className="input-field__icon" glyph={iconDelete} />
             <span className="input-field__delete-text">Delete</span>
           </button>
