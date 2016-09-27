@@ -59,7 +59,15 @@ class CarePlanPage extends Component {
     const phases = this.state.phases;
     const index = this.getPhaseIndex(ids[0]);
 
-    phases[index][ids[1]][ids[2]] = event.target.value;
+    if (ids[1] === 'measurements') {
+      const measurement = phases[index][ids[1]][ids[2]];
+      const goal = measurement.goal[[ids[3]]];
+      const item = goal[ids[4]];
+      item.value = event.target.value;
+    }
+    else {
+      phases[index][ids[1]][ids[2]] = event.target.value;
+    }
     return this.setState({ phases });
   }
 
