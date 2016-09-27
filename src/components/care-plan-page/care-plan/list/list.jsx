@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import TextInput from '../../../text-input/text-input.jsx';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
 import Icon from '../../../icon/icon.jsx';
-import iconDelete from '../../../../../svg/delete.svg';
+import Input from './input/input.jsx';
 import iconPlus from '../../../../../svg/plus.svg';
 import './list.scss';
 
@@ -22,39 +22,6 @@ const List = (
     className,
     addButtonText,
   }) => {
-  const animateAndDelete = (name, event) => {
-    const node = event.currentTarget.parentNode;
-    node.addEventListener('animationend', () => {
-      deleteCarePlanItem(name);
-    });
-
-    node.classList.add('input-field--deleting');
-  };
-
-  const getValue = (i, value) => {
-    if (edit) {
-      const name = `${reasonCode}-${type}-${i}`;
-      return (
-        <div className="input-field">
-          <TextInput
-            onChange={onChange}
-            name={name}
-            value={value}
-            disabled={saving}
-          />
-          <button
-            className="input-field__delete"
-            onClick={(event) => animateAndDelete(name, event)}
-          >
-            <Icon className="input-field__icon" glyph={iconDelete} />
-            <span className="input-field__delete-text">Delete</span>
-          </button>
-        </div>
-      );
-    }
-    return value;
-  };
-
   const getMeasurementEditControl = (label, low, high, i, j) => (
     <div className="measurement-control">
       <label className="measurement-control__label">{label}</label>
@@ -115,7 +82,19 @@ const List = (
     <div className="care-plan__list">
       <h3 className={headerClass}>{heading}</h3>
       <ul className="care-plan__listitems">
-        {items.map((item, i) => <li>{getValue(i, item)}</li>)}
+        {items.map((item, i) =>
+          <li key={i}>
+            <Input
+              i={i}
+              value={item}
+              deleteCarePlanItem={deleteCarePlanItem}
+              type={type}
+              edit={edit}
+              reasonCode={reasonCode}
+              saving={saving}
+              onChange={onChange}
+            />
+          </li>)}
         {edit ? (
           <button
             className="care-plan__addbutton"
@@ -125,7 +104,7 @@ const List = (
             <Icon className="care-plan__add-icon" glyph={iconPlus} />
           </button>
           ) : null}
-        {measurementsList.map((item, i) => <li>{getMeasurementItem(i, item)}</li>)}
+        {measurementsList.map((item, i) => <li key={i}>{getMeasurementItem(i, item)}</li>)}
       </ul>
     </div>
     );
