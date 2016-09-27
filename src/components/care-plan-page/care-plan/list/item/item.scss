@@ -1,0 +1,58 @@
+.input-field {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+
+  &--deleting {
+    animation: leave 0.3s 1;
+  }
+
+  &--adding {
+    animation: enter 0.3s 1;
+  }
+
+  &__icon {
+    width: 45px;
+    height: 45px;
+  }
+
+  &__delete-text {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .text-input {
+    flex: 1 0 auto;
+  }
+}
+
+@keyframes enter {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scaleY(100%);
+    opacity: 1;
+  }
+}
+
+@keyframes leave {
+  0% {
+    transform: scaleY(100%);
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    transform: scaleY(0);
+  }
+}

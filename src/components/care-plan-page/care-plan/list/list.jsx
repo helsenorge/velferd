@@ -93,6 +93,7 @@ const List = (
               reasonCode={reasonCode}
               saving={saving}
               onChange={onChange}
+              last={i === items.length - 1}
             />
           </li>)}
         {edit ? (

@@ -2,26 +2,31 @@ import React, { Component, PropTypes } from 'react';
 import TextInput from '../../../../text-input/text-input.jsx';
 import Icon from '../../../../icon/icon.jsx';
 import iconDelete from '../../../../../../svg/delete.svg';
+import './item.scss';
 
 class Input extends Component {
   constructor(props) {
     super(props);
     const { reasonCode, type, i } = this.props;
     this.name = `${reasonCode}-${type}-${i}`;
-    this.listener = this.listener.bind(this);
     this.animateAndDelete = this.animateAndDelete.bind(this);
   }
-  listener() {
-    const el = this.refs.node;
-    const { deleteCarePlanItem } = this.props;
-    el.classList.remove('input-field--deleting');
-    deleteCarePlanItem(this.name);
-    el.removeEventListener('animationend', this.listener);
+
+  componentDidMount() {
+    if (this.props.last && this.props.value.length === 0) {
+      const el = this.refs.node;
+      el.addEventListener('animationend', () => {
+        this.refs.node.classList.remove('input-field--adding');
+      });
+      this.refs.node.classList.add('input-field--adding');
+    }
   }
 
   animateAndDelete() {
     const el = this.refs.node;
-    el.addEventListener('animationend', this.listener);
+    el.addEventListener('animationend', () => {
+      this.props.deleteCarePlanItem(this.name);
+    });
     el.classList.add('input-field--deleting');
   }
 
@@ -57,6 +62,7 @@ Input.propTypes = {
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
   value: React.PropTypes.string.isRequired,
+  last: React.PropTypes.bool.isRequired,
 };
 
 export default Input;
