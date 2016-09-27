@@ -17,6 +17,7 @@ class CarePlanPage extends Component {
     this.editCarePlan = this.editCarePlan.bind(this);
     this.deleteCarePlanItem = this.deleteCarePlanItem.bind(this);
     this.addCarePlanItem = this.addCarePlanItem.bind(this);
+    this.cancel = this.cancel.bind(this);
 
     this.state = {
       phases: Object.assign([], props.phases),
@@ -84,6 +85,10 @@ class CarePlanPage extends Component {
     this.setState({ edit: true });
   }
 
+  cancel() {
+    this.setState({ edit: false });
+  }
+
   saveCarePlan(event) {
     const { dispatch, fhirUrl, patientId } = this.props;
     event.preventDefault();
@@ -104,6 +109,7 @@ class CarePlanPage extends Component {
           edit={edit}
           editCarePlan={this.editCarePlan}
           saveCarePlan={this.saveCarePlan}
+          cancel={this.cancel}
         />
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : null)

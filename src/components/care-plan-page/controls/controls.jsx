@@ -4,7 +4,7 @@ import Spinner from '../../spinner/spinner.jsx';
 import Icon from '../../icon/icon.jsx';
 import iconPrint from '../../../../svg/ikon-print.svg';
 
-const Controls = ({ edit, editCarePlan, saveCarePlan, saving }) => {
+const Controls = ({ edit, editCarePlan, saveCarePlan, saving, cancel }) => {
   const cardClasses = classNames({
     'care-plan-page__card': true,
     'care-plan-page__card--flipped': edit,
@@ -37,7 +37,7 @@ const Controls = ({ edit, editCarePlan, saveCarePlan, saving }) => {
             Lagre
           </button>
           <button
-            onClick={saveCarePlan}
+            onClick={cancel}
             className="care-plan-page__button care-plan-page__button--cancel"
             disabled={saving}
           >
@@ -54,6 +54,7 @@ Controls.propTypes = {
   editCarePlan: PropTypes.func.isRequired,
   saveCarePlan: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
+  cancel: PropTypes.func.isRequired,
 };
 
 export default Controls;
