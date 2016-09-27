@@ -15,9 +15,6 @@ const PageMenu = () => (
         </IndexLink>
       </li>
       <li className="pagemenu__list-item">
-        <a href="#" className="pagemenu__link">Hendelser</a>
-      </li>
-      <li className="pagemenu__list-item">
         <Link
           to="/velferd/careplan"
           className="pagemenu__link"
@@ -25,9 +22,6 @@ const PageMenu = () => (
         >
             Egenbehandlingsplan
         </Link>
-      </li>
-      <li className="pagemenu__list-item">
-        <a href="#" className="pagemenu__link">Meldinger</a>
       </li>
     </ul>
   </nav>

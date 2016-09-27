@@ -1,11 +1,12 @@
 import React, { PropTypes } from 'react';
 
-const TextArea = ({ name, onChange, value, disabled }) => (
+const TextArea = ({ name, onChange, value, disabled, className = '' }) => (
   <textarea
     name={name}
     value={value}
     onChange={onChange}
     disabled={disabled}
+    className={className}
   />
 );
 
@@ -15,6 +16,7 @@ TextArea.propTypes = {
   placeholder: PropTypes.string,
   value: PropTypes.string,
   disabled: PropTypes.bool,
+  className: PropTypes.string,
 };
 
 export default TextArea;

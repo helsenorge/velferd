@@ -4,7 +4,7 @@
   font-size: 1.125rem;
   display: flex;
   margin-bottom: 4rem;
-  width: 100%;
+  flex: 1 1 100%;
 
   &__left {
     width: 80%;
@@ -15,5 +15,12 @@
     margin: 0;
     margin-bottom: 0.5rem;
     text-transform: uppercase;
+  }
+
+  &__textarea {
+    width: 60%;
+    font-size: 1rem;
+    resize: vertical;
+    border: 2px solid #D9D9D4;
   }
 }

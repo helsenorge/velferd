@@ -13,6 +13,7 @@ const Goal = ({
     if (edit) {
       return (
         <TextArea
+          className="goal__textarea"
           onChange={onChange}
           name="patient-goal"
           value={patientGoal}
