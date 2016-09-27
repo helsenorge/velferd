@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import TextInput from '../text-input/text-input.jsx';
+import TextArea from '../text-area/text-area.jsx';
 
 import './goal.scss';
 
@@ -12,7 +12,7 @@ const Goal = ({
   const getGoal = () => {
     if (edit) {
       return (
-        <TextInput
+        <TextArea
           onChange={onChange}
           name="patient-goal"
           value={patientGoal}
