@@ -92,9 +92,10 @@ class CarePlan extends Component {
         reasonCode={phase.reasonCode}
       />
       );
+
     return (
       <div>
-        <Goal patientGoal={patientGoal} />
+        <Goal patientGoal={patientGoal} edit={edit} onChange={onChange} saving={saving} />
         <div className="care-plan">
           {headings}
           {symptoms}
