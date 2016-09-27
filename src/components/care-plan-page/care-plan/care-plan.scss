@@ -56,7 +56,8 @@
 
   &__list {
     padding-left: 3.5rem;
-    flex: 0 0 calc(100% / 3 - 5.5rem);
+    padding-right: 2rem;
+    flex: 0 0 calc(100% / 3 - 7.5rem);
     background: #fff;
 
     &:nth-child(7)::before,

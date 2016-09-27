@@ -2,6 +2,8 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import TextInput from '../../../text-input/text-input.jsx';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
+import Icon from '../../../icon/icon.jsx';
+import iconDelete from '../../../../../svg/delete.svg';
 import './list.scss';
 
 const List = (
@@ -29,7 +31,10 @@ const List = (
             value={value}
             disabled={saving}
           />
-          <button onClick={() => deleteCarePlanItem(name)}>Delete</button>
+          <button className="input-field__delete" onClick={() => deleteCarePlanItem(name)}>
+            <Icon className="input-field__icon" glyph={iconDelete} />
+            <span className="input-field__delete-text">Delete</span>
+          </button>
         </div>
       );
     }
@@ -37,20 +42,23 @@ const List = (
   };
 
   const getMeasurementEditControl = (label, low, high, i, j) => (
-    <div>
-      <div><b>{label}</b></div>
-      <TextInput
-        onChange={onChange}
-        name={`${reasonCode}-measurements-${i}-${j}-low`}
-        value={low}
-        disabled={saving}
-      />-
-      <TextInput
-        onChange={onChange}
-        name={`${reasonCode}-measurements-${i}-${j}-high`}
-        value={high}
-        disabled={saving}
-      />
+    <div className="measurement-control">
+      <label className="measurement-control__label">{label}</label>
+      <div className="measurement-control__inputs">
+        <TextInput
+          onChange={onChange}
+          name={`${reasonCode}-measurements-${i}-${j}-low`}
+          value={low}
+          disabled={saving}
+        />
+        –
+        <TextInput
+          onChange={onChange}
+          name={`${reasonCode}-measurements-${i}-${j}-high`}
+          value={high}
+          disabled={saving}
+        />
+      </div>
     </div>
     );
 
