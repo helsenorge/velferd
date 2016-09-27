@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import TextInput from '../../../text-input/text-input.jsx';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
 import Icon from '../../../icon/icon.jsx';
-import Input from './input/input.jsx';
+import Item from './item/item.jsx';
 import iconPlus from '../../../../../svg/plus.svg';
 import './list.scss';
 
@@ -84,7 +84,7 @@ const List = (
       <ul className="care-plan__listitems">
         {items.map((item, i) =>
           <li key={i}>
-            <Input
+            <Item
               i={i}
               value={item}
               deleteCarePlanItem={deleteCarePlanItem}
