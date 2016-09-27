@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import Spinner from '../../spinner/spinner.jsx';
 import Icon from '../../icon/icon.jsx';
-import iconPrint from '../../../../svg/ikon-print.svg';
+import iconPrint from '../../../../svg/print.svg';
+import iconEdit from '../../../../svg/edit.svg';
 
 const Controls = ({ edit, editCarePlan, saveCarePlan, saving, cancel }) => {
   const cardClasses = classNames({
@@ -15,7 +16,7 @@ const Controls = ({ edit, editCarePlan, saveCarePlan, saving, cancel }) => {
         <div className="care-plan-page__front">
           <button
             onClick={editCarePlan}
-            className="care-plan-page__button care-plan-page__button--edit"
+            className="care-plan-page__button care-plan-page__button--print"
           >
             <Icon glyph={iconPrint} />
             Skriv ut egenbehandlingsplan
@@ -24,6 +25,7 @@ const Controls = ({ edit, editCarePlan, saveCarePlan, saving, cancel }) => {
             onClick={editCarePlan}
             className="care-plan-page__button care-plan-page__button--edit"
           >
+            <Icon glyph={iconEdit} />
             Rediger
           </button>
         </div>

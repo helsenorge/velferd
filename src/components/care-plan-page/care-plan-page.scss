@@ -54,7 +54,6 @@
     .icon {
       width: 40px;
       height: 40px;
-      margin-right: 1rem;
       vertical-align: middle;
     }
 
@@ -73,6 +72,12 @@
       background: #269392;
       color: #fff;
       min-width: 90px;
+    }
+
+    &--print {
+      .icon {
+        margin-right: 0.7rem;
+      }
     }
   }
 
