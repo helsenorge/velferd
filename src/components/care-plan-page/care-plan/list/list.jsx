@@ -4,6 +4,7 @@ import TextInput from '../../../text-input/text-input.jsx';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
 import Icon from '../../../icon/icon.jsx';
 import iconDelete from '../../../../../svg/delete.svg';
+import iconPlus from '../../../../../svg/plus.svg';
 import './list.scss';
 
 const List = (
@@ -102,11 +103,17 @@ const List = (
       <h3 className={headerClass}>{heading}</h3>
       <ul className="care-plan__listitems">
         {items.map((item, i) => <li>{getValue(i, item)}</li>)}
+        {edit ? (
+          <button
+            className="care-plan__addbutton"
+            onClick={() => addCarePlanItem(reasonCode, type)}
+          >
+            Legg til symptom
+            <Icon className="care-plan__add-icon" glyph={iconPlus} />
+          </button>
+          ) : null}
         {measurementsList.map((item, i) => <li>{getMeasurementItem(i, item)}</li>)}
       </ul>
-      {edit ? (
-        <button onClick={() => addCarePlanItem(reasonCode, type)}>Legg til element</button>
-        ) : null}
     </div>
     );
 };
