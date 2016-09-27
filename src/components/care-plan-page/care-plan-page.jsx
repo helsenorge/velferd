@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
-import classNames from 'classnames';
 import CarePlan from './care-plan/care-plan.jsx';
-import Icon from '../icon/icon.jsx';
-import iconPrint from '../../../svg/ikon-print.svg';
+import Controls from './controls/controls.jsx';
 import ReasonCodes from '../../constants/reason-codes';
 import { getPhase } from './care-plan-page.js';
 import './care-plan-page.scss';
@@ -97,61 +95,16 @@ class CarePlanPage extends Component {
     const { isFetching, error } = this.props;
     const { phases, edit, saving } = this.state;
     const isEmpty = phases.length === 0;
-    const cardClasses = classNames({
-      'care-plan-page__card': true,
-      'care-plan-page__card--flipped': edit,
-    });
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
         {error && <p>{error}</p>}
-        <div className="care-plan-page__controls">
-          <div className={cardClasses}>
-            <div className="care-plan-page__front">
-              <button
-                onClick={this.editCarePlan}
-                className="care-plan-page__button care-plan-page__button--edit"
-              >
-                <Icon glyph={iconPrint} />
-                Skriv ut egenbehandlingsplan
-              </button>
-              <button
-                onClick={this.editCarePlan}
-                className="care-plan-page__button care-plan-page__button--edit"
-              >
-                Rediger
-              </button>
-            </div>
-            <div className="care-plan-page__back">
-              {saving ? (<div className="atom_spinner_circular">
-                <div className="spinner">
-                  <div className="s1"></div>
-                  <div className="s2"></div>
-                  <div className="s3"></div>
-                  <div className="s4"></div>
-                  <div className="s5"></div>
-                  <div className="s6"></div>
-                  <div className="s7"></div>
-                  <div className="s8"></div>
-                </div>
-              </div>) : null}
-              <button
-                onClick={this.saveCarePlan}
-                className="care-plan-page__button care-plan-page__button--save"
-                disabled={saving}
-              >
-                Lagre
-              </button>
-              <button
-                onClick={this.saveCarePlan}
-                className="care-plan-page__button care-plan-page__button--cancel"
-                disabled={saving}
-              >
-                Avbryt
-              </button>
-            </div>
-          </div>
-        </div>
+        <Controls
+          saving={saving}
+          edit={edit}
+          editCarePlan={this.editCarePlan}
+          saveCarePlan={this.saveCarePlan}
+        />
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : null)
           : <CarePlan
