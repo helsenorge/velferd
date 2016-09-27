@@ -4,7 +4,7 @@ import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
 import Controls from './controls/controls.jsx';
 import ReasonCodes from '../../constants/reason-codes';
-import { getPhase } from './care-plan-page.js';
+import { getPhase, getPatientGoal } from './care-plan-page.js';
 import './care-plan-page.scss';
 
 class CarePlanPage extends Component {
@@ -20,7 +20,7 @@ class CarePlanPage extends Component {
     this.cancel = this.cancel.bind(this);
 
     this.state = {
-      phases: Object.assign([], props.phases),
+      carePlan: undefined,
       edit: false,
       saving: false,
     };
@@ -33,7 +33,7 @@ class CarePlanPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.saveCompleted) {
-      this.setState({ phases: Object.assign([], nextProps.phases) });
+      this.setState({ carePlan: Object.assign({}, nextProps.carePlan) });
     }
 
     if (nextProps.saveCompleted) {
@@ -56,36 +56,36 @@ class CarePlanPage extends Component {
 
   updatePhaseState(event) {
     const ids = event.target.name.split('-');
-    const phases = this.state.phases;
+    const carePlan = this.state.carePlan;
     const index = this.getPhaseIndex(ids[0]);
 
     if (ids[1] === 'measurements') {
-      const measurement = phases[index][ids[1]][ids[2]];
+      const measurement = carePlan.phases[index][ids[1]][ids[2]];
       const goal = measurement.goal[[ids[3]]];
       const item = goal[ids[4]];
       item.value = event.target.value;
     }
     else {
-      phases[index][ids[1]][ids[2]] = event.target.value;
+      carePlan.phases[index][ids[1]][ids[2]] = event.target.value;
     }
-    return this.setState({ phases });
+    return this.setState({ carePlan });
   }
 
   deleteCarePlanItem(name) {
     const ids = name.split('-');
-    const phases = this.state.phases;
+    const carePlan = this.state.carePlan;
     const index = this.getPhaseIndex(ids[0]);
 
-    phases[index][ids[1]].splice(ids[2], 1);
-    return this.setState({ phases });
+    carePlan.phases[index][ids[1]].splice(ids[2], 1);
+    return this.setState({ carePlan });
   }
 
   addCarePlanItem(reasonCode, type) {
-    const phases = this.state.phases;
+    const carePlan = this.state.carePlan;
     const index = this.getPhaseIndex(reasonCode);
 
-    phases[index][type].push('');
-    return this.setState({ phases });
+    carePlan.phases[index][type].push('');
+    return this.setState({ carePlan });
   }
 
   editCarePlan(event) {
@@ -101,13 +101,14 @@ class CarePlanPage extends Component {
     const { dispatch, fhirUrl, patientId } = this.props;
     event.preventDefault();
     this.setState({ saving: true });
-    dispatch(saveCarePlan(fhirUrl, patientId, this.state.phases));
+    dispatch(saveCarePlan(fhirUrl, patientId, this.state.carePlan.phases));
   }
 
   render() {
     const { isFetching, error } = this.props;
-    const { phases, edit, saving } = this.state;
-    const isEmpty = phases.length === 0;
+    const { carePlan, edit, saving } = this.state;
+    const isEmpty = carePlan === undefined;
+
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
@@ -122,7 +123,8 @@ class CarePlanPage extends Component {
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : null)
           : <CarePlan
-            phases={phases}
+            phases={carePlan.phases}
+            patientGoal={carePlan.patientGoal}
             edit={edit}
             saving={saving}
             onChange={this.updatePhaseState}
@@ -144,7 +146,7 @@ CarePlanPage.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   saveCompleted: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
-  phases: PropTypes.array.isRequired,
+  carePlan: PropTypes.object,
   error: PropTypes.string,
 };
 
@@ -154,22 +156,24 @@ function mapStateToProps(state) {
   const { isFetching, data, saveCompleted, error } = carePlan
     || { isFetching: true, data: null, saveCompleted: null };
 
-  const phases = [];
+  let plan;
   const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
 
   if (!saveCompleted && !isEmpty) {
+    plan = { phases: [] };
     const greenPhase = getPhase(data.entry[0].resource, ReasonCodes.green);
-    phases.push(greenPhase);
+    plan.phases.push(greenPhase);
     const yellowPhase = getPhase(data.entry[0].resource, ReasonCodes.yellow);
-    phases.push(yellowPhase);
+    plan.phases.push(yellowPhase);
     const redPhase = getPhase(data.entry[0].resource, ReasonCodes.red);
-    phases.push(redPhase);
+    plan.phases.push(redPhase);
+    plan.patientGoal = getPatientGoal(data.entry[0].resource);
   }
 
   return {
     fhirUrl,
     patientId,
-    phases,
+    carePlan: plan,
     isFetching,
     saveCompleted,
     error,
