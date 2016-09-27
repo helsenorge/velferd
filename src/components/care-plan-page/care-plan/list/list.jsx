@@ -18,9 +18,9 @@ const List = (
     addCarePlanItem,
     reasonCode,
     type,
-    deleteCarePlanItem,
     className,
     addButtonText,
+    ...props,
   }) => {
   const getMeasurementEditControl = (label, low, high, i, j) => (
     <div className="measurement-control">
@@ -83,19 +83,18 @@ const List = (
       <h3 className={headerClass}>{heading}</h3>
       <ul className="care-plan__listitems">
         {items.map((item, i) =>
-          <li key={i}>
-            <Item
-              i={i}
-              value={item}
-              deleteCarePlanItem={deleteCarePlanItem}
-              type={type}
-              edit={edit}
-              reasonCode={reasonCode}
-              saving={saving}
-              onChange={onChange}
-              last={i === items.length - 1}
-            />
-          </li>)}
+          <Item
+            key={i}
+            i={i}
+            value={item}
+            type={type}
+            edit={edit}
+            reasonCode={reasonCode}
+            saving={saving}
+            onChange={onChange}
+            last={i === items.length - 1}
+            {...props}
+          />)}
         {edit ? (
           <button
             className="care-plan__addbutton"
@@ -121,7 +120,6 @@ List.propTypes = {
   measurements: PropTypes.array,
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
-  deleteCarePlanItem: React.PropTypes.func.isRequired,
   addCarePlanItem: React.PropTypes.func.isRequired,
   reasonCode: React.PropTypes.string.isRequired,
   type: React.PropTypes.string.isRequired,

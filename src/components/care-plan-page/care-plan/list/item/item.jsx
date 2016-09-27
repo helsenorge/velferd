@@ -34,21 +34,23 @@ class Input extends Component {
     const { edit, value, onChange, saving } = this.props;
 
     return !edit ? (<span>{value}</span>) : (
-      <div className="input-field" ref="node">
-        <TextInput
-          onChange={onChange}
-          name={this.name}
-          value={value}
-          disabled={saving}
-        />
-        <button
-          className="input-field__delete"
-          onClick={this.animateAndDelete}
-        >
-          <Icon className="input-field__icon" glyph={iconDelete} />
-          <span className="input-field__delete-text">Delete</span>
-        </button>
-      </div>
+      <li>
+        <div className="input-field" ref="node">
+          <TextInput
+            onChange={onChange}
+            name={this.name}
+            value={value}
+            disabled={saving}
+          />
+          <button
+            className="input-field__delete"
+            onClick={this.animateAndDelete}
+          >
+            <Icon className="input-field__icon" glyph={iconDelete} />
+            <span className="input-field__delete-text">Delete</span>
+          </button>
+        </div>
+      </li>
       );
   }
 }
