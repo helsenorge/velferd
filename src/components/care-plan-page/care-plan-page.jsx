@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
 import Controls from './controls/controls.jsx';
+import HistoryContainer from './history-container/history-container.jsx';
 import ReasonCodes from '../../constants/reason-codes';
-import { getPhase, getPatientGoal } from './care-plan-page.js';
+import { getCarePlan } from './care-plan-page.js';
 import './care-plan-page.scss';
 
 class CarePlanPage extends Component {
@@ -142,6 +143,7 @@ class CarePlanPage extends Component {
         <div className="care-plan-page__lastupdated">
           Sist oppdatert: 30.02.2016 kl. 11.34 av Anna For Eieb (lege)
         </div>
+        {carePlan && <HistoryContainer carePlanId={carePlan.id} />}
       </div>
     );
   }
@@ -167,14 +169,7 @@ function mapStateToProps(state) {
   const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
 
   if (!saveCompleted && !isEmpty) {
-    plan = { phases: [] };
-    const greenPhase = getPhase(data.entry[0].resource, ReasonCodes.green);
-    plan.phases.push(greenPhase);
-    const yellowPhase = getPhase(data.entry[0].resource, ReasonCodes.yellow);
-    plan.phases.push(yellowPhase);
-    const redPhase = getPhase(data.entry[0].resource, ReasonCodes.red);
-    plan.phases.push(redPhase);
-    plan.patientGoal = getPatientGoal(data.entry[0].resource);
+    plan = getCarePlan(data.entry[0].resource);
   }
 
   return {
