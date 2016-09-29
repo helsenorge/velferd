@@ -4,6 +4,7 @@ import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
 import Controls from './controls/controls.jsx';
 import ReasonCodes from '../../constants/reason-codes';
+import CommentLightbox from './comment-lightbox/comment-lightbox.jsx';
 import { getPhase, getPatientGoal } from './care-plan-page.js';
 import './care-plan-page.scss';
 
@@ -18,11 +19,14 @@ class CarePlanPage extends Component {
     this.deleteCarePlanItem = this.deleteCarePlanItem.bind(this);
     this.addCarePlanItem = this.addCarePlanItem.bind(this);
     this.cancel = this.cancel.bind(this);
+    this.closeLightbox = this.closeLightbox.bind(this);
+    this.openLightbox = this.openLightbox.bind(this);
 
     this.state = {
       carePlan: undefined,
       edit: false,
       saving: false,
+      lightboxOpen: false,
     };
   }
 
@@ -101,7 +105,7 @@ class CarePlanPage extends Component {
   }
 
   cancel() {
-    this.setState({ edit: false });
+    this.setState({ edit: false, lightboxOpen: false });
   }
 
   saveCarePlan(event) {
@@ -109,22 +113,32 @@ class CarePlanPage extends Component {
     event.preventDefault();
     this.setState({ saving: true });
     dispatch(saveCarePlan(fhirUrl, patientId, this.state.carePlan));
+    this.closeLightbox();
+  }
+
+  openLightbox() {
+    this.setState({ lightboxOpen: true });
+  }
+
+  closeLightbox() {
+    this.setState({ lightboxOpen: false });
   }
 
   render() {
     const { isFetching, error } = this.props;
     const { carePlan, edit, saving } = this.state;
     const isEmpty = carePlan === undefined;
-
+    const lightbox = this.state.lightboxOpen ?
+      <CommentLightbox onClose={this.cancel} saveCarePlan={this.saveCarePlan} /> : null;
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
         {error && <p>{error}</p>}
         <Controls
           saving={saving}
-          edit={edit}
-          editCarePlan={this.editCarePlan}
-          saveCarePlan={this.saveCarePlan}
+          editing={edit}
+          edit={this.editCarePlan}
+          save={this.openLightbox}
           cancel={this.cancel}
         />
         {isEmpty
@@ -142,6 +156,7 @@ class CarePlanPage extends Component {
         <div className="care-plan-page__lastupdated">
           Sist oppdatert: 30.02.2016 kl. 11.34 av Anna For Eieb (lege)
         </div>
+        {lightbox}
       </div>
     );
   }

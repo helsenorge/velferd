@@ -6,24 +6,23 @@ import iconPrint from '../../../../svg/print.svg';
 import iconEdit from '../../../../svg/edit.svg';
 import './controls.scss';
 
-const Controls = ({ edit, editCarePlan, saveCarePlan, saving, cancel }) => {
+const Controls = ({ editing, edit, save, saving, cancel }) => {
   const cardClasses = classNames({
     controls__card: true,
-    'controls__card--flipped': edit,
+    'controls__card--flipped': editing,
   });
   return (
     <div className="controls">
       <div className={cardClasses}>
         <div className="controls__front">
           <button
-            onClick={editCarePlan}
             className="controls__button controls__button--print"
           >
             <Icon glyph={iconPrint} />
             Skriv ut egenbehandlingsplan
           </button>
           <button
-            onClick={editCarePlan}
+            onClick={edit}
             className="controls__button controls__button--edit"
           >
             <Icon glyph={iconEdit} />
@@ -33,7 +32,7 @@ const Controls = ({ edit, editCarePlan, saveCarePlan, saving, cancel }) => {
         <div className="controls__back">
           {saving ? (<Spinner />) : null}
           <button
-            onClick={saveCarePlan}
+            onClick={save}
             className="controls__button controls__button--save"
             disabled={saving}
           >
@@ -53,9 +52,9 @@ const Controls = ({ edit, editCarePlan, saveCarePlan, saving, cancel }) => {
 };
 
 Controls.propTypes = {
-  edit: PropTypes.bool.isRequired,
-  editCarePlan: PropTypes.func.isRequired,
-  saveCarePlan: PropTypes.func.isRequired,
+  editing: PropTypes.bool.isRequired,
+  edit: PropTypes.func.isRequired,
+  save: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
   cancel: PropTypes.func.isRequired,
 };
