@@ -23,6 +23,7 @@ class CarePlanPage extends Component {
     this.cancel = this.cancel.bind(this);
     this.closeLightbox = this.closeLightbox.bind(this);
     this.openLightbox = this.openLightbox.bind(this);
+    this.createCarePlan = this.createCarePlan.bind(this);
 
     this.state = {
       carePlan: null,
@@ -122,6 +123,10 @@ class CarePlanPage extends Component {
     this.closeLightbox();
   }
 
+  createCarePlan(type) {
+    console.log(type);
+  }
+
   openLightbox() {
     this.setState({ lightboxOpen: true });
   }
@@ -156,7 +161,8 @@ class CarePlanPage extends Component {
           cancel={this.cancel}
         />
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <CreateCarePlan />)
+          ? (isFetching ? <h2>Loading...</h2> :
+            <CreateCarePlan createCarePlan={this.createCarePlan} />)
           : <CarePlan
             phases={carePlan.phases}
             patientGoal={carePlan.patientGoal}
