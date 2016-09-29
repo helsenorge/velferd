@@ -4,6 +4,7 @@ import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
 import Controls from './controls/controls.jsx';
 import HistoryContainer from './history-container/history-container.jsx';
+import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
 import ReasonCodes from '../../constants/reason-codes';
 import { getCarePlan } from './care-plan-page.js';
 import './care-plan-page.scss';
@@ -21,7 +22,7 @@ class CarePlanPage extends Component {
     this.cancel = this.cancel.bind(this);
 
     this.state = {
-      carePlan: undefined,
+      carePlan: null,
       edit: false,
       saving: false,
     };
@@ -34,7 +35,8 @@ class CarePlanPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.saveCompleted) {
-      this.setState({ carePlan: Object.assign({}, nextProps.carePlan) });
+      const carePlan = nextProps.carePlan ? Object.assign({}, nextProps.carePlan) : null;
+      this.setState({ carePlan });
     }
 
     if (nextProps.saveCompleted) {
@@ -115,7 +117,11 @@ class CarePlanPage extends Component {
   render() {
     const { isFetching, error } = this.props;
     const { carePlan, edit, saving } = this.state;
-    const isEmpty = carePlan === undefined;
+
+    let isEmpty = true;
+    if (carePlan) {
+      isEmpty = false;
+    }
 
     return (
       <div className="care-plan-page">
@@ -129,7 +135,7 @@ class CarePlanPage extends Component {
           cancel={this.cancel}
         />
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : null)
+          ? (isFetching ? <h2>Loading...</h2> : <CreateCarePlan />)
           : <CarePlan
             phases={carePlan.phases}
             patientGoal={carePlan.patientGoal}
