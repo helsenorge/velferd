@@ -52,8 +52,8 @@ const List = (
       const range2 = measurement.goal[1];
 
       if (edit) {
-        const label1 = `Ideel ${getMeasurementName(range1.code)} ${name} (${unit})`;
-        const label2 = `Ideel ${getMeasurementName(range2.code)} ${name} (${unit})`;
+        const label1 = `Ideell ${getMeasurementName(range1.code)} ${name} (${unit})`;
+        const label2 = `Ideell ${getMeasurementName(range2.code)} ${name} (${unit})`;
         return (
           <div>
             {getMeasurementEditControl(label1, range1.low.value, range1.high.value, i, 0)}
