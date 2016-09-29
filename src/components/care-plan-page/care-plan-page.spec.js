@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { getPhase } from './care-plan-page.js';
+import { getPhase, getPatientGoal } from './care-plan-page.js';
 import data from '../../mock/care-plan.json';
 
 describe('careplan phase', () => {
@@ -35,5 +35,12 @@ describe('careplan phase', () => {
   it('should have a questionnaire', () => {
     const phase = getPhase(data, 'green');
     expect(phase.questionnaireId).to.equal('62763');
+  });
+});
+
+describe('careplan', () => {
+  it('should have a goal', () => {
+    const goal = getPatientGoal(data);
+    expect(goal).to.not.equal(undefined);
   });
 });

@@ -1,14 +1,23 @@
+import ReasonCodes from '../../constants/reason-codes';
+
 function getMeasurements(activities, goals) {
   return activities
     .filter(activity => activity.detail.category.coding[0].code === 'observation'
     && activity.detail.code)
     .map(activity => {
       const goalReference = activity.detail.goal[0].reference;
-      console.log(activity);
+      const goal = goals[goalReference.substring(1)].map(g => {
+        const range = g.extension[1].valueRange;
+        return {
+          code: g.extension[0].valueCodeableConcept.coding[0].code,
+          high: range.high,
+          low: range.low,
+        };
+      });
+
       return {
         code: activity.detail.code.coding[0].code,
-        goalReference,
-        goal: goals[goalReference.substring(1)],
+        goal,
       };
     });
 }
@@ -71,4 +80,31 @@ export function getPhase(resource, reasonCode) {
     symptoms,
     actions,
     medications };
+}
+
+export function getPatientGoal(resource) {
+  if (resource.goal.length > 0) {
+    const ref = resource.goal[0].reference.substring(1);
+    const goal = resource.contained.filter(res => res.resourceType === 'Goal' && res.id === ref);
+
+    if (goal.length > 0) {
+      return goal[0].description;
+    }
+  }
+  return '';
+}
+
+export function getCarePlan(resource) {
+  const phases = [];
+  const greenPhase = getPhase(resource, ReasonCodes.green);
+  phases.push(greenPhase);
+  const yellowPhase = getPhase(resource, ReasonCodes.yellow);
+  phases.push(yellowPhase);
+  const redPhase = getPhase(resource, ReasonCodes.red);
+  phases.push(redPhase);
+
+  const patientGoal = getPatientGoal(resource);
+  const id = resource.id;
+
+  return { id, phases, patientGoal };
 }

@@ -25,7 +25,12 @@
     },
     {
       "resourceType": "Goal",
-      "id": "ideal-weight-goal",
+      "id": "patient-goal",
+      "description": "Jeg ønsker å kunne dra på hytta med gutta"
+    },
+    {
+      "resourceType": "Goal",
+      "id": "green-goal-188736",
       "extension": [
         {
           "extension": [
@@ -34,9 +39,9 @@
               "valueCodeableConcept": {
                 "coding": [
                   {
-                    "system": "http://loinc.org",
-                    "code": "29463-7",
-                    "display": "Body weight"
+                    "system": "urn:std:iso:11073:10101",
+                    "code": "188736",
+                    "display": "MDC_MASS_BODY_ACTUAL"
                   }
                 ]
               }
@@ -65,7 +70,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "ideal-pulse-goal",
+      "id": "green-goal-149530",
       "extension": [
         {
           "extension": [
@@ -105,7 +110,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "ideal-pulseoximeter-goal",
+      "id": "green-goal-150456",
       "extension": [
         {
           "extension": [
@@ -145,7 +150,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "ideal-bloodpressure-goal",
+      "id": "green-goal-150020",
       "extension": [
         {
           "extension": [
@@ -336,6 +341,16 @@
       }
     ]
   },
+  "goal": [
+    {
+      "reference": "#patient-goal"
+    }
+  ],
+  "note": [
+    {
+      "text": "Increased medication."
+    }
+  ],
   "activity": [
     {
       "detail": {
@@ -425,7 +440,7 @@
         },
         "goal": [
             {
-              "reference": "#ideal-weight-goal"
+              "reference": "#green-goal-188736"
             }
           ]
       }
@@ -466,7 +481,7 @@
         },
         "goal": [
             {
-              "reference": "#ideal-pulse-goal"
+              "reference": "#green-goal-149530"
             }
           ]
       }
@@ -507,7 +522,7 @@
         },
         "goal": [
             {
-              "reference": "#ideal-pulseoximeter-goal"
+              "reference": "#green-goal-150456"
             }
           ]
       }
@@ -548,7 +563,7 @@
         },
         "goal": [
             {
-              "reference": "#ideal-bloodpressure-goal"
+              "reference": "#green-goal-150020"
             }
           ]
       }

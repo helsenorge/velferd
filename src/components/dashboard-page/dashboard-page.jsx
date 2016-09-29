@@ -36,6 +36,8 @@ class DashboardPage extends Component {
     this.handleSingleForwardClick = this.handleSingleForwardClick.bind(this);
     this.handleRangeClick = this.handleRangeClick.bind(this);
     this.handleDateClick = this.handleDateClick.bind(this);
+    this.addOpacityOverlay = this.addOpacityOverlay.bind(this);
+    this.removeOpacityOverlay = this.removeOpacityOverlay.bind(this);
   }
 
   handleBackClick() {
@@ -71,15 +73,26 @@ class DashboardPage extends Component {
     }
   }
 
+  addOpacityOverlay() {
+    const overlay = document.getElementById('overlay');
+    overlay.classList.add('dashboard-page__overlay--active');
+  }
+
+  removeOpacityOverlay() {
+    const overlay = document.getElementById('overlay');
+    overlay.classList.remove('dashboard-page__overlay--active');
+  }
+
   handleDateClick(date) {
-    console.log(date);
     const { selectedDate } = this.state;
 
     if (!selectedDate) {
+      this.addOpacityOverlay();
       this.setState({ selectedDate: date });
     }
     else if (selectedDate.valueOf() === date.valueOf()) {
       this.setState({ selectedDate: null });
+      this.removeOpacityOverlay();
     }
     else {
       this.setState({ selectedDate: date });
@@ -92,6 +105,7 @@ class DashboardPage extends Component {
 
     return (
       <div className="dashboard-page">
+        <div className="dashboard-page__overlay" id="overlay" />
         <Header
           handleRangeClick={this.handleRangeClick}
           handleForwardClick={this.handleForwardClick}
@@ -101,6 +115,7 @@ class DashboardPage extends Component {
           handleDateClick={this.handleDateClick}
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
+          selectedDate={this.state.selectedDate}
           activeRange={this.state.dayRange}
         />
         <QuestionnaireResponsesContainer

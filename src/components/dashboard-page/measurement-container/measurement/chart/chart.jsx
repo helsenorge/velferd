@@ -33,6 +33,7 @@ class Chart extends Component {
 
     return {
       name: 'selectedColumn',
+      className: 'selected-column',
       data: [
         { x: Math.floor(selectedDate.getTime() / 1000), y: this.props.high },
         { x: Math.floor(to.getTime() / 1000), y: this.props.high },

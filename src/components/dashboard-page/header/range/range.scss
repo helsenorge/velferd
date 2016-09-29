@@ -5,12 +5,13 @@
   padding-top: 1rem;
   display: flex;
   flex-direction: row;
+  z-index: 10;
 
   &--sticky {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 1;
+
     width: calc(100% - 8rem);
     background: $page-background;
     padding: 1rem 4rem;
@@ -44,7 +45,7 @@
 }
 
 .range__date {
-  font-size: 1.25rem;
+  font-size: 1.875rem;
   font-weight: 400;
 }
 
@@ -64,13 +65,24 @@
     flex: 0 0 calc(100% / 7);
     border-left: 1px solid #E1E1E1;
 
+    &--selected,
+    &:hover,
+    &:focus {
+      background: #343434;
+      color: $page-background;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
     &:last-child {
       border-right: 1px solid #E1E1E1;
     }
   }
 
   &--14 {
-    margin-right: 2.7rem;
+    margin-right: 2.9rem;
 
     .range__button {
       flex: 0 0 calc(100% / 14);

@@ -2,8 +2,10 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
+import Controls from './controls/controls.jsx';
+import HistoryContainer from './history-container/history-container.jsx';
 import ReasonCodes from '../../constants/reason-codes';
-import { getPhase } from './care-plan-page.js';
+import { getCarePlan } from './care-plan-page.js';
 import './care-plan-page.scss';
 
 class CarePlanPage extends Component {
@@ -11,12 +13,15 @@ class CarePlanPage extends Component {
   constructor(props) {
     super(props);
 
-    this.updatePhaseState = this.updatePhaseState.bind(this);
+    this.updateCarePlanState = this.updateCarePlanState.bind(this);
     this.saveCarePlan = this.saveCarePlan.bind(this);
     this.editCarePlan = this.editCarePlan.bind(this);
+    this.deleteCarePlanItem = this.deleteCarePlanItem.bind(this);
+    this.addCarePlanItem = this.addCarePlanItem.bind(this);
+    this.cancel = this.cancel.bind(this);
 
     this.state = {
-      phases: Object.assign([], props.phases),
+      carePlan: undefined,
       edit: false,
       saving: false,
     };
@@ -29,7 +34,7 @@ class CarePlanPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.saveCompleted) {
-      this.setState({ phases: Object.assign([], nextProps.phases) });
+      this.setState({ carePlan: Object.assign({}, nextProps.carePlan) });
     }
 
     if (nextProps.saveCompleted) {
@@ -50,13 +55,45 @@ class CarePlanPage extends Component {
     }
   }
 
-  updatePhaseState(event) {
-    const ids = event.target.name.split('-');
-    const phases = this.state.phases;
+  updateCarePlanState(event) {
+    const carePlan = this.state.carePlan;
+
+    if (event.target.name === 'patient-goal') {
+      carePlan.patientGoal = event.target.value;
+    }
+    else {
+      const ids = event.target.name.split('-');
+      const index = this.getPhaseIndex(ids[0]);
+
+      if (ids[1] === 'measurements') {
+        const measurement = carePlan.phases[index][ids[1]][ids[2]];
+        const goal = measurement.goal[[ids[3]]];
+        const item = goal[ids[4]];
+        item.value = event.target.value;
+      }
+      else {
+        carePlan.phases[index][ids[1]][ids[2]] = event.target.value;
+      }
+    }
+
+    return this.setState({ carePlan });
+  }
+
+  deleteCarePlanItem(name) {
+    const ids = name.split('-');
+    const carePlan = this.state.carePlan;
     const index = this.getPhaseIndex(ids[0]);
 
-    phases[index][ids[1]][ids[2]] = event.target.value;
-    return this.setState({ phases });
+    carePlan.phases[index][ids[1]].splice(ids[2], 1);
+    return this.setState({ carePlan });
+  }
+
+  addCarePlanItem(reasonCode, type) {
+    const carePlan = this.state.carePlan;
+    const index = this.getPhaseIndex(reasonCode);
+
+    carePlan.phases[index][type].push('');
+    return this.setState({ carePlan });
   }
 
   editCarePlan(event) {
@@ -64,33 +101,49 @@ class CarePlanPage extends Component {
     this.setState({ edit: true });
   }
 
+  cancel() {
+    this.setState({ edit: false });
+  }
+
   saveCarePlan(event) {
     const { dispatch, fhirUrl, patientId } = this.props;
     event.preventDefault();
     this.setState({ saving: true });
-    dispatch(saveCarePlan(fhirUrl, patientId, this.state.phases));
+    dispatch(saveCarePlan(fhirUrl, patientId, this.state.carePlan));
   }
 
   render() {
     const { isFetching, error } = this.props;
-    const { phases, edit, saving } = this.state;
-    const isEmpty = phases.length === 0;
+    const { carePlan, edit, saving } = this.state;
+    const isEmpty = carePlan === undefined;
 
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
         {error && <p>{error}</p>}
-        {!edit && <button onClick={this.editCarePlan}>Rediger</button>}
-        {edit && <button onClick={this.saveCarePlan} disabled={saving}>Lagre</button>}
+        <Controls
+          saving={saving}
+          edit={edit}
+          editCarePlan={this.editCarePlan}
+          saveCarePlan={this.saveCarePlan}
+          cancel={this.cancel}
+        />
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> : null)
           : <CarePlan
-            phases={phases}
+            phases={carePlan.phases}
+            patientGoal={carePlan.patientGoal}
             edit={edit}
             saving={saving}
-            onChange={this.updatePhaseState}
+            onChange={this.updateCarePlanState}
+            deleteCarePlanItem={this.deleteCarePlanItem}
+            addCarePlanItem={this.addCarePlanItem}
           />
         }
+        <div className="care-plan-page__lastupdated">
+          Sist oppdatert: 30.02.2016 kl. 11.34 av Anna For Eieb (lege)
+        </div>
+        {carePlan && <HistoryContainer carePlanId={carePlan.id} />}
       </div>
     );
   }
@@ -102,7 +155,7 @@ CarePlanPage.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   saveCompleted: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
-  phases: PropTypes.array.isRequired,
+  carePlan: PropTypes.object,
   error: PropTypes.string,
 };
 
@@ -112,22 +165,17 @@ function mapStateToProps(state) {
   const { isFetching, data, saveCompleted, error } = carePlan
     || { isFetching: true, data: null, saveCompleted: null };
 
-  const phases = [];
+  let plan;
   const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
 
   if (!saveCompleted && !isEmpty) {
-    const greenPhase = getPhase(data.entry[0].resource, ReasonCodes.green);
-    phases.push(greenPhase);
-    const yellowPhase = getPhase(data.entry[0].resource, ReasonCodes.yellow);
-    phases.push(yellowPhase);
-    const redPhase = getPhase(data.entry[0].resource, ReasonCodes.red);
-    phases.push(redPhase);
+    plan = getCarePlan(data.entry[0].resource);
   }
 
   return {
     fhirUrl,
     patientId,
-    phases,
+    carePlan: plan,
     isFetching,
     saveCompleted,
     error,

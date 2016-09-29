@@ -2,7 +2,7 @@ import React from 'react';
 import ZoomButtons from './zoombuttons/zoombuttons.jsx';
 import Range from './range/range.jsx';
 import Report from './report/report.jsx';
-import Goal from './goal/goal.jsx';
+import Goal from '../../goal/goal.jsx';
 import './header.scss';
 
 const Header = (props) => (

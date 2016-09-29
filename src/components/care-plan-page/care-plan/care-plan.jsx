@@ -1,19 +1,22 @@
 import React, { Component, PropTypes } from 'react';
-import Phase from './phase/phase.jsx';
+import List from './list/list.jsx';
+import Goal from '../../goal/goal.jsx';
+import './care-plan.scss';
+import Icon from '../../icon/icon.jsx';
 import ReasonCodes from '../../../constants/reason-codes';
-import ansikt1 from '../../../../svg/ansikt-1.svg';
-import ansikt2 from '../../../../svg/ansikt-2.svg';
-import ansikt3 from '../../../../svg/ansikt-3.svg';
+import face1 from '../../../../svg/face1.svg';
+import face2 from '../../../../svg/face2.svg';
+import face3 from '../../../../svg/face3.svg';
 
 class CarePlan extends Component {
   getPhaseName(reasonCode) {
     switch (reasonCode) {
     case ReasonCodes.green:
-      return 'Stabil fase av hjertesvikt';
+      return 'Stabil';
     case ReasonCodes.yellow:
-      return 'Moderat forverring av hjertesvikt';
+      return 'Moderat forverring';
     case ReasonCodes.red:
-      return 'Alvorlig forverring av hjertesvikt';
+      return 'Alvorlig forverring';
     default:
       return null;
     }
@@ -22,36 +25,83 @@ class CarePlan extends Component {
   getPhaseIcon(i) {
     switch (i) {
     case 0:
-      return ansikt1;
+      return face1;
     case 1:
-      return ansikt2;
+      return face2;
     case 2:
-      return ansikt3;
+      return face3;
     default:
-      return ansikt1;
+      return face1;
     }
   }
 
   render() {
-    const { phases, edit, saving, onChange } = this.props;
+    const { phases, patientGoal, edit, saving, onChange,
+      deleteCarePlanItem, addCarePlanItem } = this.props;
+
+    const headings = phases.map((phase, i) =>
+      <h3 key={i} className="care-plan__heading">
+        <Icon glyph={this.getPhaseIcon(i)} className="care-plan__icon" />
+        {this.getPhaseName(phase.reasonCode)}
+      </h3>
+    );
+    const symptoms = phases.map((phase, i) =>
+      <List
+        key={i}
+        items={phase.symptoms}
+        measurements={phase.measurements}
+        heading="Symptomer"
+        edit={edit}
+        saving={saving}
+        onChange={onChange}
+        deleteCarePlanItem={deleteCarePlanItem}
+        addCarePlanItem={addCarePlanItem}
+        type="symptoms"
+        addButtonText="symptom"
+        reasonCode={phase.reasonCode}
+      />
+    );
+    const actions = phases.map((phase, i) =>
+      <List
+        key={i}
+        items={phase.actions}
+        heading="Hva gjør du?"
+        edit={edit}
+        saving={saving}
+        onChange={onChange}
+        deleteCarePlanItem={deleteCarePlanItem}
+        addCarePlanItem={addCarePlanItem}
+        type="actions"
+        addButtonText="tiltak"
+        reasonCode={phase.reasonCode}
+      />
+    );
+    const medications = phases.map((phase, i) =>
+      <List
+        key={i}
+        className="care-plan__listheading--medisiner"
+        items={phase.medications}
+        heading="Medisiner"
+        edit={edit}
+        saving={saving}
+        onChange={onChange}
+        deleteCarePlanItem={deleteCarePlanItem}
+        addCarePlanItem={addCarePlanItem}
+        type="medications"
+        addButtonText="medisinering"
+        reasonCode={phase.reasonCode}
+      />
+      );
 
     return (
       <div>
-        {phases.map((phase, i) => {
-          let icon = this.getPhaseIcon(i);
-          return (
-            <Phase
-              edit={edit}
-              saving={saving}
-              glyph={icon}
-              key={i}
-              name={this.getPhaseName(phase.reasonCode)}
-              phase={phase}
-              onChange={onChange}
-            />
-            );
-        }
-        )}
+        <Goal patientGoal={patientGoal} edit={edit} onChange={onChange} saving={saving} />
+        <div className="care-plan">
+          {headings}
+          {symptoms}
+          {actions}
+          {medications}
+        </div>
       </div>
     );
   }
@@ -59,9 +109,12 @@ class CarePlan extends Component {
 
 CarePlan.propTypes = {
   phases: PropTypes.array.isRequired,
+  patientGoal: PropTypes.string,
   onChange: React.PropTypes.func.isRequired,
   edit: PropTypes.bool.isRequired,
   saving: React.PropTypes.bool.isRequired,
+  deleteCarePlanItem: React.PropTypes.func.isRequired,
+  addCarePlanItem: React.PropTypes.func.isRequired,
 };
 
 export default CarePlan;

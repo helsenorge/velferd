@@ -1,0 +1,18 @@
+.measurement-control {
+  margin-top: 1.625rem;
+  margin-right: 3rem;
+
+  &__inputs {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .text-input {
+    width: 30%;
+  }
+
+  &__label {
+    font-weight: 600;
+  }
+}

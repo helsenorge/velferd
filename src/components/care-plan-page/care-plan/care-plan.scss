@@ -1,0 +1,100 @@
+.care-plan {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+
+  &__addbutton {
+    border: 2px solid #269392;
+    color: #097A7A;
+    width: 17.6rem;
+    margin-top: 1.625rem;
+    text-align: left;
+    padding: 0.6rem 1rem;
+  }
+
+  &__add-icon {
+    float: right;
+    height: 20px;
+    width: 20px;
+    transition: 1s;
+
+    &--active {
+      transform: rotate(180deg);
+    }
+  }
+
+  &__heading {
+    margin: 0;
+    flex: 0 0 calc(100% / 3 - 4rem);
+    text-transform: uppercase;
+    font-size: 1.25rem;
+    font-weight: 400;
+    padding: 1rem;
+
+    &:nth-child(1) {
+      background: #DFEED3;
+    }
+
+    &:nth-child(2) {
+      background: #F5E8C2;
+    }
+
+    &:nth-child(3) {
+      background: #EDCAB9;
+    }
+  }
+
+  &__icon {
+    margin-right: 0.75rem;
+    width: 30px;
+    height: 30px;
+    vertical-align: middle;
+  }
+
+  &__listheading {
+    text-transform: uppercase;
+    font-size: 1.125rem;
+    font-weight: 400;
+    margin-top: 2.25rem;
+    margin-bottom: 1.625rem;
+
+    &--medisiner {
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      text-transform: initial;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+  }
+
+  &__listitems {
+    list-style-type: none;
+    padding: 0;
+    line-height: 1.5rem;
+  }
+
+  &__list {
+    padding-left: 3.5rem;
+    padding-right: 2rem;
+    flex: 0 0 calc(100% / 3 - 7.5rem);
+    background: #fff;
+
+    &:nth-child(7)::before,
+    &:nth-child(8)::before,
+    &:nth-child(9)::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 2px;
+      background: #EFEFED;
+      margin-top: 2.75rem;
+    }
+
+    &:nth-last-child(1),
+    &:nth-last-child(2),
+    &:nth-last-child(3) {
+      padding-bottom: 3.875rem;
+    }
+  }
+}
