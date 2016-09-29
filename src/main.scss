@@ -10,6 +10,12 @@ body {
   color: $tundora;
 }
 
+.noscroll {
+  overflow: hidden;
+  width: 100vw;
+  min-width: 100%;
+}
+
 h1,
 h2 {
   font-weight: 400;
@@ -25,6 +31,7 @@ button {
   background: transparent;
 }
 
-input, textarea {
+input,
+textarea {
   font-family: 'Open Sans', sans serif;
 }
