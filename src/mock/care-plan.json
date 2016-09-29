@@ -346,6 +346,11 @@
       "reference": "#patient-goal"
     }
   ],
+  "note": [
+    {
+      "text": "Increased medication."
+    }
+  ],
   "activity": [
     {
       "detail": {

@@ -5,6 +5,8 @@ import { getObservationCodingDisplay } from '../helpers/observation-helpers';
 export const REQUEST_CAREPLAN = 'REQUEST_CAREPLAN';
 export const RECEIVE_CAREPLAN = 'RECEIVE_CAREPLAN';
 export const COMPLETE_SAVE_CAREPLAN = 'COMPLETE_SAVE_CAREPLAN';
+export const REQUEST_CAREPLAN_HISTORY = 'REQUEST_CAREPLAN_HISTORY';
+export const RECEIVE_CAREPLAN_HISTORY = 'RECEIVE_CAREPLAN_HISTORY';
 
 function requestCarePlan(patientId) {
   return {
@@ -22,6 +24,22 @@ function receiveCarePlan(patientId, json) {
   };
 }
 
+function requestCarePlanHistory(carePlanId) {
+  return {
+    type: REQUEST_CAREPLAN_HISTORY,
+    carePlanId,
+  };
+}
+
+function receiveCarePlanHistory(carePlanId, json) {
+  return {
+    type: RECEIVE_CAREPLAN_HISTORY,
+    carePlanId,
+    data: json,
+    receivedAt: Date.now(),
+  };
+}
+
 function completeSaveCarePlan(saveCompleted, error) {
   return {
     type: COMPLETE_SAVE_CAREPLAN,
@@ -32,6 +50,23 @@ function completeSaveCarePlan(saveCompleted, error) {
 
 function useMock() {
   return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
+}
+
+export function fetchCarePlanHistory(fhirUrl, carePlanId) {
+  return (dispatch, getState) => {
+    const { token, expiration } = getState().auth;
+    const { authenticate } = getState().settings;
+
+    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+      return dispatch(discardAuthToken());
+    }
+
+    dispatch(requestCarePlanHistory(carePlanId));
+    const url = `${fhirUrl}/CarePlan/${carePlanId}/_history`;
+    return get(url, token)
+      .then(response => response.json())
+      .then(json => dispatch(receiveCarePlanHistory(carePlanId, json)));
+  };
 }
 
 export function fetchCarePlan(fhirUrl, patientId) {

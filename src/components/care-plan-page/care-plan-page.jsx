@@ -3,9 +3,11 @@ import { connect } from 'react-redux';
 import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
 import Controls from './controls/controls.jsx';
+import HistoryContainer from './history-container/history-container.jsx';
+import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
 import ReasonCodes from '../../constants/reason-codes';
 import CommentLightbox from './comment-lightbox/comment-lightbox.jsx';
-import { getPhase, getPatientGoal } from './care-plan-page.js';
+import { getCarePlan } from './care-plan-page.js';
 import './care-plan-page.scss';
 
 class CarePlanPage extends Component {
@@ -23,7 +25,7 @@ class CarePlanPage extends Component {
     this.openLightbox = this.openLightbox.bind(this);
 
     this.state = {
-      carePlan: undefined,
+      carePlan: null,
       edit: false,
       saving: false,
       lightboxOpen: false,
@@ -37,7 +39,8 @@ class CarePlanPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.saveCompleted) {
-      this.setState({ carePlan: Object.assign({}, nextProps.carePlan) });
+      const carePlan = nextProps.carePlan ? Object.assign({}, nextProps.carePlan) : null;
+      this.setState({ carePlan });
     }
 
     if (nextProps.saveCompleted) {
@@ -127,7 +130,10 @@ class CarePlanPage extends Component {
   render() {
     const { isFetching, error } = this.props;
     const { carePlan, edit, saving } = this.state;
-    const isEmpty = carePlan === undefined;
+    let isEmpty = true;
+    if (carePlan) {
+      isEmpty = false;
+    }
     const lightbox = this.state.lightboxOpen ?
       <CommentLightbox onClose={this.cancel} saveCarePlan={this.saveCarePlan} /> : null;
     return (
@@ -142,7 +148,7 @@ class CarePlanPage extends Component {
           cancel={this.cancel}
         />
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : null)
+          ? (isFetching ? <h2>Loading...</h2> : <CreateCarePlan />)
           : <CarePlan
             phases={carePlan.phases}
             patientGoal={carePlan.patientGoal}
@@ -157,6 +163,7 @@ class CarePlanPage extends Component {
           Sist oppdatert: 30.02.2016 kl. 11.34 av Anna For Eieb (lege)
         </div>
         {lightbox}
+        {carePlan && <HistoryContainer carePlanId={carePlan.id} />}
       </div>
     );
   }
@@ -182,14 +189,7 @@ function mapStateToProps(state) {
   const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
 
   if (!saveCompleted && !isEmpty) {
-    plan = { phases: [] };
-    const greenPhase = getPhase(data.entry[0].resource, ReasonCodes.green);
-    plan.phases.push(greenPhase);
-    const yellowPhase = getPhase(data.entry[0].resource, ReasonCodes.yellow);
-    plan.phases.push(yellowPhase);
-    const redPhase = getPhase(data.entry[0].resource, ReasonCodes.red);
-    plan.phases.push(redPhase);
-    plan.patientGoal = getPatientGoal(data.entry[0].resource);
+    plan = getCarePlan(data.entry[0].resource);
   }
 
   return {

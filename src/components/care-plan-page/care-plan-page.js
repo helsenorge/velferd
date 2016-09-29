@@ -1,3 +1,5 @@
+import ReasonCodes from '../../constants/reason-codes';
+
 function getMeasurements(activities, goals) {
   return activities
     .filter(activity => activity.detail.category.coding[0].code === 'observation'
@@ -90,4 +92,19 @@ export function getPatientGoal(resource) {
     }
   }
   return '';
+}
+
+export function getCarePlan(resource) {
+  const phases = [];
+  const greenPhase = getPhase(resource, ReasonCodes.green);
+  phases.push(greenPhase);
+  const yellowPhase = getPhase(resource, ReasonCodes.yellow);
+  phases.push(yellowPhase);
+  const redPhase = getPhase(resource, ReasonCodes.red);
+  phases.push(redPhase);
+
+  const patientGoal = getPatientGoal(resource);
+  const id = resource.id;
+
+  return { id, phases, patientGoal };
 }
