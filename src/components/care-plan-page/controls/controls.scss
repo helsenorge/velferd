@@ -35,8 +35,6 @@
   }
 
   &__button {
-    color: #097A7A;
-    font-size: 1.125rem;
     margin-left: 1.5rem;
 
     .icon {
@@ -45,20 +43,7 @@
       vertical-align: middle;
     }
 
-    &--save,
-    &--cancel {
-      border-radius: 100px;
-      border: 2px solid #269392;
-      padding: 0.5rem 1.25rem;
-    }
-
-    &--cancel {
-      background: #fff;
-    }
-
     &--save {
-      background: #269392;
-      color: #fff;
       min-width: 90px;
     }
 

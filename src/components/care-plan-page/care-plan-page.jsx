@@ -6,6 +6,7 @@ import Controls from './controls/controls.jsx';
 import HistoryContainer from './history-container/history-container.jsx';
 import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
 import ReasonCodes from '../../constants/reason-codes';
+import Footer from './footer/footer.jsx';
 import CommentLightbox from './comment-lightbox/comment-lightbox.jsx';
 import { getCarePlan } from './care-plan-page.js';
 import './care-plan-page.scss';
@@ -159,9 +160,7 @@ class CarePlanPage extends Component {
             addCarePlanItem={this.addCarePlanItem}
           />
         }
-        <div className="care-plan-page__lastupdated">
-          Sist oppdatert: 30.02.2016 kl. 11.34 av Anna For Eieb (lege)
-        </div>
+        <Footer />
         {lightbox}
         {carePlan && <HistoryContainer carePlanId={carePlan.id} />}
       </div>

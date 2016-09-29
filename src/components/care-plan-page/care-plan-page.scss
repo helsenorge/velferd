@@ -1,16 +1,11 @@
 .care-plan-page {
   padding-left: 2rem;
-
+  padding-bottom: 5rem;
   // samme som header på dashboard-page. Flyttes
   &__heading {
     margin-top: 1;
     font-size: 3rem;
     font-weight: 300;
     text-align: center;
-  }
-
-  &__lastupdated {
-    margin-top: 2.625rem;
-    font-size: 1.125rem;
   }
 }

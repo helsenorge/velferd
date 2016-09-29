@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import TextInput from '../../../text-input/text-input.jsx';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
 import Icon from '../../../icon/icon.jsx';
+import Button from '../../../button/button.jsx';
 import Item from './item/item.jsx';
 import iconPlus from '../../../../../svg/plus.svg';
 import './list.scss';
@@ -96,13 +97,14 @@ const List = (
             {...props}
           />)}
         {edit ? (
-          <button
+          <Button
+            square
             className="care-plan__addbutton"
             onClick={() => addCarePlanItem(reasonCode, type)}
           >
             Legg til {addButtonText}
             <Icon className="care-plan__add-icon" glyph={iconPlus} />
-          </button>
+          </Button>
           ) : null}
         {measurementsList.map((item, i) => <li key={i}>{getMeasurementItem(i, item)}</li>)}
       </ul>

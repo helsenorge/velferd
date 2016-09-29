@@ -3,6 +3,7 @@ import Collapse from 'react-collapse';
 import classNames from 'classnames';
 import iconChevron from '../../../../../svg/chevron.svg';
 import Icon from '../../../icon/icon.jsx';
+import Button from '../../../button/button.jsx';
 import './history.scss';
 class History extends Component {
 
@@ -42,14 +43,15 @@ class History extends Component {
     });
     return (
       <div className="historytable">
-        <button
+        <Button
           className="historytable__expanderbutton"
           aria-controls="collapse"
           onClick={this.toggleOpened}
+          lvl3
         >
           Tidligere versjoner
           <Icon glyph={iconChevron} className={iconClasses} />
-        </button>
+        </Button>
         <Collapse id="collapse" isOpened={isOpened} aria-expanded={isOpened}>
           <table className="historytable__table">
             <thead>
