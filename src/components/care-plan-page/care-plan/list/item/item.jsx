@@ -33,7 +33,7 @@ class Input extends Component {
   render() {
     const { edit, value, onChange, saving } = this.props;
 
-    return !edit ? (<span>{value}</span>) : (
+    return !edit ? (<li>{value}</li>) : (
       <li>
         <div className="input-field" ref="node">
           <TextInput
