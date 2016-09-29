@@ -188,6 +188,9 @@ export function saveCarePlan(fhirUrl, patientId, carePlan) {
     contained.push(goal);
     resource.goal = [{ reference: `#${goal.id}` }];
 
+    // Comment
+    resource.note = [{ text: carePlan.comment }];
+
     phases.forEach(phase => {
       // Actions
       phase.actions.forEach(action => {

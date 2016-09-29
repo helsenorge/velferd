@@ -24,6 +24,7 @@ class CarePlanPage extends Component {
     this.cancel = this.cancel.bind(this);
     this.closeLightbox = this.closeLightbox.bind(this);
     this.openLightbox = this.openLightbox.bind(this);
+    this.createCarePlan = this.createCarePlan.bind(this);
 
     this.state = {
       carePlan: null,
@@ -65,7 +66,10 @@ class CarePlanPage extends Component {
   updateCarePlanState(event) {
     const carePlan = this.state.carePlan;
 
-    if (event.target.name === 'patient-goal') {
+    if (event.target.name === 'comment') {
+      carePlan.comment = event.target.value;
+    }
+    else if (event.target.name === 'patient-goal') {
       carePlan.patientGoal = event.target.value;
     }
     else {
@@ -120,6 +124,10 @@ class CarePlanPage extends Component {
     this.closeLightbox();
   }
 
+  createCarePlan(type) {
+    console.log(type);
+  }
+
   openLightbox() {
     this.setState({ lightboxOpen: true });
   }
@@ -136,7 +144,12 @@ class CarePlanPage extends Component {
       isEmpty = false;
     }
     const lightbox = this.state.lightboxOpen ?
-      <CommentLightbox onClose={this.cancel} saveCarePlan={this.saveCarePlan} /> : null;
+      <CommentLightbox
+        comment={carePlan.comment}
+        onClose={this.cancel}
+        onChange={this.updateCarePlanState}
+        saveCarePlan={this.saveCarePlan}
+      /> : null;
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
@@ -149,7 +162,8 @@ class CarePlanPage extends Component {
           cancel={this.cancel}
         />
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <CreateCarePlan />)
+          ? (isFetching ? <h2>Loading...</h2> :
+            <CreateCarePlan createCarePlan={this.createCarePlan} />)
           : <CarePlan
             phases={carePlan.phases}
             patientGoal={carePlan.patientGoal}
