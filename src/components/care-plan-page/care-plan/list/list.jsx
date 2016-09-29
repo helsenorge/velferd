@@ -10,7 +10,7 @@ import './list.scss';
 
 const List = (
   {
-    edit,
+    editing,
     saving,
     onChange,
     items,
@@ -52,7 +52,7 @@ const List = (
       const range1 = measurement.goal[0];
       const range2 = measurement.goal[1];
 
-      if (edit) {
+      if (editing) {
         const label1 = `Ideell ${getMeasurementName(range1.code)} ${name} (${unit})`;
         const label2 = `Ideell ${getMeasurementName(range2.code)} ${name} (${unit})`;
         return (
@@ -69,7 +69,7 @@ const List = (
 
     const range = measurement.goal[0];
 
-    if (edit) {
+    if (editing) {
       const label = `Ideel ${name} (${unit})`;
       return getMeasurementEditControl(label, range.low.value, range.high.value, i, 0);
     }
@@ -89,14 +89,14 @@ const List = (
             i={i}
             value={item}
             type={type}
-            edit={edit}
+            editing={editing}
             reasonCode={reasonCode}
             saving={saving}
             onChange={onChange}
             last={i === items.length - 1}
             {...props}
           />)}
-        {edit ? (
+        {editing ? (
           <Button
             square
             className="care-plan__addbutton"
@@ -115,7 +115,7 @@ const List = (
 export default List;
 
 List.propTypes = {
-  edit: PropTypes.bool.isRequired,
+  editing: PropTypes.bool.isRequired,
   heading: PropTypes.string.isRequired,
   className: PropTypes.string,
   items: PropTypes.array.isRequired,

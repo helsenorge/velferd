@@ -1,6 +1,6 @@
 import React from 'react';
 import './footer.scss';
-import Button from '../../button/button.jsx';
+import Button from '../../../button/button.jsx';
 const Footer = () => (
   <div className="footer">
     <div className="footer__lastupdated">

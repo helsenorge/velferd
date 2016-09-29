@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
-import Spinner from '../../spinner/spinner.jsx';
-import Button from '../../button/button.jsx';
-import Icon from '../../icon/icon.jsx';
-import iconPrint from '../../../../svg/print.svg';
-import iconEdit from '../../../../svg/edit.svg';
+import Spinner from '../../../spinner/spinner.jsx';
+import Button from '../../../button/button.jsx';
+import Icon from '../../../icon/icon.jsx';
+import iconPrint from '../../../../../svg/print.svg';
+import iconEdit from '../../../../../svg/edit.svg';
 import './controls.scss';
 
-const Controls = ({ editing, edit, save, saving, cancel }) => {
+const Controls = ({ editing, edit, openLightbox, saving, cancel }) => {
   const cardClasses = classNames({
     controls__card: true,
     'controls__card--flipped': editing,
@@ -35,7 +35,7 @@ const Controls = ({ editing, edit, save, saving, cancel }) => {
         <div className="controls__back">
           {saving ? (<Spinner />) : null}
           <Button
-            onClick={save}
+            onClick={openLightbox}
             className="controls__button controls__button--save"
             disabled={saving}
           >
@@ -58,7 +58,7 @@ const Controls = ({ editing, edit, save, saving, cancel }) => {
 Controls.propTypes = {
   editing: PropTypes.bool.isRequired,
   edit: PropTypes.func.isRequired,
-  save: PropTypes.func.isRequired,
+  openLightbox: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
   cancel: PropTypes.func.isRequired,
 };

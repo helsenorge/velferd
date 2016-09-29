@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import Lightbox from '../../lightbox/lightbox.jsx';
+import Lightbox from '../../../lightbox/lightbox.jsx';
 import './comment-lightbox.scss';
 
 const CommentLightbox = ({ onClose, saveCarePlan, onChange, comment }) => (

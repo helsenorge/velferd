@@ -2,12 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
-import Controls from './controls/controls.jsx';
 import HistoryContainer from './history-container/history-container.jsx';
 import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
 import ReasonCodes from '../../constants/reason-codes';
-import Footer from './footer/footer.jsx';
-import CommentLightbox from './comment-lightbox/comment-lightbox.jsx';
 import { getCarePlan } from './care-plan-page.js';
 import './care-plan-page.scss';
 
@@ -28,7 +25,7 @@ class CarePlanPage extends Component {
 
     this.state = {
       carePlan: null,
-      edit: false,
+      editing: false,
       saving: false,
       lightboxOpen: false,
     };
@@ -46,7 +43,7 @@ class CarePlanPage extends Component {
     }
 
     if (nextProps.saveCompleted) {
-      this.setState({ saving: false, edit: false });
+      this.setState({ saving: false, editing: false });
     }
   }
 
@@ -109,11 +106,11 @@ class CarePlanPage extends Component {
 
   editCarePlan(event) {
     event.preventDefault();
-    this.setState({ edit: true });
+    this.setState({ editing: true });
   }
 
   cancel() {
-    this.setState({ edit: false, lightboxOpen: false });
+    this.setState({ editing: false, lightboxOpen: false });
   }
 
   saveCarePlan(event) {
@@ -138,44 +135,37 @@ class CarePlanPage extends Component {
 
   render() {
     const { isFetching, error } = this.props;
-    const { carePlan, edit, saving } = this.state;
+    const { carePlan, editing, saving, lightboxOpen } = this.state;
     let isEmpty = true;
     if (carePlan) {
       isEmpty = false;
     }
-    const lightbox = this.state.lightboxOpen ?
-      <CommentLightbox
-        comment={carePlan.comment}
-        onClose={this.cancel}
-        onChange={this.updateCarePlanState}
-        saveCarePlan={this.saveCarePlan}
-      /> : null;
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
         {error && <p>{error}</p>}
-        <Controls
-          saving={saving}
-          editing={edit}
-          edit={this.editCarePlan}
-          save={this.openLightbox}
-          cancel={this.cancel}
-        />
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> :
             <CreateCarePlan createCarePlan={this.createCarePlan} />)
           : <CarePlan
+            lightboxOpen={lightboxOpen}
+            cancel={this.cancel}
+            comment={carePlan.comment}
             phases={carePlan.phases}
             patientGoal={carePlan.patientGoal}
-            edit={edit}
+            editing={editing}
+            updateCarePlanState={this.updateCarePlanState}
+            edit={this.editCarePlan}
+            saveCarePlan={this.saveCarePlan}
+            save={this.saveCarePlan}
+            openLightbox={this.openLightbox}
+            cancel={this.cancel}
             saving={saving}
             onChange={this.updateCarePlanState}
             deleteCarePlanItem={this.deleteCarePlanItem}
             addCarePlanItem={this.addCarePlanItem}
           />
         }
-        <Footer />
-        {lightbox}
         {carePlan && <HistoryContainer carePlanId={carePlan.id} />}
       </div>
     );

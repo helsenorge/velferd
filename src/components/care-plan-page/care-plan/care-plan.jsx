@@ -3,6 +3,9 @@ import List from './list/list.jsx';
 import Goal from '../../goal/goal.jsx';
 import './care-plan.scss';
 import Icon from '../../icon/icon.jsx';
+import Footer from './footer/footer.jsx';
+import Controls from './controls/controls.jsx';
+import CommentLightbox from './comment-lightbox/comment-lightbox.jsx';
 import ReasonCodes from '../../../constants/reason-codes';
 import face1 from '../../../../svg/face1.svg';
 import face2 from '../../../../svg/face2.svg';
@@ -36,8 +39,8 @@ class CarePlan extends Component {
   }
 
   render() {
-    const { phases, patientGoal, edit, saving, onChange,
-      deleteCarePlanItem, addCarePlanItem } = this.props;
+    const { phases, patientGoal, editing, saving, onChange, saveCarePlan,
+      deleteCarePlanItem, addCarePlanItem, comment, cancel, updateCarePlanState } = this.props;
 
     const headings = phases.map((phase, i) =>
       <h3 key={i} className="care-plan__heading">
@@ -51,7 +54,7 @@ class CarePlan extends Component {
         items={phase.symptoms}
         measurements={phase.measurements}
         heading="Symptomer"
-        edit={edit}
+        editing={editing}
         saving={saving}
         onChange={onChange}
         deleteCarePlanItem={deleteCarePlanItem}
@@ -66,7 +69,7 @@ class CarePlan extends Component {
         key={i}
         items={phase.actions}
         heading="Hva gjør du?"
-        edit={edit}
+        editing={editing}
         saving={saving}
         onChange={onChange}
         deleteCarePlanItem={deleteCarePlanItem}
@@ -82,7 +85,7 @@ class CarePlan extends Component {
         className="care-plan__listheading--medisiner"
         items={phase.medications}
         heading="Medisiner"
-        edit={edit}
+        editing={editing}
         saving={saving}
         onChange={onChange}
         deleteCarePlanItem={deleteCarePlanItem}
@@ -93,28 +96,48 @@ class CarePlan extends Component {
       />
       );
 
+    const lightbox = this.props.lightboxOpen ?
+      <CommentLightbox
+        comment={comment}
+        onClose={cancel}
+        onChange={updateCarePlanState}
+        saveCarePlan={saveCarePlan}
+      /> : null;
+
     return (
       <div>
-        <Goal patientGoal={patientGoal} edit={edit} onChange={onChange} saving={saving} />
+        <Controls
+          saving={saving}
+          editing={editing}
+          {...this.props}
+        />
+        <Goal patientGoal={patientGoal} editing={editing} onChange={onChange} saving={saving} />
         <div className="care-plan">
           {headings}
           {symptoms}
           {actions}
           {medications}
         </div>
+        <Footer />
+        {lightbox}
       </div>
     );
   }
 }
 
 CarePlan.propTypes = {
+  comment: PropTypes.string.isRequired,
+  lightboxOpen: PropTypes.bool.isRequired,
   phases: PropTypes.array.isRequired,
   patientGoal: PropTypes.string,
   onChange: React.PropTypes.func.isRequired,
-  edit: PropTypes.bool.isRequired,
+  editing: PropTypes.bool.isRequired,
+  cancel: PropTypes.func.isRequired,
+  updateCarePlanState: PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
   deleteCarePlanItem: React.PropTypes.func.isRequired,
   addCarePlanItem: React.PropTypes.func.isRequired,
+  saveCarePlan: React.PropTypes.func.isRequired,
 };
 
 export default CarePlan;
