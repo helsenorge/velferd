@@ -106,5 +106,10 @@ export function getCarePlan(resource) {
   const patientGoal = getPatientGoal(resource);
   const id = resource.id;
 
-  return { id, phases, patientGoal };
+  let comment = '';
+  if (resource.note) {
+    comment = resource.note.text;
+  }
+
+  return { id, phases, patientGoal, comment };
 }

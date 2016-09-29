@@ -64,7 +64,10 @@ class CarePlanPage extends Component {
   updateCarePlanState(event) {
     const carePlan = this.state.carePlan;
 
-    if (event.target.name === 'patient-goal') {
+    if (event.target.name === 'comment') {
+      carePlan.comment = event.target.value;
+    }
+    else if (event.target.name === 'patient-goal') {
       carePlan.patientGoal = event.target.value;
     }
     else {
@@ -135,7 +138,12 @@ class CarePlanPage extends Component {
       isEmpty = false;
     }
     const lightbox = this.state.lightboxOpen ?
-      <CommentLightbox onClose={this.cancel} saveCarePlan={this.saveCarePlan} /> : null;
+      <CommentLightbox
+        comment={carePlan.comment}
+        onClose={this.cancel}
+        onChange={this.updateCarePlanState}
+        saveCarePlan={this.saveCarePlan}
+      /> : null;
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>

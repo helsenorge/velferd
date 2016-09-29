@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import Lightbox from '../../lightbox/lightbox.jsx';
 import './comment-lightbox.scss';
 
-const CommentLightbox = ({ onClose, saveCarePlan }) => (
+const CommentLightbox = ({ onClose, saveCarePlan, onChange, comment }) => (
   <Lightbox className="commentlightbox" onClose={onClose}>
     <label className="commentlightbox__label" htmlFor="area">
       Legg til en kommentar om hva som er endret
@@ -11,6 +11,9 @@ const CommentLightbox = ({ onClose, saveCarePlan }) => (
       Kommentaren vil ikke komme med på pasientens utskrift
     </p>
     <textarea
+      onChange={onChange}
+      value={comment}
+      name="comment"
       className="commentlightbox__textarea"
       id="area"
       placeholder="F. eks. Endret medisinering på moderat forverring"
@@ -28,6 +31,8 @@ const CommentLightbox = ({ onClose, saveCarePlan }) => (
 CommentLightbox.propTypes = {
   onClose: PropTypes.func.isRequired,
   saveCarePlan: PropTypes.func.isRequired,
+  onChange: React.PropTypes.func.isRequired,
+  comment: PropTypes.string.isRequired,
 };
 
 export default CommentLightbox;
