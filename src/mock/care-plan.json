@@ -358,6 +358,41 @@
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
+              "code": "all"
+            }
+          ]
+        }],
+        "category": {
+          "coding": [
+            {
+              "system": "http://hl7.org/fhir/care-plan-activity-category",
+              "code": "observation"
+            }
+          ]
+        },
+        "scheduledTiming": {
+          "repeat": {
+            "frequency": 1,
+            "period": 1,
+            "periodUnits": "wk"
+          }
+        },
+        "extension": [
+          {
+            "url": "http://ehelse.no/fhir/vft",
+            "valueReference": {
+              "reference": "Questionnaire/62763"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "detail": {
+        "reasonCode": [{
+          "coding": [
+            {
+              "system": "http://ehelse.no/fhir/vft",
               "code": "green"
             }
           ]
@@ -383,25 +418,10 @@
           "coding": [
             {
               "system": "http://hl7.org/fhir/care-plan-activity-category",
-              "code": "observation"
+              "code": "other"
             }
           ]
-        },
-        "scheduledTiming": {
-          "repeat": {
-            "frequency": 1,
-            "period": 1,
-            "periodUnits": "wk"
-          }
-        },
-        "extension": [
-          {
-            "url": "http://ehelse.no/fhir/vft",
-            "valueReference": {
-              "reference": "Questionnaire/62763"
-            }
-          }
-        ]
+        }
       }
     },
     {
@@ -683,25 +703,10 @@
           "coding": [
             {
               "system": "http://hl7.org/fhir/care-plan-activity-category",
-              "code": "observation"
+              "code": "other"
             }
           ]
-        },
-        "scheduledTiming": {
-          "repeat": {
-            "frequency": 1,
-            "period": 1,
-            "periodUnits": "wk"
-          }
-        },
-        "extension": [
-          {
-            "url": "http://ehelse.no/fhir/vft",
-            "valueReference": {
-              "reference": "Questionnaire/62763"
-            }
-          }
-        ]
+        }        
       }
     },
     {
@@ -840,25 +845,10 @@
           "coding": [
             {
               "system": "http://hl7.org/fhir/care-plan-activity-category",
-              "code": "observation"
+              "code": "other"
             }
           ]
-        },
-        "scheduledTiming": {
-          "repeat": {
-            "frequency": 1,
-            "period": 1,
-            "periodUnits": "wk"
-          }
-        },
-        "extension": [
-          {
-            "url": "http://ehelse.no/fhir/vft",
-            "valueReference": {
-              "reference": "Questionnaire/62763"
-            }
-          }
-        ]
+        }
       }
     },
     {
