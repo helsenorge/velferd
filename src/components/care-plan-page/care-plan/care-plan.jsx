@@ -125,7 +125,7 @@ class CarePlan extends Component {
           {actions}
           {medications}
         </div>
-        <Footer />
+        <Footer comment={comment} />
         {lightbox}
       </div>
     );
