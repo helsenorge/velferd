@@ -44,6 +44,13 @@ function getQuestionnaire(activities) {
   return observations ? observations[0] : null;
 }
 
+function getCondition(activities) {
+  const results = activities
+    .filter(activity => activity.detail.category.coding[0].code === 'other');
+
+  return results ? results[0] : null;
+}
+
 export function getPhase(resource, reasonCode) {
   const activities = resource.activity.filter(activity =>
       activity.detail.reasonCode[0].coding[0].code === reasonCode);
@@ -56,15 +63,29 @@ export function getPhase(resource, reasonCode) {
     .forEach(res => (goals[res.id] = res.extension));
   const measurements = getMeasurements(activities, goals);
 
-  const questionnaire = getQuestionnaire(activities);
+  const conditionActivity = getCondition(activities);
 
   const conditions = {};
   resource.contained.filter(res => res.resourceType === 'Condition')
     .forEach(res => (conditions[res.id] = res.notes));
 
-  const symptoms = !questionnaire ? []
-    : questionnaire.detail.reasonReference.map(
+  const symptoms = !conditionActivity ? []
+    : conditionActivity.detail.reasonReference.map(
     ref => conditions[ref.reference.substring(1)]);
+
+  return {
+    reasonCode,
+    measurements,
+    symptoms,
+    actions,
+    medications };
+}
+
+export function getQuestionnaireId(resource) {
+  const activities = resource.activity.filter(activity =>
+      activity.detail.reasonCode[0].coding[0].code === 'all');
+
+  const questionnaire = getQuestionnaire(activities);
 
   let questionnaireId;
   if (questionnaire) {
@@ -73,13 +94,7 @@ export function getPhase(resource, reasonCode) {
       reference.indexOf('Questionnaire/') + 'Questionnaire/'.length);
   }
 
-  return {
-    reasonCode,
-    questionnaireId,
-    measurements,
-    symptoms,
-    actions,
-    medications };
+  return questionnaireId;
 }
 
 export function getPatientGoal(resource) {
@@ -105,11 +120,12 @@ export function getCarePlan(resource) {
 
   const patientGoal = getPatientGoal(resource);
   const id = resource.id;
+  const questionnaireId = getQuestionnaireId(resource);
 
   let comment = '';
   if (resource.note) {
     comment = resource.note.text;
   }
 
-  return { id, phases, patientGoal, comment };
+  return { id, phases, patientGoal, comment, questionnaireId };
 }

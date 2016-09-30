@@ -208,13 +208,8 @@ export function saveCarePlan(fhirUrl, patientId, carePlan) {
         activities.push(data.activity);
         contained.push(data.goal);
       });
-      // Questionnaire
-      const activity = buildActivity('', phase.reasonCode, 'observation');
-      activity.detail.scheduledTiming = { repeat: { frequency: 1, period: 1, periodUnits: 'wk' } };
-      activity.detail.extension = [{
-        url: 'http://ehelse.no/fhir/vft',
-        valueReference: { reference: `Questionnaire/${phase.questionnaireId}` },
-      }];
+      // Symptoms
+      const activity = buildActivity('', phase.reasonCode, 'other');
       activity.detail.reasonReference = [];
       // Conditions
       phase.symptoms.forEach((symptom, index) => {
@@ -225,6 +220,15 @@ export function saveCarePlan(fhirUrl, patientId, carePlan) {
 
       activities.push(activity);
     });
+
+    // Questionnaire
+    const activity = buildActivity('', 'all', 'observation');
+    activity.detail.scheduledTiming = { repeat: { frequency: 1, period: 1, periodUnits: 'wk' } };
+    activity.detail.extension = [{
+      url: 'http://ehelse.no/fhir/vft',
+      valueReference: { reference: `Questionnaire/${carePlan.questionnaireId}` },
+    }];
+    activities.push(activity);
 
     delete resource.id;
     resource.activity = activities;
