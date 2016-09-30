@@ -138,7 +138,7 @@ class CarePlanPage extends Component {
     const { carePlan, editing, saving, lightboxOpen } = this.state;
     let isEmpty = true;
     if (carePlan) {
-      isEmpty = false;
+      isEmpty = true;
     }
     return (
       <div className="care-plan-page">
