@@ -29,14 +29,14 @@ const List = (
       <div className="measurement-control__inputs">
         <TextInput
           onChange={onChange}
-          name={`${reasonCode}-measurements-${i}-${j}-low`}
+          name={`all-measurements-${i}-${j}-low`}
           value={low}
           disabled={saving}
         />
         –
         <TextInput
           onChange={onChange}
-          name={`${reasonCode}-measurements-${i}-${j}-high`}
+          name={`all-measurements-${i}-${j}-high`}
           value={high}
           disabled={saving}
         />

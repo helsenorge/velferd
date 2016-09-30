@@ -71,15 +71,15 @@ class CarePlanPage extends Component {
     }
     else {
       const ids = event.target.name.split('-');
-      const index = this.getPhaseIndex(ids[0]);
 
       if (ids[1] === 'measurements') {
-        const measurement = carePlan.phases[index][ids[1]][ids[2]];
+        const measurement = carePlan.measurements[ids[2]];
         const goal = measurement.goal[[ids[3]]];
         const item = goal[ids[4]];
         item.value = event.target.value;
       }
       else {
+        const index = this.getPhaseIndex(ids[0]);
         carePlan.phases[index][ids[1]][ids[2]] = event.target.value;
       }
     }
@@ -160,6 +160,7 @@ class CarePlanPage extends Component {
             save={this.saveCarePlan}
             openLightbox={this.openLightbox}
             cancel={this.cancel}
+            measurements={carePlan.measurements}
             saving={saving}
             onChange={this.updateCarePlanState}
             deleteCarePlanItem={this.deleteCarePlanItem}
@@ -193,6 +194,7 @@ function mapStateToProps(state) {
 
   if (!saveCompleted && !isEmpty) {
     plan = getCarePlan(data.entry[0].resource);
+    console.log('plan', plan);
   }
 
   return {

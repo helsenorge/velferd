@@ -30,7 +30,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "green-goal-188736",
+      "id": "all-goal-188736",
       "extension": [
         {
           "extension": [
@@ -70,7 +70,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "green-goal-149530",
+      "id": "all-goal-149530",
       "extension": [
         {
           "extension": [
@@ -110,7 +110,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "green-goal-150456",
+      "id": "all-goal-150456",
       "extension": [
         {
           "extension": [
@@ -150,7 +150,7 @@
     },
     {
       "resourceType": "Goal",
-      "id": "green-goal-150020",
+      "id": "all-goal-150020",
       "extension": [
         {
           "extension": [
@@ -430,7 +430,7 @@
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
-              "code": "green"
+              "code": "all"
             }
           ]
         }],
@@ -460,7 +460,7 @@
         },
         "goal": [
             {
-              "reference": "#green-goal-188736"
+              "reference": "#all-goal-188736"
             }
           ]
       }
@@ -471,7 +471,7 @@
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
-              "code": "green"
+              "code": "all"
             }
           ]
         }],
@@ -501,7 +501,7 @@
         },
         "goal": [
             {
-              "reference": "#green-goal-149530"
+              "reference": "#all-goal-149530"
             }
           ]
       }
@@ -512,7 +512,7 @@
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
-              "code": "green"
+              "code": "all"
             }
           ]
         }],
@@ -542,7 +542,7 @@
         },
         "goal": [
             {
-              "reference": "#green-goal-150456"
+              "reference": "#all-goal-150456"
             }
           ]
       }
@@ -553,7 +553,7 @@
           "coding": [
             {
               "system": "http://ehelse.no/fhir/vft",
-              "code": "green"
+              "code": "all"
             }
           ]
         }],
@@ -583,7 +583,7 @@
         },
         "goal": [
             {
-              "reference": "#green-goal-150020"
+              "reference": "#all-goal-150020"
             }
           ]
       }

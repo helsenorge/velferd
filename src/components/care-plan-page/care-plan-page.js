@@ -1,8 +1,13 @@
 import ReasonCodes from '../../constants/reason-codes';
 
-function getMeasurements(activities, goals) {
-  return activities
-    .filter(activity => activity.detail.category.coding[0].code === 'observation'
+export function getMeasurements(resource) {
+  const goals = {};
+  resource.contained.filter(res => res.resourceType === 'Goal')
+    .forEach(res => (goals[res.id] = res.extension));
+
+  return resource.activity
+    .filter(activity => activity.detail.reasonCode[0].coding[0].code === 'all'
+    && activity.detail.category.coding[0].code === 'observation'
     && activity.detail.code)
     .map(activity => {
       const goalReference = activity.detail.goal[0].reference;
@@ -58,13 +63,7 @@ export function getPhase(resource, reasonCode) {
   const actions = getActions(activities);
   const medications = getMedications(activities);
 
-  const goals = {};
-  resource.contained.filter(res => res.resourceType === 'Goal')
-    .forEach(res => (goals[res.id] = res.extension));
-  const measurements = getMeasurements(activities, goals);
-
   const conditionActivity = getCondition(activities);
-
   const conditions = {};
   resource.contained.filter(res => res.resourceType === 'Condition')
     .forEach(res => (conditions[res.id] = res.notes));
@@ -75,7 +74,6 @@ export function getPhase(resource, reasonCode) {
 
   return {
     reasonCode,
-    measurements,
     symptoms,
     actions,
     medications };
@@ -121,11 +119,12 @@ export function getCarePlan(resource) {
   const patientGoal = getPatientGoal(resource);
   const id = resource.id;
   const questionnaireId = getQuestionnaireId(resource);
+  const measurements = getMeasurements(resource);
 
   let comment = '';
   if (resource.note) {
     comment = resource.note.text;
   }
 
-  return { id, phases, patientGoal, comment, questionnaireId };
+  return { id, phases, patientGoal, comment, questionnaireId, measurements };
 }

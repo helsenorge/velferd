@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { getPhase, getPatientGoal, getQuestionnaireId } from './care-plan-page.js';
+import { getPhase, getPatientGoal, getQuestionnaireId, getMeasurements } from './care-plan-page.js';
 import data from '../../mock/care-plan.json';
 
 describe('careplan phase', () => {
@@ -25,12 +25,6 @@ describe('careplan phase', () => {
     expect(phase.medications).to.not.equal(undefined);
     expect(phase.medications.length).gt(0);
   });
-
-  it('should have a list of measurements', () => {
-    const phase = getPhase(data, 'green');
-    expect(phase.measurements).to.not.equal(undefined);
-    expect(phase.measurements.length).gt(0);
-  });
 });
 
 describe('careplan', () => {
@@ -42,5 +36,11 @@ describe('careplan', () => {
   it('should have a questionnaire', () => {
     const id = getQuestionnaireId(data);
     expect(id).to.equal('62763');
+  });
+
+  it('should have a list of measurements', () => {
+    const measurements = getMeasurements(data);
+    expect(measurements).to.not.equal(undefined);
+    expect(measurements.length).gt(0);
   });
 });

@@ -38,6 +38,13 @@ class CarePlan extends Component {
     }
   }
 
+  getMeasurements(reasonCode) {
+    if (reasonCode === ReasonCodes.green) {
+      return this.props.measurements;
+    }
+    return [];
+  }
+
   render() {
     const { phases, patientGoal, editing, saving, onChange, saveCarePlan,
       deleteCarePlanItem, addCarePlanItem, comment, cancel, updateCarePlanState } = this.props;
@@ -52,7 +59,7 @@ class CarePlan extends Component {
       <List
         key={i}
         items={phase.symptoms}
-        measurements={phase.measurements}
+        measurements={this.getMeasurements(phase.reasonCode)}
         heading="Symptomer"
         editing={editing}
         saving={saving}
@@ -128,6 +135,7 @@ class CarePlan extends Component {
 CarePlan.propTypes = {
   comment: PropTypes.string.isRequired,
   lightboxOpen: PropTypes.bool.isRequired,
+  measurements: PropTypes.array.isRequired,
   phases: PropTypes.array.isRequired,
   patientGoal: PropTypes.string,
   onChange: React.PropTypes.func.isRequired,

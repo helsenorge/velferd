@@ -202,12 +202,6 @@ export function saveCarePlan(fhirUrl, patientId, carePlan) {
         const activity = buildActivity(drug, phase.reasonCode, 'drug');
         activities.push(activity);
       });
-      // Measurements
-      phase.measurements.forEach(measurement => {
-        const data = buildObservationActivityCondition(phase.reasonCode, measurement);
-        activities.push(data.activity);
-        contained.push(data.goal);
-      });
       // Symptoms
       const activity = buildActivity('', phase.reasonCode, 'other');
       activity.detail.reasonReference = [];
@@ -219,6 +213,13 @@ export function saveCarePlan(fhirUrl, patientId, carePlan) {
       });
 
       activities.push(activity);
+    });
+
+    // Measurements
+    carePlan.measurements.forEach(measurement => {
+      const data = buildObservationActivityCondition('all', measurement);
+      activities.push(data.activity);
+      contained.push(data.goal);
     });
 
     // Questionnaire
