@@ -1,51 +1,54 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
-import Spinner from '../../spinner/spinner.jsx';
-import Icon from '../../icon/icon.jsx';
-import iconPrint from '../../../../svg/print.svg';
-import iconEdit from '../../../../svg/edit.svg';
+import Spinner from '../../../spinner/spinner.jsx';
+import Button from '../../../button/button.jsx';
+import Icon from '../../../icon/icon.jsx';
+import iconPrint from '../../../../../svg/print.svg';
+import iconEdit from '../../../../../svg/edit.svg';
 import './controls.scss';
 
-const Controls = ({ edit, editCarePlan, saveCarePlan, saving, cancel }) => {
+const Controls = ({ editing, edit, openLightbox, saving, cancel }) => {
   const cardClasses = classNames({
     controls__card: true,
-    'controls__card--flipped': edit,
+    'controls__card--flipped': editing,
   });
   return (
     <div className="controls">
       <div className={cardClasses}>
         <div className="controls__front">
-          <button
-            onClick={editCarePlan}
+          <Button
             className="controls__button controls__button--print"
+            lvl3
           >
             <Icon glyph={iconPrint} />
             Skriv ut egenbehandlingsplan
-          </button>
-          <button
-            onClick={editCarePlan}
-            className="controls__button controls__button--edit"
+          </Button>
+          <Button
+            onClick={edit}
+            lvl3
+            className="controls__button"
           >
             <Icon glyph={iconEdit} />
             Rediger
-          </button>
+          </Button>
         </div>
         <div className="controls__back">
           {saving ? (<Spinner />) : null}
-          <button
-            onClick={saveCarePlan}
+          <Button
+            onClick={openLightbox}
             className="controls__button controls__button--save"
             disabled={saving}
           >
             Lagre
-          </button>
-          <button
+          </Button>
+          <Button
             onClick={cancel}
-            className="controls__button controls__button--cancel"
+            lvl2
+            className="controls__button"
             disabled={saving}
           >
             Avbryt
-          </button>
+          </Button>
         </div>
       </div>
     </div>
@@ -53,9 +56,9 @@ const Controls = ({ edit, editCarePlan, saveCarePlan, saving, cancel }) => {
 };
 
 Controls.propTypes = {
-  edit: PropTypes.bool.isRequired,
-  editCarePlan: PropTypes.func.isRequired,
-  saveCarePlan: PropTypes.func.isRequired,
+  editing: PropTypes.bool.isRequired,
+  edit: PropTypes.func.isRequired,
+  openLightbox: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
   cancel: PropTypes.func.isRequired,
 };

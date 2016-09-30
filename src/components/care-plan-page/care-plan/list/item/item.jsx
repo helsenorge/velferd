@@ -31,9 +31,9 @@ class Input extends Component {
   }
 
   render() {
-    const { edit, value, onChange, saving } = this.props;
+    const { editing, value, onChange, saving } = this.props;
 
-    return !edit ? (<span>{value}</span>) : (
+    return !editing ? (<li>{value}</li>) : (
       <li>
         <div className="input-field" ref="node">
           <TextInput
@@ -60,7 +60,7 @@ Input.propTypes = {
   type: React.PropTypes.string.isRequired,
   i: React.PropTypes.number.isRequired,
   deleteCarePlanItem: React.PropTypes.func.isRequired,
-  edit: PropTypes.bool.isRequired,
+  editing: PropTypes.bool.isRequired,
   onChange: React.PropTypes.func.isRequired,
   saving: React.PropTypes.bool.isRequired,
   value: React.PropTypes.string.isRequired,

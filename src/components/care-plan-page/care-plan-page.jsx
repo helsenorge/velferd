@@ -2,8 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
-import Controls from './controls/controls.jsx';
 import HistoryContainer from './history-container/history-container.jsx';
+import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
 import ReasonCodes from '../../constants/reason-codes';
 import { getCarePlan } from './care-plan-page.js';
 import './care-plan-page.scss';
@@ -19,11 +19,15 @@ class CarePlanPage extends Component {
     this.deleteCarePlanItem = this.deleteCarePlanItem.bind(this);
     this.addCarePlanItem = this.addCarePlanItem.bind(this);
     this.cancel = this.cancel.bind(this);
+    this.closeLightbox = this.closeLightbox.bind(this);
+    this.openLightbox = this.openLightbox.bind(this);
+    this.createCarePlan = this.createCarePlan.bind(this);
 
     this.state = {
-      carePlan: undefined,
-      edit: false,
+      carePlan: null,
+      editing: false,
       saving: false,
+      lightboxOpen: false,
     };
   }
 
@@ -34,11 +38,12 @@ class CarePlanPage extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (!nextProps.saveCompleted) {
-      this.setState({ carePlan: Object.assign({}, nextProps.carePlan) });
+      const carePlan = nextProps.carePlan ? Object.assign({}, nextProps.carePlan) : null;
+      this.setState({ carePlan });
     }
 
     if (nextProps.saveCompleted) {
-      this.setState({ saving: false, edit: false });
+      this.setState({ saving: false, editing: false });
     }
   }
 
@@ -58,20 +63,23 @@ class CarePlanPage extends Component {
   updateCarePlanState(event) {
     const carePlan = this.state.carePlan;
 
-    if (event.target.name === 'patient-goal') {
+    if (event.target.name === 'comment') {
+      carePlan.comment = event.target.value;
+    }
+    else if (event.target.name === 'patient-goal') {
       carePlan.patientGoal = event.target.value;
     }
     else {
       const ids = event.target.name.split('-');
-      const index = this.getPhaseIndex(ids[0]);
 
       if (ids[1] === 'measurements') {
-        const measurement = carePlan.phases[index][ids[1]][ids[2]];
+        const measurement = carePlan.measurements[ids[2]];
         const goal = measurement.goal[[ids[3]]];
         const item = goal[ids[4]];
         item.value = event.target.value;
       }
       else {
+        const index = this.getPhaseIndex(ids[0]);
         carePlan.phases[index][ids[1]][ids[2]] = event.target.value;
       }
     }
@@ -98,11 +106,11 @@ class CarePlanPage extends Component {
 
   editCarePlan(event) {
     event.preventDefault();
-    this.setState({ edit: true });
+    this.setState({ editing: true });
   }
 
   cancel() {
-    this.setState({ edit: false });
+    this.setState({ editing: false, lightboxOpen: false });
   }
 
   saveCarePlan(event) {
@@ -110,39 +118,55 @@ class CarePlanPage extends Component {
     event.preventDefault();
     this.setState({ saving: true });
     dispatch(saveCarePlan(fhirUrl, patientId, this.state.carePlan));
+    this.closeLightbox();
+  }
+
+  createCarePlan(type) {
+    console.log(type);
+  }
+
+  openLightbox() {
+    this.setState({ lightboxOpen: true });
+  }
+
+  closeLightbox() {
+    this.setState({ lightboxOpen: false });
   }
 
   render() {
     const { isFetching, error } = this.props;
-    const { carePlan, edit, saving } = this.state;
-    const isEmpty = carePlan === undefined;
-
+    const { carePlan, editing, saving, lightboxOpen } = this.state;
+    let isEmpty = true;
+    if (carePlan) {
+      isEmpty = false;
+    }
     return (
       <div className="care-plan-page">
         <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
         {error && <p>{error}</p>}
-        <Controls
-          saving={saving}
-          edit={edit}
-          editCarePlan={this.editCarePlan}
-          saveCarePlan={this.saveCarePlan}
-          cancel={this.cancel}
-        />
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : null)
+          ? (isFetching ? <h2>Loading...</h2> :
+            <CreateCarePlan createCarePlan={this.createCarePlan} />)
           : <CarePlan
+            lightboxOpen={lightboxOpen}
+            cancel={this.cancel}
+            comment={carePlan.comment}
             phases={carePlan.phases}
             patientGoal={carePlan.patientGoal}
-            edit={edit}
+            editing={editing}
+            updateCarePlanState={this.updateCarePlanState}
+            edit={this.editCarePlan}
+            saveCarePlan={this.saveCarePlan}
+            save={this.saveCarePlan}
+            openLightbox={this.openLightbox}
+            cancel={this.cancel}
+            measurements={carePlan.measurements}
             saving={saving}
             onChange={this.updateCarePlanState}
             deleteCarePlanItem={this.deleteCarePlanItem}
             addCarePlanItem={this.addCarePlanItem}
           />
         }
-        <div className="care-plan-page__lastupdated">
-          Sist oppdatert: 30.02.2016 kl. 11.34 av Anna For Eieb (lege)
-        </div>
         {carePlan && <HistoryContainer carePlanId={carePlan.id} />}
       </div>
     );
@@ -170,6 +194,7 @@ function mapStateToProps(state) {
 
   if (!saveCompleted && !isEmpty) {
     plan = getCarePlan(data.entry[0].resource);
+    console.log('plan', plan);
   }
 
   return {

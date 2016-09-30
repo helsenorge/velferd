@@ -3,13 +3,14 @@ import classNames from 'classnames';
 import TextInput from '../../../text-input/text-input.jsx';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
 import Icon from '../../../icon/icon.jsx';
+import Button from '../../../button/button.jsx';
 import Item from './item/item.jsx';
 import iconPlus from '../../../../../svg/plus.svg';
 import './list.scss';
 
 const List = (
   {
-    edit,
+    editing,
     saving,
     onChange,
     items,
@@ -28,14 +29,14 @@ const List = (
       <div className="measurement-control__inputs">
         <TextInput
           onChange={onChange}
-          name={`${reasonCode}-measurements-${i}-${j}-low`}
+          name={`all-measurements-${i}-${j}-low`}
           value={low}
           disabled={saving}
         />
         –
         <TextInput
           onChange={onChange}
-          name={`${reasonCode}-measurements-${i}-${j}-high`}
+          name={`all-measurements-${i}-${j}-high`}
           value={high}
           disabled={saving}
         />
@@ -51,9 +52,9 @@ const List = (
       const range1 = measurement.goal[0];
       const range2 = measurement.goal[1];
 
-      if (edit) {
-        const label1 = `Ideel ${getMeasurementName(range1.code)} ${name} (${unit})`;
-        const label2 = `Ideel ${getMeasurementName(range2.code)} ${name} (${unit})`;
+      if (editing) {
+        const label1 = `Ideell ${getMeasurementName(range1.code)} ${name} (${unit})`;
+        const label2 = `Ideell ${getMeasurementName(range2.code)} ${name} (${unit})`;
         return (
           <div>
             {getMeasurementEditControl(label1, range1.low.value, range1.high.value, i, 0)}
@@ -68,7 +69,7 @@ const List = (
 
     const range = measurement.goal[0];
 
-    if (edit) {
+    if (editing) {
       const label = `Ideel ${name} (${unit})`;
       return getMeasurementEditControl(label, range.low.value, range.high.value, i, 0);
     }
@@ -88,21 +89,22 @@ const List = (
             i={i}
             value={item}
             type={type}
-            edit={edit}
+            editing={editing}
             reasonCode={reasonCode}
             saving={saving}
             onChange={onChange}
             last={i === items.length - 1}
             {...props}
           />)}
-        {edit ? (
-          <button
+        {editing ? (
+          <Button
+            square
             className="care-plan__addbutton"
             onClick={() => addCarePlanItem(reasonCode, type)}
           >
             Legg til {addButtonText}
             <Icon className="care-plan__add-icon" glyph={iconPlus} />
-          </button>
+          </Button>
           ) : null}
         {measurementsList.map((item, i) => <li key={i}>{getMeasurementItem(i, item)}</li>)}
       </ul>
@@ -113,7 +115,7 @@ const List = (
 export default List;
 
 List.propTypes = {
-  edit: PropTypes.bool.isRequired,
+  editing: PropTypes.bool.isRequired,
   heading: PropTypes.string.isRequired,
   className: PropTypes.string,
   items: PropTypes.array.isRequired,

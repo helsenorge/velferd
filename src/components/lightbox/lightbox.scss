@@ -1,0 +1,51 @@
+.lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+
+  &__container {
+    position: relative;
+    align-self: center;
+    background: #fff;
+    padding: 1.375rem 2rem 1.375rem 1.75rem;
+    animation: open 0.3s 1;
+  }
+
+  &__close-button {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+  }
+
+  &__close-button-icon {
+    height: 20px;
+    width: 20px;
+    transform: rotate(45deg);
+  }
+
+  &__close-button-text {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+}
+
+@keyframes open {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

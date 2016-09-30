@@ -1,0 +1,27 @@
+.button {
+  font-size: 1.125rem;
+  border-radius: 100px;
+  border: 2px solid #269392;
+  background: #269392;
+  color: #fff;
+  padding: 0.5rem 1.25rem;
+
+  &--lvl2 {
+    color: #097A7A;
+    background: transparent;
+  }
+
+  &--lvl3 {
+    color: #097A7A;
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+
+  &--square {
+    border-radius: 0;
+    background: transparent;
+    color: #097A7A;
+    text-align: left;
+  }
+}

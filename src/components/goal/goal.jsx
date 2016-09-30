@@ -4,13 +4,13 @@ import TextArea from '../text-area/text-area.jsx';
 import './goal.scss';
 
 const Goal = ({
-    edit,
+    editing,
     onChange,
     patientGoal,
     saving,
   }) => {
   const getGoal = () => {
-    if (edit) {
+    if (editing) {
       return (
         <TextArea
           className="goal__textarea"
@@ -37,7 +37,7 @@ const Goal = ({
 
 Goal.propTypes = {
   patientGoal: PropTypes.string,
-  edit: PropTypes.bool.isRequired,
+  editing: PropTypes.bool.isRequired,
   onChange: React.PropTypes.func,
   saving: React.PropTypes.bool,
 };
