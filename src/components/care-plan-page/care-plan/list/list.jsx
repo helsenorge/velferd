@@ -31,6 +31,7 @@ const List = (
           onChange={onChange}
           name={`all-measurements-${i}-${j}-low`}
           value={low}
+          className="measurement-control__input"
           disabled={saving}
         />
         –
@@ -38,6 +39,7 @@ const List = (
           onChange={onChange}
           name={`all-measurements-${i}-${j}-high`}
           value={high}
+          className="measurement-control__input"
           disabled={saving}
         />
       </div>
@@ -102,8 +104,10 @@ const List = (
             className="care-plan__addbutton"
             onClick={() => addCarePlanItem(reasonCode, type)}
           >
-            Legg til {addButtonText}
-            <Icon className="care-plan__add-icon" glyph={iconPlus} />
+            <div className="care-plan__buttonwrap">
+              <div>Legg til {addButtonText}</div>
+              <Icon className="care-plan__add-icon" glyph={iconPlus} />
+            </div>
           </Button>
           ) : null}
         {measurementsList.map((item, i) => <li key={i}>{getMeasurementItem(i, item)}</li>)}

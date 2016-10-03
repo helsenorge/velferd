@@ -7,6 +7,10 @@
   perspective: 800px;
   position: relative;
 
+  &--footer {
+    margin-top: 1rem;
+  }
+
   &__card {
     width: 100%;
     height: 100%;
@@ -18,12 +22,14 @@
 
   &__front,
   &__back {
+    transform: rotateX(0deg);
     margin: 0;
     display: block;
     position: absolute;
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
   }
 
   &__back {

@@ -79,7 +79,7 @@ class CarePlan extends Component {
     const headings = phases.map((phase, i) =>
       <h3 key={i} className="care-plan__heading">
         <Icon glyph={this.getPhaseIcon(i)} className="care-plan__icon" />
-        {this.getPhaseName(phase.reasonCode)}
+        <div>{this.getPhaseName(phase.reasonCode)}</div>
       </h3>
     );
     const symptoms = phases.map((phase, i) =>
@@ -138,6 +138,11 @@ class CarePlan extends Component {
           {actions}
           {medications}
         </div>
+        <Controls
+          footer
+          openLightbox={this.openLightbox}
+          {...props}
+        />
         <Footer {...props} />
         {lightbox}
       </div>

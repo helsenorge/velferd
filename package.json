@@ -28,6 +28,7 @@
     "chartist": "^0.9.8",
     "classnames": "^2.2.5",
     "react": "^15.0.2",
+    "react-autosize-textarea": "^0.3.3",
     "react-chartist": "^0.10.2",
     "react-collapse": "^2.3.3",
     "react-dom": "^15.0.2",

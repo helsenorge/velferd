@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import TextInput from '../../../../text-input/text-input.jsx';
+import TextArea from '../../../../text-area/text-area.jsx';
 import Icon from '../../../../icon/icon.jsx';
 import iconDelete from '../../../../../../svg/delete.svg';
 import './item.scss';
@@ -36,11 +36,12 @@ class Input extends Component {
     return !editing ? (<li>{value}</li>) : (
       <li>
         <div className="input-field" ref="node">
-          <TextInput
+          <TextArea
             onChange={onChange}
             name={this.name}
             value={value}
             disabled={saving}
+            className="input-field__textarea"
           />
           <button
             className="input-field__delete"

@@ -7,13 +7,16 @@ import iconPrint from '../../../../../svg/print.svg';
 import iconEdit from '../../../../../svg/edit.svg';
 import './controls.scss';
 
-const Controls = ({ editing, edit, openLightbox, saving, cancel }) => {
+const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false }) => {
+  const controlClasses = classNames('controls', { 'controls--footer': footer });
+
   const cardClasses = classNames({
     controls__card: true,
     'controls__card--flipped': editing,
   });
-  return (
-    <div className="controls">
+
+  const html = (
+    <div className={controlClasses}>
       <div className={cardClasses}>
         <div className="controls__front">
           <Button
@@ -53,6 +56,12 @@ const Controls = ({ editing, edit, openLightbox, saving, cancel }) => {
       </div>
     </div>
     );
+
+  if (footer && editing || !footer) {
+    return html;
+  }
+
+  return null;
 };
 
 Controls.propTypes = {
@@ -61,6 +70,7 @@ Controls.propTypes = {
   openLightbox: PropTypes.func.isRequired,
   saving: PropTypes.bool.isRequired,
   cancel: PropTypes.func.isRequired,
+  footer: PropTypes.bool,
 };
 
 export default Controls;

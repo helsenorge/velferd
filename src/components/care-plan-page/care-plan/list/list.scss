@@ -3,13 +3,14 @@
   margin-right: 3rem;
 
   &__inputs {
+    width: 13rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
 
-  .text-input {
-    width: 30%;
+  &__input {
+    width: 3rem;
   }
 
   &__label {
