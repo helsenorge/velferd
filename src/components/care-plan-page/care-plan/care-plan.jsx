@@ -138,6 +138,11 @@ class CarePlan extends Component {
           {actions}
           {medications}
         </div>
+        <Controls
+          footer
+          openLightbox={this.openLightbox}
+          {...props}
+        />
         <Footer {...props} />
         {lightbox}
       </div>
