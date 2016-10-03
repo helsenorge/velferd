@@ -3,8 +3,13 @@
 .pageheader {
   background: #343434;
   color: #CDCDCD;
-  padding: 1rem 10rem;
+  padding: 1rem 2rem;
   font-weight: 300;
-  display: flex;
-  justify-content: space-between;
+
+  &__wrapper {
+    display: flex;
+    justify-content: space-between;
+    max-width: 80rem;
+    margin: 0 auto;
+  }
 }

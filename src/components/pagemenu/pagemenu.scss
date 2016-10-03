@@ -2,13 +2,13 @@
 
 .pagemenu {
   background: #CCE8D9;
-  padding: 0 10rem;
   font-size: 1.125rem;
 
   &__list {
+    max-width: 80rem;
     list-style-type: none;
-    padding: 0;
-    margin: 0;
+    padding: 0 2rem;
+    margin: 0 auto;
     display: flex;
     justify-content: space-between;
   }
