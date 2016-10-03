@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 import './text-area.scss';
 import classNames from 'classnames';
+import ResizeArea from 'react-autosize-textarea';
 const TextArea = ({ name, onChange, placeholder = '', value, disabled, className = '' }) => {
   const classes = classNames('textarea', className);
   return (
-    <textarea
+    <ResizeArea
       name={name}
       value={value}
       placeholder={placeholder}
