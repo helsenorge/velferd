@@ -104,8 +104,10 @@ const List = (
             className="care-plan__addbutton"
             onClick={() => addCarePlanItem(reasonCode, type)}
           >
-            <div>Legg til {addButtonText}</div>
-            <Icon className="care-plan__add-icon" glyph={iconPlus} />
+            <div className="care-plan__buttonwrap">
+              <div>Legg til {addButtonText}</div>
+              <Icon className="care-plan__add-icon" glyph={iconPlus} />
+            </div>
           </Button>
           ) : null}
         {measurementsList.map((item, i) => <li key={i}>{getMeasurementItem(i, item)}</li>)}

@@ -22,6 +22,7 @@
 
   &__front,
   &__back {
+    transform: rotateX(0deg);
     margin: 0;
     display: block;
     position: absolute;
