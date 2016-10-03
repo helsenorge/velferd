@@ -19,15 +19,12 @@ class CarePlanPage extends Component {
     this.deleteCarePlanItem = this.deleteCarePlanItem.bind(this);
     this.addCarePlanItem = this.addCarePlanItem.bind(this);
     this.cancel = this.cancel.bind(this);
-    this.closeLightbox = this.closeLightbox.bind(this);
-    this.openLightbox = this.openLightbox.bind(this);
     this.createCarePlan = this.createCarePlan.bind(this);
 
     this.state = {
       carePlan: null,
       editing: false,
       saving: false,
-      lightboxOpen: false,
     };
   }
 
@@ -110,7 +107,7 @@ class CarePlanPage extends Component {
   }
 
   cancel() {
-    this.setState({ editing: false, lightboxOpen: false });
+    this.setState({ editing: false });
   }
 
   saveCarePlan(event) {
@@ -118,24 +115,15 @@ class CarePlanPage extends Component {
     event.preventDefault();
     this.setState({ saving: true });
     dispatch(saveCarePlan(fhirUrl, patientId, this.state.carePlan));
-    this.closeLightbox();
   }
 
   createCarePlan(type) {
     console.log(type);
   }
 
-  openLightbox() {
-    this.setState({ lightboxOpen: true });
-  }
-
-  closeLightbox() {
-    this.setState({ lightboxOpen: false });
-  }
-
   render() {
     const { isFetching, error } = this.props;
-    const { carePlan, editing, saving, lightboxOpen } = this.state;
+    const { carePlan, editing, saving } = this.state;
     let isEmpty = true;
     if (carePlan) {
       isEmpty = false;
@@ -148,20 +136,17 @@ class CarePlanPage extends Component {
           ? (isFetching ? <h2>Loading...</h2> :
             <CreateCarePlan createCarePlan={this.createCarePlan} />)
           : <CarePlan
-            lightboxOpen={lightboxOpen}
             cancel={this.cancel}
             comment={carePlan.comment}
             phases={carePlan.phases}
             patientGoal={carePlan.patientGoal}
             editing={editing}
+            saving={saving}
             updateCarePlanState={this.updateCarePlanState}
             edit={this.editCarePlan}
-            saveCarePlan={this.saveCarePlan}
             save={this.saveCarePlan}
-            openLightbox={this.openLightbox}
             cancel={this.cancel}
             measurements={carePlan.measurements}
-            saving={saving}
             onChange={this.updateCarePlanState}
             deleteCarePlanItem={this.deleteCarePlanItem}
             addCarePlanItem={this.addCarePlanItem}

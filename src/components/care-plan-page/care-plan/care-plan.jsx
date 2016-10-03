@@ -12,6 +12,16 @@ import face2 from '../../../../svg/face2.svg';
 import face3 from '../../../../svg/face3.svg';
 
 class CarePlan extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { lightboxOpen: false };
+    this.cancel = this.cancel.bind(this);
+    this.openLightbox = this.openLightbox.bind(this);
+    this.closeLightbox = this.closeLightbox.bind(this);
+    this.save = this.save.bind(this);
+  }
+
   getPhaseName(reasonCode) {
     switch (reasonCode) {
     case ReasonCodes.green:
@@ -38,16 +48,33 @@ class CarePlan extends Component {
     }
   }
 
-  getMeasurements(reasonCode) {
+  getMeasurements(measurements, reasonCode) {
     if (reasonCode === ReasonCodes.green) {
-      return this.props.measurements;
+      return measurements;
     }
     return [];
   }
 
+  openLightbox() {
+    this.setState({ lightboxOpen: true });
+  }
+
+  closeLightbox() {
+    this.setState({ lightboxOpen: false });
+  }
+
+  save(evt) {
+    this.closeLightbox();
+    this.props.save(evt);
+  }
+
+  cancel() {
+    this.closeLightbox();
+    this.props.cancel();
+  }
+
   render() {
-    const { phases, patientGoal, editing, saving, onChange, saveCarePlan,
-      deleteCarePlanItem, addCarePlanItem, comment, cancel, updateCarePlanState } = this.props;
+    const { phases, measurements, ...props } = this.props;
 
     const headings = phases.map((phase, i) =>
       <h3 key={i} className="care-plan__heading">
@@ -59,16 +86,12 @@ class CarePlan extends Component {
       <List
         key={i}
         items={phase.symptoms}
-        measurements={this.getMeasurements(phase.reasonCode)}
+        measurements={this.getMeasurements(measurements, phase.reasonCode)}
         heading="Symptomer"
-        editing={editing}
-        saving={saving}
-        onChange={onChange}
-        deleteCarePlanItem={deleteCarePlanItem}
-        addCarePlanItem={addCarePlanItem}
         type="symptoms"
         addButtonText="symptom"
         reasonCode={phase.reasonCode}
+        {...props}
       />
     );
     const actions = phases.map((phase, i) =>
@@ -76,14 +99,10 @@ class CarePlan extends Component {
         key={i}
         items={phase.actions}
         heading="Hva gjør du?"
-        editing={editing}
-        saving={saving}
-        onChange={onChange}
-        deleteCarePlanItem={deleteCarePlanItem}
-        addCarePlanItem={addCarePlanItem}
         type="actions"
         addButtonText="tiltak"
         reasonCode={phase.reasonCode}
+        {...props}
       />
     );
     const medications = phases.map((phase, i) =>
@@ -92,40 +111,34 @@ class CarePlan extends Component {
         className="care-plan__listheading--medisiner"
         items={phase.medications}
         heading="Medisiner"
-        editing={editing}
-        saving={saving}
-        onChange={onChange}
-        deleteCarePlanItem={deleteCarePlanItem}
-        addCarePlanItem={addCarePlanItem}
         type="medications"
         addButtonText="medisinering"
         reasonCode={phase.reasonCode}
+        {...props}
       />
       );
 
-    const lightbox = this.props.lightboxOpen ?
+    const lightbox = this.state.lightboxOpen ?
       <CommentLightbox
-        comment={comment}
-        onClose={cancel}
-        onChange={updateCarePlanState}
-        saveCarePlan={saveCarePlan}
+        onClose={this.cancel}
+        saveIt={this.save}
+        {...props}
       /> : null;
 
     return (
       <div>
         <Controls
-          saving={saving}
-          editing={editing}
-          {...this.props}
+          openLightbox={this.openLightbox}
+          {...props}
         />
-        <Goal patientGoal={patientGoal} editing={editing} onChange={onChange} saving={saving} />
+        <Goal {...props} />
         <div className="care-plan">
           {headings}
           {symptoms}
           {actions}
           {medications}
         </div>
-        <Footer comment={comment} />
+        <Footer {...props} />
         {lightbox}
       </div>
     );
@@ -133,19 +146,10 @@ class CarePlan extends Component {
 }
 
 CarePlan.propTypes = {
-  comment: PropTypes.string.isRequired,
-  lightboxOpen: PropTypes.bool.isRequired,
   measurements: PropTypes.array.isRequired,
   phases: PropTypes.array.isRequired,
-  patientGoal: PropTypes.string,
-  onChange: React.PropTypes.func.isRequired,
-  editing: PropTypes.bool.isRequired,
   cancel: PropTypes.func.isRequired,
-  updateCarePlanState: PropTypes.func.isRequired,
-  saving: React.PropTypes.bool.isRequired,
-  deleteCarePlanItem: React.PropTypes.func.isRequired,
-  addCarePlanItem: React.PropTypes.func.isRequired,
-  saveCarePlan: React.PropTypes.func.isRequired,
+  save: React.PropTypes.func.isRequired,
 };
 
 export default CarePlan;
