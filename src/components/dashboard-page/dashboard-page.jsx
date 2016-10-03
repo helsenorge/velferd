@@ -7,11 +7,6 @@ import ObservationCodes from '../../constants/observation-codes';
 import Header from './header/header.jsx';
 import ToTheTop from './to-the-top/to-the-top.jsx';
 import './dashboard-page.scss';
-import iconEgenvurdering from '../../../svg/ikon-egenvurdering.svg';
-import iconblodtrykk from '../../../svg/ikon-blodtrykk.svg';
-import iconpuls from '../../../svg/ikon-puls.svg';
-import iconvekt from '../../../svg/ikon-vekt.svg';
-
 
 class DashboardPage extends Component {
 
@@ -123,28 +118,24 @@ class DashboardPage extends Component {
           toDate={this.state.toDate}
           selectedDate={this.state.selectedDate}
           questionnaireId={this.props.questionnaireId}
-          icon={iconEgenvurdering}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
           selectedDate={this.state.selectedDate}
           code={ObservationCodes.bloodPressure}
-          icon={iconblodtrykk}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
           selectedDate={this.state.selectedDate}
           code={ObservationCodes.weight}
-          icon={iconvekt}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
           selectedDate={this.state.selectedDate}
           code={ObservationCodes.pulse}
-          icon={iconpuls}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}
