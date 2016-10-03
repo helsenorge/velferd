@@ -1,14 +1,19 @@
 import React, { PropTypes } from 'react';
-
-const TextArea = ({ name, onChange, value, disabled, className = '' }) => (
-  <textarea
-    name={name}
-    value={value}
-    onChange={onChange}
-    disabled={disabled}
-    className={className}
-  />
-);
+import './text-area.scss';
+import classNames from 'classnames';
+const TextArea = ({ name, onChange, placeholder = '', value, disabled, className = '' }) => {
+  const classes = classNames('textarea', className);
+  return (
+    <textarea
+      name={name}
+      value={value}
+      placeholder={placeholder}
+      onChange={onChange}
+      disabled={disabled}
+      className={classes}
+    />
+  );
+};
 
 TextArea.propTypes = {
   name: PropTypes.string.isRequired,
