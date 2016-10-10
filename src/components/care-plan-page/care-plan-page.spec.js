@@ -1,5 +1,7 @@
 import { expect } from 'chai';
-import { getPhase, getPatientGoal, getQuestionnaireId, getMeasurements } from './care-plan-page.js';
+import { getPhase, getPatientGoal,
+  getQuestionnaireId, getMeasurements, getCategory } from './care-plan-page.js';
+import CarePlanCategories from '../../constants/care-plan-categories';
 import data from '../../mock/care-plan.json';
 
 describe('careplan phase', () => {
@@ -42,5 +44,10 @@ describe('careplan', () => {
     const measurements = getMeasurements(data);
     expect(measurements).to.not.equal(undefined);
     expect(measurements.length).gt(0);
+  });
+
+  it('should have a category', () => {
+    const category = getCategory(data);
+    expect(category).to.equal(CarePlanCategories.HeartFailure);
   });
 });

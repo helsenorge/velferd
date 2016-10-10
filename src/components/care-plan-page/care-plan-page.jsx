@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchCarePlan, saveCarePlan } from '../../actions/care-plan';
+import { fetchCarePlan, saveCarePlan, createCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
 import HistoryContainer from './history-container/history-container.jsx';
 import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
@@ -118,7 +118,8 @@ class CarePlanPage extends Component {
   }
 
   createCarePlan(type) {
-    console.log(type);
+    const { dispatch, fhirUrl, patientId } = this.props;
+    dispatch(createCarePlan(fhirUrl, patientId, type));
   }
 
   render() {

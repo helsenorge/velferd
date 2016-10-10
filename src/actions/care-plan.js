@@ -1,6 +1,8 @@
-import { get, put } from '../helpers/api';
+import { get, put, post } from '../helpers/api';
 import { discardAuthToken } from '../actions/auth';
 import { getObservationCodingDisplay } from '../helpers/observation-helpers';
+import { buildCarePlan } from '../helpers/care-plan-builder';
+import CarePlanCategories from '../constants/care-plan-categories';
 
 export const REQUEST_CAREPLAN = 'REQUEST_CAREPLAN';
 export const RECEIVE_CAREPLAN = 'RECEIVE_CAREPLAN';
@@ -171,71 +173,141 @@ function buildGoal(id, description) {
   };
 }
 
+function buildCategory(category) {
+  switch (category) {
+  case CarePlanCategories.HeartFailure:
+    return { coding: [{ system: 'http://hl7.org/fhir/ValueSet/care-plan-category', code: '412776001' }] };
+  case CarePlanCategories.COPD:
+    return { coding: [{ system: 'http://hl7.org/fhir/ValueSet/care-plan-category', code: '698361000' }] };
+  default:
+    return null;
+  }
+}
+
+function buildCarePlanResource(patientId, category, goal, note, activity, contained) {
+  contained.push({
+    resourceType: 'Practitioner',
+    id: 'pr1',
+    name: { family: ['Tor'], given: ['Doc'] } });
+
+  contained.push({
+    resourceType: 'Organization',
+    id: 'org1',
+    name: 'Response center' });
+
+  return {
+    resourceType: 'CarePlan',
+    text: {
+      status: 'additional',
+      div: '<div>Sample care plan</div>',
+    },
+    subject: { reference: `Patient/${patientId}` },
+    contained,
+    status: 'active',
+    author: [{ reference: '#pr1' }],
+    participant: [
+      {
+        role: { text: 'Patient' },
+        member: { reference: `Patient/${patientId}` },
+      },
+      {
+        role: { text: 'GP' },
+        member: { reference: '#pr1' },
+      },
+      {
+        role: { text: 'Response Center' },
+        member: { reference: '#org1' },
+      },
+    ],
+    category,
+    goal,
+    note,
+    activity,
+  };
+}
+
+function toFhirCarePlan(patientId, carePlan) {
+  const activities = [];
+  const contained = [];
+
+  contained.push(buildGoal('patient-goal', carePlan.patientGoal));
+  const goal = [{ reference: '#patient-goal' }];
+  const note = [{ text: carePlan.comment }];
+  const category = [buildCategory(carePlan.category)];
+
+  carePlan.phases.forEach(phase => {
+      // Actions
+    phase.actions.forEach(action => {
+      const activity = buildActivity(action, phase.reasonCode, 'procedure');
+      activities.push(activity);
+    });
+      // Drugs
+    phase.medications.forEach(drug => {
+      const activity = buildActivity(drug, phase.reasonCode, 'drug');
+      activities.push(activity);
+    });
+      // Symptoms
+    const activity = buildActivity('', phase.reasonCode, 'other');
+    activity.detail.reasonReference = [];
+      // Conditions
+    phase.symptoms.forEach((symptom, index) => {
+      const condition = buildCondition(symptom, phase.reasonCode, index + 1);
+      contained.push(condition);
+      activity.detail.reasonReference.push({ reference: `#${condition.id}` });
+    });
+
+    activities.push(activity);
+  });
+
+  // Measurements
+  carePlan.measurements.forEach(measurement => {
+    const data = buildObservationActivityCondition('all', measurement);
+    activities.push(data.activity);
+    contained.push(data.goal);
+  });
+
+  // Questionnaire
+  const activity = buildActivity('', 'all', 'observation');
+  activity.detail.scheduledTiming = { repeat: { frequency: 1, period: 1, periodUnits: 'wk' } };
+  activity.detail.extension = [{
+    url: 'http://ehelse.no/fhir/vft',
+    valueReference: { reference: `Questionnaire/${carePlan.questionnaireId}` },
+  }];
+  activities.push(activity);
+
+  return buildCarePlanResource(
+    patientId,
+    category,
+    goal,
+    note,
+    activities,
+    contained);
+}
+
+export function createCarePlan(fhirUrl, patientId, type) {
+  return (dispatch) => {
+    const carePlan = buildCarePlan(type);
+    const resource = toFhirCarePlan(patientId, carePlan);
+    console.log(resource);
+    const url = `${fhirUrl}/CarePlan/`;
+
+    return post(url, resource)
+      .then(() => {
+        dispatch(fetchCarePlan(fhirUrl, patientId));
+      })
+      .catch(error => console.error(error));
+  };
+}
+
 export function saveCarePlan(fhirUrl, patientId, carePlan) {
   return (dispatch, getState) => {
     const { data } = getState().carePlan;
     const resource = Object.assign({}, data.entry[0].resource);
-    const phases = carePlan.phases;
-
     const id = resource.id;
     const url = `${fhirUrl}/CarePlan/${id}`;
-    const activities = [];
-    const contained = resource.contained.filter(res => res.resourceType !== 'Condition'
-      && res.resourceType !== 'Goal');
+    const updatedResource = toFhirCarePlan(patientId, carePlan);
 
-    // Patient Goal
-    const goal = buildGoal('patient-goal', carePlan.patientGoal);
-    contained.push(goal);
-    resource.goal = [{ reference: `#${goal.id}` }];
-
-    // Comment
-    resource.note = [{ text: carePlan.comment }];
-
-    phases.forEach(phase => {
-      // Actions
-      phase.actions.forEach(action => {
-        const activity = buildActivity(action, phase.reasonCode, 'procedure');
-        activities.push(activity);
-      });
-      // Drugs
-      phase.medications.forEach(drug => {
-        const activity = buildActivity(drug, phase.reasonCode, 'drug');
-        activities.push(activity);
-      });
-      // Symptoms
-      const activity = buildActivity('', phase.reasonCode, 'other');
-      activity.detail.reasonReference = [];
-      // Conditions
-      phase.symptoms.forEach((symptom, index) => {
-        const condition = buildCondition(symptom, phase.reasonCode, index + 1);
-        contained.push(condition);
-        activity.detail.reasonReference.push({ reference: `#${condition.id}` });
-      });
-
-      activities.push(activity);
-    });
-
-    // Measurements
-    carePlan.measurements.forEach(measurement => {
-      const data = buildObservationActivityCondition('all', measurement);
-      activities.push(data.activity);
-      contained.push(data.goal);
-    });
-
-    // Questionnaire
-    const activity = buildActivity('', 'all', 'observation');
-    activity.detail.scheduledTiming = { repeat: { frequency: 1, period: 1, periodUnits: 'wk' } };
-    activity.detail.extension = [{
-      url: 'http://ehelse.no/fhir/vft',
-      valueReference: { reference: `Questionnaire/${carePlan.questionnaireId}` },
-    }];
-    activities.push(activity);
-
-    delete resource.id;
-    resource.activity = activities;
-    resource.contained = contained;
-
-    return put(url, resource)
+    return put(url, updatedResource)
       .then(() => {
         dispatch(completeSaveCarePlan(true));
         dispatch(fetchCarePlan(fhirUrl, patientId));
