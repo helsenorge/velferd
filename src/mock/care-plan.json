@@ -333,14 +333,14 @@
       }
     }
   ],
-  "category": {
+  "category": [{
     "coding": [
       {
-        "system": "http://loinc.org",
-        "code": "LP173737-0"
+        "system": "http://hl7.org/fhir/ValueSet/care-plan-category",
+        "code": "698361000"
       }
     ]
-  },
+  }],
   "goal": [
     {
       "reference": "#patient-goal"

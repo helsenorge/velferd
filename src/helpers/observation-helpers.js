@@ -12,7 +12,7 @@ export function getMeasurementName(code) {
     return 'Blodtrykk';
   case ObservationCodes.bloodPressureSystolic:
     return 'Systolisk';
-  case ObservationCodes.bloodPressureDiastoic:
+  case ObservationCodes.bloodPressureDiastolic:
     return 'Diastolisk';
   default:
     return '';
@@ -46,7 +46,7 @@ export function getObservationCodingDisplay(code) {
     return 'MDC_PRESS_BLD_NONINV';
   case ObservationCodes.bloodPressureSystolic:
     return 'MDC_PRESS_BLD_NONINV_SYS';
-  case ObservationCodes.bloodPressureDiastoic:
+  case ObservationCodes.bloodPressureDiastolic:
     return 'MDC_PRESS_BLD_NONINV_DIA';
   default:
     return null;

@@ -1,4 +1,5 @@
 import ReasonCodes from '../../constants/reason-codes';
+import CarePlanCategories from '../../constants/care-plan-categories';
 
 export function getMeasurements(resource) {
   const goals = {};
@@ -107,6 +108,21 @@ export function getPatientGoal(resource) {
   return '';
 }
 
+export function getCategory(resource) {
+  console.log(resource.category);
+  if (resource.category.length > 0) {
+    const coding = resource.category[0].coding[0];
+
+    if (coding.code === '698361000') {
+      return CarePlanCategories.HeartFailure;
+    }
+    if (coding.code === '412776001') {
+      return CarePlanCategories.COPD;
+    }
+  }
+  return null;
+}
+
 export function getCarePlan(resource) {
   const phases = [];
   const greenPhase = getPhase(resource, ReasonCodes.green);
@@ -120,11 +136,12 @@ export function getCarePlan(resource) {
   const id = resource.id;
   const questionnaireId = getQuestionnaireId(resource);
   const measurements = getMeasurements(resource);
+  const category = getCategory(resource);
 
   let comment = '';
   if (resource.note) {
     comment = resource.note.text;
   }
 
-  return { id, phases, patientGoal, comment, questionnaireId, measurements };
+  return { id, category, phases, patientGoal, comment, questionnaireId, measurements };
 }

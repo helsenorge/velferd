@@ -22,3 +22,13 @@ export function put(url, data) {
 
   return fetch(url, init);
 }
+
+export function post(url, data) {
+  const init = {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json' },
+  };
+
+  return fetch(url, init);
+}

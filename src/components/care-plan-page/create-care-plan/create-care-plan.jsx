@@ -35,7 +35,7 @@ const CreateCarePlan = ({ createCarePlan }) => (
           <Icon className="create-care-plan__icon" glyph={iconLungs} />
           <span className="create-care-plan__icontext">Kols</span>
         </div>
-        <Button className="create-care-plan__button" square>
+        <Button className="create-care-plan__button" square onClick={() => createCarePlan('COPD')}>
           Opprett egenbehandlingsplan
           <Icon glyph={iconPlus} className="create-care-plan__button-icon" />
         </Button>
@@ -45,7 +45,7 @@ const CreateCarePlan = ({ createCarePlan }) => (
           <Icon className="create-care-plan__icon" glyph={iconCOPD} />
           <span className="create-care-plan__icontext">Kombinert kols og hjertesvikt</span>
         </div>
-        <Button className="create-care-plan__button" square onClick={() => createCarePlan('COPD')} >
+        <Button className="create-care-plan__button" square>
           Opprett egenbehandlingsplan
           <Icon glyph={iconPlus} className="create-care-plan__button-icon" />
         </Button>
