@@ -1,11 +1,15 @@
 .footer {
   &__lastupdated {
-    margin-top: 2.625rem;
-    font-size: 1.125rem;
+    margin-top: 0.875rem;
+    font-size: 1rem;
   }
 
   &__button {
     margin-top: 1.625rem;
     margin-bottom: 4rem;
+  }
+
+  &__comment {
+    margin-top: 0;
   }
 }

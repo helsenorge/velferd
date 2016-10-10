@@ -1,10 +1,19 @@
 .goal {
   background: #EEEEEE;
-  padding: 1rem 2rem;
+  padding: 1.375rem 2rem;
   font-size: 1.125rem;
   display: flex;
   margin-bottom: 4rem;
   flex: 1 1 100%;
+
+  &--ebh {
+    background: #fff;
+    margin-bottom: 2.125rem;
+
+    .goal__lastupdated {
+      display: none;
+    }
+  }
 
   &__left {
     width: 80%;
@@ -13,7 +22,7 @@
   &__heading {
     font-weight: 400;
     margin: 0;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.875rem;
     text-transform: uppercase;
   }
 

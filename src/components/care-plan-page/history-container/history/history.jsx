@@ -56,7 +56,7 @@ class History extends Component {
           <table className="historytable__table">
             <thead>
               <tr>
-                <th className="historytable__header">Sist oppdatert</th>
+                <th className="historytable__header">Dato</th>
                 <th className="historytable__header">Endret av</th>
                 <th className="historytable__header">Kommentar</th>
               </tr>

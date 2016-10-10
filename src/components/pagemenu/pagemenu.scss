@@ -22,11 +22,14 @@
     flex: 1;
     padding: 1rem 0;
     text-align: center;
-    color: #2C2C2C;
+    color: #2c2c2c;
     text-decoration: none;
     text-transform: uppercase;
 
-    &--active,
+    &--active {
+      background: #d5d5d5;
+    }
+
     &:hover {
       background: #a6d9be;
     }

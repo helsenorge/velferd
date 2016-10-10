@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
 import TextArea from '../text-area/text-area.jsx';
-
+import classNames from 'classnames';
 import './goal.scss';
 
 const Goal = ({
@@ -8,6 +8,7 @@ const Goal = ({
     onChange,
     patientGoal,
     saving,
+    className,
   }) => {
   const getGoal = () => {
     if (editing) {
@@ -21,16 +22,16 @@ const Goal = ({
         />
       );
     }
-    return (<span>"{patientGoal}"</span>);
+    return (<span>«{patientGoal}»</span>);
   };
-
+  const classes = classNames(className, 'goal');
   return (
-    <div className="goal">
+    <div className={classes}>
       <div className="goal__left">
         <h3 className="goal__heading">Overordnet mål</h3>
         {getGoal()}
       </div>
-      <span>Sist oppdatert 21.11.2015</span>
+      <span className="goal__lastupdated">Sist oppdatert 21.11.2015</span>
     </div>
   );
 };
@@ -40,6 +41,7 @@ Goal.propTypes = {
   editing: PropTypes.bool.isRequired,
   onChange: React.PropTypes.func,
   saving: React.PropTypes.bool,
+  className: React.PropTypes.string,
 };
 
 export default Goal;

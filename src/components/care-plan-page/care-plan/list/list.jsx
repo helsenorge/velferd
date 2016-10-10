@@ -55,8 +55,8 @@ const List = (
       const range2 = measurement.goal[1];
 
       if (editing) {
-        const label1 = `Ideell ${getMeasurementName(range1.code)} ${name} (${unit})`;
-        const label2 = `Ideell ${getMeasurementName(range2.code)} ${name} (${unit})`;
+        const label1 = `Idealnivå ${getMeasurementName(range1.code)} ${name} (${unit})`;
+        const label2 = `Idealnivå ${getMeasurementName(range2.code)} ${name} (${unit})`;
         return (
           <div>
             {getMeasurementEditControl(label1, range1.low.value, range1.high.value, i, 0)}
@@ -72,7 +72,7 @@ const List = (
     const range = measurement.goal[0];
 
     if (editing) {
-      const label = `Ideel ${name} (${unit})`;
+      const label = `Idealnivå ${name} (${unit})`;
       return getMeasurementEditControl(label, range.low.value, range.high.value, i, 0);
     }
 

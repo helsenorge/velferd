@@ -29,11 +29,11 @@
 
   &__heading {
     margin: 0;
-    flex: 0 0 calc(100% / 3 - 4rem);
+    flex: 0 0 calc(100% / 3 - 3.25rem);
     text-transform: uppercase;
     font-size: 1.25rem;
     font-weight: 400;
-    padding: 1rem;
+    padding: 1.2rem 1rem;
     display: flex;
 
     &:nth-child(1) {
@@ -58,7 +58,7 @@
 
   &__listheading {
     text-transform: uppercase;
-    font-size: 1.125rem;
+    font-size: 1rem;
     font-weight: 400;
     margin-top: 2.25rem;
     margin-bottom: 1.625rem;
@@ -76,6 +76,10 @@
     list-style-type: none;
     padding: 0;
     line-height: 1.5rem;
+
+    li {
+      margin-bottom: 0.875rem;
+    }
   }
 
   &__list {
@@ -87,7 +91,7 @@
 
     padding-left: 3.5rem;
     padding-right: 2rem;
-    flex: 0 1 calc(100% / 3 - 7.5rem);
+    flex: 0 1 calc(100% / 3 - 6.7rem);
     background: #fff;
 
     &:nth-child(7)::before,

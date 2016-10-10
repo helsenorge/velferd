@@ -131,7 +131,7 @@ class CarePlan extends Component {
           openLightbox={this.openLightbox}
           {...props}
         />
-        <Goal {...props} />
+        <Goal className="goal--ebh" {...props} />
         <div className="care-plan">
           {headings}
           {symptoms}
