@@ -14,8 +14,23 @@
   &--lvl3 {
     color: #097A7A;
     background: transparent;
-    border: 0;
+    border: 2px solid transparent;
+    border-radius: 0;
     padding: 0;
+    padding-right: 0.1rem;
+
+    &:hover .button__text{
+      border-bottom: 1px solid #D9D9D4;
+    }
+
+    &:focus {
+      outline: none;
+      border: 2px solid #D9D9D4;
+
+      .button__text {
+        border-bottom: 0;
+      }
+    }
   }
 
   &--square {
