@@ -107,7 +107,8 @@ class CarePlanPage extends Component {
   }
 
   cancel() {
-    this.setState({ editing: false });
+    const carePlan = Object.assign({}, this.props.carePlan);
+    this.setState({ editing: false, carePlan });
   }
 
   saveCarePlan(event) {
