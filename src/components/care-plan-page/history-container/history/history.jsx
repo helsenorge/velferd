@@ -1,17 +1,6 @@
 import React, { Component, PropTypes } from 'react';
-import Collapse from 'react-collapse';
-import classNames from 'classnames';
-import iconChevron from '../../../../../svg/chevron.svg';
-import Icon from '../../../icon/icon.jsx';
-import Button from '../../../button/button.jsx';
 import './history.scss';
 class History extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = { isOpened: false };
-    this.toggleOpened = this.toggleOpened.bind(this);
-  }
 
   getRows(versions) {
     const rows = [];
@@ -29,43 +18,24 @@ class History extends Component {
     return rows;
   }
 
-  toggleOpened() {
-    this.setState({ isOpened: !this.state.isOpened });
-  }
-
   render() {
     const { versions } = this.props;
-    const { isOpened } = this.state;
     const rows = this.getRows(versions);
-    const iconClasses = classNames({
-      historytable__expandericon: true,
-      'historytable__expandericon--open': isOpened,
-    });
+
     return (
       <div className="historytable">
-        <Button
-          className="historytable__expanderbutton"
-          aria-controls="collapse"
-          onClick={this.toggleOpened}
-          lvl3
-        >
-          <span className="button__text">Tidligere versjoner</span>
-          <Icon glyph={iconChevron} className={iconClasses} />
-        </Button>
-        <Collapse id="collapse" isOpened={isOpened} aria-expanded={isOpened}>
-          <table className="historytable__table">
-            <thead>
-              <tr>
-                <th className="historytable__header">Dato</th>
-                <th className="historytable__header">Endret av</th>
-                <th className="historytable__header">Kommentar</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows}
-            </tbody>
-          </table>
-        </Collapse>
+        <table className="historytable__table">
+          <thead>
+            <tr>
+              <th className="historytable__header">Dato</th>
+              <th className="historytable__header">Endret av</th>
+              <th className="historytable__header">Kommentar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows}
+          </tbody>
+        </table>
       </div>
     );
   }

@@ -1,20 +1,4 @@
 .historytable {
-  &__expanderbutton {
-    font-size: 1rem;
-  }
-
-  &__expandericon {
-    margin-left: 1rem;
-    width: 14px;
-    height: 14px;
-    vertical-align: middle;
-    transform: rotate(-90deg);
-
-    &--open {
-      transform: rotate(90deg);
-    }
-  }
-
   &__table {
     margin-top: 1.625rem;
     border-spacing: 2rem 1rem;
