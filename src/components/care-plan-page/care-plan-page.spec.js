@@ -1,6 +1,7 @@
 import { expect } from 'chai';
-import { getPhase, getPatientGoal,
-  getQuestionnaireId, getMeasurements, getCategory } from './care-plan-page.js';
+import { getPhase, getPatientGoal, getQuestionnaireId,
+  getMeasurements, getCategory, getAuthor,
+  getLastUpdated } from './care-plan-page.js';
 import CarePlanCategories from '../../constants/care-plan-categories';
 import data from '../../mock/care-plan.json';
 
@@ -49,5 +50,15 @@ describe('careplan', () => {
   it('should have a category', () => {
     const category = getCategory(data);
     expect(category).to.equal(CarePlanCategories.HeartFailure);
+  });
+
+  it('should have an author', () => {
+    const author = getAuthor(data);
+    expect(author).to.not.equal(undefined);
+  });
+
+  it('should have the date it was last updated', () => {
+    const lastUpdated = getLastUpdated(data);
+    expect(lastUpdated).to.not.equal(undefined);
   });
 });

@@ -139,6 +139,8 @@ class CarePlanPage extends Component {
           : <CarePlan
             cancel={this.cancel}
             comment={carePlan.comment}
+            author={carePlan.author}
+            lastUpdated={carePlan.lastUpdated}
             phases={carePlan.phases}
             patientGoal={carePlan.patientGoal}
             editing={editing}

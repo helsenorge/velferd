@@ -6,6 +6,13 @@ export function formatDate(date) {
   return dateString;
 }
 
+export function formatDateTime(date) {
+  const dateObject = new Date(date);
+  const dateString = `${dateObject.getDate()}. ${monthNames[dateObject.getMonth()]}
+  ${dateObject.getFullYear()} kl. ${dateObject.getHours()}.${dateObject.getMinutes()}`;
+  return dateString;
+}
+
 export function getMonth(date) {
   const dateObject = new Date(date);
   return monthNames[dateObject.getMonth()];

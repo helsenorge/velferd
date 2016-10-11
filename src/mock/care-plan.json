@@ -1,6 +1,10 @@
 {
   "resourceType": "CarePlan",
   "id": "examplePlan",
+  "meta": {
+        "versionId":"1",
+        "lastUpdated":"2016-10-11T08:05:50.802+00:00"
+  },
   "text": {
     "status": "additional",
     "div": "<div>Sample care plan</div>"
