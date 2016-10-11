@@ -12,8 +12,21 @@
   }
 
   &__icon {
-    width: 45px;
-    height: 45px;
+    width: 15px;
+    height: 15px;
+    fill: #E77169;
+    border: 2px solid #E77169;
+    border-radius: 1000px;
+    padding: 5px;
+    margin-left: 10px;
+  }
+
+  &__delete:hover &__icon {
+    box-shadow: 0 0 0 4px #D5D5D5;
+  }
+
+  &__delete:focus &__icon {
+    box-shadow: 0 0 0 2px #D5D5D5;
   }
 
   &__delete-text {

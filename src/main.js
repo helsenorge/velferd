@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory } from 'react-router';
+import { Router, hashHistory } from 'react-router';
 import routes from './routes';
 import './main.scss';
 import configureStore from './store/configureStore';
@@ -17,7 +17,7 @@ if (window.location.hostname === 'apps.ehelselab.com') {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router history={browserHistory} routes={routes} />
+    <Router history={hashHistory} routes={routes} />
   </Provider>,
   document.getElementById('container')
 );

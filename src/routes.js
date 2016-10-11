@@ -5,7 +5,7 @@ import DashboardPage from './components/dashboard-page/dashboard-page.jsx';
 import CarePlan from './components/care-plan-page/care-plan-page.jsx';
 
 export default (
-  <Route path="/velferd" component={App}>
+  <Route path="/" component={App}>
     <IndexRoute component={DashboardPage} />
     <Route path="careplan" component={CarePlan} />
     <Route path="loggedin" />
