@@ -180,7 +180,6 @@ function mapStateToProps(state) {
 
   if (!saveCompleted && !isEmpty) {
     plan = getCarePlan(data.entry[0].resource);
-    console.log('plan', plan);
   }
 
   return {

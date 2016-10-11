@@ -109,7 +109,6 @@ export function getPatientGoal(resource) {
 }
 
 export function getCategory(resource) {
-  console.log(resource.category);
   if (resource.category.length > 0) {
     const coding = resource.category[0].coding[0];
 

@@ -24,7 +24,7 @@ const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false 
             lvl3
           >
             <Icon glyph={iconPrint} />
-            Skriv ut egenbehandlingsplan
+            <span className="button__text">Skriv ut egenbehandlingsplan</span>
           </Button>
           <Button
             onClick={edit}
@@ -32,7 +32,7 @@ const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false 
             className="controls__button"
           >
             <Icon glyph={iconEdit} />
-            Rediger
+            <span className="button__text">Rediger</span>
           </Button>
         </div>
         <div className="controls__back">

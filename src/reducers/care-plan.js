@@ -14,6 +14,9 @@ export function carePlan(state = {
   case REQUEST_CAREPLAN:
     return Object.assign({}, state, {
       isFetching: true,
+      data: null,
+      saveCompleted: null,
+      error: null,
     });
   case RECEIVE_CAREPLAN:
     return Object.assign({}, state, {
