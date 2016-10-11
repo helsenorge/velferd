@@ -6,9 +6,15 @@ export function formatDate(date) {
   return dateString;
 }
 
+export function formatDate2(date) {
+  const dateObject = new Date(date);
+  const month = dateObject.getMonth() + 1;
+  return `${dateObject.getDate()}.${month}.${dateObject.getFullYear()}`;
+}
+
 export function formatDateTime(date) {
   const dateObject = new Date(date);
-  const dateString = `${dateObject.getDate()}. ${monthNames[dateObject.getMonth()]}
+  const dateString = `${dateObject.getDate()}.${monthNames[dateObject.getMonth()]}
   ${dateObject.getFullYear()} kl. ${dateObject.getHours()}.${dateObject.getMinutes()}`;
   return dateString;
 }
