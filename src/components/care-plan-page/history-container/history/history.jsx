@@ -49,7 +49,7 @@ class History extends Component {
           onClick={this.toggleOpened}
           lvl3
         >
-          Tidligere versjoner
+          <span className="button__text">Tidligere versjoner</span>
           <Icon glyph={iconChevron} className={iconClasses} />
         </Button>
         <Collapse id="collapse" isOpened={isOpened} aria-expanded={isOpened}>
