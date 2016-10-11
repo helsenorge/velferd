@@ -237,12 +237,12 @@ function toFhirCarePlan(patientId, carePlan) {
 
   carePlan.phases.forEach(phase => {
       // Actions
-    phase.actions.forEach(action => {
+    phase.actions.filter(a => a.trim() !== '').forEach(action => {
       const activity = buildActivity(action, phase.reasonCode, 'procedure');
       activities.push(activity);
     });
       // Drugs
-    phase.medications.forEach(drug => {
+    phase.medications.filter(d => d.trim() !== '').forEach(drug => {
       const activity = buildActivity(drug, phase.reasonCode, 'drug');
       activities.push(activity);
     });
@@ -250,7 +250,7 @@ function toFhirCarePlan(patientId, carePlan) {
     const activity = buildActivity('', phase.reasonCode, 'other');
     activity.detail.reasonReference = [];
       // Conditions
-    phase.symptoms.forEach((symptom, index) => {
+    phase.symptoms.filter(s => s.trim() !== '').forEach((symptom, index) => {
       const condition = buildCondition(symptom, phase.reasonCode, index + 1);
       contained.push(condition);
       activity.detail.reasonReference.push({ reference: `#${condition.id}` });
@@ -288,7 +288,6 @@ export function createCarePlan(fhirUrl, patientId, type) {
   return (dispatch) => {
     const carePlan = buildCarePlan(type);
     const resource = toFhirCarePlan(patientId, carePlan);
-    console.log(resource);
     const url = `${fhirUrl}/CarePlan/`;
 
     return post(url, resource)
