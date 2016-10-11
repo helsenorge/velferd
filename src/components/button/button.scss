@@ -6,6 +6,15 @@
   color: #fff;
   padding: 0.5rem 1.25rem;
 
+  &:hover {
+    box-shadow: 0 0 0 6px #D5D5D5;
+  }
+
+  &:focus {
+    box-shadow: 0 0 0 3px #D5D5D5;
+    outline: none;
+  }
+
   &--lvl2 {
     color: #097A7A;
     background: transparent;
@@ -14,18 +23,21 @@
   &--lvl3 {
     color: #097A7A;
     background: transparent;
-    border: 2px solid transparent;
+    border: 0;
     border-radius: 0;
     padding: 0;
     padding-right: 0.1rem;
 
-    &:hover .button__text{
-      border-bottom: 1px solid #D9D9D4;
+    &:hover {
+      box-shadow: none;
+      .button__text {
+        border-bottom: 1px solid #D9D9D4;
+      }
     }
 
     &:focus {
       outline: none;
-      border: 2px solid #D9D9D4;
+      box-shadow: 0 0 0 2px #D9D9D4;
 
       .button__text {
         border-bottom: 0;

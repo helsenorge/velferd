@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import Lightbox from '../../../lightbox/lightbox.jsx';
 import './comment-lightbox.scss';
+import Button from '../../../button/button.jsx';
 
 const CommentLightbox = ({ onClose, saveIt, updateCarePlanState, comment }) => (
   <Lightbox className="commentlightbox" onClose={onClose}>
@@ -19,12 +20,12 @@ const CommentLightbox = ({ onClose, saveIt, updateCarePlanState, comment }) => (
       placeholder="F. eks. Endret medisinering på moderat forverring"
       rows="7"
     />
-    <button className="commentlightbox__button commentlightbox__button--add" onClick={saveIt}>
+    <Button lvl1 className="commentlightbox__button" onClick={saveIt}>
       Legg til og lagre
-    </button>
-    <button className="commentlightbox__button" onClick={onClose}>
+    </Button>
+    <Button lvl2 className="commentlightbox__button" onClick={onClose}>
       Avbryt
-    </button>
+    </Button>
   </Lightbox>
   );
 
