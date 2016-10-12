@@ -16,8 +16,8 @@ export function getMeasurements(resource) {
         const range = g.extension[1].valueRange;
         return {
           code: g.extension[0].valueCodeableConcept.coding[0].code,
-          high: range.high,
-          low: range.low,
+          high: Object.assign({}, range.high),
+          low: Object.assign({}, range.low),
         };
       });
 

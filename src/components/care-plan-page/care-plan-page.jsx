@@ -34,8 +34,9 @@ class CarePlanPage extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!nextProps.saveCompleted) {
-      const carePlan = nextProps.carePlan ? Object.assign({}, nextProps.carePlan) : null;
+    if (nextProps.carePlan && this.props.carePlan !== nextProps.carePlan &&
+      !nextProps.saveCompleted) {
+      const carePlan = getCarePlan(nextProps.carePlan);
       this.setState({ carePlan });
     }
 
@@ -107,7 +108,7 @@ class CarePlanPage extends Component {
   }
 
   cancel() {
-    const carePlan = Object.assign({}, this.props.carePlan);
+    const carePlan = getCarePlan(this.props.carePlan);
     this.setState({ editing: false, carePlan });
   }
 
@@ -178,17 +179,17 @@ function mapStateToProps(state) {
   const { isFetching, data, saveCompleted, error } = carePlan
     || { isFetching: true, data: null, saveCompleted: null };
 
-  let plan;
+  let resource;
   const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
 
   if (!saveCompleted && !isEmpty) {
-    plan = getCarePlan(data.entry[0].resource);
+    resource = data.entry[0].resource;
   }
 
   return {
     fhirUrl,
     patientId,
-    carePlan: plan,
+    carePlan: resource,
     isFetching,
     saveCompleted,
     error,
