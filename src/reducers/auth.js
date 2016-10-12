@@ -5,6 +5,7 @@ import {
 export function auth(state = {
   token: null,
   expiration: null,
+  user: { name: { family: '', given: 'Test-bruker' } },
 }, action) {
   switch (action.type) {
   case SET_AUTH_TOKEN:

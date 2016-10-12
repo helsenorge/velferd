@@ -4,7 +4,10 @@ import './footer.scss';
 import Button from '../../../button/button.jsx';
 const Footer = ({ comment, author, lastUpdated }) => {
   const date = formatDateTime(lastUpdated);
-  const name = `${author.name.given.join(' ')} ${author.name.family.join(' ')}`;
+
+  const given = author.name.given ? author.name.given.join(' ') : '';
+  const family = author.name.family ? author.name.family.join(' ') : '';
+  const name = `${given} ${family}`;
 
   return (
     <div className="footer">

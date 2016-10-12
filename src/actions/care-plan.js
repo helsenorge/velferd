@@ -184,11 +184,11 @@ function buildCategory(category) {
   }
 }
 
-function buildCarePlanResource(patientId, category, goal, note, activity, contained) {
+function buildCarePlanResource(user, patientId, category, goal, note, activity, contained) {
   contained.push({
     resourceType: 'Practitioner',
     id: 'pr1',
-    name: { family: ['Tor'], given: ['Doc'] } });
+    name: { family: [user.name.family], given: [user.name.given] } });
 
   contained.push({
     resourceType: 'Organization',
@@ -226,7 +226,7 @@ function buildCarePlanResource(patientId, category, goal, note, activity, contai
   };
 }
 
-function toFhirCarePlan(patientId, carePlan) {
+function toFhirCarePlan(patientId, carePlan, user) {
   const activities = [];
   const contained = [];
 
@@ -276,6 +276,7 @@ function toFhirCarePlan(patientId, carePlan) {
   activities.push(activity);
 
   return buildCarePlanResource(
+    user,
     patientId,
     category,
     goal,
@@ -285,9 +286,10 @@ function toFhirCarePlan(patientId, carePlan) {
 }
 
 export function createCarePlan(fhirUrl, patientId, type) {
-  return (dispatch) => {
+  return (dispatch, getState) => {
+    const { user } = getState().auth;
     const carePlan = buildCarePlan(type);
-    const resource = toFhirCarePlan(patientId, carePlan);
+    const resource = toFhirCarePlan(patientId, carePlan, user);
     const url = `${fhirUrl}/CarePlan/`;
 
     return post(url, resource)
@@ -301,10 +303,10 @@ export function createCarePlan(fhirUrl, patientId, type) {
 export function saveCarePlan(fhirUrl, patientId, carePlan) {
   return (dispatch, getState) => {
     const { data } = getState().carePlan;
-    const resource = Object.assign({}, data.entry[0].resource);
-    const id = resource.id;
-    const url = `${fhirUrl}/CarePlan/${id}`;
-    const updatedResource = toFhirCarePlan(patientId, carePlan);
+    const { user } = getState().auth;
+    const resource = data.entry[0].resource;
+    const url = `${fhirUrl}/CarePlan/${resource.id}`;
+    const updatedResource = toFhirCarePlan(patientId, carePlan, user);
 
     return put(url, updatedResource)
       .then(() => {

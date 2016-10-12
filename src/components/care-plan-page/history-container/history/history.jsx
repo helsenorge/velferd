@@ -7,7 +7,9 @@ class History extends Component {
   getRows(versions) {
     const rows = [];
     versions.forEach((version, i) => {
-      const name = `${version.author.name.given.join(' ')} ${version.author.name.family.join(' ')}`;
+      const given = version.author.name.given ? version.author.name.given.join(' ') : '';
+      const family = version.author.name.family ? version.author.name.family.join(' ') : '';
+      const name = `${given} ${family}`;
       const date = formatDate2(version.date);
       rows.push(
         <tr key={i}>
