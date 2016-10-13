@@ -287,12 +287,18 @@ function toFhirCarePlan(patientId, carePlan, user) {
 
 export function createCarePlan(fhirUrl, patientId, type) {
   return (dispatch, getState) => {
-    const { user } = getState().auth;
+    const { user, token, expiration } = getState().auth;
+    const { authenticate } = getState().settings;
+
+    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+      return dispatch(discardAuthToken());
+    }
+
     const carePlan = buildCarePlan(type);
     const resource = toFhirCarePlan(patientId, carePlan, user);
     const url = `${fhirUrl}/CarePlan/`;
 
-    return post(url, resource)
+    return post(url, resource, token)
       .then(() => {
         dispatch(fetchCarePlan(fhirUrl, patientId));
       })
@@ -303,12 +309,18 @@ export function createCarePlan(fhirUrl, patientId, type) {
 export function saveCarePlan(fhirUrl, patientId, carePlan) {
   return (dispatch, getState) => {
     const { data } = getState().carePlan;
-    const { user } = getState().auth;
+    const { user, token, expiration } = getState().auth;
+    const { authenticate } = getState().settings;
+
+    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+      return dispatch(discardAuthToken());
+    }
+
     const resource = data.entry[0].resource;
     const url = `${fhirUrl}/CarePlan/${resource.id}`;
     const updatedResource = toFhirCarePlan(patientId, carePlan, user);
 
-    return put(url, updatedResource)
+    return put(url, updatedResource, token)
       .then(() => {
         dispatch(completeSaveCarePlan(true));
         dispatch(fetchCarePlan(fhirUrl, patientId));
