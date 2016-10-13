@@ -6,7 +6,7 @@ import {
 export function settings(state = {
   authenticate: false,
   fhirUrl: 'http://continua.cloudapp.net/baseDstu2',
-  patientId: '1-26',
+  patientId: '72325',
   questionnaireId: '62763',
 }, action) {
   switch (action.type) {

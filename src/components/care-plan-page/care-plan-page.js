@@ -16,8 +16,8 @@ export function getMeasurements(resource) {
         const range = g.extension[1].valueRange;
         return {
           code: g.extension[0].valueCodeableConcept.coding[0].code,
-          high: range.high,
-          low: range.low,
+          high: Object.assign({}, range.high),
+          low: Object.assign({}, range.low),
         };
       });
 
@@ -122,6 +122,19 @@ export function getCategory(resource) {
   return null;
 }
 
+export function getAuthor(resource) {
+  if (resource.author.length > 0) {
+    const authorRef = resource.author[0].reference.substring(1);
+    const contained = resource.contained.filter(res => res.id === authorRef);
+    return contained[0];
+  }
+  return null;
+}
+
+export function getLastUpdated(resource) {
+  return new Date(resource.meta.lastUpdated);
+}
+
 export function getCarePlan(resource) {
   const phases = [];
   const greenPhase = getPhase(resource, ReasonCodes.green);
@@ -136,11 +149,22 @@ export function getCarePlan(resource) {
   const questionnaireId = getQuestionnaireId(resource);
   const measurements = getMeasurements(resource);
   const category = getCategory(resource);
+  const author = getAuthor(resource);
+  const lastUpdated = getLastUpdated(resource);
 
   let comment = '';
   if (resource.note) {
     comment = resource.note.text;
   }
 
-  return { id, category, phases, patientGoal, comment, questionnaireId, measurements };
+  return {
+    id,
+    category,
+    author,
+    lastUpdated,
+    phases,
+    patientGoal,
+    comment,
+    questionnaireId,
+    measurements };
 }

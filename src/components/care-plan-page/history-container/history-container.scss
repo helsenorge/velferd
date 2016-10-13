@@ -1,0 +1,17 @@
+.history-container {
+  &__expanderbutton {
+    font-size: 1rem;
+  }
+
+  &__expandericon {
+    margin-left: 1rem;
+    width: 14px;
+    height: 14px;
+    vertical-align: middle;
+    transform: rotate(-90deg);
+
+    &--open {
+      transform: rotate(90deg);
+    }
+  }
+}
