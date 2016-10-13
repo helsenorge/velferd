@@ -7,7 +7,7 @@
   padding-left: 8rem;
 
   .ct-series .ct-line {
-    stroke: $jungle-green;
+    stroke: #5E5E5E;
     stroke-width: 2px;
   }
 
@@ -16,8 +16,8 @@
   }
 
   .ct-series .ct-point {
-    stroke: $jungle-green;
-    stroke-width: 5px;
+    stroke: #5E5E5E;
+    stroke-width: 8px;
   }
 
   .ct-series .ct-area {
@@ -32,5 +32,16 @@
     stroke: #E1E1E1;
     stroke-width: 1px;
     stroke-dasharray: inherit;
+  }
+
+  .ct-label {
+    font-size: 1rem;
+    color: #5E5E5E;
+    fill: #5E5E5E;
+  }
+
+  .ct-vertical.ct-label {
+    color: #343434;
+    font-size: 0.875rem;
   }
 }
