@@ -6,11 +6,6 @@ import { redirectToAuthenticateUri } from '../../helpers/auth-helpers';
 
 class Login extends Component {
 
-  componentDidMount() {
-    console.log('window.hash', window.location.hash);
-    if (!this.tokenReceived()) redirectToAuthenticateUri();
-  }
-
   tokenReceived() {
     return window.location.hash && window.location.hash.indexOf('access_token') > 0;
   }
@@ -28,7 +23,10 @@ class Login extends Component {
   render() {
     if (this.tokenReceived()) {
       this.processHash(window.location.hash);
-      browserHistory.push('/velferd');
+      browserHistory.push('/');
+    }
+    else {
+      redirectToAuthenticateUri();
     }
     return null;
   }
