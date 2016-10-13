@@ -29,6 +29,12 @@ export function getDate(date) {
   return dateObject.getDate();
 }
 
+export function getTime(date) {
+  const dateObject = new Date(date);
+  const dateString = `${dateObject.getHours()}:${dateObject.getMinutes()}`;
+  return dateString;
+}
+
 export function filterPoints(points, fromDate, toDate) {
   return points.filter(item =>
     new Date(item.date).valueOf() > fromDate.valueOf() &&
