@@ -7,11 +7,16 @@ import { redirectToAuthenticateUri } from '../../helpers/auth-helpers';
 class Login extends Component {
 
   componentDidMount() {
-    if (!this.props.hash) redirectToAuthenticateUri();
+    console.log('window.hash', window.location.hash);
+    if (!this.tokenReceived()) redirectToAuthenticateUri();
+  }
+
+  tokenReceived() {
+    return window.location.hash && window.location.hash.indexOf('access_token') > 0;
   }
 
   processHash(hash) {
-    const token = hash.substring(hash.indexOf('#access_token=') + '#access_token='.length,
+    const token = hash.substring(hash.indexOf('access_token=') + 'access_token='.length,
       hash.indexOf('&'));
     const expiresIn = hash.substring(hash.indexOf('expires_in=') + 'expires_in='.length);
     const expires = new Date();
@@ -21,8 +26,8 @@ class Login extends Component {
   }
 
   render() {
-    if (this.props.hash) {
-      this.processHash(this.props.hash);
+    if (this.tokenReceived()) {
+      this.processHash(window.location.hash);
       browserHistory.push('/velferd');
     }
     return null;
@@ -30,7 +35,6 @@ class Login extends Component {
 }
 
 Login.propTypes = {
-  hash: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
 };
 

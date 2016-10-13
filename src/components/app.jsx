@@ -33,7 +33,7 @@ class App extends Component {
     const { data, authenticate, token } = this.props;
 
     if (!this.accessAllowed(authenticate, token)) {
-      return (<Login hash={this.props.location.hash} />);
+      return (<Login />);
     }
 
     return (
@@ -58,7 +58,6 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   children: PropTypes.object,
   token: PropTypes.string,
-  location: PropTypes.object,
 };
 
 function mapStateToProps(state) {
