@@ -68,7 +68,7 @@ class Measurements extends Component {
     }
   }
 
-  getDataPoint(item) {
+  getDataPoint(item, unit) {
     const point = {
       date: item.resource.effectiveDateTime,
       value: [],
@@ -76,14 +76,14 @@ class Measurements extends Component {
 
     if (item.resource.valueQuantity) {
       point.value.push(item.resource.valueQuantity.value);
-      point.unit = item.resource.valueQuantity.unit;
+      point.unit = unit;
     }
     else {
       item.resource.component.forEach((component) => {
         if (component.valueQuantity
           && component.code.coding[0].code !== ObservationCodes.bloodPressureMean) {
           point.value.push(component.valueQuantity.value);
-          point.unit = component.valueQuantity.unit;
+          point.unit = unit;
         }
       }, this);
     }
@@ -91,15 +91,14 @@ class Measurements extends Component {
   }
 
   render() {
-    let points = this.props.data.entry.map(this.getDataPoint);
+    const unit = getUnit(this.props.code);
+    let points = this.props.data.entry.map((item) => this.getDataPoint(item, unit));
     const name = getMeasurementName(this.props.code);
     const highReference = this.getMeasurementHighReference(this.props.code);
     const lowReference = this.getMeasurementLowReference(this.props.code);
-
-    const unit = getUnit(this.props.code);
     const referenceValue = `${lowReference} - ${highReference} ${unit}`;
 
-    const latestValue = this.getDataPoint(this.props.data.entry[0]);
+    const latestValue = this.getDataPoint(this.props.data.entry[0], unit);
     return (
       <div className="measurement">
         <div className="measurement__chart">
