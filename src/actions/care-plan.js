@@ -112,6 +112,16 @@ function buildActivity(description, reasonCode, category) {
 }
 
 function buildTarget(goal) {
+  const low = { code: goal.low.code, system: goal.low.system, unit: goal.low.unit };
+  const high = { code: goal.high.code, system: goal.high.system, unit: goal.high.unit };
+
+  if (goal.low.value.toString().trim() !== '') {
+    low.value = goal.low.value;
+  }
+  if (goal.high.value.toString().trim() !== '') {
+    high.value = goal.high.value;
+  }
+
   return {
     extension: [
       {
@@ -123,7 +133,7 @@ function buildTarget(goal) {
       },
       {
         url: 'goal-target.detail',
-        valueRange: { low: goal.low, high: goal.high },
+        valueRange: { low, high },
       },
     ],
     url: 'http://hl7.org/fhir/StructureDefinition/goal-target',

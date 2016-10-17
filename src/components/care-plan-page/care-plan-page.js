@@ -14,11 +14,18 @@ export function getMeasurements(resource) {
       const goalReference = activity.detail.goal[0].reference;
       const goal = goals[goalReference.substring(1)].map(g => {
         const range = g.extension[1].valueRange;
-        return {
+        const target = {
           code: g.extension[0].valueCodeableConcept.coding[0].code,
           high: Object.assign({}, range.high),
           low: Object.assign({}, range.low),
         };
+        if (!target.high.value) {
+          target.high.value = '';
+        }
+        if (!target.low.value) {
+          target.low.value = '';
+        }
+        return target;
       });
 
       return {
