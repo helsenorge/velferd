@@ -18,9 +18,9 @@ class App extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { dispatch, fhirUrl, patientId, authenticate, token, data } = nextProps;
+    const { dispatch, fhirUrl, patientId, authenticate, token, patient } = nextProps;
 
-    if (this.accessAllowed(authenticate, token) && data === null) {
+    if (this.accessAllowed(authenticate, token) && patient === null) {
       dispatch(fetchPatient(fhirUrl, patientId));
     }
   }
@@ -30,22 +30,32 @@ class App extends Component {
   }
 
   render() {
-    const { data, authenticate, token } = this.props;
+    const { patient, authenticate, token, isFetching } = this.props;
 
     if (!this.accessAllowed(authenticate, token)) {
       return (<Login />);
     }
 
-    return (
-      <div>
-        <PageHeader patient={data} />
-        <PageMenu />
-        <article className="main">
-          {this.props.children}
-        </article>
-        <Footer fhirUrl={this.props.fhirUrl} />
-      </div>
-    );
+    let markup = null;
+
+    if (isFetching) {
+      markup = (<h2>Loading...</h2>);
+    }
+    else if (patient) {
+      console.log(patient);
+      markup = (
+        <div>
+          <PageHeader patient={patient} />
+          <PageMenu />
+          <article className="main">
+            {this.props.children}
+          </article>
+          <Footer fhirUrl={this.props.fhirUrl} />
+        </div>
+      );
+    }
+
+    return markup;
   }
 }
 
@@ -53,7 +63,7 @@ App.propTypes = {
   authenticate: PropTypes.bool.isRequired,
   fhirUrl: PropTypes.string.isRequired,
   patientId: PropTypes.string.isRequired,
-  data: PropTypes.object,
+  patient: PropTypes.object,
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   children: PropTypes.object,
@@ -77,7 +87,7 @@ function mapStateToProps(state) {
     authenticate,
     fhirUrl,
     patientId,
-    data,
+    patient: data,
     isFetching,
   };
 }
