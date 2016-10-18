@@ -30,7 +30,7 @@ class App extends Component {
   }
 
   render() {
-    const { patient, authenticate, token, isFetching } = this.props;
+    const { patient, authenticate, token, isFetching, user } = this.props;
 
     if (!this.accessAllowed(authenticate, token)) {
       return (<Login />);
@@ -42,10 +42,9 @@ class App extends Component {
       markup = (<h2>Loading...</h2>);
     }
     else if (patient) {
-      console.log(patient);
       markup = (
         <div>
-          <PageHeader patient={patient} />
+          <PageHeader patient={patient} user={user} />
           <PageMenu />
           <article className="main">
             {this.props.children}
@@ -64,6 +63,7 @@ App.propTypes = {
   fhirUrl: PropTypes.string.isRequired,
   patientId: PropTypes.string.isRequired,
   patient: PropTypes.object,
+  user: PropTypes.object,
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   children: PropTypes.object,
@@ -84,6 +84,7 @@ function mapStateToProps(state) {
 
   return {
     token: auth.token,
+    user: auth.user,
     authenticate,
     fhirUrl,
     patientId,

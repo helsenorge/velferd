@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import './pageheader.scss';
 
-const PageHeader = ({ patient }) => {
+const PageHeader = ({ patient, user }) => {
   let patientName;
   if (patient.name && patient.name.length > 0) {
     const name = patient.name[0];
@@ -17,7 +17,7 @@ const PageHeader = ({ patient }) => {
           {patientName} 1230399 12345 hjertesvikt
         </span>
         <span>
-          Innlogget som: Anna Fos Eieb (lege), Lillesand legekontor
+          Innlogget som: {`${user.name.given} ${user.name.family}`}, Lillesand legekontor
         </span>
       </div>
     </header>
@@ -25,7 +25,8 @@ const PageHeader = ({ patient }) => {
 };
 
 PageHeader.propTypes = {
-  patient: PropTypes.object,
+  patient: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
 };
 
 export default PageHeader;
