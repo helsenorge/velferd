@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPatient } from '../actions/patient';
+import { getCategory } from '../helpers/care-plan-helpers.js';
 import PageHeader from '../components/pageheader/pageheader.jsx';
 import PageMenu from '../components/pagemenu/pagemenu.jsx';
 import Footer from '../components/footer/footer.jsx';
@@ -30,7 +31,7 @@ class App extends Component {
   }
 
   render() {
-    const { patient, authenticate, token, isFetching, user } = this.props;
+    const { patient, authenticate, token, isFetching, user, carePlanCategory } = this.props;
 
     if (!this.accessAllowed(authenticate, token)) {
       return (<Login />);
@@ -44,7 +45,7 @@ class App extends Component {
     else if (patient) {
       markup = (
         <div>
-          <PageHeader patient={patient} user={user} />
+          <PageHeader patient={patient} user={user} carePlanCategory={carePlanCategory} />
           <PageMenu />
           <article className="main">
             {this.props.children}
@@ -68,10 +69,11 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   children: PropTypes.object,
   token: PropTypes.string,
+  carePlanCategory: PropTypes.object,
 };
 
 function mapStateToProps(state) {
-  const { patient, settings, auth } = state;
+  const { patient, settings, auth, carePlan } = state;
   const {
     isFetching,
     data,
@@ -79,6 +81,13 @@ function mapStateToProps(state) {
     isFetching: true,
     data: null,
   };
+
+  let carePlanCategory;
+  if (carePlan.data !== null
+    && carePlan.data.resourceType === 'Bundle'
+    && carePlan.data.total > 0) {
+    carePlanCategory = getCategory(carePlan.data.entry[0].resource);
+  }
 
   const { authenticate, fhirUrl, patientId } = settings;
 
@@ -90,6 +99,7 @@ function mapStateToProps(state) {
     patientId,
     patient: data,
     isFetching,
+    carePlanCategory,
   };
 }
 

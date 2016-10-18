@@ -1,5 +1,16 @@
-import ReasonCodes from '../../constants/reason-codes';
-import CarePlanCategories from '../../constants/care-plan-categories';
+import ReasonCodes from '../constants/reason-codes';
+import CarePlanCategories from '../constants/care-plan-categories';
+
+export function getCategoryName(category) {
+  switch (category) {
+  case CarePlanCategories.COPD:
+    return 'KOLS';
+  case CarePlanCategories.HeartFailure:
+    return 'Hjertesvikt';
+  default:
+    return '';
+  }
+}
 
 export function getMeasurements(resource) {
   const goals = {};

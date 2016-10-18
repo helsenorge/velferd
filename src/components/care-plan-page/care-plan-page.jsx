@@ -6,7 +6,7 @@ import HistoryContainer from './history-container/history-container.jsx';
 import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
 import ReasonCodes from '../../constants/reason-codes';
 import CarePlanCategories from '../../constants/care-plan-categories';
-import { getCarePlan } from './care-plan-page.js';
+import { getCarePlan } from '../../helpers/care-plan-helpers.js';
 import './care-plan-page.scss';
 
 class CarePlanPage extends Component {
