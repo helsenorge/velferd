@@ -14,10 +14,10 @@ const PageHeader = ({ patient, user }) => {
     <header className="pageheader">
       <div className="pageheader__wrapper">
         <span>
-          {patientName} 1230399 12345 hjertesvikt
+          {patientName}, Hjertesvikt
         </span>
         <span>
-          Innlogget som: {`${user.name.given} ${user.name.family}`}, Lillesand legekontor
+          Innlogget som: {`${user.name.given} ${user.name.family}`}
         </span>
       </div>
     </header>
