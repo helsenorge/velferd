@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { getPatientGoal } from '../../helpers/care-plan-helpers.js';
 import MeasurementContainer from './measurement-container/measurement-container.jsx';
 import QuestionnaireResponsesContainer from
   './questionnaire-responses-container/questionnaire-responses-container';
@@ -112,6 +113,7 @@ class DashboardPage extends Component {
           toDate={this.state.toDate}
           selectedDate={this.state.selectedDate}
           activeRange={this.state.dayRange}
+          patientGoal={this.props.patientGoal}
         />
         <QuestionnaireResponsesContainer
           fromDate={this.state.fromDate}
@@ -151,14 +153,23 @@ class DashboardPage extends Component {
 
 DashboardPage.propTypes = {
   questionnaireId: PropTypes.string.isRequired,
+  patientGoal: PropTypes.object,
 };
 
 function mapStateToProps(state) {
-  const { settings } = state;
+  const { settings, carePlan } = state;
   const { questionnaireId } = settings;
+
+  let patientGoal;
+  if (carePlan.data !== null
+    && carePlan.data.resourceType === 'Bundle'
+    && carePlan.data.total > 0) {
+    patientGoal = getPatientGoal(carePlan.data.entry[0].resource);
+  }
 
   return {
     questionnaireId,
+    patientGoal,
   };
 }
 
