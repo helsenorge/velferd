@@ -28,7 +28,7 @@ const PageHeader = ({ patient, user, carePlanCategory }) => {
 PageHeader.propTypes = {
   patient: PropTypes.object.isRequired,
   user: PropTypes.object.isRequired,
-  carePlanCategory: PropTypes.object,
+  carePlanCategory: PropTypes.string,
 };
 
 export default PageHeader;

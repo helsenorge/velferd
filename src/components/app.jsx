@@ -69,7 +69,7 @@ App.propTypes = {
   dispatch: PropTypes.func.isRequired,
   children: PropTypes.object,
   token: PropTypes.string,
-  carePlanCategory: PropTypes.object,
+  carePlanCategory: PropTypes.string,
 };
 
 function mapStateToProps(state) {
