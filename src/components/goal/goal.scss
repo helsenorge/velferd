@@ -1,5 +1,7 @@
+@import '../../constants/constants';
+
 .goal {
-  background: #EEEEEE;
+  background: $gallery;
   padding: 1.375rem 2rem;
   font-size: 1.125rem;
   display: flex;
@@ -30,6 +32,6 @@
     width: 60%;
     font-size: 1rem;
     resize: vertical;
-    border: 2px solid #D9D9D4;
+    border: 2px solid $quill-gray;
   }
 }

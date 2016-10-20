@@ -37,7 +37,7 @@
   &--fwd {
     display: flex;
     width: 7rem;
-    color: #097A7A;
+    color: $atoll;
     align-items: center;
   }
 
@@ -70,7 +70,7 @@
 
   .range__button {
     flex: 0 0 calc(100% / 7);
-    border-left: 1px solid #E1E1E1;
+    border-left: 1px solid $mercury;
 
     &--selected,
     &:hover,
@@ -84,7 +84,7 @@
     }
 
     &:last-child {
-      border-right: 1px solid #E1E1E1;
+      border-right: 1px solid $mercury;
     }
   }
 

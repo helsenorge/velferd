@@ -1,6 +1,8 @@
+@import '../../constants/constants';
+
 .textarea {
-  border: 2px solid #D9D9D4;
-  color: #6E6E6A;
+  border: 2px solid $quill-gray;
+  color: $storm-dust;
   padding: 0.6rem 1rem;
   font-size: 1rem;
   resize: none;
