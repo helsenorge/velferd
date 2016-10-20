@@ -10,12 +10,12 @@ function buildPhase(reasonCode, symptoms, actions, medications) {
     medications };
 }
 
-function buildTarget(code, unit, value) {
+function buildTarget(code, unit) {
   return {
     code,
     system: 'urn:std:iso:11073:10101',
     unit,
-    value };
+  };
 }
 
 function buildMeasurement(code, goal) {
@@ -29,34 +29,34 @@ function buildDefaultMeasurements() {
   measurements.push(buildMeasurement(ObservationCodes.weight,
     [{
       code: ObservationCodes.weight,
-      high: buildTarget('263875', 'kg', '80'),
-      low: buildTarget('263875', 'kg', '60'),
+      high: buildTarget('263875', 'kg'),
+      low: buildTarget('263875', 'kg'),
     }]
   ));
   measurements.push(buildMeasurement(ObservationCodes.pulse,
     [{
       code: ObservationCodes.pulse,
-      high: buildTarget('264864', 'bpm', '80'),
-      low: buildTarget('264864', 'bpm', '60'),
+      high: buildTarget('264864', 'bpm'),
+      low: buildTarget('264864', 'bpm'),
     }]
   ));
   measurements.push(buildMeasurement(ObservationCodes.pulseOximeter,
     [{
       code: ObservationCodes.pulseOximeter,
-      high: buildTarget('262688', '%', '99'),
-      low: buildTarget('262688', '%', '98'),
+      high: buildTarget('262688', '%'),
+      low: buildTarget('262688', '%'),
     }]
   ));
   measurements.push(buildMeasurement(ObservationCodes.bloodPressure,
     [{
       code: ObservationCodes.bloodPressureSystolic,
-      high: buildTarget('266016', 'mmHg', '180'),
-      low: buildTarget('266016', 'mmHg', '60'),
+      high: buildTarget('266016', 'mmHg'),
+      low: buildTarget('266016', 'mmHg'),
     },
     {
       code: ObservationCodes.bloodPressureDiastolic,
-      high: buildTarget('266016', 'mmHg', '180'),
-      low: buildTarget('266016', 'mmHg', '60'),
+      high: buildTarget('266016', 'mmHg'),
+      low: buildTarget('266016', 'mmHg'),
     }]
   ));
   return measurements;

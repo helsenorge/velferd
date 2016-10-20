@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import { getPhase, getPatientGoal, getQuestionnaireId,
   getMeasurements, getCategory, getAuthor,
-  getLastUpdated } from './care-plan-page.js';
-import CarePlanCategories from '../../constants/care-plan-categories';
-import data from '../../mock/care-plan.json';
+  getLastUpdated } from './care-plan-helpers.js';
+import CarePlanCategories from '../constants/care-plan-categories';
+import data from '../mock/care-plan.json';
 
 describe('careplan phase', () => {
   it('should have a reason code', () => {
