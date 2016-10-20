@@ -120,7 +120,7 @@ class CarePlan extends Component {
 
     const lightbox = this.state.lightboxOpen ?
       <CommentLightbox
-        onClose={this.cancel}
+        onClose={this.closeLightbox}
         saveIt={this.save}
         {...props}
       /> : null;
