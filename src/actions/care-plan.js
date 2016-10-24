@@ -4,11 +4,19 @@ import { getObservationCodingDisplay } from '../helpers/observation-helpers';
 import { buildCarePlan } from '../helpers/care-plan-builder';
 import CarePlanCategories from '../constants/care-plan-categories';
 
+export const INVALIDATE_CAREPLAN = 'INVALIDATE_CAREPLAN';
 export const REQUEST_CAREPLAN = 'REQUEST_CAREPLAN';
 export const RECEIVE_CAREPLAN = 'RECEIVE_CAREPLAN';
 export const COMPLETE_SAVE_CAREPLAN = 'COMPLETE_SAVE_CAREPLAN';
 export const REQUEST_CAREPLAN_HISTORY = 'REQUEST_CAREPLAN_HISTORY';
 export const RECEIVE_CAREPLAN_HISTORY = 'RECEIVE_CAREPLAN_HISTORY';
+
+export function invalidateCarePlan(patientId) {
+  return {
+    type: INVALIDATE_CAREPLAN,
+    patientId,
+  };
+}
 
 function requestCarePlan(patientId) {
   return {
@@ -50,10 +58,6 @@ function completeSaveCarePlan(saveCompleted, error) {
   };
 }
 
-function useMock() {
-  return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
-}
-
 export function fetchCarePlanHistory(fhirUrl, carePlanId) {
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
@@ -71,12 +75,19 @@ export function fetchCarePlanHistory(fhirUrl, carePlanId) {
   };
 }
 
-export function fetchCarePlan(fhirUrl, patientId) {
-  if (useMock()) {
-    const json = require( `../mock/care-plan.json`); // eslint-disable-line
-    return dispatch => dispatch(receiveCarePlan(patientId, json));
-  }
+function shouldFetchCarePlan(state) {
+  const carePlan = state.carePlan;
 
+  if (!carePlan.data) {
+    return true;
+  }
+  else if (carePlan.isFetching) {
+    return false;
+  }
+  return carePlan.didInvalidate;
+}
+
+export function fetchCarePlan(fhirUrl, patientId) {
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
     const { authenticate } = getState().settings;
@@ -90,6 +101,15 @@ export function fetchCarePlan(fhirUrl, patientId) {
     return get(url, token)
       .then(response => response.json())
       .then(json => dispatch(receiveCarePlan(patientId, json)));
+  };
+}
+
+export function fetchCarePlanIfNeeded(fhirUrl, patientId) {
+  return (dispatch, getState) => {
+    if (shouldFetchCarePlan(getState())) {
+      return dispatch(fetchCarePlan(fhirUrl, patientId));
+    }
+    return Promise.resolve();
   };
 }
 

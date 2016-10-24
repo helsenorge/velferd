@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPatient } from '../actions/patient';
+import { fetchCarePlanIfNeeded } from '../actions/care-plan';
+
 import { getCategory } from '../helpers/care-plan-helpers.js';
 import PageHeader from '../components/pageheader/pageheader.jsx';
 import PageMenu from '../components/pagemenu/pagemenu.jsx';
@@ -15,6 +17,7 @@ class App extends Component {
 
     if (this.accessAllowed(authenticate, token)) {
       dispatch(fetchPatient(fhirUrl, patientId));
+      dispatch(fetchCarePlanIfNeeded(fhirUrl, patientId));
     }
   }
 
@@ -23,6 +26,7 @@ class App extends Component {
 
     if (this.accessAllowed(authenticate, token) && patient === null) {
       dispatch(fetchPatient(fhirUrl, patientId));
+      dispatch(fetchCarePlanIfNeeded(fhirUrl, patientId));
     }
   }
 

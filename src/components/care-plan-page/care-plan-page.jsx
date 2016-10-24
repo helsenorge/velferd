@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchCarePlan, saveCarePlan, createCarePlan } from '../../actions/care-plan';
+import { saveCarePlan, createCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
 import HistoryContainer from './history-container/history-container.jsx';
 import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
@@ -29,9 +29,11 @@ class CarePlanPage extends Component {
     };
   }
 
-  componentDidMount() {
-    const { dispatch, fhirUrl, patientId } = this.props;
-    dispatch(fetchCarePlan(fhirUrl, patientId));
+  componentWillMount() {
+    if (!this.state.carePlan && this.props.carePlan) {
+      const carePlan = getCarePlan(this.props.carePlan);
+      this.setState({ carePlan });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -128,6 +130,7 @@ class CarePlanPage extends Component {
   render() {
     const { isFetching, error } = this.props;
     const { carePlan, editing, saving } = this.state;
+
     let isEmpty = true;
     let planCategory = '';
     if (carePlan) {
