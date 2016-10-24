@@ -154,7 +154,7 @@ class DashboardPage extends Component {
 
 DashboardPage.propTypes = {
   questionnaireId: PropTypes.string.isRequired,
-  patientGoal: PropTypes.object,
+  patientGoal: PropTypes.string,
   carePlanLastUpdated: React.PropTypes.instanceOf(Date),
 };
 
