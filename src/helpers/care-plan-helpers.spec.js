@@ -42,7 +42,7 @@ describe('careplan', () => {
   });
 
   it('should have a measurement', () => {
-    const measurement = getMeasurement(data, 188736);
+    const measurement = getMeasurement(data, '188736');
     expect(measurement).to.not.equal(undefined);
   });
 
