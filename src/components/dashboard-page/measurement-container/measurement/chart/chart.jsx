@@ -91,11 +91,18 @@ class Chart extends Component {
   }
 
   render() {
-    const { dataPoints, fromDate, toDate, lowReference, highReference,
+    const { dataPoints, fromDate, toDate, idealValues,
       low, high, selectedDate } = this.props;
     const series = this.getValues(dataPoints);
-    series.push(this.getReferenceValuesData(highReference));
-    series.push(this.getReferenceValuesData(lowReference));
+
+    idealValues.forEach(range => {
+      if (range.high.value) {
+        series.push(this.getReferenceValuesData(range.high.value));
+      }
+      if (range.low.value) {
+        series.push(this.getReferenceValuesData(range.low.value));
+      }
+    });
 
     if (selectedDate) series.push(this.getSelectedDateData(selectedDate));
 
@@ -161,11 +168,10 @@ Chart.propTypes = {
   dataPoints: PropTypes.array.isRequired,
   high: PropTypes.number.isRequired,
   low: PropTypes.number.isRequired,
-  highReference: PropTypes.number.isRequired,
-  lowReference: PropTypes.number.isRequired,
-  fromDate: React.PropTypes.instanceOf(Date).isRequired,
-  toDate: React.PropTypes.instanceOf(Date).isRequired,
-  selectedDate: React.PropTypes.instanceOf(Date),
+  fromDate: PropTypes.instanceOf(Date).isRequired,
+  toDate: PropTypes.instanceOf(Date).isRequired,
+  selectedDate: PropTypes.instanceOf(Date),
+  idealValues: PropTypes.array,
 };
 
 export default Chart;

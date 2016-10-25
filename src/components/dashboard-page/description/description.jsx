@@ -1,13 +1,13 @@
 import React, { PropTypes } from 'react';
 import './description.scss';
 
-const Description = ({ name, unit, referenceValue }) => {
+const Description = ({ name, unit, idealValue }) => {
   let referenceMarkup;
 
-  if (referenceValue) {
+  if (idealValue) {
     referenceMarkup = (
-      <span className="measurement-description__reference-value">
-        Pasientens idealnivå: {referenceValue}
+      <span className="measurement-description__ideal-value">
+        Pasientens idealnivå: {idealValue}
       </span>
       );
   }
@@ -26,7 +26,7 @@ const Description = ({ name, unit, referenceValue }) => {
 Description.propTypes = {
   name: PropTypes.string.isRequired,
   unit: PropTypes.string,
-  referenceValue: PropTypes.string,
+  idealValue: PropTypes.string,
 };
 
 export default Description;

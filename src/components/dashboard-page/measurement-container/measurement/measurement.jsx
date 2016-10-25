@@ -38,34 +38,15 @@ class Measurements extends Component {
     }
   }
 
-  getMeasurementHighReference(code) {
-    switch (code) {
-    case ObservationCodes.weight:
-      return 90;
-    case ObservationCodes.pulse:
-      return 70;
-    case ObservationCodes.pulseOximeter:
-      return 100;
-    case ObservationCodes.bloodPressure:
-      return 110;
-    default:
-      return null;
+  getIdealValuesString(idealValues, unit) {
+    if (idealValues && idealValues.length > 0) {
+      if (idealValues.length === 2) {
+        return `${idealValues[0].low.value}/${idealValues[1].low.value} -
+      ${idealValues[0].high.value}/${idealValues[1].high.value} ${unit}`;
+      }
+      return `${idealValues[0].low.value} - ${idealValues[0].high.value} ${unit}`;
     }
-  }
-
-  getMeasurementLowReference(code) {
-    switch (code) {
-    case ObservationCodes.weight:
-      return 80;
-    case ObservationCodes.pulse:
-      return 60;
-    case ObservationCodes.pulseOximeter:
-      return 90;
-    case ObservationCodes.bloodPressure:
-      return 70;
-    default:
-      return null;
-    }
+    return '';
   }
 
   getDataPoint(item, unit) {
@@ -91,32 +72,31 @@ class Measurements extends Component {
   }
 
   render() {
-    const unit = getUnit(this.props.code);
-    let points = this.props.data.entry.map((item) => this.getDataPoint(item, unit));
-    const name = getMeasurementName(this.props.code);
-    const highReference = this.getMeasurementHighReference(this.props.code);
-    const lowReference = this.getMeasurementLowReference(this.props.code);
-    const referenceValue = `${lowReference} - ${highReference} ${unit}`;
+    const { code, data, idealValues } = this.props;
 
-    const latestValue = this.getDataPoint(this.props.data.entry[0], unit);
+    const unit = getUnit(code);
+    let points = data.entry.map((item) => this.getDataPoint(item, unit));
+    const name = getMeasurementName(code);
+    const idealValue = this.getIdealValuesString(idealValues, unit);
+    const latestValue = this.getDataPoint(data.entry[0], unit);
+
     return (
       <div className="measurement">
         <div className="measurement__chart">
           <Description
             name={name}
             unit={unit}
-            referenceValue={referenceValue}
+            idealValue={idealValue}
             icon={this.props.icon}
           />
           <Chart
             dataPoints={points}
             high={this.getMeasurementHigh(this.props.code)}
             low={this.getMeasurementLow(this.props.code)}
-            highReference={highReference}
-            lowReference={lowReference}
             fromDate={this.props.fromDate}
             toDate={this.props.toDate}
             selectedDate={this.props.selectedDate}
+            idealValues={this.props.idealValues}
           />
         </div>
         <LatestMeasurement
@@ -130,10 +110,11 @@ class Measurements extends Component {
 Measurements.propTypes = {
   data: PropTypes.object.isRequired,
   code: PropTypes.string.isRequired,
-  fromDate: React.PropTypes.instanceOf(Date).isRequired,
-  toDate: React.PropTypes.instanceOf(Date).isRequired,
-  selectedDate: React.PropTypes.instanceOf(Date),
+  fromDate: PropTypes.instanceOf(Date).isRequired,
+  toDate: PropTypes.instanceOf(Date).isRequired,
+  selectedDate: PropTypes.instanceOf(Date),
   icon: PropTypes.string,
+  idealValues: PropTypes.array,
 };
 
 export default Measurements;

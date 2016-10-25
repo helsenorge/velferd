@@ -12,36 +12,58 @@ export function getCategoryName(category) {
   }
 }
 
+function mapGoal(goal) {
+  return goal.extension.map(g => {
+    const range = g.extension[1].valueRange;
+    const target = {
+      code: g.extension[0].valueCodeableConcept.coding[0].code,
+      high: Object.assign({}, range.high),
+      low: Object.assign({}, range.low),
+    };
+    if (!target.high.value) {
+      target.high.value = '';
+    }
+    if (!target.low.value) {
+      target.low.value = '';
+    }
+    return target;
+  });
+}
+
+export function getMeasurement(resource, code) {
+  const results = resource.activity.filter(activity =>
+    activity.detail.reasonCode[0].coding[0].code === 'all' &&
+    activity.detail.category.coding[0].code === 'observation' &&
+    activity.detail.code && activity.detail.code.coding[0].code === code)
+    .map(activity => {
+      const ref = activity.detail.goal[0].reference.substring(1);
+      const goal = resource.contained.filter(res => res.id === ref);
+
+      return {
+        code: activity.detail.code.coding[0].code,
+        goal: goal ? mapGoal(goal[0]) : null,
+      };
+    });
+
+  return results ? results[0] : null;
+}
+
 export function getMeasurements(resource) {
   const goals = {};
   resource.contained.filter(res => res.resourceType === 'Goal')
-    .forEach(res => (goals[res.id] = res.extension));
+    .forEach(res => (goals[res.id] = res));
 
   return resource.activity
     .filter(activity => activity.detail.reasonCode[0].coding[0].code === 'all'
     && activity.detail.category.coding[0].code === 'observation'
     && activity.detail.code)
     .map(activity => {
-      const goalReference = activity.detail.goal[0].reference;
-      const goal = goals[goalReference.substring(1)].map(g => {
-        const range = g.extension[1].valueRange;
-        const target = {
-          code: g.extension[0].valueCodeableConcept.coding[0].code,
-          high: Object.assign({}, range.high),
-          low: Object.assign({}, range.low),
-        };
-        if (!target.high.value) {
-          target.high.value = '';
-        }
-        if (!target.low.value) {
-          target.low.value = '';
-        }
-        return target;
-      });
+      const ref = activity.detail.goal[0].reference.substring(1);
+      const goal = goals[ref];
 
       return {
         code: activity.detail.code.coding[0].code,
-        goal,
+        goal: mapGoal(goal),
       };
     });
 }

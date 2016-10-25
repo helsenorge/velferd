@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchObservations } from '../../../actions/observations';
+import { getMeasurement } from '../../../helpers/care-plan-helpers.js';
 import Measurement from './measurement/measurement.jsx';
 
 class MeasurementsContainer extends Component {
@@ -25,6 +26,7 @@ class MeasurementsContainer extends Component {
               fromDate={this.props.fromDate}
               toDate={this.props.toDate}
               selectedDate={this.props.selectedDate}
+              idealValues={this.props.idealValues}
             />
           </div>
         }
@@ -41,14 +43,15 @@ MeasurementsContainer.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   dispatch: PropTypes.func.isRequired,
-  fromDate: React.PropTypes.instanceOf(Date).isRequired,
-  toDate: React.PropTypes.instanceOf(Date).isRequired,
-  selectedDate: React.PropTypes.instanceOf(Date),
-  icon: React.PropTypes.string,
+  fromDate: PropTypes.instanceOf(Date).isRequired,
+  toDate: PropTypes.instanceOf(Date).isRequired,
+  selectedDate: PropTypes.instanceOf(Date),
+  icon: PropTypes.string,
+  idealValues: PropTypes.array,
 };
 
 function mapStateToProps(state, ownProps) {
-  const { observationsByCode, settings } = state;
+  const { observationsByCode, settings, carePlan } = state;
   const {
     isFetching,
     lastUpdated,
@@ -58,6 +61,15 @@ function mapStateToProps(state, ownProps) {
     data: null,
   };
 
+  let idealValues;
+
+  if (carePlan.data !== null
+    && carePlan.data.resourceType === 'Bundle'
+    && carePlan.data.total > 0) {
+    const measurement = getMeasurement(carePlan.data.entry[0].resource, ownProps.code);
+    idealValues = measurement.goal;
+  }
+
   const { fhirUrl, patientId } = settings;
 
   return {
@@ -66,6 +78,7 @@ function mapStateToProps(state, ownProps) {
     data,
     isFetching,
     lastUpdated,
+    idealValues,
   };
 }
 
