@@ -1,19 +1,25 @@
 import {
-  REQUEST_CAREPLAN, RECEIVE_CAREPLAN, COMPLETE_SAVE_CAREPLAN,
+  INVALIDATE_CAREPLAN, REQUEST_CAREPLAN, RECEIVE_CAREPLAN, COMPLETE_SAVE_CAREPLAN,
   REQUEST_CAREPLAN_HISTORY, RECEIVE_CAREPLAN_HISTORY,
 } from '../actions/care-plan';
 
 export function carePlan(state = {
   isFetching: false,
+  didInvalidate: false,
   data: null,
   saveCompleted: null,
   error: null,
   history: null,
 }, action) {
   switch (action.type) {
+  case INVALIDATE_CAREPLAN:
+    return Object.assign({}, state, {
+      didInvalidate: true,
+    });
   case REQUEST_CAREPLAN:
     return Object.assign({}, state, {
       isFetching: true,
+      didInvalidate: false,
       data: null,
       saveCompleted: null,
       error: null,
@@ -21,6 +27,7 @@ export function carePlan(state = {
   case RECEIVE_CAREPLAN:
     return Object.assign({}, state, {
       isFetching: false,
+      didInvalidate: false,
       data: action.data,
       lastUpdated: action.receivedAt,
     });

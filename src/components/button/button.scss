@@ -1,3 +1,5 @@
+@import '../../constants/constants';
+
 .button {
   font-size: 1.125rem;
   border-radius: 100px;
@@ -7,21 +9,21 @@
   padding: 0.5rem 1.25rem;
 
   &:hover {
-    box-shadow: 0 0 0 6px #D5D5D5;
+    box-shadow: 0 0 0 6px $alto;
   }
 
   &:focus {
-    box-shadow: 0 0 0 3px #D5D5D5;
+    box-shadow: 0 0 0 3px $alto;
     outline: none;
   }
 
   &--lvl2 {
-    color: #097A7A;
+    color: $atoll;
     background: transparent;
   }
 
   &--lvl3 {
-    color: #097A7A;
+    color: $atoll;
     background: transparent;
     border: 0;
     border-radius: 0;
@@ -32,13 +34,13 @@
       box-shadow: none;
 
       .button__text {
-        border-bottom: 1px solid #D9D9D4;
+        border-bottom: 1px solid $quill-gray;
       }
     }
 
     &:focus {
       outline: none;
-      box-shadow: 0 0 0 2px #D9D9D4;
+      box-shadow: 0 0 0 2px $quill-gray;
 
       .button__text {
         border-bottom: 0;
@@ -49,7 +51,7 @@
   &--square {
     border-radius: 0;
     background: transparent;
-    color: #097A7A;
+    color: $atoll;
     text-align: left;
   }
 }

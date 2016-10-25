@@ -1,15 +1,15 @@
 @import '../../constants/constants';
 
 .pageheader {
-  background: #343434;
-  color: #CDCDCD;
+  background: $mine-shaft;
+  color: $silver;
   padding: 1rem 2rem;
   font-weight: 300;
 
   &__wrapper {
     display: flex;
     justify-content: space-between;
-    max-width: 80rem;
+    max-width: 76rem;
     margin: 0 auto;
   }
 }

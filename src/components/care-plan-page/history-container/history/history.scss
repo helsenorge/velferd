@@ -1,3 +1,5 @@
+@import '../../../../constants/constants';
+
 .historytable {
   &__table {
     margin-top: 1.625rem;
@@ -10,9 +12,9 @@
     text-transform: uppercase;
     font-size: 1.125rem;
     text-align: left;
-    border-bottom: 2px solid #8B8B87;
+    border-bottom: 2px solid $natural-grey;
     padding-bottom: 12px;
-    color: #097A7A;
+    color: $atoll;
 
     &:nth-child(1) {
       width: 10rem;
@@ -22,7 +24,7 @@
   &__cell {
     color: #269392;
     text-align: left;
-    border-bottom: 1px solid #D9D9D4;
+    border-bottom: 1px solid $quill-gray;
     padding-bottom: 12px;
 
     &--date {

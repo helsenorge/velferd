@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react';
 import TextArea from '../text-area/text-area.jsx';
 import classNames from 'classnames';
+import { formatDate2 } from '../../helpers/date-helpers.js';
 import './goal.scss';
 
 const Goal = ({
@@ -9,6 +10,7 @@ const Goal = ({
     patientGoal,
     saving,
     className,
+    carePlanLastUpdated,
   }) => {
   const getGoal = () => {
     if (editing) {
@@ -24,6 +26,11 @@ const Goal = ({
     }
     return (<span>«{patientGoal}»</span>);
   };
+  let lastUpdated;
+  if (carePlanLastUpdated) {
+    lastUpdated = formatDate2(carePlanLastUpdated);
+  }
+
   const classes = classNames(className, 'goal');
   return (
     <div className={classes}>
@@ -31,7 +38,7 @@ const Goal = ({
         <h3 className="goal__heading">Overordnet mål</h3>
         {getGoal()}
       </div>
-      <span className="goal__lastupdated">Sist oppdatert 21.11.2015</span>
+      <span className="goal__lastupdated">Sist oppdatert {lastUpdated}</span>
     </div>
   );
 };
@@ -42,6 +49,7 @@ Goal.propTypes = {
   onChange: React.PropTypes.func,
   saving: React.PropTypes.bool,
   className: React.PropTypes.string,
+  carePlanLastUpdated: React.PropTypes.instanceOf(Date),
 };
 
 export default Goal;

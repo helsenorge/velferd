@@ -1,9 +1,9 @@
 import { expect } from 'chai';
 import { getPhase, getPatientGoal, getQuestionnaireId,
-  getMeasurements, getCategory, getAuthor,
-  getLastUpdated } from './care-plan-page.js';
-import CarePlanCategories from '../../constants/care-plan-categories';
-import data from '../../mock/care-plan.json';
+  getMeasurement, getMeasurements, getCategory, getAuthor,
+  getLastUpdated } from './care-plan-helpers.js';
+import CarePlanCategories from '../constants/care-plan-categories';
+import data from '../mock/care-plan.json';
 
 describe('careplan phase', () => {
   it('should have a reason code', () => {
@@ -39,6 +39,11 @@ describe('careplan', () => {
   it('should have a questionnaire', () => {
     const id = getQuestionnaireId(data);
     expect(id).to.equal('62763');
+  });
+
+  it('should have a measurement', () => {
+    const measurement = getMeasurement(data, 188736);
+    expect(measurement).to.not.equal(undefined);
   });
 
   it('should have a list of measurements', () => {

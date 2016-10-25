@@ -114,6 +114,7 @@ $delay8: 1s;
 // Chrome goes crazy when you assign the same keyframes to multiple animations
 // for multiple elements when those animations specify different delays.
 
+/* stylelint-disable */
 @keyframes pils0 {
   0%  {transform: scale($startstop-scale);}
   10% {transform: scale($delta-scale);        opacity: $delta-opacity;}
@@ -162,3 +163,4 @@ $delay8: 1s;
   60% {transform: scale($startstop-scale);    opacity: $startstop-opacity;}
   99% {                                       opacity: $startstop-opacity;}
 }
+/* stylelint-enable */

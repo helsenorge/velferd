@@ -1,11 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchCarePlan, saveCarePlan, createCarePlan } from '../../actions/care-plan';
+import { saveCarePlan, createCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
 import HistoryContainer from './history-container/history-container.jsx';
 import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
 import ReasonCodes from '../../constants/reason-codes';
-import { getCarePlan } from './care-plan-page.js';
+import CarePlanCategories from '../../constants/care-plan-categories';
+import { getCarePlan } from '../../helpers/care-plan-helpers.js';
 import './care-plan-page.scss';
 
 class CarePlanPage extends Component {
@@ -28,9 +29,11 @@ class CarePlanPage extends Component {
     };
   }
 
-  componentDidMount() {
-    const { dispatch, fhirUrl, patientId } = this.props;
-    dispatch(fetchCarePlan(fhirUrl, patientId));
+  componentWillMount() {
+    if (!this.state.carePlan && this.props.carePlan) {
+      const carePlan = getCarePlan(this.props.carePlan);
+      this.setState({ carePlan });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -127,13 +130,17 @@ class CarePlanPage extends Component {
   render() {
     const { isFetching, error } = this.props;
     const { carePlan, editing, saving } = this.state;
+
     let isEmpty = true;
+    let planCategory = '';
     if (carePlan) {
       isEmpty = false;
+      planCategory = carePlan.category === CarePlanCategories.HeartFailure ? ' for hjertesvikt'
+        : ' for KOLS';
     }
     return (
       <div className="care-plan-page">
-        <h2 className="care-plan-page__heading">Egenbehandlingsplan</h2>
+        <h2 className="care-plan-page__heading">Egenbehandlingsplan{planCategory}</h2>
         {error && <p>{error}</p>}
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> :

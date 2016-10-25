@@ -100,28 +100,30 @@ class Range extends Component {
     );
     return (
       <nav className={rangeClasses} ref="range">
-        <div className="range__controls">
-          <button
-            className="range__button range__button--rev"
-            onClick={() => handleSingleBackClick()}
-          >
-            <Icon className="range__arrow" glyph={pil} width={51} height={51} />
-            <span className="range__text--rev">Eldre</span>
-          </button>
-        </div>
+        <div className="range__wrapper">
+          <div className="range__controls">
+            <button
+              className="range__button range__button--rev"
+              onClick={() => handleSingleBackClick()}
+            >
+              <Icon className="range__arrow" glyph={pil} width={51} height={51} />
+              <span className="range__text--rev">Eldre</span>
+            </button>
+          </div>
 
-        <div className={rangeDateClasses}>
-          {dateButtons}
-        </div>
+          <div className={rangeDateClasses}>
+            {dateButtons}
+          </div>
 
-        <div className="range__controls">
-          <button
-            className="range__button range__button--fwd"
-            onClick={() => handleSingleForwardClick()}
-          >
-            <span className="range__text">Nyere</span>
-            <Icon className="range__arrow--fwd" glyph={pil} width={51} height={51} />
-          </button>
+          <div className="range__controls">
+            <button
+              className="range__button range__button--fwd"
+              onClick={() => handleSingleForwardClick()}
+            >
+              <span className="range__text">Nyere</span>
+              <Icon className="range__arrow--fwd" glyph={pil} width={51} height={51} />
+            </button>
+          </div>
         </div>
       </nav>
       );

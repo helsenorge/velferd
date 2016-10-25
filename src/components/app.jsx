@@ -1,6 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPatient } from '../actions/patient';
+import { fetchCarePlanIfNeeded } from '../actions/care-plan';
+
+import { getCategory } from '../helpers/care-plan-helpers.js';
 import PageHeader from '../components/pageheader/pageheader.jsx';
 import PageMenu from '../components/pagemenu/pagemenu.jsx';
 import Footer from '../components/footer/footer.jsx';
@@ -14,14 +17,16 @@ class App extends Component {
 
     if (this.accessAllowed(authenticate, token)) {
       dispatch(fetchPatient(fhirUrl, patientId));
+      dispatch(fetchCarePlanIfNeeded(fhirUrl, patientId));
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    const { dispatch, fhirUrl, patientId, authenticate, token, data } = nextProps;
+    const { dispatch, fhirUrl, patientId, authenticate, token, patient } = nextProps;
 
-    if (this.accessAllowed(authenticate, token) && data === null) {
+    if (this.accessAllowed(authenticate, token) && patient === null) {
       dispatch(fetchPatient(fhirUrl, patientId));
+      dispatch(fetchCarePlanIfNeeded(fhirUrl, patientId));
     }
   }
 
@@ -30,22 +35,31 @@ class App extends Component {
   }
 
   render() {
-    const { data, authenticate, token } = this.props;
+    const { patient, authenticate, token, isFetching, user, carePlanCategory } = this.props;
 
     if (!this.accessAllowed(authenticate, token)) {
       return (<Login />);
     }
 
-    return (
-      <div>
-        <PageHeader patient={data} />
-        <PageMenu />
-        <article className="main">
-          {this.props.children}
-        </article>
-        <Footer fhirUrl={this.props.fhirUrl} />
-      </div>
-    );
+    let markup = null;
+
+    if (isFetching) {
+      markup = (<h2>Loading...</h2>);
+    }
+    else if (patient) {
+      markup = (
+        <div>
+          <PageHeader patient={patient} user={user} carePlanCategory={carePlanCategory} />
+          <PageMenu />
+          <article className="main">
+            {this.props.children}
+          </article>
+          <Footer fhirUrl={this.props.fhirUrl} />
+        </div>
+      );
+    }
+
+    return markup;
   }
 }
 
@@ -53,15 +67,17 @@ App.propTypes = {
   authenticate: PropTypes.bool.isRequired,
   fhirUrl: PropTypes.string.isRequired,
   patientId: PropTypes.string.isRequired,
-  data: PropTypes.object,
+  patient: PropTypes.object,
+  user: PropTypes.object,
   isFetching: PropTypes.bool.isRequired,
   dispatch: PropTypes.func.isRequired,
   children: PropTypes.object,
   token: PropTypes.string,
+  carePlanCategory: PropTypes.string,
 };
 
 function mapStateToProps(state) {
-  const { patient, settings, auth } = state;
+  const { patient, settings, auth, carePlan } = state;
   const {
     isFetching,
     data,
@@ -70,15 +86,24 @@ function mapStateToProps(state) {
     data: null,
   };
 
+  let carePlanCategory;
+  if (carePlan.data !== null
+    && carePlan.data.resourceType === 'Bundle'
+    && carePlan.data.total > 0) {
+    carePlanCategory = getCategory(carePlan.data.entry[0].resource);
+  }
+
   const { authenticate, fhirUrl, patientId } = settings;
 
   return {
     token: auth.token,
+    user: auth.user,
     authenticate,
     fhirUrl,
     patientId,
-    data,
+    patient: data,
     isFetching,
+    carePlanCategory,
   };
 }
 
