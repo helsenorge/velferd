@@ -7,6 +7,7 @@ import Icon from '../../../icon/icon.jsx';
 import classNames from 'classnames';
 import { formatDate, filterObservationsInRange } from '../../../../helpers/date-helpers.js';
 import { getMeasurementName } from '../../../../helpers/observation-helpers';
+import ObservationCodes from '../../../../constants/observation-codes';
 
 class Report extends Component {
   constructor(props) {
@@ -61,16 +62,40 @@ Report.propTypes = {
   data: PropTypes.array.isRequired,
 };
 
-function calculateReportValues(entries, code) {
-  const values = entries.map(entry => parseInt(entry.resource.valueQuantity.value, 10));
+function calculateValues(values, code) {
   const average = Math.round(values.reduce((a, b) => a + b) / values.length);
-
   return {
     name: getMeasurementName(code),
     min: Math.min(...values),
     max: Math.max(...values),
     average,
   };
+}
+
+function calculateForCompoundMeasurement(entries) {
+  const values = {};
+
+  entries.forEach(entry => {
+    entry.resource.component.forEach(component => {
+      const code = component.code.coding[0].code;
+      if (code !== ObservationCodes.bloodPressureMean) {
+        if (!values[code]) {
+          values[code] = [];
+        }
+        values[code].push(component.valueQuantity.value);
+      }
+    });
+  });
+
+  const data = [];
+
+  Object.keys(values).forEach((key) => {
+    if (values.hasOwnProperty(key)) {
+      data.push(calculateValues(values[key], key));
+    }
+  });
+
+  return data;
 }
 
 function mapStateToProps(state, ownProps) {
@@ -80,10 +105,18 @@ function mapStateToProps(state, ownProps) {
   Object.keys(observationsByCode).forEach((key) => {
     if (observationsByCode.hasOwnProperty(key)) {
       const observations = observationsByCode[key];
-      if (observations.data && key !== '150020') {
-        const entries = filterObservationsInRange(observations.data.entry,
-          ownProps.fromDate, ownProps.toDate);
-        data.push(calculateReportValues(entries, key));
+
+      if (observations.data) {
+        const entries = filterObservationsInRange(
+          observations.data.entry, ownProps.fromDate, ownProps.toDate);
+
+        if (entries.length > 0 && entries[0].resource.valueQuantity) {
+          const values = entries.map(entry => parseInt(entry.resource.valueQuantity.value, 10));
+          data.push(calculateValues(values, key));
+        }
+        else {
+          data.push(...calculateForCompoundMeasurement(entries));
+        }
       }
     }
   });

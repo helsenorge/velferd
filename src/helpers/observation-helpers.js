@@ -11,9 +11,9 @@ export function getMeasurementName(code) {
   case ObservationCodes.bloodPressure:
     return 'Blodtrykk';
   case ObservationCodes.bloodPressureSystolic:
-    return 'Systolisk';
+    return 'Systolisk Blodtrykk';
   case ObservationCodes.bloodPressureDiastolic:
-    return 'Diastolisk';
+    return 'Diastolisk Blodtrykk';
   default:
     return '';
   }
