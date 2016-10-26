@@ -5,7 +5,8 @@ import Collapse from 'react-collapse';
 import iconChevron from '../../../../../svg/chevron-left.svg';
 import Icon from '../../../icon/icon.jsx';
 import classNames from 'classnames';
-import { formatDate, filterObservationsInRange } from '../../../../helpers/date-helpers.js';
+import { formatDate, filterObservationsInRange, filterQuestionnaireResponses }
+  from '../../../../helpers/date-helpers.js';
 import { getMeasurementName } from '../../../../helpers/observation-helpers';
 import ObservationCodes from '../../../../constants/observation-codes';
 
@@ -21,10 +22,20 @@ class Report extends Component {
   }
 
   render() {
+    const { questionnaireReport, measurementReports, fromDate, toDate } = this.props;
     const iconClass = classNames({
       report__chevron: true,
       'report__chevron--open': this.state.expanded,
     });
+    let questionnaireReportMarkup;
+    if (questionnaireReport) {
+      questionnaireReportMarkup = (
+        <p className="report__paragraph">
+              Andel grønne smilefjes: {questionnaireReport.greenPercent}%
+              , oransje: {questionnaireReport.yellowPercent}% og røde
+              : {questionnaireReport.redPercent}%.
+        </p>);
+    }
     return (
       <div className="report">
         <button
@@ -37,17 +48,15 @@ class Report extends Component {
         <Collapse isOpened={this.state.expanded}>
           <div className="report__expander">
             <h3 className="report__header">
-               {formatDate(this.props.fromDate)} - {formatDate(this.props.toDate)} 2016
+               {formatDate(fromDate)} - {formatDate(toDate)} 2016
             </h3>
-            {this.props.data.map((measurement, i) =>
+            {measurementReports.map((measurement, i) =>
               <p className="report__paragraph" key={i}>
                 <b>{measurement.name}</b> har variert mellom {measurement.min}&nbsp;
                 og {measurement.max} og har et gjennomsnitt på {measurement.average}.
               </p>
             )}
-            <p className="report__paragraph">
-              Andel grønne smilefjes: 80%, oransje: 15% og røde: 5%.
-            </p>
+            {questionnaireReportMarkup}
             <button className="report__copybutton">Kopier tekst</button>
           </div>
         </Collapse>
@@ -59,7 +68,8 @@ class Report extends Component {
 Report.propTypes = {
   fromDate: PropTypes.instanceOf(Date).isRequired,
   toDate: PropTypes.instanceOf(Date).isRequired,
-  data: PropTypes.array.isRequired,
+  measurementReports: PropTypes.array.isRequired,
+  questionnaireReport: PropTypes.object,
 };
 
 function calculateValues(values, code) {
@@ -98,30 +108,58 @@ function calculateForCompoundMeasurement(entries) {
   return data;
 }
 
-function mapStateToProps(state, ownProps) {
-  const { observationsByCode } = state;
-  const data = [];
+function calculateQuestionnaireValues(entries) {
+  const count = { 1: 0, 2: 0, 3: 0 };
 
+  for (let i = 0; i < entries.length; i++) {
+    const resource = entries[i].resource;
+    for (let ii = 0; ii < resource.group.group[0].question.length; ii++) {
+      const question = resource.group.group[0].question[ii];
+      const value = question.answer[0].valueCoding.code;
+      count[value] ++;
+    }
+  }
+
+  const total = count[1] + count[2] + count[3];
+
+  return {
+    greenPercent: total > 0 ? Math.round((count[1] * 100) / total) : 0,
+    yellowPercent: total > 0 ? Math.round((count[2] * 100) / total) : 0,
+    redPercent: total > 0 ? Math.round((count[3] * 100) / total) : 0,
+  };
+}
+
+function mapStateToProps(state, ownProps) {
+  const { observationsByCode, questionnaireResponses } = state;
+  const { fromDate, toDate } = ownProps;
+
+  let questionnaireReport;
+  if (questionnaireResponses.data) {
+    const entries = filterQuestionnaireResponses(
+      questionnaireResponses.data.entry, fromDate, toDate);
+    questionnaireReport = calculateQuestionnaireValues(entries);
+  }
+
+  const measurementReports = [];
   Object.keys(observationsByCode).forEach((key) => {
     if (observationsByCode.hasOwnProperty(key)) {
       const observations = observationsByCode[key];
 
       if (observations.data) {
-        const entries = filterObservationsInRange(
-          observations.data.entry, ownProps.fromDate, ownProps.toDate);
+        const entries = filterObservationsInRange(observations.data.entry, fromDate, toDate);
 
         if (entries.length > 0 && entries[0].resource.valueQuantity) {
           const values = entries.map(entry => parseInt(entry.resource.valueQuantity.value, 10));
-          data.push(calculateValues(values, key));
+          measurementReports.push(calculateValues(values, key));
         }
         else {
-          data.push(...calculateForCompoundMeasurement(entries));
+          measurementReports.push(...calculateForCompoundMeasurement(entries));
         }
       }
     }
   });
 
-  return { data };
+  return { measurementReports, questionnaireReport };
 }
 
 export default connect(mapStateToProps)(Report);
