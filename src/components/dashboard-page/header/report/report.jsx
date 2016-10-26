@@ -9,6 +9,7 @@ import { formatDate, filterObservationsInRange, filterQuestionnaireResponses }
   from '../../../../helpers/date-helpers.js';
 import { getMeasurementName } from '../../../../helpers/observation-helpers';
 import ObservationCodes from '../../../../constants/observation-codes';
+import QuestionnaireResponseCodes from '../../../../constants/questionnaire-response-codes';
 
 class Report extends Component {
   constructor(props) {
@@ -109,7 +110,10 @@ function calculateForCompoundMeasurement(entries) {
 }
 
 function calculateQuestionnaireValues(entries) {
-  const count = { 1: 0, 2: 0, 3: 0 };
+  const count = {};
+  count[QuestionnaireResponseCodes.green] = 0;
+  count[QuestionnaireResponseCodes.yellow] = 0;
+  count[QuestionnaireResponseCodes.red] = 0;
 
   for (let i = 0; i < entries.length; i++) {
     const resource = entries[i].resource;
@@ -120,12 +124,16 @@ function calculateQuestionnaireValues(entries) {
     }
   }
 
-  const total = count[1] + count[2] + count[3];
+  const total = count[QuestionnaireResponseCodes.green] +
+    count[QuestionnaireResponseCodes.yellow] + count[QuestionnaireResponseCodes.red];
 
   return {
-    greenPercent: total > 0 ? Math.round((count[1] * 100) / total) : 0,
-    yellowPercent: total > 0 ? Math.round((count[2] * 100) / total) : 0,
-    redPercent: total > 0 ? Math.round((count[3] * 100) / total) : 0,
+    greenPercent: total > 0 ?
+     Math.round((count[QuestionnaireResponseCodes.green] * 100) / total) : 0,
+    yellowPercent: total > 0 ?
+     Math.round((count[QuestionnaireResponseCodes.yellow] * 100) / total) : 0,
+    redPercent: total > 0 ?
+     Math.round((count[QuestionnaireResponseCodes.red] * 100) / total) : 0,
   };
 }
 

@@ -38,11 +38,11 @@ class CarePlan extends Component {
   getPhaseIcon(i) {
     switch (i) {
     case 0:
-      return face1;
+      return face3;
     case 1:
       return face2;
     case 2:
-      return face3;
+      return face1;
     default:
       return face1;
     }
