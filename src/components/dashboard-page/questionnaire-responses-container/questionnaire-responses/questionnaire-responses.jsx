@@ -9,7 +9,7 @@ import Icon from '../../../icon/icon.jsx';
 import ansikt1 from '../../../../../svg/face1.svg';
 import ansikt2 from '../../../../../svg/face2.svg';
 import ansikt3 from '../../../../../svg/face3.svg';
-
+import QuestionnaireResponseCodes from '../../../../constants/questionnaire-response-codes';
 
 class QuestionnaireResponses extends Component {
 
@@ -108,11 +108,11 @@ class QuestionnaireResponses extends Component {
 
   getIcon(value) {
     switch (value) {
-    case '1':
+    case QuestionnaireResponseCodes.green.toString():
       return ansikt1;
-    case '2':
+    case QuestionnaireResponseCodes.yellow.toString():
       return ansikt2;
-    case '3':
+    case QuestionnaireResponseCodes.red.toString():
       return ansikt3;
     default:
       return null;

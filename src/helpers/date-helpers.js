@@ -49,6 +49,13 @@ export function filterObservations(entries, date) {
     );
 }
 
+export function filterObservationsInRange(entries, fromDate, toDate) {
+  return entries.filter(item =>
+      new Date(item.resource.effectiveDateTime).valueOf() > fromDate.valueOf() &&
+      new Date(item.resource.effectiveDateTime).valueOf() < toDate.valueOf()
+    );
+}
+
 export function filterQuestionnaireResponses(entries, fromDate, toDate) {
   return entries.filter(item =>
       new Date(item.resource.authored).valueOf() > fromDate.valueOf() &&

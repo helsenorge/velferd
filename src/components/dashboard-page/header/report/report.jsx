@@ -1,10 +1,15 @@
 import React, { Component, PropTypes } from 'react';
 import './report.scss';
+import { connect } from 'react-redux';
 import Collapse from 'react-collapse';
 import iconChevron from '../../../../../svg/chevron-left.svg';
 import Icon from '../../../icon/icon.jsx';
 import classNames from 'classnames';
-import { formatDate } from '../../../../helpers/date-helpers.js';
+import { formatDate, filterObservationsInRange, filterQuestionnaireResponses }
+  from '../../../../helpers/date-helpers.js';
+import { getMeasurementName } from '../../../../helpers/observation-helpers';
+import ObservationCodes from '../../../../constants/observation-codes';
+import QuestionnaireResponseCodes from '../../../../constants/questionnaire-response-codes';
 
 class Report extends Component {
   constructor(props) {
@@ -18,10 +23,20 @@ class Report extends Component {
   }
 
   render() {
+    const { questionnaireReport, measurementReports, fromDate, toDate } = this.props;
     const iconClass = classNames({
       report__chevron: true,
       'report__chevron--open': this.state.expanded,
     });
+    let questionnaireReportMarkup;
+    if (questionnaireReport) {
+      questionnaireReportMarkup = (
+        <p className="report__paragraph">
+              Andel grønne smilefjes: {questionnaireReport.greenPercent}%
+              , oransje: {questionnaireReport.yellowPercent}% og røde
+              : {questionnaireReport.redPercent}%.
+        </p>);
+    }
     return (
       <div className="report">
         <button
@@ -34,22 +49,15 @@ class Report extends Component {
         <Collapse isOpened={this.state.expanded}>
           <div className="report__expander">
             <h3 className="report__header">
-               {formatDate(this.props.fromDate)} - {formatDate(this.props.toDate)} 2016
+               {formatDate(fromDate)} - {formatDate(toDate)} 2016
             </h3>
-            <p className="report__paragraph">
-              <b>Blodtrykk</b> har variert mellom [min-verdi] og
-               [max-verdi] og har et gjennomsnitt på [gjennomsnittlig verdi].
-            </p>
-            <p className="report__paragraph">
-              <b>Puls</b> har variert mellom [min-verdi] og
-               [max-verdi] og har et gjennomsnittlig på [gjennomsnittlig verdi].
-            </p>
-            <p className="report__paragraph">
-              Andel grønne smilefjes: 80%, oransje: 15% og røde: 5%.
-            </p>
-            <p className="report__paragraph">
-              4. august ble det startet en antibiotikakur med xx.
-            </p>
+            {measurementReports.map((measurement, i) =>
+              <p className="report__paragraph" key={i}>
+                <b>{measurement.name}</b> har variert mellom {measurement.min}&nbsp;
+                og {measurement.max} og har et gjennomsnitt på {measurement.average}.
+              </p>
+            )}
+            {questionnaireReportMarkup}
             <button className="report__copybutton">Kopier tekst</button>
           </div>
         </Collapse>
@@ -61,6 +69,105 @@ class Report extends Component {
 Report.propTypes = {
   fromDate: PropTypes.instanceOf(Date).isRequired,
   toDate: PropTypes.instanceOf(Date).isRequired,
+  measurementReports: PropTypes.array.isRequired,
+  questionnaireReport: PropTypes.object,
 };
 
-export default Report;
+function calculateValues(values, code) {
+  const average = Math.round(values.reduce((a, b) => a + b) / values.length);
+  return {
+    name: getMeasurementName(code),
+    min: Math.min(...values),
+    max: Math.max(...values),
+    average,
+  };
+}
+
+function calculateForCompoundMeasurement(entries) {
+  const values = {};
+
+  entries.forEach(entry => {
+    entry.resource.component.forEach(component => {
+      const code = component.code.coding[0].code;
+      if (code !== ObservationCodes.bloodPressureMean) {
+        if (!values[code]) {
+          values[code] = [];
+        }
+        values[code].push(component.valueQuantity.value);
+      }
+    });
+  });
+
+  const data = [];
+
+  Object.keys(values).forEach((key) => {
+    if (values.hasOwnProperty(key)) {
+      data.push(calculateValues(values[key], key));
+    }
+  });
+
+  return data;
+}
+
+function calculateQuestionnaireValues(entries) {
+  const count = {};
+  count[QuestionnaireResponseCodes.green] = 0;
+  count[QuestionnaireResponseCodes.yellow] = 0;
+  count[QuestionnaireResponseCodes.red] = 0;
+
+  for (let i = 0; i < entries.length; i++) {
+    const resource = entries[i].resource;
+    for (let ii = 0; ii < resource.group.group[0].question.length; ii++) {
+      const question = resource.group.group[0].question[ii];
+      const value = question.answer[0].valueCoding.code;
+      count[value] ++;
+    }
+  }
+
+  const total = count[QuestionnaireResponseCodes.green] +
+    count[QuestionnaireResponseCodes.yellow] + count[QuestionnaireResponseCodes.red];
+
+  return {
+    greenPercent: total > 0 ?
+     Math.round((count[QuestionnaireResponseCodes.green] * 100) / total) : 0,
+    yellowPercent: total > 0 ?
+     Math.round((count[QuestionnaireResponseCodes.yellow] * 100) / total) : 0,
+    redPercent: total > 0 ?
+     Math.round((count[QuestionnaireResponseCodes.red] * 100) / total) : 0,
+  };
+}
+
+function mapStateToProps(state, ownProps) {
+  const { observationsByCode, questionnaireResponses } = state;
+  const { fromDate, toDate } = ownProps;
+
+  let questionnaireReport;
+  if (questionnaireResponses.data) {
+    const entries = filterQuestionnaireResponses(
+      questionnaireResponses.data.entry, fromDate, toDate);
+    questionnaireReport = calculateQuestionnaireValues(entries);
+  }
+
+  const measurementReports = [];
+  Object.keys(observationsByCode).forEach((key) => {
+    if (observationsByCode.hasOwnProperty(key)) {
+      const observations = observationsByCode[key];
+
+      if (observations.data) {
+        const entries = filterObservationsInRange(observations.data.entry, fromDate, toDate);
+
+        if (entries.length > 0 && entries[0].resource.valueQuantity) {
+          const values = entries.map(entry => parseInt(entry.resource.valueQuantity.value, 10));
+          measurementReports.push(calculateValues(values, key));
+        }
+        else {
+          measurementReports.push(...calculateForCompoundMeasurement(entries));
+        }
+      }
+    }
+  });
+
+  return { measurementReports, questionnaireReport };
+}
+
+export default connect(mapStateToProps)(Report);
