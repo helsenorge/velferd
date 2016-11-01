@@ -27,16 +27,13 @@ class Chart extends Component {
     return values;
   }
 
-  getSelectedDateData(selectedDate) {
-    const to = new Date(selectedDate.getTime());
-    to.setDate(to.getDate() + 1);
-
+  getOverlayData(from, to) {
     return {
-      name: 'selectedColumn',
-      className: 'selected-column',
+      name: 'overlay',
+      className: 'chart-overlay',
       data: [
-        { x: Math.floor(selectedDate.getTime() / 1000), y: this.props.high },
-        { x: Math.floor(to.getTime() / 1000), y: this.props.high },
+        { x: Math.floor(from.getTime() / 1000), y: this.props.high + 10 },
+        { x: Math.floor(to.getTime() / 1000), y: this.props.high + 10 },
       ] };
   }
 
@@ -104,7 +101,12 @@ class Chart extends Component {
       }
     });
 
-    if (selectedDate) series.push(this.getSelectedDateData(selectedDate));
+    if (selectedDate) {
+      series.push(this.getOverlayData(fromDate, selectedDate));
+      const from2 = new Date(selectedDate.getTime());
+      from2.setDate(from2.getDate() + 1);
+      series.push(this.getOverlayData(from2, toDate));
+    }
 
     const data = {
       series,
