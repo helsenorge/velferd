@@ -5,6 +5,7 @@ import { getMeasurementName, getUnit } from '../../../../helpers/observation-hel
 import Icon from '../../../icon/icon.jsx';
 import Button from '../../../button/button.jsx';
 import Item from './item/item.jsx';
+import TransitionGroup from 'react-addons-transition-group';
 import iconPlus from '../../../../../svg/plus.svg';
 import './list.scss';
 
@@ -81,23 +82,32 @@ const List = (
 
   const measurementsList = measurements !== undefined ? measurements : [];
   const headerClass = classNames('care-plan__listheading', className);
+  const elements = items.map((item, i) =>
+    <Item
+      key={item.id}
+      i={i}
+      id={item.id}
+      value={item.text}
+      type={type}
+      editing={editing}
+      reasonCode={reasonCode}
+      saving={saving}
+      onChange={onChange}
+      last={i === items.length - 1}
+      {...props}
+    />);
+
   return (
     <div className="care-plan__list">
       <h3 className={headerClass}>{heading}</h3>
-      <ul className="care-plan__listitems">
-        {items.map((item, i) =>
-          <Item
-            key={i}
-            i={i}
-            value={item}
-            type={type}
-            editing={editing}
-            reasonCode={reasonCode}
-            saving={saving}
-            onChange={onChange}
-            last={i === items.length - 1}
-            {...props}
-          />)}
+      <TransitionGroup
+        transitionEnterTimeout={400}
+        transitionLeaveTimeout={400}
+        component="ul"
+        className="care-plan__listitems"
+      >
+        {elements}
+      </TransitionGroup>
         {editing ? (
           <Button
             square
@@ -110,6 +120,7 @@ const List = (
             </div>
           </Button>
           ) : null}
+      <ul className="care-plan__listitems">
         {measurementsList.map((item, i) => <li key={i}>{getMeasurementItem(i, item)}</li>)}
       </ul>
     </div>
