@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { fetchPatients, setActivePatient } from '../../actions/patient';
+import { setActivePatient, fetchPatients,
+  fetchPatientByIdentifier } from '../../actions/patient';
 import { fetchCarePlan } from '../../actions/care-plan';
 import TextInput from '../text-input/text-input.jsx';
 
@@ -20,7 +21,15 @@ class PatientsFinder extends Component {
 
   search() {
     const { dispatch, fhirUrl } = this.props;
-    dispatch(fetchPatients(fhirUrl, this.state.searchString));
+    const { searchString } = this.state;
+    const isPersonNumber = /^([0-9]){11}$/.test(searchString);
+
+    if (isPersonNumber) {
+      dispatch(fetchPatientByIdentifier(fhirUrl, this.state.searchString));
+    }
+    else {
+      dispatch(fetchPatients(fhirUrl, this.state.searchString));
+    }
   }
 
   handleKeyPress(event) {
@@ -99,7 +108,7 @@ class PatientsFinder extends Component {
         <h2>Velg pasient</h2>
         <TextInput
           name="searchInput"
-          placeholder="Søk på navn"
+          placeholder="Søk på navn eller personnummer"
           onChange={this.updateSearchString}
           onKeyPress={this.handleKeyPress}
           value={this.state.searchString}

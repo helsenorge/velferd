@@ -65,6 +65,25 @@ export function fetchPatients(fhirUrl, name) {
   };
 }
 
+export function fetchPatientByIdentifier(fhirUrl, value) {
+  return (dispatch, getState) => {
+    const { token, expiration } = getState().auth;
+    const { authenticate } = getState().settings;
+
+    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+      return dispatch(discardAuthToken());
+    }
+
+    dispatch(requestPatients());
+    const systemIdentifier = '2.16.578.1.12.4.1.1.8116';
+    const identifier = `${systemIdentifier}|${value}`;
+    const url = `${fhirUrl}/Patient?identifier=${identifier}`;
+    return get(url, token)
+      .then(response => response.json())
+      .then(json => dispatch(receivePatients(json)));
+  };
+}
+
 export function fetchPatient(fhirUrl, patientId) {
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
