@@ -184,8 +184,8 @@ CarePlanPage.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { carePlan, settings } = state;
-  const { fhirUrl, patientId } = settings;
+  const { carePlan, settings, patient } = state;
+  const { fhirUrl } = settings;
   const { isFetching, data, saveCompleted, error } = carePlan
     || { isFetching: true, data: null, saveCompleted: null };
 
@@ -198,7 +198,7 @@ function mapStateToProps(state) {
 
   return {
     fhirUrl,
-    patientId,
+    patientId: patient.activePatient.id,
     carePlan: resource,
     isFetching,
     saveCompleted,

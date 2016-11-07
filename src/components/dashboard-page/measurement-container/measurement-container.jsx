@@ -51,7 +51,7 @@ MeasurementsContainer.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const { observationsByCode, settings, carePlan } = state;
+  const { observationsByCode, settings, carePlan, patient } = state;
   const {
     isFetching,
     lastUpdated,
@@ -70,11 +70,11 @@ function mapStateToProps(state, ownProps) {
     idealValues = measurement.goal;
   }
 
-  const { fhirUrl, patientId } = settings;
+  const { fhirUrl } = settings;
 
   return {
     fhirUrl,
-    patientId,
+    patientId: patient.activePatient.id,
     data,
     isFetching,
     lastUpdated,

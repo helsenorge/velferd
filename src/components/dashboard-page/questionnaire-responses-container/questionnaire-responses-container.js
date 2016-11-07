@@ -48,7 +48,7 @@ QuestionnaireResponsesContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { questionnaireResponses, settings } = state;
+  const { questionnaireResponses, settings, patient } = state;
   const {
     isFetching,
     lastUpdated,
@@ -58,11 +58,11 @@ function mapStateToProps(state) {
     data: null,
   };
 
-  const { fhirUrl, patientId } = settings;
+  const { fhirUrl } = settings;
 
   return {
     fhirUrl,
-    patientId,
+    patientId: patient.activePatient.id,
     data,
     isFetching,
     lastUpdated,
