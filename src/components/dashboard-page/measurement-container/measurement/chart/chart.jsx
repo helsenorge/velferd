@@ -92,14 +92,16 @@ class Chart extends Component {
       low, high, selectedDate } = this.props;
     const series = this.getValues(dataPoints);
 
-    idealValues.forEach(range => {
-      if (range.high.value) {
-        series.push(this.getReferenceValuesData(range.high.value));
-      }
-      if (range.low.value) {
-        series.push(this.getReferenceValuesData(range.low.value));
-      }
-    });
+    if (idealValues) {
+      idealValues.forEach(range => {
+        if (range.high.value) {
+          series.push(this.getReferenceValuesData(range.high.value));
+        }
+        if (range.low.value) {
+          series.push(this.getReferenceValuesData(range.low.value));
+        }
+      });
+    }
 
     if (selectedDate) {
       series.push(this.getOverlayData(fromDate, selectedDate));

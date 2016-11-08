@@ -142,7 +142,7 @@ function mapStateToProps(state, ownProps) {
   const { fromDate, toDate } = ownProps;
 
   let questionnaireReport;
-  if (questionnaireResponses.data) {
+  if (questionnaireResponses.data && questionnaireResponses.data.entry) {
     const entries = filterQuestionnaireResponses(
       questionnaireResponses.data.entry, fromDate, toDate);
     questionnaireReport = calculateQuestionnaireValues(entries);
@@ -153,7 +153,7 @@ function mapStateToProps(state, ownProps) {
     if (observationsByCode.hasOwnProperty(key)) {
       const observations = observationsByCode[key];
 
-      if (observations.data) {
+      if (observations.data && observations.data.entry) {
         const entries = filterObservationsInRange(observations.data.entry, fromDate, toDate);
 
         if (entries.length > 0 && entries[0].resource.valueQuantity) {
