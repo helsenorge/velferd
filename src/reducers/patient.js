@@ -1,6 +1,7 @@
 import {
-  REQUEST_PATIENT, RECEIVE_PATIENT,
-  REQUEST_PATIENTS, RECEIVE_PATIENTS,
+  REQUEST_PATIENT,
+  REQUEST_PATIENTS,
+  RECEIVE_PATIENTS,
   SET_ACTIVE_PATIENT,
 } from '../actions/patient';
 
@@ -13,16 +14,11 @@ export function patient(state = {
   case SET_ACTIVE_PATIENT:
     return Object.assign({}, state, {
       activePatient: action.patient,
+      isFetching: false,
     });
   case REQUEST_PATIENT:
     return Object.assign({}, state, {
       isFetching: true,
-    });
-  case RECEIVE_PATIENT:
-    return Object.assign({}, state, {
-      isFetching: false,
-      data: action.data,
-      lastUpdated: action.receivedAt,
     });
   case REQUEST_PATIENTS:
     return Object.assign({}, state, {

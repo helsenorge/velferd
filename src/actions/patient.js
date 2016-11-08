@@ -2,9 +2,7 @@ import { get } from '../helpers/api';
 import { discardAuthToken } from '../actions/auth';
 
 export const SET_ACTIVE_PATIENT = 'SET_ACTIVE_PATIENT';
-
 export const REQUEST_PATIENT = 'REQUEST_PATIENT';
-export const RECEIVE_PATIENT = 'RECEIVE_PATIENT';
 
 export const REQUEST_PATIENTS = 'REQUEST_PATIENTS';
 export const RECEIVE_PATIENTS = 'RECEIVE_PATIENTS';
@@ -20,15 +18,6 @@ function requestPatient(patientId) {
   return {
     type: REQUEST_PATIENT,
     patientId,
-  };
-}
-
-function receivePatient(patientId, json) {
-  return {
-    type: RECEIVE_PATIENT,
-    patientId,
-    data: json,
-    receivedAt: Date.now(),
   };
 }
 
@@ -84,7 +73,7 @@ export function fetchPatientByIdentifier(fhirUrl, value) {
   };
 }
 
-export function fetchPatient(fhirUrl, patientId) {
+export function fetchAndSetActivePatient(fhirUrl, patientId) {
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
     const { authenticate } = getState().settings;
@@ -98,6 +87,6 @@ export function fetchPatient(fhirUrl, patientId) {
     `${fhirUrl}/Patient/${patientId}`;
     return get(url, token)
       .then(response => response.json())
-      .then(json => dispatch(receivePatient(patientId, json)));
+      .then(json => dispatch(setActivePatient(json)));
   };
 }

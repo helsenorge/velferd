@@ -1,6 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setActivePatient, fetchPatients,
+import { setActivePatient,
+  fetchAndSetActivePatient,
+  fetchPatients,
   fetchPatientByIdentifier } from '../../actions/patient';
 import { fetchCarePlan } from '../../actions/care-plan';
 import TextInput from '../text-input/text-input.jsx';
@@ -12,7 +14,30 @@ class PatientsFinder extends Component {
     this.search = this.search.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.updateSearchString = this.updateSearchString.bind(this);
-    this.state = { searchString: '' };
+    this.state = { searchString: '', lastViewed: this.loadLastViewed() };
+  }
+
+  loadLastViewed() {
+    try {
+      const serializedPatients = localStorage.getItem('lastViewed');
+      if (serializedPatients === null) {
+        return {};
+      }
+      return JSON.parse(serializedPatients);
+    }
+    catch (e) {
+      return {};
+    }
+  }
+
+  saveLastViewed(lastViewed) {
+    try {
+      const serializedPatients = JSON.stringify(lastViewed);
+      localStorage.setItem('lastViewed', serializedPatients);
+    }
+    catch (e) {
+      // Ignore write errors.
+    }
   }
 
   updateSearchString(event) {
@@ -38,10 +63,23 @@ class PatientsFinder extends Component {
     }
   }
 
-  handlePatientClick(patient) {
+  handlePatientClick(patient, patientName) {
     const { dispatch, fhirUrl } = this.props;
+    const { lastViewed } = this.state;
+    lastViewed[patient.id] = patientName;
+
+    this.saveLastViewed(lastViewed);
+    this.setState({ lastViewed });
+
     dispatch(setActivePatient(patient));
     dispatch(fetchCarePlan(fhirUrl, patient.id));
+  }
+
+  handleLastViewedPatientClick(patientId) {
+    const { dispatch, fhirUrl } = this.props;
+
+    dispatch(fetchAndSetActivePatient(fhirUrl, patientId));
+    dispatch(fetchCarePlan(fhirUrl, patientId));
   }
 
   groupPatientsByInitial(data) {
@@ -74,7 +112,7 @@ class PatientsFinder extends Component {
       patientsByInitial[initial].push(
         <li key={patient.id}>
           <button
-            onClick={() => this.handlePatientClick(patient)}
+            onClick={() => this.handlePatientClick(patient, patientName)}
           >
             {patientName} - {patient.id}
           </button>
@@ -87,6 +125,7 @@ class PatientsFinder extends Component {
 
   render() {
     const { data } = this.props;
+    const { lastViewed } = this.state;
     const patientsByInitial = this.groupPatientsByInitial(data);
     const groups = [];
 
@@ -103,6 +142,20 @@ class PatientsFinder extends Component {
       }
     });
 
+    const recentlyViewed = [];
+
+    Object.keys(lastViewed).sort().forEach((key) => {
+      if (lastViewed.hasOwnProperty(key)) {
+        recentlyViewed.push(
+          <li key={key}>
+            <button onClick={() => this.handleLastViewedPatientClick(key)}>
+              {lastViewed[key]} - {key}
+            </button>
+          </li>
+        );
+      }
+    });
+
     return (
       <div>
         <h2>Velg pasient</h2>
@@ -113,6 +166,8 @@ class PatientsFinder extends Component {
           onKeyPress={this.handleKeyPress}
           value={this.state.searchString}
         />
+        <h3>Nylig sett på</h3>
+        <ul>{recentlyViewed}</ul>
         {groups}
       </div>
     );
