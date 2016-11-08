@@ -1,0 +1,39 @@
+.month {
+  display: flex;
+  flex-direction: column;
+
+  &:not(:last-of-type) {
+    //border-right: 4px solid #E1E1E1;
+  }
+
+  &__monthname {
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 7px;
+  }
+
+  &__dates {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+
+    &--14,
+    &--30 {
+      display: flex;
+    }
+  }
+
+  &__dates--14 .month__date {
+    width: 60.1718749999px;
+  }
+
+  &__dates--30 .month__date {
+    width: 27.546875px;
+  }
+
+  &__date {
+    text-align: center;
+    border-left: 1px solid #E1E1E1;
+  }
+}

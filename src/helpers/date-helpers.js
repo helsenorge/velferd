@@ -73,5 +73,5 @@ export function getNumberofColumnsinChart(dateRange) {
     return 14;
   }
 
-  return dateRange;
+  return dateRange - 1;
 }

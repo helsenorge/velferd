@@ -1,10 +1,8 @@
 import React, { PropTypes, Component } from 'react';
-import classNames from 'classnames';
-import { getMonth, getDate, calculateDateRange, getNumberofColumnsinChart }
-  from '../../../../helpers/date-helpers.js';
 import './range.scss';
 import Icon from '../../../icon/icon.jsx';
 import pil from '../../../../../svg/pil-venstre.svg';
+import Month from './month/month.jsx';
 
 class Range extends Component {
   constructor(props) {
@@ -57,49 +55,24 @@ class Range extends Component {
     const {
       handleSingleBackClick,
       handleSingleForwardClick,
-      handleDateClick,
       fromDate,
       toDate,
       activeRange,
-      selectedDate,
     } = this.props;
 
     const to = new Date(toDate.getTime());
     to.setDate(to.getDate() - 1);
 
-    const dates = [];
-
-    const dateRange = calculateDateRange(fromDate, toDate);
-    const cols = getNumberofColumnsinChart(dateRange);
-    const valuesPerCell = Math.floor(dateRange / cols);
-
+    const months = [];
     for (let d = new Date(fromDate);
-      d.getTime() < toDate.getTime(); d.setDate(d.getDate() + valuesPerCell)) {
-      dates.push(new Date(d));
+      d.getTime() < toDate.getTime(); d.setDate(d.getDate() + 1)) {
+      if (months.indexOf(d.getMonth()) < 0) {
+        months.push(d.getMonth());
+      }
     }
 
-    const dateButtons = dates.map((date, index) => {
-      const selected = selectedDate !== null && date.getTime() === selectedDate.getTime();
-      const btnClass = classNames({
-        'range__button--selected': selected,
-        range__button: true,
-      });
-      return (
-        <button className={btnClass} key={index} onClick={() => handleDateClick(date)}>
-          <div className="range__date">{getDate(date)}.</div>
-          <div className="range__month">{getMonth(date)}</div>
-        </button>
-      );
-    });
-    const rangeClasses = classNames({
-      range: true,
-    });
-    const rangeDateClasses = classNames(
-      'range__date-buttons',
-      `range__date-buttons--${activeRange}`
-    );
     return (
-      <nav className={rangeClasses} ref="range">
+      <nav className="range" ref="range">
         <div className="range__wrapper">
           <div className="range__controls">
             <button
@@ -110,11 +83,17 @@ class Range extends Component {
               <span className="range__text--rev">Eldre</span>
             </button>
           </div>
-
-          <div className={rangeDateClasses}>
-            {dateButtons}
+          <div className="range__months">
+            {months.map((month) =>
+              <Month
+                key={month}
+                month={month}
+                activeRange={activeRange}
+                fromDate={fromDate}
+                toDate={toDate}
+              />
+            )}
           </div>
-
           <div className="range__controls">
             <button
               className="range__button range__button--fwd"
