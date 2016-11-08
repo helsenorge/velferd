@@ -1,8 +1,18 @@
 import { get } from '../helpers/api';
 import { discardAuthToken } from '../actions/auth';
 
+export const SET_ACTIVE_PATIENT = 'SET_ACTIVE_PATIENT';
 export const REQUEST_PATIENT = 'REQUEST_PATIENT';
-export const RECEIVE_PATIENT = 'RECEIVE_PATIENT';
+
+export const REQUEST_PATIENTS = 'REQUEST_PATIENTS';
+export const RECEIVE_PATIENTS = 'RECEIVE_PATIENTS';
+
+export function setActivePatient(patient) {
+  return {
+    type: SET_ACTIVE_PATIENT,
+    patient,
+  };
+}
 
 function requestPatient(patientId) {
   return {
@@ -11,25 +21,59 @@ function requestPatient(patientId) {
   };
 }
 
-function receivePatient(patientId, json) {
+function requestPatients(name) {
   return {
-    type: RECEIVE_PATIENT,
-    patientId,
+    type: REQUEST_PATIENTS,
+    name,
+  };
+}
+
+function receivePatients(json) {
+  return {
+    type: RECEIVE_PATIENTS,
     data: json,
     receivedAt: Date.now(),
   };
 }
 
-function useMock() {
-  return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
+export function fetchPatients(fhirUrl, name) {
+  return (dispatch, getState) => {
+    const { token, expiration } = getState().auth;
+    const { authenticate } = getState().settings;
+
+    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+      return dispatch(discardAuthToken());
+    }
+
+    dispatch(requestPatients());
+    const url =
+    `${fhirUrl}/Patient?_count=500&name=${name}`;
+    return get(url, token)
+      .then(response => response.json())
+      .then(json => dispatch(receivePatients(json)));
+  };
 }
 
-export function fetchPatient(fhirUrl, patientId) {
-  if (useMock()) {
-    const json = require('../mock/patient.json'); // eslint-disable-line
-    return dispatch => dispatch(receivePatient(patientId, json));
-  }
+export function fetchPatientByIdentifier(fhirUrl, value) {
+  return (dispatch, getState) => {
+    const { token, expiration } = getState().auth;
+    const { authenticate } = getState().settings;
 
+    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+      return dispatch(discardAuthToken());
+    }
+
+    dispatch(requestPatients());
+    const systemIdentifier = '2.16.578.1.12.4.1.1.8116';
+    const identifier = `${systemIdentifier}|${value}`;
+    const url = `${fhirUrl}/Patient?identifier=${identifier}`;
+    return get(url, token)
+      .then(response => response.json())
+      .then(json => dispatch(receivePatients(json)));
+  };
+}
+
+export function fetchAndSetActivePatient(fhirUrl, patientId) {
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
     const { authenticate } = getState().settings;
@@ -43,6 +87,6 @@ export function fetchPatient(fhirUrl, patientId) {
     `${fhirUrl}/Patient/${patientId}`;
     return get(url, token)
       .then(response => response.json())
-      .then(json => dispatch(receivePatient(patientId, json)));
+      .then(json => dispatch(setActivePatient(json)));
   };
 }

@@ -2,7 +2,8 @@ import React, { PropTypes } from 'react';
 import './text-input.scss';
 import classNames from 'classnames';
 
-const TextInput = ({ name, onChange, placeholder, value, disabled, className = '' }) => {
+const TextInput = ({ name, onChange, onKeyPress,
+    placeholder, value, disabled, className = '' }) => {
   const classes = classNames('text-input', className);
   return (
     <input
@@ -11,6 +12,7 @@ const TextInput = ({ name, onChange, placeholder, value, disabled, className = '
       placeholder={placeholder}
       value={value}
       onChange={onChange}
+      onKeyPress={onKeyPress}
       disabled={disabled}
       className={classes}
     />
@@ -20,6 +22,7 @@ const TextInput = ({ name, onChange, placeholder, value, disabled, className = '
 TextInput.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
+  onKeyPress: PropTypes.func,
   placeholder: PropTypes.string,
   value: PropTypes.string,
   disabled: PropTypes.bool,

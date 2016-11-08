@@ -1,0 +1,13 @@
+.footer {
+  font-size: 0.875rem;
+  text-align: center;
+  border-top: 2px solid #dedede;
+  padding: 0.5rem;
+
+  &__icon {
+    vertical-align: middle;
+    height: 28px;
+    width: 190px;
+    margin-left: 1rem;
+  }
+}

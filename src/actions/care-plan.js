@@ -123,7 +123,7 @@ function buildActivity(description, reasonCode, category) {
       category: {
         coding: [buildCoding('http://hl7.org/fhir/care-plan-activity-category', category, '')],
       },
-      description,
+      description: description.text,
       reasonCode: [{
         coding: [buildCoding('http://ehelse.no/fhir/vft', reasonCode, '')],
       }],
@@ -134,11 +134,10 @@ function buildActivity(description, reasonCode, category) {
 function buildTarget(goal) {
   const low = { code: goal.low.code, system: goal.low.system, unit: goal.low.unit };
   const high = { code: goal.high.code, system: goal.high.system, unit: goal.high.unit };
-
-  if (goal.low.value.toString().trim() !== '') {
+  if (goal.low.value && goal.low.value.toString().trim() !== '') {
     low.value = goal.low.value;
   }
-  if (goal.high.value.toString().trim() !== '') {
+  if (goal.high.value && goal.high.value.toString().trim() !== '') {
     high.value = goal.high.value;
   }
 
@@ -191,7 +190,7 @@ function buildCondition(symptom, reasonCode, number) {
   return {
     resourceType: 'Condition',
     id: `${reasonCode}-condition-${number}`,
-    notes: symptom,
+    notes: symptom.text,
   };
 }
 
@@ -267,12 +266,12 @@ function toFhirCarePlan(patientId, carePlan, user) {
 
   carePlan.phases.forEach(phase => {
       // Actions
-    phase.actions.filter(a => a.trim() !== '').forEach(action => {
+    phase.actions.filter(a => a.text.trim() !== '').forEach(action => {
       const activity = buildActivity(action, phase.reasonCode, 'procedure');
       activities.push(activity);
     });
       // Drugs
-    phase.medications.filter(d => d.trim() !== '').forEach(drug => {
+    phase.medications.filter(d => d.text.trim() !== '').forEach(drug => {
       const activity = buildActivity(drug, phase.reasonCode, 'drug');
       activities.push(activity);
     });
@@ -280,7 +279,7 @@ function toFhirCarePlan(patientId, carePlan, user) {
     const activity = buildActivity('', phase.reasonCode, 'other');
     activity.detail.reasonReference = [];
       // Conditions
-    phase.symptoms.filter(s => s.trim() !== '').forEach((symptom, index) => {
+    phase.symptoms.filter(s => s.text.trim() !== '').forEach((symptom, index) => {
       const condition = buildCondition(symptom, phase.reasonCode, index + 1);
       contained.push(condition);
       activity.detail.reasonReference.push({ reference: `#${condition.id}` });

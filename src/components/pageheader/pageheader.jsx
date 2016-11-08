@@ -3,8 +3,8 @@ import { getCategoryName } from '../../helpers/care-plan-helpers.js';
 import './pageheader.scss';
 
 const PageHeader = ({ patient, user, carePlanCategory }) => {
-  let patientName;
-  if (patient.name && patient.name.length > 0) {
+  let patientName = '(No patient)';
+  if (patient && patient.name && patient.name.length > 0) {
     const name = patient.name[0];
     const given = name.given ? name.given.join(' ') : '';
     const family = name.family ? name.family.join(' ') : '';
@@ -26,7 +26,7 @@ const PageHeader = ({ patient, user, carePlanCategory }) => {
 };
 
 PageHeader.propTypes = {
-  patient: PropTypes.object.isRequired,
+  patient: PropTypes.object,
   user: PropTypes.object.isRequired,
   carePlanCategory: PropTypes.string,
 };

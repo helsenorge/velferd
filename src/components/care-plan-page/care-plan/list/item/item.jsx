@@ -7,50 +7,56 @@ import './item.scss';
 class Input extends Component {
   constructor(props) {
     super(props);
-    const { reasonCode, type, i } = this.props;
-    this.name = `${reasonCode}-${type}-${i}`;
-    this.animateAndDelete = this.animateAndDelete.bind(this);
+    const { reasonCode, type, i, id } = this.props;
+    this.name = `${reasonCode}-${type}-${i}-${id}`;
   }
 
-  componentDidMount() {
-    if (this.props.last && this.props.value.length === 0) {
-      const el = this.refs.node;
+  componentWillEnter(cb) {
+    const el = this.refs.node;
+    if (el !== undefined) {
       el.addEventListener('animationend', () => {
-        this.refs.node.classList.remove('input-field--adding');
+        el.classList.remove('input-field--adding');
+        cb();
       });
-      this.refs.node.classList.add('input-field--adding');
+      el.classList.add('input-field--adding');
+    }
+    else {
+      cb();
     }
   }
 
-  animateAndDelete() {
+  componentWillLeave(cb) {
     const el = this.refs.node;
-    el.addEventListener('animationend', () => {
-      this.props.deleteCarePlanItem(this.name);
-    });
-    el.classList.add('input-field--deleting');
+    if (el !== undefined) {
+      el.addEventListener('animationend', () => {
+        cb();
+      });
+      el.classList.add('input-field--deleting');
+    }
+    else {
+      cb();
+    }
   }
 
   render() {
     const { editing, value, onChange, saving } = this.props;
 
     return !editing ? (<li>{value}</li>) : (
-      <li>
-        <div className="input-field" ref="node">
-          <TextArea
-            onChange={onChange}
-            name={this.name}
-            value={value}
-            disabled={saving}
-            className="input-field__textarea"
-          />
-          <button
-            className="input-field__delete"
-            onClick={this.animateAndDelete}
-          >
-            <Icon className="input-field__icon" glyph={iconDelete} />
-            <span className="input-field__delete-text">Delete</span>
-          </button>
-        </div>
+      <li className="input-field" ref="node">
+        <TextArea
+          onChange={onChange}
+          name={this.name}
+          value={value}
+          disabled={saving}
+          className="input-field__textarea"
+        />
+        <button
+          className="input-field__delete"
+          onClick={() => this.props.deleteCarePlanItem(this.name)}
+        >
+          <Icon className="input-field__icon" glyph={iconDelete} />
+          <span className="input-field__delete-text">Delete</span>
+        </button>
       </li>
       );
   }
@@ -66,6 +72,7 @@ Input.propTypes = {
   saving: React.PropTypes.bool.isRequired,
   value: React.PropTypes.string.isRequired,
   last: React.PropTypes.bool.isRequired,
+  id: React.PropTypes.string.isRequired,
 };
 
 export default Input;

@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import shortId from 'shortid';
 import { connect } from 'react-redux';
 import { saveCarePlan, createCarePlan } from '../../actions/care-plan';
 import CarePlan from './care-plan/care-plan.jsx';
@@ -72,7 +73,6 @@ class CarePlanPage extends Component {
     }
     else {
       const ids = event.target.name.split('-');
-
       if (ids[1] === 'measurements') {
         const measurement = carePlan.measurements[ids[2]];
         const goal = measurement.goal[[ids[3]]];
@@ -81,7 +81,7 @@ class CarePlanPage extends Component {
       }
       else {
         const index = this.getPhaseIndex(ids[0]);
-        carePlan.phases[index][ids[1]][ids[2]] = event.target.value;
+        carePlan.phases[index][ids[1]][ids[2]].text = event.target.value;
       }
     }
 
@@ -91,9 +91,12 @@ class CarePlanPage extends Component {
   deleteCarePlanItem(name) {
     const ids = name.split('-');
     const carePlan = this.state.carePlan;
-    const index = this.getPhaseIndex(ids[0]);
+    const pIndex = this.getPhaseIndex(ids[0]);
+    const itemIndex = carePlan.phases[pIndex][ids[1]].findIndex((el) => (
+      el.id === ids[3]
+    ));
 
-    carePlan.phases[index][ids[1]].splice(ids[2], 1);
+    carePlan.phases[pIndex][ids[1]].splice(itemIndex, 1);
     return this.setState({ carePlan });
   }
 
@@ -101,7 +104,7 @@ class CarePlanPage extends Component {
     const carePlan = this.state.carePlan;
     const index = this.getPhaseIndex(reasonCode);
 
-    carePlan.phases[index][type].push('');
+    carePlan.phases[index][type].push({ id: shortId.generate(), text: '' });
     return this.setState({ carePlan });
   }
 
@@ -181,8 +184,8 @@ CarePlanPage.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { carePlan, settings } = state;
-  const { fhirUrl, patientId } = settings;
+  const { carePlan, settings, patient } = state;
+  const { fhirUrl } = settings;
   const { isFetching, data, saveCompleted, error } = carePlan
     || { isFetching: true, data: null, saveCompleted: null };
 
@@ -195,7 +198,7 @@ function mapStateToProps(state) {
 
   return {
     fhirUrl,
-    patientId,
+    patientId: patient.activePatient.id,
     carePlan: resource,
     isFetching,
     saveCompleted,

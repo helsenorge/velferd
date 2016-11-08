@@ -1,5 +1,6 @@
 import ReasonCodes from '../constants/reason-codes';
 import CarePlanCategories from '../constants/care-plan-categories';
+import shortId from 'shortid';
 
 export function getCategoryName(category) {
   switch (category) {
@@ -71,13 +72,13 @@ export function getMeasurements(resource) {
 function getActions(activities) {
   return activities
     .filter(activity => activity.detail.category.coding[0].code === 'procedure')
-    .map(activity => activity.detail.description);
+    .map(activity => ({ id: shortId.generate(), text: activity.detail.description }));
 }
 
 function getMedications(activities) {
   return activities
     .filter(activity => activity.detail.category.coding[0].code === 'drug')
-    .map(activity => activity.detail.description);
+    .map(activity => ({ id: shortId.generate(), text: activity.detail.description }));
 }
 
 function getQuestionnaire(activities) {
@@ -111,7 +112,7 @@ export function getPhase(resource, reasonCode) {
 
   const symptoms = !conditionActivity ? []
     : conditionActivity.detail.reasonReference.map(
-    ref => conditions[ref.reference.substring(1)]);
+    ref => ({ id: shortId.generate(), text: conditions[ref.reference.substring(1)] }));
 
   return {
     reasonCode,

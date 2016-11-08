@@ -8,34 +8,38 @@ import { getMeasurementName, getUnit } from '../../../../helpers/observation-hel
 
 class Measurements extends Component {
 
-  getMeasurementHigh(code) {
-    switch (code) {
-    case ObservationCodes.weight:
-      return 100;
-    case ObservationCodes.pulse:
-      return 100;
-    case ObservationCodes.pulseOximeter:
-      return 105;
-    case ObservationCodes.bloodPressure:
-      return 150;
-    default:
-      return null;
+  getHighAndLow(code, entries) {
+    if (code === ObservationCodes.pulseOximeter) {
+      return { low: 70, high: 100 };
     }
-  }
+    if (code === ObservationCodes.bloodPressure) {
+      const values = { systolic: [], diastolic: [] };
 
-  getMeasurementLow(code) {
-    switch (code) {
-    case ObservationCodes.weight:
-      return 55;
-    case ObservationCodes.pulse:
-      return 50;
-    case ObservationCodes.pulseOximeter:
-      return 88;
-    case ObservationCodes.bloodPressure:
-      return 50;
-    default:
-      return null;
+      entries.forEach(entry => {
+        entry.resource.component.filter(c => c.valueQuantity).forEach(component => {
+          if (component.code.coding[0].code === ObservationCodes.bloodPressureSystolic) {
+            values.systolic.push(component.valueQuantity.value);
+          }
+          if (component.code.coding[0].code === ObservationCodes.bloodPressureDiastolic) {
+            values.diastolic.push(component.valueQuantity.value);
+          }
+        });
+      });
+
+      return {
+        low: Math.min(...values.diastolic) - 10,
+        high: Math.max(...values.systolic) + 10 };
     }
+
+    const values = entries.map(entry => {
+      if (entry.resource.valueQuantity) {
+        return entry.resource.valueQuantity.value;
+      }
+      return null;
+    }).filter(value => value !== null);
+    return {
+      low: Math.min(...values) - 10,
+      high: Math.max(...values) + 10 };
   }
 
   getIdealValuesString(idealValues, unit) {
@@ -59,7 +63,7 @@ class Measurements extends Component {
       point.value.push(item.resource.valueQuantity.value);
       point.unit = unit;
     }
-    else {
+    else if (item.resource.component) {
       item.resource.component.forEach((component) => {
         if (component.valueQuantity
           && component.code.coding[0].code !== ObservationCodes.bloodPressureMean) {
@@ -72,13 +76,14 @@ class Measurements extends Component {
   }
 
   render() {
-    const { code, data, idealValues } = this.props;
+    const { code, data, idealValues, fromDate, toDate, selectedDate, icon } = this.props;
 
     const unit = getUnit(code);
     let points = data.entry.map((item) => this.getDataPoint(item, unit));
     const name = getMeasurementName(code);
     const idealValue = this.getIdealValuesString(idealValues, unit);
     const latestValue = this.getDataPoint(data.entry[0], unit);
+    const highAndLow = this.getHighAndLow(code, data.entry);
 
     return (
       <div className="measurement">
@@ -87,16 +92,16 @@ class Measurements extends Component {
             name={name}
             unit={unit}
             idealValue={idealValue}
-            icon={this.props.icon}
+            icon={icon}
           />
           <Chart
             dataPoints={points}
-            high={this.getMeasurementHigh(this.props.code)}
-            low={this.getMeasurementLow(this.props.code)}
-            fromDate={this.props.fromDate}
-            toDate={this.props.toDate}
-            selectedDate={this.props.selectedDate}
-            idealValues={this.props.idealValues}
+            high={highAndLow.high}
+            low={highAndLow.low}
+            fromDate={fromDate}
+            toDate={toDate}
+            selectedDate={selectedDate}
+            idealValues={idealValues}
           />
         </div>
         <LatestMeasurement

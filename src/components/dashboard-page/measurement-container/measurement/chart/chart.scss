@@ -24,8 +24,9 @@
     fill: $chateau-green;
   }
 
-  .selected-column .ct-area {
-    fill: #fff;
+  .chart-overlay .ct-area {
+    fill:#000000;
+    fill-opacity: 0.04
   }
 
   .ct-grid {
