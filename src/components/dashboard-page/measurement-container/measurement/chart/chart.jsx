@@ -113,6 +113,7 @@ class Chart extends Component {
     };
 
     const dateRange = calculateDateRange(fromDate, toDate);
+    console.log(dateRange);
 
     const options = {
       showPoint: dateRange <= 14,
@@ -121,7 +122,7 @@ class Chart extends Component {
       chartPadding: {
         top: 0,
         right: 0,
-        bottom: -30,
+        bottom: 0,
         left: 0,
       },
       axisY: {
@@ -132,6 +133,7 @@ class Chart extends Component {
         showLabel: true,
       },
       axisX: {
+        offset: 0,
         showLabel: false,
         type: Chartist.FixedScaleAxis,
         low: Math.floor(fromDate.getTime() / 1000),

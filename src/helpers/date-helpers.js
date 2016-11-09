@@ -64,14 +64,9 @@ export function filterQuestionnaireResponses(entries, fromDate, toDate) {
 }
 
 export function calculateDateRange(startDate, endDate) {
-  const timeDiff = Math.abs(endDate.getTime() - startDate.getTime());
-  return Math.ceil(timeDiff / (1000 * 3600 * 24));
+  return Math.floor((endDate - startDate) / 86400000);
 }
 
 export function getNumberofColumnsinChart(dateRange) {
-  if (dateRange >= 90) {
-    return 14;
-  }
-
   return dateRange - 1;
 }
