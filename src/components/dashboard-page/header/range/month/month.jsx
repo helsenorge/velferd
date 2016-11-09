@@ -28,16 +28,27 @@ const Month = ({ month, fromDate, toDate, activeRange }) => {
     }
   }
 
+  const isSecondLastDayOfMonth = dates[0].getDate()
+    === new Date(fromDate.getYear(), month + 1, 0).getDate() - 1;
+
+  const isLastDayOfMonth = dates[0].getDate()
+    === new Date(fromDate.getYear(), month + 1, 0).getDate();
+
   const dateClasses = classNames('month__dates', `month__dates--${activeRange}`);
+  const monthNameClasses = classNames({
+    month__monthname: true,
+    'month__monthname--secondlast': isSecondLastDayOfMonth,
+    'month__monthname--last': isLastDayOfMonth,
+  });
   return (
     <div className="month">
-      <div className="month__monthname">{monthName}</div>
+      <div className={monthNameClasses}>{monthName}</div>
       <ol className={dateClasses}>
         {
-          dates.map((date) => {
-            const dateObj = new Date(date);
-            return (<li key={dateObj.getTime()} className="month__date">{dateObj.getDate()}.</li>);
-          })
+          dates.map((date) => (
+            <li key={date.getTime()} className="month__date">{date.getDate()}.</li>
+            )
+          )
         }
       </ol>
     </div>

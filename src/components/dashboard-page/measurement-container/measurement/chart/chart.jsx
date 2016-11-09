@@ -113,7 +113,6 @@ class Chart extends Component {
     };
 
     const dateRange = calculateDateRange(fromDate, toDate);
-    console.log(dateRange);
 
     const options = {
       showPoint: dateRange <= 14,

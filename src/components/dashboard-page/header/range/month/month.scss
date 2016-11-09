@@ -10,6 +10,17 @@
     text-transform: uppercase;
     font-weight: 600;
     margin-bottom: 7px;
+
+    &--secondlast {
+      position: relative;
+      left: -64.87px;
+    }
+
+    &--last {
+      width: 0;
+      position: relative;
+      left: calc(-64.87px * 2);
+    }
   }
 
   &__dates {
