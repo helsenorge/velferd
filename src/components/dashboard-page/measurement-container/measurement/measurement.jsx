@@ -31,7 +31,12 @@ class Measurements extends Component {
         high: Math.max(...values.systolic) + 10 };
     }
 
-    const values = entries.map(entry => parseInt(entry.resource.valueQuantity.value, 10));
+    const values = entries.map(entry => {
+      if (entry.resource.valueQuantity) {
+        return entry.resource.valueQuantity.value;
+      }
+      return null;
+    }).filter(value => value !== null);
     return {
       low: Math.min(...values) - 10,
       high: Math.max(...values) + 10 };
@@ -58,7 +63,7 @@ class Measurements extends Component {
       point.value.push(item.resource.valueQuantity.value);
       point.unit = unit;
     }
-    else {
+    else if (item.resource.component) {
       item.resource.component.forEach((component) => {
         if (component.valueQuantity
           && component.code.coding[0].code !== ObservationCodes.bloodPressureMean) {
