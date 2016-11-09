@@ -6,21 +6,63 @@
     //border-right: 4px solid #E1E1E1;
   }
 
-  &__monthname {
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 7px;
+  &--14 {
+    .month__dates {
+      display: flex;
+    }
 
-    &--secondlast {
+    .month__date {
+      width: 64.87px;
+    }
+
+    .month__monthname--1 {
       position: relative;
       left: -64.87px;
     }
 
-    &--last {
+    .month__monthname--0 {
       width: 0;
       position: relative;
       left: calc(-64.87px * 2);
     }
+  }
+
+  &--30 {
+    .month__dates {
+      display: flex;
+    }
+
+    .month__date {
+      width: 28.5312499px;
+    }
+
+    .month__monthname--3 {
+      position: relative;
+      left: -28.5312499px;
+    }
+
+    .month__monthname--2 {
+      position: relative;
+      left: calc(-28.5312499px * 2);
+    }
+
+    .month__monthname--1 {
+      width: 0;
+      position: relative;
+      left: calc(-28.5312499px * 3);
+    }
+
+    .month__monthname--0 {
+      width: 0;
+      position: relative;
+      left: calc(-64.87px * 2);
+    }
+  }
+
+  &__monthname {
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 7px;
   }
 
   &__dates {
@@ -28,19 +70,6 @@
     margin: 0;
     padding: 0;
     display: none;
-
-    &--14,
-    &--30 {
-      display: flex;
-    }
-  }
-
-  &__dates--14 .month__date {
-    width: 64.87px;
-  }
-
-  &__dates--30 .month__date {
-    width: 28.5312499px;
   }
 
   &__date {
