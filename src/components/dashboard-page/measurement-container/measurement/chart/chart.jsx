@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import ChartistGraph from 'react-chartist';
 import Chartist from 'chartist';
-import { formatDate, calculateDateRange, getNumberofColumnsinChart }
+import { calculateDateRange, getNumberofColumnsinChart }
   from '../../../../../helpers/date-helpers.js';
 import './chart.scss';
 
