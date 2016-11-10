@@ -116,6 +116,22 @@ class Chart extends Component {
 
     const dateRange = calculateDateRange(fromDate, toDate);
 
+    let divisor;
+    let ticks;
+
+    if (dateRange > 30) {
+      ticks = [];
+      const firstTick = new Date(fromDate.getFullYear(), fromDate.getMonth(), 1, 24, 0, 0, 0);
+      firstTick.setMonth(firstTick.getMonth() + 1);
+
+      for (let d = firstTick; d < toDate; d.setMonth(d.getMonth() + 1)) {
+        ticks.push(Math.floor(d.getTime() / 1000));
+      }
+    }
+    else {
+      divisor = getNumberofColumnsinChart(dateRange);
+    }
+
     const options = {
       showPoint: dateRange <= 14,
       lineSmooth: false,
@@ -135,14 +151,11 @@ class Chart extends Component {
       },
       axisX: {
         offset: 0,
-        showLabel: false,
         type: Chartist.FixedScaleAxis,
         low: Math.floor(fromDate.getTime() / 1000),
         high: Math.floor(toDate.getTime() / 1000),
-        divisor: getNumberofColumnsinChart(dateRange),
-        labelInterpolationFnc(value) {
-          return formatDate(new Date(value * 1000));
-        },
+        divisor,
+        ticks,
       },
       series: {
         referenceValues: {
