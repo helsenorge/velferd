@@ -1,5 +1,6 @@
 import { get } from '../helpers/api';
 import { discardAuthToken } from '../actions/auth';
+import { BirthNumberSystemIdentifier } from '../constants/patient.js';
 
 export const SET_ACTIVE_PATIENT = 'SET_ACTIVE_PATIENT';
 export const REQUEST_PATIENT = 'REQUEST_PATIENT';
@@ -64,8 +65,7 @@ export function fetchPatientByIdentifier(fhirUrl, value) {
     }
 
     dispatch(requestPatients());
-    const systemIdentifier = '2.16.578.1.12.4.1.1.8116';
-    const identifier = `${systemIdentifier}|${value}`;
+    const identifier = `${BirthNumberSystemIdentifier}|${value}`;
     const url = `${fhirUrl}/Patient?identifier=${identifier}`;
     return get(url, token)
       .then(response => response.json())
