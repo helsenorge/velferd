@@ -24,6 +24,12 @@
     display: flex;
     flex-direction: row;
   }
+
+  &__months {
+    display: flex;
+    width: 856.41px;
+    overflow: hidden;
+  }
 }
 
 .range__button {
@@ -42,7 +48,7 @@
   }
 
   &--rev {
-    margin-right: 1rem;
+    margin-right: 3.5rem;
   }
 
   &--fwd {

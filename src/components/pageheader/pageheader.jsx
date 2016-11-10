@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { getCategoryName } from '../../helpers/care-plan-helpers.js';
+import { getBirthNumber } from '../../helpers/patient-helpers.js';
 import './pageheader.scss';
 
 const PageHeader = ({ patient, user, carePlanCategory }) => {
@@ -11,11 +12,13 @@ const PageHeader = ({ patient, user, carePlanCategory }) => {
     patientName = `${given} ${family}`;
   }
 
+  const birthNumber = getBirthNumber(patient);
+
   return (
     <header className="pageheader">
       <div className="pageheader__wrapper">
         <span>
-          {patientName}, {getCategoryName(carePlanCategory)}
+          {patientName} {birthNumber}, {getCategoryName(carePlanCategory)}
         </span>
         <span>
           Innlogget som: {`${user.name.given} ${user.name.family}`}

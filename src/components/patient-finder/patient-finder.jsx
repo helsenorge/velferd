@@ -5,6 +5,7 @@ import { setActivePatient,
   fetchPatients,
   fetchPatientByIdentifier } from '../../actions/patient';
 import { fetchCarePlan } from '../../actions/care-plan';
+import { getBirthNumber, getName } from '../../helpers/patient-helpers.js';
 import TextInput from '../text-input/text-input.jsx';
 
 class PatientsFinder extends Component {
@@ -91,19 +92,9 @@ class PatientsFinder extends Component {
 
     data.entry.forEach(entry => {
       const patient = entry.resource;
-      let patientName;
-      let initial = ' ';
-
-      if (patient.name && patient.name.length > 0) {
-        const name = patient.name[0];
-        const given = name.given ? name.given.join(' ') : '';
-        const family = name.family ? name.family.join(' ').trim() : '';
-        patientName = `${family}, ${given}`;
-
-        if (family) {
-          initial = family.substring(0, 1);
-        }
-      }
+      const patientName = getName(patient);
+      const initial = patientName ? patientName.substring(0, 1) : ' ';
+      const birthNumber = getBirthNumber(patient);
 
       if (!patientsByInitial[initial]) {
         patientsByInitial[initial] = [];
@@ -114,7 +105,7 @@ class PatientsFinder extends Component {
           <button
             onClick={() => this.handlePatientClick(patient, patientName)}
           >
-            {patientName} - {patient.id}
+            {patientName} - {birthNumber}
           </button>
         </li>
         );
@@ -149,7 +140,7 @@ class PatientsFinder extends Component {
         recentlyViewed.push(
           <li key={key}>
             <button onClick={() => this.handleLastViewedPatientClick(key)}>
-              {lastViewed[key]} - {key}
+              {lastViewed[key]}
             </button>
           </li>
         );
