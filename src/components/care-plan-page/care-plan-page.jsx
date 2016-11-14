@@ -119,15 +119,15 @@ class CarePlanPage extends Component {
   }
 
   saveCarePlan(event) {
-    const { dispatch, fhirUrl, patientId } = this.props;
+    const { dispatch, patientId } = this.props;
     event.preventDefault();
     this.setState({ saving: true });
-    dispatch(saveCarePlan(fhirUrl, patientId, this.state.carePlan));
+    dispatch(saveCarePlan(patientId, this.state.carePlan));
   }
 
   createCarePlan(type) {
-    const { dispatch, fhirUrl, patientId } = this.props;
-    dispatch(createCarePlan(fhirUrl, patientId, type));
+    const { dispatch, patientId } = this.props;
+    dispatch(createCarePlan(patientId, type));
   }
 
   render() {
@@ -174,7 +174,6 @@ class CarePlanPage extends Component {
 }
 
 CarePlanPage.propTypes = {
-  fhirUrl: PropTypes.string.isRequired,
   patientId: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   saveCompleted: PropTypes.bool,
@@ -184,8 +183,7 @@ CarePlanPage.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { carePlan, settings, patient } = state;
-  const { fhirUrl } = settings;
+  const { carePlan, patient } = state;
   const { isFetching, data, saveCompleted, error } = carePlan
     || { isFetching: true, data: null, saveCompleted: null };
 
@@ -197,7 +195,6 @@ function mapStateToProps(state) {
   }
 
   return {
-    fhirUrl,
     patientId: patient.activePatient.id,
     carePlan: resource,
     isFetching,

@@ -26,7 +26,7 @@ function useMock() {
   return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
 }
 
-export function fetchObservations(fhirUrl, code, patientId) {
+export function fetchObservations(code, patientId) {
   if (useMock()) {
     const json = require( `../mock/${code}.observations.json`); // eslint-disable-line
     return dispatch => dispatch(receiveObservations(code, patientId, json));
@@ -34,7 +34,7 @@ export function fetchObservations(fhirUrl, code, patientId) {
 
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
       return dispatch(discardAuthToken());

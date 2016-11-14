@@ -21,8 +21,8 @@ class HistoryContainer extends Component {
   toggleOpened() {
     const isOpened = !this.state.isOpened;
     if (isOpened) {
-      const { dispatch, fhirUrl, carePlanId } = this.props;
-      dispatch(fetchCarePlanHistory(fhirUrl, carePlanId));
+      const { dispatch, carePlanId } = this.props;
+      dispatch(fetchCarePlanHistory(carePlanId));
     }
     this.setState({ isOpened });
   }
@@ -58,7 +58,6 @@ class HistoryContainer extends Component {
 }
 
 HistoryContainer.propTypes = {
-  fhirUrl: PropTypes.string.isRequired,
   carePlanId: PropTypes.string.isRequired,
   versions: PropTypes.array,
   isFetching: PropTypes.bool.isRequired,
@@ -66,7 +65,7 @@ HistoryContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { carePlan, settings } = state;
+  const { carePlan } = state;
   let isFetching = true;
   let versions = [];
 
@@ -78,10 +77,7 @@ function mapStateToProps(state) {
     }
   }
 
-  const { fhirUrl } = settings;
-
   return {
-    fhirUrl,
     versions,
     isFetching,
   };
