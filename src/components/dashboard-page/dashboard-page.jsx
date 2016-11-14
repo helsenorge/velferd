@@ -120,7 +120,6 @@ class DashboardPage extends Component {
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
           selectedDate={this.state.selectedDate}
-          questionnaireId={this.props.questionnaireId}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}
@@ -153,14 +152,12 @@ class DashboardPage extends Component {
 }
 
 DashboardPage.propTypes = {
-  questionnaireId: PropTypes.string.isRequired,
   patientGoal: PropTypes.string,
   carePlanLastUpdated: React.PropTypes.instanceOf(Date),
 };
 
 function mapStateToProps(state) {
-  const { settings, carePlan } = state;
-  const { questionnaireId } = settings;
+  const { carePlan } = state;
 
   let patientGoal;
   let carePlanLastUpdated;
@@ -172,7 +169,6 @@ function mapStateToProps(state) {
   }
 
   return {
-    questionnaireId,
     patientGoal,
     carePlanLastUpdated,
   };

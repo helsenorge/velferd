@@ -24,7 +24,7 @@ function useMock() {
   return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
 }
 
-export function fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId) {
+export function fetchQuestionnaireResponses(patientId) {
   if (useMock()) {
     const json = require( `../mock/questionnaire-responses.json`); // eslint-disable-line
     return dispatch => dispatch(receivetQuestionnaireResponses(patientId, json));
@@ -32,7 +32,7 @@ export function fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId)
 
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
       return dispatch(discardAuthToken());
@@ -40,8 +40,7 @@ export function fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId)
 
     dispatch(requestQuestionnaireResponses(patientId));
     const url =
-    `${fhirUrl}/QuestionnaireResponse?_count=500&_sort:asc=authored&patient=${patientId}
-    &questionnaire=${questionnaireId}`;
+    `${fhirUrl}/QuestionnaireResponse?_count=500&_sort:asc=authored&patient=${patientId}`;
     return get(url, token)
       .then(response => response.json())
       .then(json => dispatch(receivetQuestionnaireResponses(patientId, json)));

@@ -7,8 +7,8 @@ import Measurement from './measurement/measurement.jsx';
 class MeasurementsContainer extends Component {
 
   componentDidMount() {
-    const { dispatch, fhirUrl, patientId } = this.props;
-    dispatch(fetchObservations(fhirUrl, this.props.code, patientId));
+    const { dispatch, patientId } = this.props;
+    dispatch(fetchObservations(this.props.code, patientId));
   }
 
   render() {
@@ -36,7 +36,6 @@ class MeasurementsContainer extends Component {
 }
 
 MeasurementsContainer.propTypes = {
-  fhirUrl: PropTypes.string.isRequired,
   patientId: PropTypes.string.isRequired,
   code: PropTypes.string.isRequired,
   data: PropTypes.object,
@@ -51,7 +50,7 @@ MeasurementsContainer.propTypes = {
 };
 
 function mapStateToProps(state, ownProps) {
-  const { observationsByCode, settings, carePlan, patient } = state;
+  const { observationsByCode, carePlan, patient } = state;
   const {
     isFetching,
     lastUpdated,
@@ -70,10 +69,7 @@ function mapStateToProps(state, ownProps) {
     idealValues = measurement.goal;
   }
 
-  const { fhirUrl } = settings;
-
   return {
-    fhirUrl,
     patientId: patient.activePatient.id,
     data,
     isFetching,
