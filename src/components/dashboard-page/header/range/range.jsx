@@ -3,6 +3,7 @@ import './range.scss';
 import Icon from '../../../icon/icon.jsx';
 import pil from '../../../../../svg/pil-venstre.svg';
 import Month from './month/month.jsx';
+import classNames from 'classnames';
 
 class Range extends Component {
   constructor(props) {
@@ -71,6 +72,9 @@ class Range extends Component {
       }
     }
 
+    const rangeClasses = classNames('range__months', {
+      'range__months--borders': activeRange >= 90,
+    });
     return (
       <nav className="range" ref="range">
         <div className="range__wrapper">
@@ -83,7 +87,7 @@ class Range extends Component {
               <span className="range__text--rev">Eldre</span>
             </button>
           </div>
-          <div className="range__months">
+          <div className={rangeClasses}>
             {months.map((month) =>
               <Month
                 key={month}

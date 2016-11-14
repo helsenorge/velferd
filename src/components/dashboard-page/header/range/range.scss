@@ -29,6 +29,30 @@
     display: flex;
     width: 856.41px;
     overflow: hidden;
+
+    &--borders {
+      position: relative;
+
+      &::before {
+        content: "";
+        height: 50%;
+        width: 2px;
+        background: #E2E1E1;
+        position: absolute;
+        left: 0;
+        top: 25%;
+      }
+
+      &::after {
+        content: "";
+        height: 50%;
+        width: 2px;
+        background: #E2E1E1;
+        position: absolute;
+        right: 0;
+        top: 25%;
+      }
+    }
   }
 }
 
