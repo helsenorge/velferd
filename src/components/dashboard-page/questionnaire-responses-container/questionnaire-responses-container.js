@@ -7,8 +7,8 @@ import { bindActionCreators } from 'redux';
 class QuestionnaireResponsesContainer extends Component {
 
   componentDidMount() {
-    const { fhirUrl, patientId, questionnaireId } = this.props;
-    this.props.actions.fetchQuestionnaireResponses(fhirUrl, patientId, questionnaireId);
+    const { patientId } = this.props;
+    this.props.actions.fetchQuestionnaireResponses(patientId);
   }
 
   render() {
@@ -34,9 +34,7 @@ class QuestionnaireResponsesContainer extends Component {
 }
 
 QuestionnaireResponsesContainer.propTypes = {
-  fhirUrl: PropTypes.string.isRequired,
   patientId: PropTypes.string.isRequired,
-  questionnaireId: PropTypes.string.isRequired,
   data: PropTypes.object,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
@@ -48,7 +46,7 @@ QuestionnaireResponsesContainer.propTypes = {
 };
 
 function mapStateToProps(state) {
-  const { questionnaireResponses, settings, patient } = state;
+  const { questionnaireResponses, patient } = state;
   const {
     isFetching,
     lastUpdated,
@@ -58,10 +56,7 @@ function mapStateToProps(state) {
     data: null,
   };
 
-  const { fhirUrl } = settings;
-
   return {
-    fhirUrl,
     patientId: patient.activePatient.id,
     data,
     isFetching,

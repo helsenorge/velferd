@@ -46,15 +46,15 @@ class PatientsFinder extends Component {
   }
 
   search() {
-    const { dispatch, fhirUrl } = this.props;
+    const { dispatch } = this.props;
     const { searchString } = this.state;
     const isPersonNumber = /^([0-9]){11}$/.test(searchString);
 
     if (isPersonNumber) {
-      dispatch(fetchPatientByIdentifier(fhirUrl, this.state.searchString));
+      dispatch(fetchPatientByIdentifier(this.state.searchString));
     }
     else {
-      dispatch(fetchPatients(fhirUrl, this.state.searchString));
+      dispatch(fetchPatients(this.state.searchString));
     }
   }
 
@@ -65,7 +65,7 @@ class PatientsFinder extends Component {
   }
 
   handlePatientClick(patient, patientName) {
-    const { dispatch, fhirUrl } = this.props;
+    const { dispatch } = this.props;
     const { lastViewed } = this.state;
     lastViewed[patient.id] = patientName;
 
@@ -73,14 +73,14 @@ class PatientsFinder extends Component {
     this.setState({ lastViewed });
 
     dispatch(setActivePatient(patient));
-    dispatch(fetchCarePlan(fhirUrl, patient.id));
+    dispatch(fetchCarePlan(patient.id));
   }
 
   handleLastViewedPatientClick(patientId) {
-    const { dispatch, fhirUrl } = this.props;
+    const { dispatch } = this.props;
 
-    dispatch(fetchAndSetActivePatient(fhirUrl, patientId));
-    dispatch(fetchCarePlan(fhirUrl, patientId));
+    dispatch(fetchAndSetActivePatient(patientId));
+    dispatch(fetchCarePlan(patientId));
   }
 
   groupPatientsByInitial(data) {
@@ -167,17 +167,14 @@ class PatientsFinder extends Component {
 
 PatientsFinder.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  fhirUrl: PropTypes.string.isRequired,
   data: PropTypes.object,
 };
 
 function mapStateToProps(state) {
-  const { patient, settings } = state;
+  const { patient } = state;
   const { data } = patient;
-  const { fhirUrl } = settings;
 
   return {
-    fhirUrl,
     data,
   };
 }

@@ -58,10 +58,10 @@ function completeSaveCarePlan(saveCompleted, error) {
   };
 }
 
-export function fetchCarePlanHistory(fhirUrl, carePlanId) {
+export function fetchCarePlanHistory(carePlanId) {
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
       return dispatch(discardAuthToken());
@@ -87,10 +87,10 @@ function shouldFetchCarePlan(state) {
   return carePlan.didInvalidate;
 }
 
-export function fetchCarePlan(fhirUrl, patientId) {
+export function fetchCarePlan(patientId) {
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
       return dispatch(discardAuthToken());
@@ -104,10 +104,10 @@ export function fetchCarePlan(fhirUrl, patientId) {
   };
 }
 
-export function fetchCarePlanIfNeeded(fhirUrl, patientId) {
+export function fetchCarePlanIfNeeded(patientId) {
   return (dispatch, getState) => {
     if (shouldFetchCarePlan(getState())) {
-      return dispatch(fetchCarePlan(fhirUrl, patientId));
+      return dispatch(fetchCarePlan(patientId));
     }
     return Promise.resolve();
   };
@@ -314,10 +314,10 @@ function toFhirCarePlan(patientId, carePlan, user) {
     contained);
 }
 
-export function createCarePlan(fhirUrl, patientId, type) {
+export function createCarePlan(patientId, type) {
   return (dispatch, getState) => {
     const { user, token, expiration } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
       return dispatch(discardAuthToken());
@@ -329,17 +329,17 @@ export function createCarePlan(fhirUrl, patientId, type) {
 
     return post(url, resource, token)
       .then(() => {
-        dispatch(fetchCarePlan(fhirUrl, patientId));
+        dispatch(fetchCarePlan(patientId));
       })
       .catch(error => console.error(error));
   };
 }
 
-export function saveCarePlan(fhirUrl, patientId, carePlan) {
+export function saveCarePlan(patientId, carePlan) {
   return (dispatch, getState) => {
     const { data } = getState().carePlan;
     const { user, token, expiration } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
       return dispatch(discardAuthToken());
@@ -352,7 +352,7 @@ export function saveCarePlan(fhirUrl, patientId, carePlan) {
     return put(url, updatedResource, token)
       .then(() => {
         dispatch(completeSaveCarePlan(true));
-        dispatch(fetchCarePlan(fhirUrl, patientId));
+        dispatch(fetchCarePlan(patientId));
       })
       .catch(error => dispatch(completeSaveCarePlan(false, `Saving failed. ${error}`)));
   };

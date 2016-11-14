@@ -1,9 +1,37 @@
 .month {
   display: flex;
   flex-direction: column;
+  position: relative;
 
-  &:not(:last-of-type) {
-    //border-right: 4px solid #E1E1E1;
+  &__monthname {
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 7px;
+    padding-left: 0.5rem;
+  }
+
+  &__dates {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+  }
+
+  &__date {
+    text-align: center;
+    border-left: 1px solid #E1E1E1;
+  }
+
+  &--14,
+  &--30 {
+    &::after {
+      content: "";
+      width: 4px;
+      height: 100%;
+      background: #E2E1E1;
+      position: absolute;
+      right: -2px;
+    }
   }
 
   &--14 {
@@ -59,21 +87,192 @@
     }
   }
 
-  &__monthname {
-    text-transform: uppercase;
-    font-weight: 600;
-    margin-bottom: 7px;
+  &--90 {
+    box-shadow: 1px 0 0 1px #E2E1E1;
+
+    .month__dates {
+      display: flex;
+    }
+
+    .month__date {
+      overflow: hidden;
+      width: calc(856.41px / 90);
+      border: 0;
+      visibility: hidden;
+    }
+
+    .month__monthname {
+      position: relative;
+      top: 25%;
+      padding-left: 0.5rem;
+
+      &--10 {
+        position: relative;
+        left: calc(-856.41px / 90);
+      }
+
+      &--9 {
+        position: relative;
+        left: calc(-856.41px / 90 * 2);
+      }
+
+      &--8 {
+        position: relative;
+        left: calc(-856.41px / 90 * 3);
+      }
+
+      &--7 {
+        position: relative;
+        left: calc(-856.41px / 90 * 4);
+      }
+
+      &--6 {
+        position: relative;
+        left: calc(-856.41px / 90 * 5);
+      }
+
+      &--5 {
+        position: relative;
+        width: 0;
+        left: calc(-856.41px / 90 * 6);
+      }
+
+      &--4 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 90 * 7);
+      }
+
+      &--3,
+      &--2,
+      &--1,
+      &--0 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 90 * 8);
+      }
+    }
   }
 
-  &__dates {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: none;
-  }
+  &--180 {
+    box-shadow: 1px 0 0 0 #E2E1E1;
+    position: relative;
 
-  &__date {
-    text-align: center;
-    border-left: 1px solid #E1E1E1;
+    //gjem box-shadow på høyre side
+    &:last-child::after {
+      content: "";
+      height: 100%;
+      width: 1px;
+      background: #f6f6f6;
+      position: absolute;
+      right: -1px;
+    }
+
+    .month__dates {
+      display: flex;
+    }
+
+    .month__date {
+      overflow: hidden;
+      width: calc(856.41px / 180);
+      border: 0;
+      visibility: hidden;
+    }
+
+    .month__monthname {
+      position: relative;
+      top: 25%;
+      padding-left: 0.5rem;
+
+      &--16 {
+        position: relative;
+        left: calc(-856.41px / 180);
+      }
+
+      &--15 {
+        position: relative;
+        left: calc(-856.41px / 180 * 2);
+      }
+
+      &--14 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 3);
+      }
+
+      &--13 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 4);
+      }
+
+      &--12 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 5);
+      }
+
+      &--11 {
+        position: relative;
+        width: 0;
+        left: calc(-856.41px / 180 * 6);
+      }
+
+      &--10 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 7);
+      }
+
+      &--9 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 8);
+      }
+
+      &--8 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 9);
+      }
+
+      &--7 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 10);
+      }
+
+      &--6 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 11);
+      }
+
+      &--5 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 12);
+      }
+
+      &--4 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 13);
+      }
+
+      &--3 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 14);
+      }
+
+      &--2,
+      &--1,
+      &--0 {
+        width: 0;
+        position: relative;
+        left: calc(-856.41px / 180 * 16);
+      }
+    }
   }
 }

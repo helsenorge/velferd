@@ -6,7 +6,6 @@ import {
 export function settings(state = {
   authenticate: false,
   fhirUrl: 'http://continua.cloudapp.net/baseDstu2',
-  questionnaireId: '62763',
 }, action) {
   switch (action.type) {
   case SET_FHIR_URL:

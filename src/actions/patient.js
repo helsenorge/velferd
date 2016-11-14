@@ -37,10 +37,10 @@ function receivePatients(json) {
   };
 }
 
-export function fetchPatients(fhirUrl, name) {
+export function fetchPatients(name) {
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
       return dispatch(discardAuthToken());
@@ -55,10 +55,10 @@ export function fetchPatients(fhirUrl, name) {
   };
 }
 
-export function fetchPatientByIdentifier(fhirUrl, value) {
+export function fetchPatientByIdentifier(value) {
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
       return dispatch(discardAuthToken());
@@ -73,10 +73,10 @@ export function fetchPatientByIdentifier(fhirUrl, value) {
   };
 }
 
-export function fetchAndSetActivePatient(fhirUrl, patientId) {
+export function fetchAndSetActivePatient(patientId) {
   return (dispatch, getState) => {
     const { token, expiration } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
       return dispatch(discardAuthToken());

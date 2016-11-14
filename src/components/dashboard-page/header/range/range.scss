@@ -16,6 +16,7 @@
 
     .range__wrapper {
       max-width: 76rem;
+      min-width: 1200px;
       margin: 0 auto;
     }
   }
@@ -29,6 +30,32 @@
     display: flex;
     width: 856.41px;
     overflow: hidden;
+
+    &--borders {
+      position: relative;
+
+      &::before {
+        content: "";
+        height: 50%;
+        width: 2px;
+        background: #E2E1E1;
+        position: absolute;
+        left: 0;
+        top: 25%;
+        z-index: 1;
+      }
+
+      &::after {
+        content: "";
+        height: 50%;
+        width: 2px;
+        background: #E2E1E1;
+        position: absolute;
+        right: 0;
+        top: 25%;
+        z-index: 1;
+      }
+    }
   }
 }
 
