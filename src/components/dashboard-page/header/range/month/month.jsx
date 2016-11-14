@@ -29,7 +29,6 @@ const Month = ({ month, fromDate, toDate, activeRange }) => {
   }
   const daysFromLast =
   (new Date(fromDate.getYear(), month + 1, 0).getDate()) - dates[0].getDate();
-  console.log(daysFromLast);
 
   const monthClasses = classNames('month', `month--${activeRange}`);
   const monthNameClasses = classNames('month__monthname',
