@@ -124,7 +124,6 @@ class Chart extends Component {
       const firstTick = new Date(fromDate.getFullYear(), fromDate.getMonth(), 0, 24, 0, 0, 0);
       console.log(firstTick);
       firstTick.setMonth(firstTick.getMonth() + 1);
-      console.log(firstTick);
       for (let d = firstTick; d < toDate; d.setMonth(d.getMonth() + 1)) {
         ticks.push(Math.floor(d.getTime() / 1000));
       }
@@ -132,10 +131,6 @@ class Chart extends Component {
     else {
       divisor = getNumberofColumnsinChart(dateRange);
     }
-
-    console.log(dateRange);
-
-    console.log(ticks);
 
     const options = {
       showPoint: dateRange <= 14,

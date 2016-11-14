@@ -16,7 +16,7 @@
 
     .range__wrapper {
       max-width: 76rem;
-      min-width: 1220px;
+      min-width: 1200px;
       margin: 0 auto;
     }
   }
@@ -42,6 +42,7 @@
         position: absolute;
         left: 0;
         top: 25%;
+        z-index: 1;
       }
 
       &::after {
@@ -52,6 +53,7 @@
         position: absolute;
         right: 0;
         top: 25%;
+        z-index: 1;
       }
     }
   }
