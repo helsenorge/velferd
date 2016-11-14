@@ -24,7 +24,7 @@ function useMock() {
   return process.env.NODE_ENV && process.env.NODE_ENV.trim() === 'mock';
 }
 
-export function fetchQuestionnaireResponses(patientId, questionnaireId) {
+export function fetchQuestionnaireResponses(patientId) {
   if (useMock()) {
     const json = require( `../mock/questionnaire-responses.json`); // eslint-disable-line
     return dispatch => dispatch(receivetQuestionnaireResponses(patientId, json));
@@ -40,8 +40,7 @@ export function fetchQuestionnaireResponses(patientId, questionnaireId) {
 
     dispatch(requestQuestionnaireResponses(patientId));
     const url =
-    `${fhirUrl}/QuestionnaireResponse?_count=500&_sort:asc=authored&patient=${patientId}
-    &questionnaire=${questionnaireId}`;
+    `${fhirUrl}/QuestionnaireResponse?_count=500&_sort:asc=authored&patient=${patientId}`;
     return get(url, token)
       .then(response => response.json())
       .then(json => dispatch(receivetQuestionnaireResponses(patientId, json)));

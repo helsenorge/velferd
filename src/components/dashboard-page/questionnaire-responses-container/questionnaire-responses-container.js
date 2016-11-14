@@ -7,8 +7,8 @@ import { bindActionCreators } from 'redux';
 class QuestionnaireResponsesContainer extends Component {
 
   componentDidMount() {
-    const { patientId, questionnaireId } = this.props;
-    this.props.actions.fetchQuestionnaireResponses(patientId, questionnaireId);
+    const { patientId } = this.props;
+    this.props.actions.fetchQuestionnaireResponses(patientId);
   }
 
   render() {
@@ -35,7 +35,6 @@ class QuestionnaireResponsesContainer extends Component {
 
 QuestionnaireResponsesContainer.propTypes = {
   patientId: PropTypes.string.isRequired,
-  questionnaireId: PropTypes.string.isRequired,
   data: PropTypes.object,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
