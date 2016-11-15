@@ -22,50 +22,26 @@
   table-layout: fixed;
   width: 100%;
 
-  td {
+  td:not(:last-child) {
     border-right: 1px solid $desert-storm;
-    border-bottom: 1px solid $desert-storm;
     position: relative;
   }
 
-  td:first-child {
-    border-bottom: 1px solid transparent;
-  }
-
-  td:first-child::after,
-  td:last-child::after {
-    content: "";
-    position: absolute;
-    width: 25px;
-    height: 2px;
-    background: $desert-storm;
-    right: 0;
-    bottom: -1px;
-  }
-
-  td:last-child::after {
-    right: -25px;
-  }
-
-  tr:last-child td {
-    border-bottom: none;
-
-    &:last-child::after,
-    &:first-child::after {
-      content: initial;
-    }
+  .icon {
+    //display: none;
+    //height: 5px;
   }
 
   &__question {
-    width: 9rem;
+    width: 14.33%;
     word-break: break-word;
     padding: 0.5rem;
     padding-left: 0;
   }
 
   &__data {
+    padding: 0;
     text-align: center;
-    width: calc(100% - 4rem / 7);
 
     &--selected {
       background: $transparent-astronaut;

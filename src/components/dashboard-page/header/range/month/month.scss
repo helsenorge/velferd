@@ -22,8 +22,8 @@
     border-left: 1px solid #E1E1E1;
   }
 
-  &--14,
-  &--30 {
+  &--14:not(:last-child),
+  &--30:not(:last-child) {
     &::after {
       content: "";
       width: 4px;
@@ -35,7 +35,7 @@
   }
 
   &--14 {
-    $width: 60.171875px;
+    $width: 61.171875px;
 
     .month__dates {
       display: flex;
@@ -53,12 +53,12 @@
     .month__monthname--0 {
       width: 0;
       position: relative;
-      left: calc(-$width * 2);
+      left: calc(#{-$width} * 2);
     }
   }
 
   &--30 {
-    $width: 27.546875px;
+    $width: 28.546875px;
 
     .month__dates {
       display: flex;
@@ -75,19 +75,19 @@
 
     .month__monthname--2 {
       position: relative;
-      left: calc(-$width * 2);
+      left: calc(#{-$width} * 2);
     }
 
     .month__monthname--1 {
       width: 0;
       position: relative;
-      left: calc(-$width * 3);
+      left: calc(#{-$width} * 3);
     }
 
     .month__monthname--0 {
       width: 0;
       position: relative;
-      left: calc(-$width * 2);
+      left: calc(#{-$width} * 4);
     }
   }
 

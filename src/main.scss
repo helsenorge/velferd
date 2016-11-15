@@ -10,6 +10,13 @@ body {
   color: $tundora;
 }
 
+html {
+  box-sizing: border-box;
+}
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 .noscroll {
   overflow: hidden;
   width: 100vw;
