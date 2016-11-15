@@ -115,7 +115,6 @@ class Chart extends Component {
     };
 
     const dateRange = calculateDateRange(fromDate, toDate);
-
     let divisor;
     let ticks;
 

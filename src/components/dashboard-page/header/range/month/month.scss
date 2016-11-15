@@ -35,55 +35,59 @@
   }
 
   &--14 {
+    $width: 60.171875px;
+
     .month__dates {
       display: flex;
     }
 
     .month__date {
-      width: 64.87px;
+      width: $width;
     }
 
     .month__monthname--1 {
       position: relative;
-      left: -64.87px;
+      left: -$width;
     }
 
     .month__monthname--0 {
       width: 0;
       position: relative;
-      left: calc(-64.87px * 2);
+      left: calc(-$width * 2);
     }
   }
 
   &--30 {
+    $width: 27.546875px;
+
     .month__dates {
       display: flex;
     }
 
     .month__date {
-      width: 28.5312499px;
+      width: $width;
     }
 
     .month__monthname--3 {
       position: relative;
-      left: -28.5312499px;
+      left: -$width;
     }
 
     .month__monthname--2 {
       position: relative;
-      left: calc(-28.5312499px * 2);
+      left: calc(-$width * 2);
     }
 
     .month__monthname--1 {
       width: 0;
       position: relative;
-      left: calc(-28.5312499px * 3);
+      left: calc(-$width * 3);
     }
 
     .month__monthname--0 {
       width: 0;
       position: relative;
-      left: calc(-64.87px * 2);
+      left: calc(-$width * 2);
     }
   }
 
