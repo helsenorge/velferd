@@ -93,7 +93,7 @@
 
   &--90 {
     box-shadow: 1px 0 0 1px #E2E1E1;
-    $width: calc(840px / 90);
+    $width: 9.33333px;
 
     .month__dates {
       display: flex;
@@ -162,7 +162,7 @@
   &--180 {
     box-shadow: 1px 0 0 0 #E2E1E1;
     position: relative;
-    $width: calc(840px / 180);
+    $width: 4.6666666667px;
     //gjem box-shadow på høyre side
     &:last-child::after {
       content: "";
