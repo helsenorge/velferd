@@ -120,6 +120,7 @@ class DashboardPage extends Component {
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
           selectedDate={this.state.selectedDate}
+          activeRange={this.state.dayRange}
         />
         <MeasurementContainer
           fromDate={this.state.fromDate}

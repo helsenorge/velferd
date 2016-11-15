@@ -113,18 +113,20 @@ class QuestionnaireResponses extends Component {
   }
 
   render() {
-    const { data, fromDate, toDate, selectedDate } = this.props;
+    const { data, fromDate, toDate, selectedDate, activeRange } = this.props;
 
     const questions = this.getQuestions(data.entry);
     const rows = this.getRows(questions, fromDate, toDate, selectedDate);
     const latestValue = this.getLatestValue(questions, data.entry);
-
+    const tableClasses = classNames('questionnaire-responses-table', {
+      'questionnaire-responses-table--borders': activeRange < 90,
+    });
     return (
       <div className="questionnaire-responses">
         <div className="questionnaire-responses__chart">
           <Description name="Egenvurdering" icon={this.props.icon} />
           <div className="questionnaire-responses__table-container">
-            <table className="questionnaire-responses-table">
+            <table className={tableClasses}>
               <tbody>
                 {rows}
               </tbody>
@@ -145,6 +147,7 @@ QuestionnaireResponses.propTypes = {
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
+  activeRange: PropTypes.number.isRequired,
   icon: React.PropTypes.string,
 };
 

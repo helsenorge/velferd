@@ -22,7 +22,7 @@
   table-layout: fixed;
   width: 100%;
 
-  td:not(:last-child) {
+  &--borders td:not(:last-child) {
     border-right: 1px solid $desert-storm;
     position: relative;
   }
