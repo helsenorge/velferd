@@ -4,7 +4,7 @@ import { formatDate, getTime } from '../../../helpers/date-helpers';
 import Icon from '../../icon/icon.jsx';
 import iconCalendar from '../../../../svg/calendar.svg';
 import iconClock from '../../../../svg/clock.svg';
-import { getIcon } from '../../../helpers/questionnaire-response-helpers.js';
+import { getTransparentIcon } from '../../../helpers/questionnaire-response-helpers.js';
 
 const LatestMeasurement = ({ date, measurement, unit, questionnaireResponses }) => {
   let value;
@@ -30,14 +30,19 @@ const LatestMeasurement = ({ date, measurement, unit, questionnaireResponses }) 
       if (questionnaireResponses.hasOwnProperty(key)) {
         values.push(
           <div key={key}>
-            <Icon glyph={getIcon(questionnaireResponses[key])} width={20} height={20} />
+            <Icon
+              className="latest-measurement__smileyface"
+              glyph={getTransparentIcon(questionnaireResponses[key])}
+              width={20}
+              height={20}
+            />
           </div>
         );
       }
     });
 
     value = (
-      <div className="latest-measurement__valuewrapper">
+      <div className="latest-measurement__valuewrapper latest-measurement__valuewrapper--smileys">
         {values}
       </div>
     );

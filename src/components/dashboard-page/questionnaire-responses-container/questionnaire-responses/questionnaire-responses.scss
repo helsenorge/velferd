@@ -22,14 +22,13 @@
   table-layout: fixed;
   width: 100%;
 
+  tr:first-child td {
+    padding-top: 5rem;
+  }
+
   &--borders td:not(:last-child) {
     border-right: 1px solid $desert-storm;
     position: relative;
-  }
-
-  .icon {
-    //display: none;
-    //height: 5px;
   }
 
   &__question {
