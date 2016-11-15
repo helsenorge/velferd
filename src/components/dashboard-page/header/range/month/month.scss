@@ -93,6 +93,7 @@
 
   &--90 {
     box-shadow: 1px 0 0 1px #E2E1E1;
+    $width: calc(840px / 90);
 
     .month__dates {
       display: flex;
@@ -100,7 +101,7 @@
 
     .month__date {
       overflow: hidden;
-      width: calc(856.41px / 90);
+      width: $width;
       border: 0;
       visibility: hidden;
     }
@@ -112,39 +113,39 @@
 
       &--10 {
         position: relative;
-        left: calc(-856.41px / 90);
+        left: calc(#{-$width});
       }
 
       &--9 {
         position: relative;
-        left: calc(-856.41px / 90 * 2);
+        left: calc(#{-$width} * 2);
       }
 
       &--8 {
         position: relative;
-        left: calc(-856.41px / 90 * 3);
+        left: calc(#{-$width} * 3);
       }
 
       &--7 {
         position: relative;
-        left: calc(-856.41px / 90 * 4);
+        left: calc(#{-$width} * 4);
       }
 
       &--6 {
         position: relative;
-        left: calc(-856.41px / 90 * 5);
+        left: calc(#{-$width} * 5);
       }
 
       &--5 {
         position: relative;
         width: 0;
-        left: calc(-856.41px / 90 * 6);
+        left: calc(#{-$width} * 6);
       }
 
       &--4 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 90 * 7);
+        left: calc(#{-$width} * 7);
       }
 
       &--3,
@@ -153,7 +154,7 @@
       &--0 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 90 * 8);
+        left: calc(#{-$width} * 8);
       }
     }
   }
@@ -161,7 +162,7 @@
   &--180 {
     box-shadow: 1px 0 0 0 #E2E1E1;
     position: relative;
-
+    $width: calc(840px / 180);
     //gjem box-shadow på høyre side
     &:last-child::after {
       content: "";
@@ -178,7 +179,7 @@
 
     .month__date {
       overflow: hidden;
-      width: calc(856.41px / 180);
+      width: $width;
       border: 0;
       visibility: hidden;
     }
@@ -190,84 +191,84 @@
 
       &--16 {
         position: relative;
-        left: calc(-856.41px / 180);
+        left: calc(#{-$width});
       }
 
       &--15 {
         position: relative;
-        left: calc(-856.41px / 180 * 2);
+        left: calc(#{-$width} * 2);
       }
 
       &--14 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 3);
+        left: calc(#{-$width} * 3);
       }
 
       &--13 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 4);
+        left: calc(#{-$width} * 4);
       }
 
       &--12 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 5);
+        left: calc(#{-$width} * 5);
       }
 
       &--11 {
         position: relative;
         width: 0;
-        left: calc(-856.41px / 180 * 6);
+        left: calc(#{-$width} * 6);
       }
 
       &--10 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 7);
+        left: calc(#{-$width} * 7);
       }
 
       &--9 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 8);
+        left: calc(#{-$width} * 8);
       }
 
       &--8 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 9);
+        left: calc(#{-$width} * 9);
       }
 
       &--7 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 10);
+        left: calc(#{-$width} * 10);
       }
 
       &--6 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 11);
+        left: calc(#{-$width} * 11);
       }
 
       &--5 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 12);
+        left: calc(#{-$width} * 12);
       }
 
       &--4 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 13);
+        left: calc(#{-$width} * 13);
       }
 
       &--3 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 14);
+        left: calc(#{-$width} * 14);
       }
 
       &--2,
@@ -275,7 +276,7 @@
       &--0 {
         width: 0;
         position: relative;
-        left: calc(-856.41px / 180 * 16);
+        left: calc(#{-$width} * 16);
       }
     }
   }
