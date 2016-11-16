@@ -29,7 +29,7 @@
   }
 
   &--borders td:not(:last-child) {
-    border-right: 2px solid $mercury;
+    border-right: 1px solid $mercury;
     position: relative;
   }
 
@@ -49,7 +49,7 @@
   }
 
   &__border {
-    width: 2px;
+    width: 1px;
     height: 100%;
     background: $mercury;
     position: absolute;
