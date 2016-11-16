@@ -28,7 +28,7 @@
 
   &__months {
     display: flex;
-    width: 856.41px;
+    width: 840px;
     overflow: hidden;
 
     &--borders {
@@ -68,19 +68,18 @@
 
   &--rev,
   &--fwd {
-    display: flex;
-    width: 7rem;
+    width: 7.5rem;
     color: $atoll;
     align-items: center;
   }
 
   &--rev {
-    margin-right: 3.5rem;
+    margin-right: 3rem;
   }
 
   &--fwd {
     justify-content: space-between;
-    margin-left: 2rem;
+    margin-left: 1.5rem;
   }
 }
 
@@ -136,6 +135,14 @@
 
 .range__text--rev {
   margin-left: 10px;
+}
+
+.range__text--fwd {
+  margin-right: 10px;
+}
+
+.range__arrow {
+  vertical-align: middle;
 }
 
 .range__arrow--fwd {

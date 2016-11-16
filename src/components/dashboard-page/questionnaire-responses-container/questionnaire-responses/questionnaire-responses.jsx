@@ -1,15 +1,13 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
-import { filterQuestionnaireResponses, calculateDateRange, getNumberofColumnsinChart }
+import shortId from 'shortid';
+import { calculateDateRange }
   from '../../../../helpers/date-helpers.js';
 import './questionnaire-responses.scss';
 import LatestMeasurement from './../../latest-measurement/latest-measurement.jsx';
 import Description from './../../description/description.jsx';
 import Icon from '../../../icon/icon.jsx';
-import ansikt1 from '../../../../../svg/face1.svg';
-import ansikt2 from '../../../../../svg/face2.svg';
-import ansikt3 from '../../../../../svg/face3.svg';
-import QuestionnaireResponseCodes from '../../../../constants/questionnaire-response-codes';
+import { getIcon } from '../../../../helpers/questionnaire-response-helpers.js';
 
 class QuestionnaireResponses extends Component {
 
@@ -35,13 +33,9 @@ class QuestionnaireResponses extends Component {
 
   getRows(questions, fromDate, toDate, selectedDate) {
     const rows = [];
-    const dateRange = calculateDateRange(fromDate, toDate);
-    const cols = getNumberofColumnsinChart(dateRange);
-    const valuesPerCell = Math.floor(dateRange / cols);
-
     let selectedCellIndex = null;
 
-    if (selectedDate && valuesPerCell === 1) {
+    if (selectedDate) {
       selectedCellIndex = calculateDateRange(fromDate, selectedDate);
     }
 
@@ -49,7 +43,7 @@ class QuestionnaireResponses extends Component {
       if (questions.hasOwnProperty(key)) {
         const question = questions[key];
         const values = this.getValues(question, fromDate, toDate);
-        const cells = this.getCells(values, valuesPerCell, selectedCellIndex);
+        const cells = this.getCells(values, selectedCellIndex);
 
         rows.push(
           <tr key={key}>
@@ -72,65 +66,87 @@ class QuestionnaireResponses extends Component {
     return values;
   }
 
-  getCells(values, valuesPerCell, selectedCellIndex) {
-    let count = 0;
+  getCells(values, selectedCellIndex) {
     const cells = [];
-    let cellValue;
 
     for (let i = 0; i < values.length; i++) {
-      count ++;
-      const value = values[i];
+      const val = getIcon(values[i]);
+      const cellClasses = classNames(
+        'questionnaire-responses-table__data',
+        { 'questionnaire-responses-table__data--selected':
+          selectedCellIndex !== null && selectedCellIndex === i });
 
-      if (value && value !== 'empty') {
-        if (!cellValue || value < cellValue) {
-          cellValue = value;
-        }
-      }
-
-      if (count === valuesPerCell || i === value.length - 1) {
-        const val = this.getIcon(cellValue);
-        const cellClasses = classNames(
-          'questionnaire-responses-table__data',
-          { 'questionnaire-responses-table__data--selected':
-            selectedCellIndex !== null && selectedCellIndex === i });
-
-        cells.push(
-          <td className={cellClasses} key={i}>
-            <Icon glyph={val} width={20} height={20} />
-          </td>
-        );
-        count = 0;
-        cellValue = null;
-      }
+      cells.push(
+        <td className={cellClasses} key={i}>
+          <Icon glyph={val} width={20} height={20} />
+        </td>
+      );
     }
     return cells;
   }
 
-  getIcon(value) {
-    switch (value) {
-    case QuestionnaireResponseCodes.green.toString():
-      return ansikt1;
-    case QuestionnaireResponseCodes.yellow.toString():
-      return ansikt2;
-    case QuestionnaireResponseCodes.red.toString():
-      return ansikt3;
-    default:
-      return null;
+  getLatestValue(questions, entries) {
+    const values = {};
+    Object.keys(questions).forEach((key) => {
+      if (questions.hasOwnProperty(key)) {
+        values[key] = null;
+      }
+    });
+
+    let latestValue = { date: '', results: {} };
+
+    if (entries && entries.length > 0) {
+      const entry = entries[entries.length - 1];
+
+      for (let i = 0; i < entry.resource.group.group[0].question.length; i++) {
+        const question = entry.resource.group.group[0].question[i];
+        const value = question.answer[0].valueCoding.code;
+        values[question.linkId] = value;
+      }
+
+      latestValue = {
+        date: entry.resource.authored,
+        results: values,
+      };
     }
+
+    return latestValue;
+  }
+
+  createBorders() {
+    const months = document.getElementsByClassName('month');
+    const borders = [];
+    const boundingLeft = document.getElementsByClassName('range__wrapper')[0].
+      getBoundingClientRect().left;
+    for (let i = 1; i < months.length; i++) {
+      const styleLeft = months[i].getBoundingClientRect().left - boundingLeft;
+      borders.push((
+        <div
+          key={shortId.generate()}
+          style={{ left: styleLeft }}
+          className="questionnaire-responses-table__border"
+        />));
+    }
+    return borders;
   }
 
   render() {
-    const { data, fromDate, toDate, selectedDate } = this.props;
-    const entries = filterQuestionnaireResponses(data.entry, fromDate, toDate);
-    const questions = this.getQuestions(entries);
-    const rows = this.getRows(questions, fromDate, toDate, selectedDate);
+    const { data, fromDate, toDate, selectedDate, activeRange } = this.props;
 
+    const questions = this.getQuestions(data.entry);
+    const rows = this.getRows(questions, fromDate, toDate, selectedDate);
+    const latestValue = this.getLatestValue(questions, data.entry);
+    const tableClasses = classNames('questionnaire-responses-table', {
+      'questionnaire-responses-table--borders': activeRange < 90,
+    });
+    const borders = activeRange >= 90 ? this.createBorders() : null;
     return (
       <div className="questionnaire-responses">
         <div className="questionnaire-responses__chart">
-          <Description name="Egenvurdering" icon={this.props.icon} />
+          <Description name="Egenvurdering" />
           <div className="questionnaire-responses__table-container">
-            <table className="questionnaire-responses-table">
+            {borders}
+            <table className={tableClasses}>
               <tbody>
                 {rows}
               </tbody>
@@ -138,7 +154,8 @@ class QuestionnaireResponses extends Component {
           </div>
         </div>
         <LatestMeasurement
-          data={{ date: '2012', value: '', unit: '' }}
+          date={latestValue.date}
+          questionnaireResponses={latestValue.results}
         />
       </div>
     );
@@ -150,7 +167,7 @@ QuestionnaireResponses.propTypes = {
   fromDate: React.PropTypes.instanceOf(Date).isRequired,
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
-  icon: React.PropTypes.string,
+  activeRange: PropTypes.number.isRequired,
 };
 
 export default QuestionnaireResponses;

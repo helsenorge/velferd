@@ -68,5 +68,5 @@ export function calculateDateRange(startDate, endDate) {
 }
 
 export function getNumberofColumnsinChart(dateRange) {
-  return dateRange - 1;
+  return dateRange;
 }

@@ -4,8 +4,8 @@ import {
 
 
 export function settings(state = {
-  authenticate: false,
-  fhirUrl: 'http://continua.cloudapp.net/baseDstu2',
+  authenticate: true,
+  fhirUrl: 'http://helsamitest.imatiscloud.com/Imatis/WebServices/External/FHIR/fhir',
 }, action) {
   switch (action.type) {
   case SET_FHIR_URL:

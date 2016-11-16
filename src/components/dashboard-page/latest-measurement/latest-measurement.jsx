@@ -4,14 +4,50 @@ import { formatDate, getTime } from '../../../helpers/date-helpers';
 import Icon from '../../icon/icon.jsx';
 import iconCalendar from '../../../../svg/calendar.svg';
 import iconClock from '../../../../svg/clock.svg';
+import { getTransparentIcon } from '../../../helpers/questionnaire-response-helpers.js';
 
-const LatestMeasurement = ({ data }) => {
-  const { date, value, unit } = data;
-  let formattedValue = value;
+const LatestMeasurement = ({ date, measurement, unit, questionnaireResponses }) => {
+  let value;
 
-  if (value.length > 1) {
-    formattedValue = (<span>{value[0]}/<br />{value[1]}</span>);
+  if (measurement) {
+    let formattedValue = measurement;
+
+    if (measurement.length > 1) {
+      formattedValue = (<span>{measurement[0]}/<br />{measurement[1]}</span>);
+    }
+    value = (
+      <div className="latest-measurement__valuewrapper">
+        <span className="latest-measurement__value">{formattedValue}</span>
+        <span className="latest-measurement__unit">{unit}</span>
+      </div>
+    );
   }
+
+  let values = [];
+
+  if (questionnaireResponses) {
+    Object.keys(questionnaireResponses).forEach((key) => {
+      if (questionnaireResponses.hasOwnProperty(key)) {
+        values.push(
+          <div key={key}>
+            <Icon
+              className="latest-measurement__smileyface"
+              glyph={getTransparentIcon(questionnaireResponses[key])}
+              width={20}
+              height={20}
+            />
+          </div>
+        );
+      }
+    });
+
+    value = (
+      <div className="latest-measurement__valuewrapper latest-measurement__valuewrapper--smileys">
+        {values}
+      </div>
+    );
+  }
+
   return (
     <div className="latest-measurement">
       <div className="latest-measurement__headingwrapper">
@@ -25,16 +61,16 @@ const LatestMeasurement = ({ data }) => {
           <span>{getTime(date)}</span>
         </div>
       </div>
-      <div className="latest-measurement__valuewrapper">
-        <span className="latest-measurement__value">{formattedValue}</span>
-        <span className="latest-measurement__unit">{unit}</span>
-      </div>
+      {value}
     </div>
     );
 };
 
 LatestMeasurement.propTypes = {
-  data: PropTypes.object.isRequired,
+  date: PropTypes.string,
+  measurement: PropTypes.array,
+  questionnaireResponses: PropTypes.object,
+  unit: PropTypes.string,
 };
 
 export default LatestMeasurement;

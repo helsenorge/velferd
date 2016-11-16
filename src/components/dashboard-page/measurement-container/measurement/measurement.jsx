@@ -105,7 +105,9 @@ class Measurements extends Component {
           />
         </div>
         <LatestMeasurement
-          data={latestValue}
+          date={latestValue.date}
+          unit={latestValue.unit}
+          measurement={latestValue.value}
         />
       </div>
     );
