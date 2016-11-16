@@ -10,12 +10,12 @@ const Footer = ({ comment, author, lastUpdated }) => {
   const name = `${given} ${family}`;
 
   return (
-    <div className="footer">
-      <div className="footer__lastupdated">
+    <div className="careplan-footer">
+      <div className="careplan-footer__lastupdated">
         Sist endret {date} av {name}
       </div>
-      <p className="footer__comment">Kommentar: {comment}</p>
-      <Button className="footer__button">Kopier kommentar</Button>
+      <p className="careplan-footer__comment">Kommentar: {comment}</p>
+      <Button className="careplan-footer__button">Kopier kommentar</Button>
     </div>
   );
 };
