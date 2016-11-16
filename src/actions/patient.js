@@ -39,17 +39,17 @@ function receivePatients(json) {
 
 export function fetchPatients(name) {
   return (dispatch, getState) => {
-    const { token, expiration } = getState().auth;
+    const { token, expiration, useXAuthTokenHeader } = getState().auth;
     const { authenticate, fhirUrl } = getState().settings;
 
-    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+    if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
     }
 
     dispatch(requestPatients());
     const url =
     `${fhirUrl}/Patient?_count=500&name=${name}`;
-    return get(url, token)
+    return get(url, token, useXAuthTokenHeader)
       .then(response => response.json())
       .then(json => dispatch(receivePatients(json)));
   };
@@ -57,17 +57,17 @@ export function fetchPatients(name) {
 
 export function fetchPatientByIdentifier(value) {
   return (dispatch, getState) => {
-    const { token, expiration } = getState().auth;
+    const { token, expiration, useXAuthTokenHeader } = getState().auth;
     const { authenticate, fhirUrl } = getState().settings;
 
-    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+    if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
     }
 
     dispatch(requestPatients());
     const identifier = `${BirthNumberSystemIdentifier}|${value}`;
     const url = `${fhirUrl}/Patient?identifier=${identifier}`;
-    return get(url, token)
+    return get(url, token, useXAuthTokenHeader)
       .then(response => response.json())
       .then(json => dispatch(receivePatients(json)));
   };
@@ -75,17 +75,17 @@ export function fetchPatientByIdentifier(value) {
 
 export function fetchAndSetActivePatient(patientId) {
   return (dispatch, getState) => {
-    const { token, expiration } = getState().auth;
+    const { token, expiration, useXAuthTokenHeader } = getState().auth;
     const { authenticate, fhirUrl } = getState().settings;
 
-    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+    if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
     }
 
     dispatch(requestPatient(patientId));
     const url =
     `${fhirUrl}/Patient/${patientId}`;
-    return get(url, token)
+    return get(url, token, useXAuthTokenHeader)
       .then(response => response.json())
       .then(json => dispatch(setActivePatient(json)));
   };

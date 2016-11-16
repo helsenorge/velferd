@@ -33,17 +33,17 @@ export function fetchObservations(code, patientId) {
   }
 
   return (dispatch, getState) => {
-    const { token, expiration } = getState().auth;
+    const { token, expiration, useXAuthTokenHeader } = getState().auth;
     const { authenticate, fhirUrl } = getState().settings;
 
-    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+    if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
     }
 
     dispatch(requestObservations(code, patientId));
     const url =
     `${fhirUrl}/Observation?_count=500&_sort:asc=date&code=${code}&patient=${patientId}`;
-    return get(url, token)
+    return get(url, token, useXAuthTokenHeader)
       .then(response => response.json())
       .then(json => dispatch(receiveObservations(code, patientId, json)));
   };

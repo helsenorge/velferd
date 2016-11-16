@@ -11,7 +11,7 @@ function requestQuestionnaireResponses(patientId) {
   };
 }
 
-function receivetQuestionnaireResponses(patientId, json) {
+function receiveQuestionnaireResponses(patientId, json) {
   return {
     type: RECEIVE_QUESTIONNAIRE_RESPONSES,
     patientId,
@@ -27,22 +27,22 @@ function useMock() {
 export function fetchQuestionnaireResponses(patientId) {
   if (useMock()) {
     const json = require( `../mock/questionnaire-responses.json`); // eslint-disable-line
-    return dispatch => dispatch(receivetQuestionnaireResponses(patientId, json));
+    return dispatch => dispatch(receiveQuestionnaireResponses(patientId, json));
   }
 
   return (dispatch, getState) => {
-    const { token, expiration } = getState().auth;
+    const { token, expiration, useXAuthTokenHeader } = getState().auth;
     const { authenticate, fhirUrl } = getState().settings;
 
-    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+    if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
     }
 
     dispatch(requestQuestionnaireResponses(patientId));
     const url =
     `${fhirUrl}/QuestionnaireResponse?_count=500&_sort:asc=authored&patient=${patientId}`;
-    return get(url, token)
+    return get(url, token, useXAuthTokenHeader)
       .then(response => response.json())
-      .then(json => dispatch(receivetQuestionnaireResponses(patientId, json)));
+      .then(json => dispatch(receiveQuestionnaireResponses(patientId, json)));
   };
 }

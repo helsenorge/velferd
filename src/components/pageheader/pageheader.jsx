@@ -4,7 +4,7 @@ import { getBirthNumber } from '../../helpers/patient-helpers.js';
 import './pageheader.scss';
 
 const PageHeader = ({ patient, user, carePlanCategory }) => {
-  let patientName = '(No patient)';
+  let patientName = '';
   if (patient && patient.name && patient.name.length > 0) {
     const name = patient.name[0];
     const given = name.given ? name.given.join(' ') : '';
@@ -13,12 +13,13 @@ const PageHeader = ({ patient, user, carePlanCategory }) => {
   }
 
   const birthNumber = getBirthNumber(patient);
+  const careplanCategory = getCategoryName(carePlanCategory);
 
   return (
     <header className="pageheader">
       <div className="pageheader__wrapper">
         <span>
-          {patientName} {birthNumber}, {getCategoryName(carePlanCategory)}
+          {patientName} {birthNumber} {careplanCategory && <span>, {careplanCategory}</span>}
         </span>
         <span>
           Innlogget som: {`${user.name.given} ${user.name.family}`}
