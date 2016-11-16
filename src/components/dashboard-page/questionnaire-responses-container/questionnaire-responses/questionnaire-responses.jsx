@@ -139,7 +139,7 @@ class QuestionnaireResponses extends Component {
     const tableClasses = classNames('questionnaire-responses-table', {
       'questionnaire-responses-table--borders': activeRange < 90,
     });
-    const borders = this.createBorders();
+    const borders = activeRange >= 90 ? this.createBorders() : null;
     return (
       <div className="questionnaire-responses">
         <div className="questionnaire-responses__chart">
