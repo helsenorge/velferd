@@ -9,11 +9,13 @@
     flex: 1 1 auto;
     padding-left: 1rem;
     overflow: hidden;
+    position: relative;
   }
 
   &__chart {
     flex: 1 1 auto;
     margin-right: 0.1rem;
+    position: relative;
   }
 }
 
@@ -27,7 +29,7 @@
   }
 
   &--borders td:not(:last-child) {
-    border-right: 1px solid $desert-storm;
+    border-right: 1px solid $mercury;
     position: relative;
   }
 
@@ -44,5 +46,12 @@
     &--selected {
       background: $transparent-astronaut;
     }
+  }
+
+  &__border {
+    width: 1px;
+    height: 100%;
+    background: $mercury;
+    position: absolute;
   }
 }

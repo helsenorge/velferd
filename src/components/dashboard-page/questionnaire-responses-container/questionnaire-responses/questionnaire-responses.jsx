@@ -112,6 +112,23 @@ class QuestionnaireResponses extends Component {
     return latestValue;
   }
 
+  createBorders() {
+    const months = document.getElementsByClassName('month');
+    const borders = [];
+    const boundingLeft = document.getElementsByClassName('range__wrapper')[0].
+      getBoundingClientRect().left;
+    for (let i = 1; i < months.length; i++) {
+      const styleLeft = months[i].getBoundingClientRect().left - boundingLeft;
+      borders.push((
+        <div
+          style={{ left: styleLeft }}
+          className="questionnaire-responses-table__border"
+        />));
+    }
+    console.log(borders);
+    return borders;
+  }
+
   render() {
     const { data, fromDate, toDate, selectedDate, activeRange } = this.props;
 
@@ -121,11 +138,13 @@ class QuestionnaireResponses extends Component {
     const tableClasses = classNames('questionnaire-responses-table', {
       'questionnaire-responses-table--borders': activeRange < 90,
     });
+    const borders = this.createBorders();
     return (
       <div className="questionnaire-responses">
         <div className="questionnaire-responses__chart">
           <Description name="Egenvurdering" icon={this.props.icon} />
           <div className="questionnaire-responses__table-container">
+            {borders}
             <table className={tableClasses}>
               <tbody>
                 {rows}
