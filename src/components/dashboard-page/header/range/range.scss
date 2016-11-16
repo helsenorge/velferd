@@ -68,8 +68,7 @@
 
   &--rev,
   &--fwd {
-    display: flex;
-    width: 7rem;
+    width: 7.5rem;
     color: $atoll;
     align-items: center;
   }
@@ -136,6 +135,14 @@
 
 .range__text--rev {
   margin-left: 10px;
+}
+
+.range__text--fwd {
+  margin-right: 10px;
+}
+
+.range__arrow {
+  vertical-align: middle;
 }
 
 .range__arrow--fwd {

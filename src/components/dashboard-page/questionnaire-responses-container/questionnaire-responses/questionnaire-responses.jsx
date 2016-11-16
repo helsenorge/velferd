@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
+import shortId from 'shortid';
 import { calculateDateRange }
   from '../../../../helpers/date-helpers.js';
 import './questionnaire-responses.scss';
@@ -121,11 +122,11 @@ class QuestionnaireResponses extends Component {
       const styleLeft = months[i].getBoundingClientRect().left - boundingLeft;
       borders.push((
         <div
+          key={shortId.generate()}
           style={{ left: styleLeft }}
           className="questionnaire-responses-table__border"
         />));
     }
-    console.log(borders);
     return borders;
   }
 
@@ -142,7 +143,7 @@ class QuestionnaireResponses extends Component {
     return (
       <div className="questionnaire-responses">
         <div className="questionnaire-responses__chart">
-          <Description name="Egenvurdering" icon={this.props.icon} />
+          <Description name="Egenvurdering" />
           <div className="questionnaire-responses__table-container">
             {borders}
             <table className={tableClasses}>
@@ -167,7 +168,6 @@ QuestionnaireResponses.propTypes = {
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
   activeRange: PropTypes.number.isRequired,
-  icon: React.PropTypes.string,
 };
 
 export default QuestionnaireResponses;

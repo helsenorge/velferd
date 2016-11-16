@@ -103,8 +103,8 @@ class Range extends Component {
               className="range__button range__button--fwd"
               onClick={() => handleSingleForwardClick()}
             >
-              <span className="range__text">Nyere</span>
-              <Icon className="range__arrow--fwd" glyph={pil} width={51} height={51} />
+              <span className="range__text--fwd">Nyere</span>
+              <Icon className="range__arrow range__arrow--fwd" glyph={pil} width={51} height={51} />
             </button>
           </div>
         </div>

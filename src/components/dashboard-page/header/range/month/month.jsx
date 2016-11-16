@@ -20,7 +20,6 @@ const monthNames = [
 const Month = ({ month, fromDate, toDate, activeRange }) => {
   const monthName = monthNames[month];
   const dates = [];
-  console.log(new Date(fromDate));
   for (let d = new Date(fromDate);
     d.getTime() < toDate.getTime();
     d.setDate(d.getDate() + 1)) {
@@ -28,7 +27,6 @@ const Month = ({ month, fromDate, toDate, activeRange }) => {
       dates.push(new Date(d));
     }
   }
-  console.log(dates);
   const daysFromLast =
   (new Date(fromDate.getYear(), month + 1, 0).getDate()) - dates[0].getDate();
 
