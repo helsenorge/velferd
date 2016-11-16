@@ -7,8 +7,22 @@ import routes from './routes';
 import './main.scss';
 import configureStore from './store/configureStore';
 import { setAuthenticate, setFhirUrl } from './actions/settings';
+import { setAuthToken, setUseXAuthTokenHeader } from './actions/auth';
 
 const store = configureStore();
+
+if (window.location.search.indexOf('api=continua') !== -1) {
+  store.dispatch(setAuthenticate(false));
+  store.dispatch(setFhirUrl('http://continua.cloudapp.net/baseDstu2'));
+  store.dispatch(setAuthenticate(false));
+}
+
+if (window.location.search.indexOf('access_token=') !== -1) {
+  const token = window.location.search.replace('?access_token=', '');
+  store.dispatch(setAuthToken(token, null));
+  store.dispatch(setAuthenticate(true));
+  store.dispatch(setUseXAuthTokenHeader(true));
+}
 
 if (window.location.hostname === 'apps.ehelselab.com') {
   store.dispatch(setAuthenticate(true));

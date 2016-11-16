@@ -60,16 +60,16 @@ function completeSaveCarePlan(saveCompleted, error) {
 
 export function fetchCarePlanHistory(carePlanId) {
   return (dispatch, getState) => {
-    const { token, expiration } = getState().auth;
+    const { token, expiration, useXAuthTokenHeader } = getState().auth;
     const { authenticate, fhirUrl } = getState().settings;
 
-    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+    if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
     }
 
     dispatch(requestCarePlanHistory(carePlanId));
     const url = `${fhirUrl}/CarePlan/${carePlanId}/_history`;
-    return get(url, token)
+    return get(url, token, useXAuthTokenHeader)
       .then(response => response.json())
       .then(json => dispatch(receiveCarePlanHistory(carePlanId, json)));
   };
@@ -89,16 +89,16 @@ function shouldFetchCarePlan(state) {
 
 export function fetchCarePlan(patientId) {
   return (dispatch, getState) => {
-    const { token, expiration } = getState().auth;
+    const { token, expiration, useXAuthTokenHeader } = getState().auth;
     const { authenticate, fhirUrl } = getState().settings;
 
-    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+    if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
     }
 
     dispatch(requestCarePlan(patientId));
     const url = `${fhirUrl}/CarePlan?subject=${patientId}`;
-    return get(url, token)
+    return get(url, token, useXAuthTokenHeader)
       .then(response => response.json())
       .then(json => dispatch(receiveCarePlan(patientId, json)));
   };
@@ -316,10 +316,10 @@ function toFhirCarePlan(patientId, carePlan, user) {
 
 export function createCarePlan(patientId, type) {
   return (dispatch, getState) => {
-    const { user, token, expiration } = getState().auth;
+    const { user, token, expiration, useXAuthTokenHeader } = getState().auth;
     const { authenticate, fhirUrl } = getState().settings;
 
-    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+    if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
     }
 
@@ -327,7 +327,7 @@ export function createCarePlan(patientId, type) {
     const resource = toFhirCarePlan(patientId, carePlan, user);
     const url = `${fhirUrl}/CarePlan/`;
 
-    return post(url, resource, token)
+    return post(url, resource, token, useXAuthTokenHeader)
       .then(() => {
         dispatch(fetchCarePlan(patientId));
       })
@@ -338,10 +338,10 @@ export function createCarePlan(patientId, type) {
 export function saveCarePlan(patientId, carePlan) {
   return (dispatch, getState) => {
     const { data } = getState().carePlan;
-    const { user, token, expiration } = getState().auth;
+    const { user, token, expiration, useXAuthTokenHeader } = getState().auth;
     const { authenticate, fhirUrl } = getState().settings;
 
-    if (authenticate && (!token || new Date().valueOf() > expiration.valueOf())) {
+    if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
     }
 
@@ -349,7 +349,7 @@ export function saveCarePlan(patientId, carePlan) {
     const url = `${fhirUrl}/CarePlan/${resource.id}`;
     const updatedResource = toFhirCarePlan(patientId, carePlan, user);
 
-    return put(url, updatedResource, token)
+    return put(url, updatedResource, token, useXAuthTokenHeader)
       .then(() => {
         dispatch(completeSaveCarePlan(true));
         dispatch(fetchCarePlan(patientId));
