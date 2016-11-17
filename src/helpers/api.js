@@ -6,10 +6,14 @@ export function get(url, token, useXAuthTokenHeader) {
   if (token) {
     init = useXAuthTokenHeader ? {
       method: 'get',
+      mode: 'cors',
+      credentials: 'include',
       headers: { 'X-Auth-Token': `${token}` },
     }
     : {
       method: 'get',
+      mode: 'cors',
+      credentials: 'include',
       headers: { Authorization: `Bearer ${token}` },
     };
   }
@@ -33,6 +37,8 @@ export function put(url, data, token, useXAuthTokenHeader) {
 
   const init = {
     method: 'PUT',
+    mode: 'cors',
+    credentials: 'include',
     body: JSON.stringify(data),
     headers,
   };
@@ -54,6 +60,8 @@ export function post(url, data, token, useXAuthTokenHeader) {
 
   const init = {
     method: 'POST',
+    mode: 'cors',
+    credentials: 'include',
     body: JSON.stringify(data),
     headers,
   };
