@@ -8,7 +8,8 @@
 .measurement__chart {
   display: flex;
   flex-wrap: wrap;
-  flex: 1 1 auto;
+  flex: 1 0 auto;
+  min-width: 1010px;
   margin-right: 0.1rem;
   border: 1px solid $gallery;
 }
