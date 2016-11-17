@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import classNames from 'classnames';
 import { connect } from 'react-redux';
 import { setActivePatient,
   fetchAndSetActivePatient,
@@ -7,6 +8,9 @@ import { setActivePatient,
 import { fetchCarePlan } from '../../actions/care-plan';
 import { getBirthNumber, getName } from '../../helpers/patient-helpers.js';
 import TextInput from '../text-input/text-input.jsx';
+import './patient-finder.scss';
+import Icon from '../icon/icon.jsx';
+import mfglass from '../../../svg/magnifying_glass.svg';
 
 class PatientsFinder extends Component {
 
@@ -59,9 +63,8 @@ class PatientsFinder extends Component {
   }
 
   handleKeyPress(event) {
-    if (event.key === 'Enter') {
-      this.search();
-    }
+    event.preventDefault();
+    this.search();
   }
 
   handlePatientClick(patient, patientName) {
@@ -101,9 +104,10 @@ class PatientsFinder extends Component {
       }
 
       patientsByInitial[initial].push(
-        <li key={patient.id}>
+        <li key={patient.id} className="patient-finder__letter-list-item">
           <button
             onClick={() => this.handlePatientClick(patient, patientName)}
+            className="patient-finder__person"
           >
             {patientName} - {birthNumber}
           </button>
@@ -119,18 +123,18 @@ class PatientsFinder extends Component {
     const { lastViewed } = this.state;
     const patientsByInitial = this.groupPatientsByInitial(data);
     const groups = [];
-
     Object.keys(patientsByInitial).sort().forEach((key) => {
       if (patientsByInitial.hasOwnProperty(key)) {
         groups.push(
-          <div key={key}>
-            <h2>{key}</h2>
-            <ul>
-              {patientsByInitial[key]}
-            </ul>
-          </div>
-        );
+          <ul className="patient-finder__letters-list">
+            <div key={key} className="patient-finder__letter">{key}</div>
+            {patientsByInitial[key]}
+          </ul>
+          );
       }
+    });
+    const lettersClasses = classNames('patient-finder__letters', {
+      'patient-finder__letters--columns': data !== null && data.entry.length > 12,
     });
 
     const recentlyViewed = [];
@@ -139,7 +143,10 @@ class PatientsFinder extends Component {
       if (lastViewed.hasOwnProperty(key)) {
         recentlyViewed.push(
           <li key={key}>
-            <button onClick={() => this.handleLastViewedPatientClick(key)}>
+            <button
+              onClick={() => this.handleLastViewedPatientClick(key)}
+              className="patient-finder__person"
+            >
               {lastViewed[key]}
             </button>
           </li>
@@ -148,18 +155,32 @@ class PatientsFinder extends Component {
     });
 
     return (
-      <div>
-        <h2>Velg pasient</h2>
-        <TextInput
-          name="searchInput"
-          placeholder="Søk på navn eller personnummer"
-          onChange={this.updateSearchString}
-          onKeyPress={this.handleKeyPress}
-          value={this.state.searchString}
-        />
-        <h3>Nylig sett på</h3>
-        <ul>{recentlyViewed}</ul>
-        {groups}
+      <div className="patient-finder">
+        <h2 className="patient-finder__heading">Velg pasient</h2>
+
+        <section>
+          <h3 className="patient-finder__recent-heading">Nylig sett på</h3>
+          <ul className="patient-finder__list">{recentlyViewed}</ul>
+        </section>
+
+        <section>
+          <form onSubmit={this.handleKeyPress} className="patient-finder__search">
+            <TextInput
+              className="patient-finder__search-input"
+              name="searchInput"
+              placeholder="Søk på navn eller personnummer"
+              onChange={this.updateSearchString}
+              value={this.state.searchString}
+            />
+            <button type="submit" className="patient-finder__submit">
+              <Icon glyph={mfglass} className="patient-finder__icon" />
+            </button>
+          </form>
+          <div>
+            {this.props.isFetching ? <span>fetching</span> :
+              <div className={lettersClasses}>{groups}</div>}
+          </div>
+        </section>
       </div>
     );
   }
@@ -168,14 +189,16 @@ class PatientsFinder extends Component {
 PatientsFinder.propTypes = {
   dispatch: PropTypes.func.isRequired,
   data: PropTypes.object,
+  isFetching: PropTypes.bool,
 };
 
 function mapStateToProps(state) {
   const { patient } = state;
-  const { data } = patient;
+  const { data, isFetching } = patient;
 
   return {
     data,
+    isFetching,
   };
 }
 
