@@ -21,7 +21,7 @@
 
   &__date {
     text-align: center;
-    border-left: 2px solid $mercury;
+    border-left: 1px solid $mercury;
   }
 
   &--14:not(:last-child),
@@ -33,6 +33,7 @@
       background: $mercury;
       position: absolute;
       right: -2px;
+      top: 0;
     }
   }
 
@@ -94,7 +95,7 @@
   }
 
   &--90 {
-    box-shadow: 1px 0 0 1px $mercury;
+    box-shadow: 2px 0 0 0 $mercury;
     $width: 9.33333px;
 
     .month__dates {
@@ -162,7 +163,7 @@
   }
 
   &--180 {
-    box-shadow: 1px 0 0 0 $mercury;
+    box-shadow: 2px 0 0 0 $mercury;
     position: relative;
     $width: 4.6666666667px;
     //gjem box-shadow på høyre side
