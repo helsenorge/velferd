@@ -54,8 +54,8 @@ class Range extends Component {
 
   render() {
     const {
-      handleSingleBackClick,
-      handleSingleForwardClick,
+      handleBackClick,
+      handleForwardClick,
       fromDate,
       toDate,
       activeRange,
@@ -81,7 +81,7 @@ class Range extends Component {
           <div className="range__controls">
             <button
               className="range__button range__button--rev"
-              onClick={() => handleSingleBackClick()}
+              onClick={() => handleBackClick()}
             >
               <Icon className="range__arrow" glyph={pil} width={51} height={51} />
               <span className="range__text--rev">Eldre</span>
@@ -101,7 +101,7 @@ class Range extends Component {
           <div className="range__controls">
             <button
               className="range__button range__button--fwd"
-              onClick={() => handleSingleForwardClick()}
+              onClick={() => handleForwardClick()}
             >
               <span className="range__text--fwd">Nyere</span>
               <Icon className="range__arrow range__arrow--fwd" glyph={pil} width={51} height={51} />
@@ -114,8 +114,8 @@ class Range extends Component {
 }
 
 Range.propTypes = {
-  handleSingleForwardClick: React.PropTypes.func.isRequired,
-  handleSingleBackClick: React.PropTypes.func.isRequired,
+  handleForwardClick: React.PropTypes.func.isRequired,
+  handleBackClick: React.PropTypes.func.isRequired,
   handleDateClick: PropTypes.func.isRequired,
   fromDate: PropTypes.instanceOf(Date).isRequired,
   toDate: PropTypes.instanceOf(Date).isRequired,

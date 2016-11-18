@@ -14,7 +14,6 @@ const store = configureStore();
 if (window.location.search.indexOf('api=continua') !== -1) {
   store.dispatch(setAuthenticate(false));
   store.dispatch(setFhirUrl('http://continua.cloudapp.net/baseDstu2'));
-  store.dispatch(setAuthenticate(false));
 }
 
 if (window.location.search.indexOf('access_token=') !== -1) {

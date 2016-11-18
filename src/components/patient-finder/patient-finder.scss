@@ -1,0 +1,74 @@
+@import "../../constants/constants";
+
+.patient-finder {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+
+  &__heading {
+    font-size: 3rem;
+    font-weight: 300;
+    text-align: center;
+  }
+
+  &__recent-heading {
+    font-size: 1.875rem;
+    font-weight: 400;
+    margin-bottom: 1rem;
+  }
+
+  &__list {
+    list-style-type: none;
+    padding: 0;
+  }
+
+  &__person {
+    color: #269392;
+    margin-bottom: 1rem;
+  }
+
+  &__search {
+    margin-top: 5rem;
+    display: flex;
+  }
+
+  &__search-input {
+    width: 18rem;
+  }
+
+  &__submit {
+    margin-left: 5px;
+    background: #269392;
+    padding: 0 0.75rem;
+    padding-top: 5px;
+    min-width: 50px;
+  }
+
+  &__icon {
+    stroke: $page-background;
+    height: 20px;
+    width: 20px;
+  }
+
+  &__letters {
+    margin-top: 2rem;
+
+    &--columns {
+      column-count: 3;
+      column-width: 250px;
+    }
+  }
+
+  &__letters-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 2rem;
+  }
+
+  &__letter {
+    margin-bottom: 1rem;
+    font-size: 1.875rem;
+    font-weight: 400;
+  }
+}
