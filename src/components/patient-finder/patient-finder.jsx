@@ -8,6 +8,7 @@ import { setActivePatient,
 import { fetchCarePlan } from '../../actions/care-plan';
 import { getBirthNumber, getName } from '../../helpers/patient-helpers.js';
 import TextInput from '../text-input/text-input.jsx';
+import Spinner from '../spinner/spinner.jsx';
 import './patient-finder.scss';
 import Icon from '../icon/icon.jsx';
 import mfglass from '../../../svg/magnifying_glass.svg';
@@ -126,8 +127,8 @@ class PatientsFinder extends Component {
     Object.keys(patientsByInitial).sort().forEach((key) => {
       if (patientsByInitial.hasOwnProperty(key)) {
         groups.push(
-          <ul className="patient-finder__letters-list">
-            <div key={key} className="patient-finder__letter">{key}</div>
+          <ul key={key} className="patient-finder__letters-list">
+            <div className="patient-finder__letter">{key}</div>
             {patientsByInitial[key]}
           </ul>
           );
@@ -173,12 +174,13 @@ class PatientsFinder extends Component {
               value={this.state.searchString}
             />
             <button type="submit" className="patient-finder__submit">
-              <Icon glyph={mfglass} className="patient-finder__icon" />
+              {this.props.isFetching ?
+                <Spinner className="small white" /> :
+                <Icon glyph={mfglass} className="patient-finder__icon" />}
             </button>
           </form>
           <div>
-            {this.props.isFetching ? <span>fetching</span> :
-              <div className={lettersClasses}>{groups}</div>}
+            <div className={lettersClasses}>{groups}</div>
           </div>
         </section>
       </div>
