@@ -128,6 +128,7 @@ class CarePlanPage extends Component {
   createCarePlan(type) {
     const { dispatch, patientId } = this.props;
     dispatch(createCarePlan(patientId, type));
+    this.setState({ editing: true });
   }
 
   render() {

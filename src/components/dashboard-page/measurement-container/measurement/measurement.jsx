@@ -82,7 +82,7 @@ class Measurements extends Component {
     let points = data.entry.map((item) => this.getDataPoint(item, unit));
     const name = getMeasurementName(code);
     const idealValue = this.getIdealValuesString(idealValues, unit);
-    const latestValue = this.getDataPoint(data.entry[0], unit);
+    const latestValue = this.getDataPoint(data.entry[data.entry.length - 1], unit);
     const highAndLow = this.getHighAndLow(code, data.entry);
 
     return (

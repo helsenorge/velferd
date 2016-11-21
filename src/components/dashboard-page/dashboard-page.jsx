@@ -28,8 +28,6 @@ class DashboardPage extends Component {
     this.state = { fromDate, toDate, dayRange, selectedDate };
     this.handleBackClick = this.handleBackClick.bind(this);
     this.handleForwardClick = this.handleForwardClick.bind(this);
-    this.handleSingleBackClick = this.handleSingleBackClick.bind(this);
-    this.handleSingleForwardClick = this.handleSingleForwardClick.bind(this);
     this.handleRangeClick = this.handleRangeClick.bind(this);
     this.handleDateClick = this.handleDateClick.bind(this);
     this.addOpacityOverlay = this.addOpacityOverlay.bind(this);
@@ -37,11 +35,8 @@ class DashboardPage extends Component {
   }
 
   handleBackClick() {
-    this.moveDates(- this.state.dayRange);
-  }
-
-  handleSingleBackClick() {
-    this.moveDates(-1);
+    const days = this.state.dayRange > 30 ? 30 : 1;
+    this.moveDates(- days);
   }
 
   moveDates(days) {
@@ -52,11 +47,8 @@ class DashboardPage extends Component {
   }
 
   handleForwardClick() {
-    this.moveDates(this.state.dayRange);
-  }
-
-  handleSingleForwardClick() {
-    this.moveDates(1);
+    const days = this.state.dayRange > 30 ? 30 : 1;
+    this.moveDates(days);
   }
 
   handleRangeClick(days) {
@@ -106,8 +98,6 @@ class DashboardPage extends Component {
           handleRangeClick={this.handleRangeClick}
           handleForwardClick={this.handleForwardClick}
           handleBackClick={this.handleBackClick}
-          handleSingleForwardClick={this.handleSingleForwardClick}
-          handleSingleBackClick={this.handleSingleBackClick}
           handleDateClick={this.handleDateClick}
           fromDate={this.state.fromDate}
           toDate={this.state.toDate}
