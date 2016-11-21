@@ -192,86 +192,106 @@
       top: 25%;
       padding-left: 0.5rem;
 
-      &--16 {
+      &--20 {
         position: relative;
         left: calc(#{-$width});
       }
 
-      &--15 {
+      &--19 {
         position: relative;
         left: calc(#{-$width} * 2);
+      }
+
+      &--18 {
+        position: relative;
+        left: calc(#{-$width} * 3);
+      }
+
+      &--17 {
+        position: relative;
+        left: calc(#{-$width} * 4);
+      }
+
+      &--16 {
+        position: relative;
+        left: calc(#{-$width} * 5);
+      }
+
+      &--15 {
+        position: relative;
+        left: calc(#{-$width} * 6);
       }
 
       &--14 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 3);
+        left: calc(#{-$width} * 7);
       }
 
       &--13 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 4);
+        left: calc(#{-$width} * 8);
       }
 
       &--12 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 5);
+        left: calc(#{-$width} * 9);
       }
 
       &--11 {
         position: relative;
         width: 0;
-        left: calc(#{-$width} * 6);
+        left: calc(#{-$width} * 10);
       }
 
       &--10 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 7);
+        left: calc(#{-$width} * 11);
       }
 
       &--9 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 8);
+        left: calc(#{-$width} * 12);
       }
 
       &--8 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 9);
+        left: calc(#{-$width} * 13);
       }
 
       &--7 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 10);
+        left: calc(#{-$width} * 14);
       }
 
       &--6 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 11);
+        left: calc(#{-$width} * 15);
       }
 
       &--5 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 12);
+        left: calc(#{-$width} * 16);
       }
 
       &--4 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 13);
+        left: calc(#{-$width} * 17);
       }
 
       &--3 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 14);
+        left: calc(#{-$width} * 18);
       }
 
       &--2,
@@ -279,7 +299,7 @@
       &--0 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 16);
+        left: calc(#{-$width} * 19);
       }
     }
   }
