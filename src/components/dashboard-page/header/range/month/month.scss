@@ -1,5 +1,5 @@
 @import '../../../../../constants/constants';
-
+/* stylelint-disable function-calc-no-unspaced-operator */
 .month {
   display: flex;
   flex-direction: column;
@@ -284,3 +284,4 @@
     }
   }
 }
+/* stylelint-enable */
