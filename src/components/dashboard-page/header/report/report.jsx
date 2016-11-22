@@ -11,12 +11,24 @@ import { getMeasurementName } from '../../../../helpers/observation-helpers';
 import ObservationCodes from '../../../../constants/observation-codes';
 import QuestionnaireResponseCodes from '../../../../constants/questionnaire-response-codes';
 import Button from '../../../button/button.jsx';
+import Clipboard from 'clipboard';
 
 class Report extends Component {
   constructor(props) {
     super(props);
     this.state = { expanded: false };
     this.handleClick = this.handleClick.bind(this);
+
+    const clipboard = new Clipboard('.report__copybutton', { // eslint-disable-line
+      text: (trigger) => {
+        const button = trigger;
+        button.innerText = 'Tekst kopiert!';
+        setTimeout(() => {
+          button.innerText = 'Kopier tekst';
+        }, 1000);
+        return document.getElementById('copy-target').innerText;
+      },
+    });
   }
 
   handleClick() {
@@ -49,17 +61,21 @@ class Report extends Component {
         </button>
         <Collapse isOpened={this.state.expanded}>
           <div className="report__expander">
-            <h3 className="report__header">
+            <div id="copy-target">
+              <h3 className="report__header">
                {formatDate(fromDate)} - {formatDate(toDate)} 2016
-            </h3>
-            {measurementReports.map((measurement, i) =>
-              <p className="report__paragraph" key={i}>
-                <b>{measurement.name}</b> har variert mellom {measurement.min}&nbsp;
-                og {measurement.max} og har et gjennomsnitt på {measurement.average}.
-              </p>
-            )}
-            {questionnaireReportMarkup}
-            <Button lvl1>Kopier tekst</Button>
+              </h3>
+              {measurementReports.map((measurement, i) =>
+                <p className="report__paragraph" key={i}>
+                  <b>{measurement.name}</b> har variert mellom {measurement.min}&nbsp;
+                  og {measurement.max} og har et gjennomsnitt på {measurement.average}.
+                </p>
+              )}
+              {questionnaireReportMarkup}
+            </div>
+            <Button lvl1 className="report__copybutton">
+              Kopier tekst
+            </Button>
           </div>
         </Collapse>
       </div>
