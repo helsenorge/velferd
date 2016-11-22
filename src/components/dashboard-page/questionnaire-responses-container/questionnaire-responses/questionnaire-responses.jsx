@@ -9,23 +9,21 @@ import { getIcon } from '../../../../helpers/questionnaire-response-helpers.js';
 
 class QuestionnaireResponses extends Component {
 
-  getQuestions(entries) {
+  getQuestionsAndAnswers(entries) {
     const questions = {};
-
-    for (let i = 0; i < entries.length; i++) {
-      const entry = entries[i];
-
-      for (let ii = 0; ii < entry.resource.group.group[0].question.length; ii++) {
-        const question = entry.resource.group.group[0].question[ii];
-
+    entries.forEach((entry) => {
+      if (!entry.resource.group.question) {
+        return;
+      }
+      entry.resource.group.question.forEach((question) => {
         if (!questions[question.linkId]) {
           questions[question.linkId] = { text: question.text, answers: {} };
         }
         const date = new Date(entry.resource.authored).toLocaleDateString();
         const value = question.answer[0].valueCoding.code;
         questions[question.linkId].answers[date] = value;
-      }
-    }
+      });
+    });
     return questions;
   }
 
@@ -83,10 +81,11 @@ class QuestionnaireResponses extends Component {
     if (entries && entries.length > 0) {
       const entry = entries[entries.length - 1];
 
-      for (let i = 0; i < entry.resource.group.group[0].question.length; i++) {
-        const question = entry.resource.group.group[0].question[i];
-        const value = question.answer[0].valueCoding.code;
-        values[question.linkId] = value;
+      if (entry.resource.group.question) {
+        entry.resource.group.question.forEach((question) => {
+          const value = question.answer[0].valueCoding.code;
+          values[question.linkId] = value;
+        });
       }
 
       latestValue = {
@@ -118,7 +117,7 @@ class QuestionnaireResponses extends Component {
   render() {
     const { data, fromDate, toDate, selectedDate, activeRange } = this.props;
 
-    const questions = this.getQuestions(data.entry);
+    const questions = this.getQuestionsAndAnswers(data.entry);
     const rows = this.getRows(questions, fromDate, toDate, selectedDate);
     const latestValue = this.getLatestValue(questions, data.entry);
     const tableClasses = classNames('questionnaire-responses-table', {

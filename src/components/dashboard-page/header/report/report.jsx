@@ -144,14 +144,15 @@ function calculateQuestionnaireValues(entries) {
   count[QuestionnaireResponseCodes.yellow] = 0;
   count[QuestionnaireResponseCodes.red] = 0;
 
-  for (let i = 0; i < entries.length; i++) {
-    const resource = entries[i].resource;
-    for (let ii = 0; ii < resource.group.group[0].question.length; ii++) {
-      const question = resource.group.group[0].question[ii];
-      const value = question.answer[0].valueCoding.code;
-      count[value] ++;
+  entries.forEach((entry) => {
+    const resource = entry.resource;
+    if (resource.group.question) {
+      resource.group.question.forEach((question) => {
+        const value = question.answer[0].valueCoding.code;
+        count[value] ++;
+      });
     }
-  }
+  });
 
   const total = count[QuestionnaireResponseCodes.green] +
     count[QuestionnaireResponseCodes.yellow] + count[QuestionnaireResponseCodes.red];
