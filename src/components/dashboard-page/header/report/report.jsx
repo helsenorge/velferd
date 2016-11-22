@@ -10,12 +10,24 @@ import { formatDate, filterObservationsInRange, filterQuestionnaireResponses }
 import { getMeasurementName } from '../../../../helpers/observation-helpers';
 import ObservationCodes from '../../../../constants/observation-codes';
 import QuestionnaireResponseCodes from '../../../../constants/questionnaire-response-codes';
+import Clipboard from 'clipboard';
 
 class Report extends Component {
   constructor(props) {
     super(props);
     this.state = { expanded: false };
     this.handleClick = this.handleClick.bind(this);
+
+    const clipboard = new Clipboard('.report__copybutton', { // eslint-disable-line
+      text: (trigger) => {
+        const button = trigger;
+        button.innerText = 'Tekst kopiert!';
+        setTimeout(() => {
+          button.innerText = 'Kopier tekst';
+        }, 1000);
+        return document.getElementById('copy-target').innerText;
+      },
+    });
   }
 
   handleClick() {
@@ -48,17 +60,21 @@ class Report extends Component {
         </button>
         <Collapse isOpened={this.state.expanded}>
           <div className="report__expander">
-            <h3 className="report__header">
+            <div id="copy-target">
+              <h3 className="report__header">
                {formatDate(fromDate)} - {formatDate(toDate)} 2016
-            </h3>
-            {measurementReports.map((measurement, i) =>
-              <p className="report__paragraph" key={i}>
-                <b>{measurement.name}</b> har variert mellom {measurement.min}&nbsp;
-                og {measurement.max} og har et gjennomsnitt på {measurement.average}.
-              </p>
-            )}
-            {questionnaireReportMarkup}
-            <button className="report__copybutton">Kopier tekst</button>
+              </h3>
+              {measurementReports.map((measurement, i) =>
+                <p className="report__paragraph" key={i}>
+                  <b>{measurement.name}</b> har variert mellom {measurement.min}&nbsp;
+                  og {measurement.max} og har et gjennomsnitt på {measurement.average}.
+                </p>
+              )}
+              {questionnaireReportMarkup}
+            </div>
+            <button className="report__copybutton">
+              Kopier tekst
+            </button>
           </div>
         </Collapse>
       </div>
