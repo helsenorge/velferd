@@ -20,12 +20,13 @@ class Report extends Component {
     this.handleClick = this.handleClick.bind(this);
 
     const clipboard = new Clipboard('.report__copybutton', { // eslint-disable-line
-      text: (trigger) => {
-        const button = trigger;
-        button.innerText = 'Tekst kopiert!';
+      text: () => {
+        this.refs.copy.classList.remove('report__copybutton-text--visible');
+        this.refs.copied.classList.add('report__copybutton-text--visible');
         setTimeout(() => {
-          button.innerText = 'Kopier tekst';
-        }, 1000);
+          this.refs.copy.classList.add('report__copybutton-text--visible');
+          this.refs.copied.classList.remove('report__copybutton-text--visible');
+        }, 1500);
         return document.getElementById('copy-target').innerText;
       },
     });
@@ -73,8 +74,19 @@ class Report extends Component {
               )}
               {questionnaireReportMarkup}
             </div>
-            <Button lvl1 className="report__copybutton">
-              Kopier tekst
+            <Button className="report__copybutton">
+              <span
+                className="report__copybutton-text report__copybutton-text--visible"
+                ref="copy"
+              >
+                Kopier tekst
+              </span>
+              <span
+                className="report__copybutton-text"
+                ref="copied"
+              >
+                Tekst kopiert!
+              </span>
             </Button>
           </div>
         </Collapse>
