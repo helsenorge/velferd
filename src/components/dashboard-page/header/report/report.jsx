@@ -10,6 +10,7 @@ import { formatDate, filterObservationsInRange, filterQuestionnaireResponses }
 import { getMeasurementName } from '../../../../helpers/observation-helpers';
 import ObservationCodes from '../../../../constants/observation-codes';
 import QuestionnaireResponseCodes from '../../../../constants/questionnaire-response-codes';
+import Button from '../../../button/button.jsx';
 
 class Report extends Component {
   constructor(props) {
@@ -58,7 +59,7 @@ class Report extends Component {
               </p>
             )}
             {questionnaireReportMarkup}
-            <button className="report__copybutton">Kopier tekst</button>
+            <Button lvl1>Kopier tekst</Button>
           </div>
         </Collapse>
       </div>
