@@ -1,15 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <!-- Generator: Sketch 41 (35326) - http://www.bohemiancoding.com/sketch -->
-    <title>Artboard</title>
-    <desc>Created with Sketch.</desc>
-    <defs></defs>
-    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="Artboard" fill="#343434">
-            <path d="M38.1428571,19.8214286 C38.1428571,9.70278298 29.9400742,1.5 19.8214286,1.5 C9.70278298,1.5 1.5,9.70278298 1.5,19.8214286 C1.5,29.9400742 9.70278298,38.1428571 19.8214286,38.1428571 C29.9400742,38.1428571 38.1428571,29.9400742 38.1428571,19.8214286 Z M0,19.8214286 C0,8.87435585 8.87435585,0 19.8214286,0 C30.7685013,0 39.6428571,8.87435585 39.6428571,19.8214286 C39.6428571,30.7685013 30.7685013,39.6428571 19.8214286,39.6428571 C8.87435585,39.6428571 0,30.7685013 0,19.8214286 Z" id="Oval-36-Copy-2"></path>
-            <ellipse id="Oval-36-Copy-2" cx="13.8795662" cy="14.8795662" rx="1.87956618" ry="1.87956618"></ellipse>
-            <ellipse id="Oval-36-Copy-2" cx="25.8795662" cy="14.8795662" rx="1.87956618" ry="1.87956618"></ellipse>
-            <polygon id="Line" points="29.75 27.5 30.5 27.5 30.5 26 29.75 26 9.75 26 9 26 9 27.5 9.75 27.5"></polygon>
-        </g>
-    </g>
-</svg>
+<svg width="40" height="40" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><title>Artboard</title><g fill="#343434" fill-rule="evenodd"><path d="M38.143 19.82C38.143 9.704 29.94 1.5 19.82 1.5 9.704 1.5 1.5 9.703 1.5 19.82c0 10.12 8.203 18.323 18.32 18.323 10.12 0 18.323-8.203 18.323-18.322zM0 19.82C0 8.875 8.874 0 19.82 0c10.95 0 19.823 8.874 19.823 19.82 0 10.95-8.874 19.823-19.822 19.823C8.875 39.643 0 30.77 0 19.82z"/><ellipse cx="13.88" cy="14.88" rx="1.88" ry="1.88"/><ellipse cx="25.88" cy="14.88" rx="1.88" ry="1.88"/><path d="M29.75 27.5h.75V26H9v1.5h.75"/></g></svg>

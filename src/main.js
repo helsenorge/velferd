@@ -11,14 +11,10 @@ import { setAuthToken, setUseXAuthTokenHeader } from './actions/auth';
 
 const store = configureStore();
 
-if (window.location.search.indexOf('api=continua') !== -1) {
-  store.dispatch(setAuthenticate(false));
-  store.dispatch(setFhirUrl('http://continua.cloudapp.net/baseDstu2'));
-}
-
 if (window.location.search.indexOf('access_token=') !== -1) {
   const token = window.location.search.replace('?access_token=', '');
   store.dispatch(setAuthToken(token, null));
+  store.dispatch(setFhirUrl('http://helsamitest.imatiscloud.com/Imatis/WebServices/External/FHIR/fhir'));
   store.dispatch(setAuthenticate(true));
   store.dispatch(setUseXAuthTokenHeader(true));
 }

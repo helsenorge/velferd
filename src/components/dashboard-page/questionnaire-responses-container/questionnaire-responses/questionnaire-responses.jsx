@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import shortId from 'shortid';
-import { calculateDateRange }
-  from '../../../../helpers/date-helpers.js';
 import './questionnaire-responses.scss';
 import LatestMeasurement from './../../latest-measurement/latest-measurement.jsx';
 import Description from './../../description/description.jsx';
@@ -11,39 +9,31 @@ import { getIcon } from '../../../../helpers/questionnaire-response-helpers.js';
 
 class QuestionnaireResponses extends Component {
 
-  getQuestions(entries) {
+  getQuestionsAndAnswers(entries) {
     const questions = {};
-
-    for (let i = 0; i < entries.length; i++) {
-      const entry = entries[i];
-
-      for (let ii = 0; ii < entry.resource.group.group[0].question.length; ii++) {
-        const question = entry.resource.group.group[0].question[ii];
-
+    entries.forEach((entry) => {
+      if (!entry.resource.group.question) {
+        return;
+      }
+      entry.resource.group.question.forEach((question) => {
         if (!questions[question.linkId]) {
           questions[question.linkId] = { text: question.text, answers: {} };
         }
         const date = new Date(entry.resource.authored).toLocaleDateString();
         const value = question.answer[0].valueCoding.code;
         questions[question.linkId].answers[date] = value;
-      }
-    }
+      });
+    });
     return questions;
   }
 
   getRows(questions, fromDate, toDate, selectedDate) {
     const rows = [];
-    let selectedCellIndex = null;
-
-    if (selectedDate) {
-      selectedCellIndex = calculateDateRange(fromDate, selectedDate);
-    }
 
     Object.keys(questions).forEach((key) => {
       if (questions.hasOwnProperty(key)) {
         const question = questions[key];
-        const values = this.getValues(question, fromDate, toDate);
-        const cells = this.getCells(values, selectedCellIndex);
+        const cells = this.getCells(question, fromDate, toDate, selectedDate);
 
         rows.push(
           <tr key={key}>
@@ -52,33 +42,26 @@ class QuestionnaireResponses extends Component {
           </tr>);
       }
     });
+
     return rows;
   }
 
-  getValues(question, fromDate, toDate) {
-    const values = [];
+  getCells(question, fromDate, toDate, selectedDate) {
+    const cells = [];
     for (let d = new Date(fromDate); d.getTime() < toDate.getTime(); d.setDate(d.getDate() + 1)) {
       const date = d.toLocaleDateString();
-      let value = question.answers[date];
-      if (!value) value = 'empty';
-      values.push(value);
-    }
-    return values;
-  }
+      const answer = question.answers[date];
+      const iconValue = answer ? getIcon(answer) : null;
+      const cellContent = iconValue ? <Icon glyph={iconValue} width={20} height={20} /> : answer;
 
-  getCells(values, selectedCellIndex) {
-    const cells = [];
-
-    for (let i = 0; i < values.length; i++) {
-      const val = getIcon(values[i]);
       const cellClasses = classNames(
         'questionnaire-responses-table__data',
         { 'questionnaire-responses-table__data--selected':
-          selectedCellIndex !== null && selectedCellIndex === i });
+          selectedDate !== null && selectedDate === date });
 
       cells.push(
-        <td className={cellClasses} key={i}>
-          <Icon glyph={val} width={20} height={20} />
+        <td className={cellClasses} key={date}>
+          {cellContent}
         </td>
       );
     }
@@ -98,10 +81,11 @@ class QuestionnaireResponses extends Component {
     if (entries && entries.length > 0) {
       const entry = entries[entries.length - 1];
 
-      for (let i = 0; i < entry.resource.group.group[0].question.length; i++) {
-        const question = entry.resource.group.group[0].question[i];
-        const value = question.answer[0].valueCoding.code;
-        values[question.linkId] = value;
+      if (entry.resource.group.question) {
+        entry.resource.group.question.forEach((question) => {
+          const value = question.answer[0].valueCoding.code;
+          values[question.linkId] = value;
+        });
       }
 
       latestValue = {
@@ -133,7 +117,7 @@ class QuestionnaireResponses extends Component {
   render() {
     const { data, fromDate, toDate, selectedDate, activeRange } = this.props;
 
-    const questions = this.getQuestions(data.entry);
+    const questions = this.getQuestionsAndAnswers(data.entry);
     const rows = this.getRows(questions, fromDate, toDate, selectedDate);
     const latestValue = this.getLatestValue(questions, data.entry);
     const tableClasses = classNames('questionnaire-responses-table', {

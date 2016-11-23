@@ -10,12 +10,26 @@ import { formatDate, filterObservationsInRange, filterQuestionnaireResponses }
 import { getMeasurementName } from '../../../../helpers/observation-helpers';
 import ObservationCodes from '../../../../constants/observation-codes';
 import QuestionnaireResponseCodes from '../../../../constants/questionnaire-response-codes';
+import Button from '../../../button/button.jsx';
+import Clipboard from 'clipboard';
 
 class Report extends Component {
   constructor(props) {
     super(props);
     this.state = { expanded: false };
     this.handleClick = this.handleClick.bind(this);
+
+    const clipboard = new Clipboard('.report__copybutton', { // eslint-disable-line
+      text: () => {
+        this.refs.copy.classList.remove('report__copybutton-text--visible');
+        this.refs.copied.classList.add('report__copybutton-text--visible');
+        setTimeout(() => {
+          this.refs.copy.classList.add('report__copybutton-text--visible');
+          this.refs.copied.classList.remove('report__copybutton-text--visible');
+        }, 1500);
+        return document.getElementById('copy-target').innerText;
+      },
+    });
   }
 
   handleClick() {
@@ -48,17 +62,32 @@ class Report extends Component {
         </button>
         <Collapse isOpened={this.state.expanded}>
           <div className="report__expander">
-            <h3 className="report__header">
+            <div id="copy-target">
+              <h3 className="report__header">
                {formatDate(fromDate)} - {formatDate(toDate)} 2016
-            </h3>
-            {measurementReports.map((measurement, i) =>
-              <p className="report__paragraph" key={i}>
-                <b>{measurement.name}</b> har variert mellom {measurement.min}&nbsp;
-                og {measurement.max} og har et gjennomsnitt på {measurement.average}.
-              </p>
-            )}
-            {questionnaireReportMarkup}
-            <button className="report__copybutton">Kopier tekst</button>
+              </h3>
+              {measurementReports.map((measurement, i) =>
+                <p className="report__paragraph" key={i}>
+                  <b>{measurement.name}</b> har variert mellom {measurement.min}&nbsp;
+                  og {measurement.max} og har et gjennomsnitt på {measurement.average}.
+                </p>
+              )}
+              {questionnaireReportMarkup}
+            </div>
+            <Button className="report__copybutton">
+              <span
+                className="report__copybutton-text report__copybutton-text--visible"
+                ref="copy"
+              >
+                Kopier tekst
+              </span>
+              <span
+                className="report__copybutton-text"
+                ref="copied"
+              >
+                Tekst kopiert!
+              </span>
+            </Button>
           </div>
         </Collapse>
       </div>
@@ -115,14 +144,15 @@ function calculateQuestionnaireValues(entries) {
   count[QuestionnaireResponseCodes.yellow] = 0;
   count[QuestionnaireResponseCodes.red] = 0;
 
-  for (let i = 0; i < entries.length; i++) {
-    const resource = entries[i].resource;
-    for (let ii = 0; ii < resource.group.group[0].question.length; ii++) {
-      const question = resource.group.group[0].question[ii];
-      const value = question.answer[0].valueCoding.code;
-      count[value] ++;
+  entries.forEach((entry) => {
+    const resource = entry.resource;
+    if (resource.group.question) {
+      resource.group.question.forEach((question) => {
+        const value = question.answer[0].valueCoding.code;
+        count[value] ++;
+      });
     }
-  }
+  });
 
   const total = count[QuestionnaireResponseCodes.green] +
     count[QuestionnaireResponseCodes.yellow] + count[QuestionnaireResponseCodes.red];
