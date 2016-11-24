@@ -14,7 +14,7 @@ describe('careplan phase', () => {
   it('should have a list of symptoms', () => {
     const phase = getPhase(data, 'green');
     expect(phase.symptoms).to.not.equal(undefined);
-    expect(phase.symptoms.length).gt(0);
+    expect(phase.symptoms.length).equal(5);
   });
 
   it('should have a list of actions', () => {
@@ -49,7 +49,7 @@ describe('careplan', () => {
   it('should have a list of measurements', () => {
     const measurements = getMeasurements(data);
     expect(measurements).to.not.equal(undefined);
-    expect(measurements.length).gt(0);
+    expect(measurements.length).equal(4);
   });
 
   it('should have a category', () => {

@@ -169,7 +169,7 @@ class PatientsFinder extends Component {
             <TextInput
               className="patient-finder__search-input"
               name="searchInput"
-              placeholder="Søk på navn eller personnummer"
+              placeholder="Søk på navn eller fødselsnummer"
               onChange={this.updateSearchString}
               value={this.state.searchString}
             />

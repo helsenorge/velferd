@@ -403,7 +403,7 @@
         }],
         "reasonReference": [
           {
-            "reference": "#green-condition-1"            
+            "reference": "http://www.example.com/fhir/#green-condition-1"            
           },
           {
             "reference": "#green-condition-2"            
@@ -464,7 +464,7 @@
         },
         "goal": [
             {
-              "reference": "#all-goal-188736"
+              "reference": "http://www.example.com/fhir/#all-goal-188736"
             }
           ]
       }
