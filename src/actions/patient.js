@@ -47,8 +47,8 @@ export function fetchPatients(name) {
     }
 
     dispatch(requestPatients());
-    const url =
-    `${fhirUrl}/Patient?_count=500&name=${name}`;
+    const nameQuery = name ? `&name=${name}` : '';
+    const url = `${fhirUrl}/Patient?_count=500${nameQuery}`;
     return get(url, token, useXAuthTokenHeader)
       .then(response => response.json())
       .then(json => dispatch(receivePatients(json)));
