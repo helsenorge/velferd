@@ -31,13 +31,17 @@ function mapGoal(goal) {
   });
 }
 
+function containedReferenceId(reference) {
+  return reference.substring(reference.lastIndexOf('#') + 1);
+}
+
 export function getMeasurement(resource, code) {
   const results = resource.activity.filter(activity =>
     activity.detail.reasonCode[0].coding[0].code === 'all' &&
     activity.detail.category.coding[0].code === 'observation' &&
     activity.detail.code && activity.detail.code.coding[0].code === code)
     .map(activity => {
-      const ref = activity.detail.goal[0].reference.substring(1);
+      const ref = containedReferenceId(activity.detail.goal[0].reference);
       const goal = resource.contained.filter(res => res.id === ref);
 
       return {
@@ -59,7 +63,7 @@ export function getMeasurements(resource) {
     && activity.detail.category.coding[0].code === 'observation'
     && activity.detail.code)
     .map(activity => {
-      const ref = activity.detail.goal[0].reference.substring(1);
+      const ref = containedReferenceId(activity.detail.goal[0].reference);
       const goal = goals[ref];
 
       return {
@@ -112,7 +116,7 @@ export function getPhase(resource, reasonCode) {
 
   const symptoms = !conditionActivity ? []
     : conditionActivity.detail.reasonReference.map(
-    ref => ({ id: shortId.generate(), text: conditions[ref.reference.substring(1)] }));
+    ref => ({ id: shortId.generate(), text: conditions[containedReferenceId(ref.reference)] }));
 
   return {
     reasonCode,
@@ -139,7 +143,7 @@ export function getQuestionnaireId(resource) {
 
 export function getPatientGoal(resource) {
   if (resource.goal.length > 0) {
-    const ref = resource.goal[0].reference.substring(1);
+    const ref = containedReferenceId(resource.goal[0].reference);
     const goal = resource.contained.filter(res => res.resourceType === 'Goal' && res.id === ref);
 
     if (goal.length > 0) {
@@ -165,7 +169,7 @@ export function getCategory(resource) {
 
 export function getAuthor(resource) {
   if (resource.author.length > 0) {
-    const authorRef = resource.author[0].reference.substring(1);
+    const authorRef = containedReferenceId(resource.author[0].reference);
     const contained = resource.contained.filter(res => res.id === authorRef);
     return contained[0];
   }
