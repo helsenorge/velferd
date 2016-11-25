@@ -1,9 +1,11 @@
+import { containedReferenceId } from '../../../helpers/care-plan-helpers';
+
 export function getVersions(data) {
   const versions = data.entry.map(entry => {
     const resource = entry.resource;
     const date = resource.meta.lastUpdated;
 
-    const authorRef = resource.author[0].reference.substring(1);
+    const authorRef = containedReferenceId(resource.author[0].reference);
     const contained = resource.contained.filter(res => res.id === authorRef);
     const author = contained[0];
 
