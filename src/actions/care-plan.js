@@ -348,6 +348,7 @@ export function saveCarePlan(patientId, carePlan) {
     const resource = data.entry[0].resource;
     const url = `${fhirUrl}/CarePlan/${resource.id}`;
     const updatedResource = toFhirCarePlan(patientId, carePlan, user);
+    updatedResource.id = resource.id;
 
     return put(url, updatedResource, token, useXAuthTokenHeader)
       .then(() => {

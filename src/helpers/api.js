@@ -44,7 +44,6 @@ export function put(url, data, token, useXAuthTokenHeader) {
     body: JSON.stringify(data),
     headers,
   };
-  console.log('put ', url, init);
   return fetch(url, init);
 }
 
@@ -69,6 +68,5 @@ export function post(url, data, token, useXAuthTokenHeader) {
     body: JSON.stringify(data),
     headers,
   };
-  console.log('post ', url, init);
   return fetch(url, init);
 }
