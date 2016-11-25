@@ -31,7 +31,7 @@ function mapGoal(goal) {
   });
 }
 
-function containedReferenceId(reference) {
+export function containedReferenceId(reference) {
   return reference.substring(reference.lastIndexOf('#') + 1);
 }
 
