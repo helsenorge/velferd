@@ -17,7 +17,8 @@ const Description = ({ name, unit, idealValue, empty }) => {
   if (empty) {
     emptyMarkup = (
       <span className="measurement-description__empty-text">
-        Det er ikke registrert noen målinger
+        {name === 'Egenvurdering' ? 'Det er ikke registrert noen egenvurderinger'
+          : 'Det er ikke registrert noen målinger'}
       </span>
       );
   }

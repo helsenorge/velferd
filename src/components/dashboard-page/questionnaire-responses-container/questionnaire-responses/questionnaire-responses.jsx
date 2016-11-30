@@ -115,7 +115,17 @@ class QuestionnaireResponses extends Component {
   }
 
   render() {
-    const { data, fromDate, toDate, selectedDate, activeRange } = this.props;
+    const { data, fromDate, toDate, selectedDate, activeRange, empty } = this.props;
+
+    if (empty) {
+      return (
+        <div className="questionnaire-responses">
+          <div className="questionnaire-responses__chart">
+            <Description name="Egenvurdering" empty={empty} />
+          </div>
+        </div>
+      );
+    }
 
     const questions = this.getQuestionsAndAnswers(data.entry);
     const rows = this.getRows(questions, fromDate, toDate, selectedDate);
@@ -147,11 +157,12 @@ class QuestionnaireResponses extends Component {
 }
 
 QuestionnaireResponses.propTypes = {
-  data: PropTypes.object.isRequired,
-  fromDate: React.PropTypes.instanceOf(Date).isRequired,
-  toDate: React.PropTypes.instanceOf(Date).isRequired,
+  empty: PropTypes.bool,
+  data: PropTypes.object,
+  fromDate: React.PropTypes.instanceOf(Date),
+  toDate: React.PropTypes.instanceOf(Date),
   selectedDate: React.PropTypes.instanceOf(Date),
-  activeRange: PropTypes.number.isRequired,
+  activeRange: PropTypes.number,
 };
 
 export default QuestionnaireResponses;

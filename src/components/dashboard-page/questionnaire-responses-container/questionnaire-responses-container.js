@@ -17,7 +17,7 @@ class QuestionnaireResponsesContainer extends Component {
     return (
       <div>
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : null)
+          ? (isFetching ? <h2>Loading...</h2> : <QuestionnaireResponses empty />)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             <QuestionnaireResponses
               data={data}
