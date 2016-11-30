@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import classNames from 'classnames';
 import './description.scss';
 
 const Description = ({ name, unit, idealValue, empty }) => {
@@ -15,14 +16,19 @@ const Description = ({ name, unit, idealValue, empty }) => {
   let emptyMarkup;
   if (empty) {
     emptyMarkup = (
-      <span>
+      <span className="measurement-description__empty-text">
         Det er ikke registrert noen målinger
       </span>
       );
   }
 
+  const className = classNames({
+    'measurement-description': true,
+    'measurement-description--empty': empty,
+  });
+
   return (
-    <div className="measurement-description">
+    <div className={className}>
       <h3 className="measurement-description__heading">{name} {unit ? `(${unit})` : null}</h3>
       {emptyMarkup}
       {referenceMarkup}
