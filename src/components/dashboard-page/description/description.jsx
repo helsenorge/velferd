@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import './description.scss';
 
-const Description = ({ name, unit, idealValue }) => {
+const Description = ({ name, unit, idealValue, empty }) => {
   let referenceMarkup;
 
   if (idealValue) {
@@ -11,20 +11,27 @@ const Description = ({ name, unit, idealValue }) => {
       </span>
       );
   }
-  else {
-    referenceMarkup = null;
-  }
 
+  let emptyMarkup;
+  if (empty) {
+    emptyMarkup = (
+      <span>
+        Det er ikke registrert noen målinger
+      </span>
+      );
+  }
 
   return (
     <div className="measurement-description">
       <h3 className="measurement-description__heading">{name} {unit ? `(${unit})` : null}</h3>
+      {emptyMarkup}
       {referenceMarkup}
     </div>);
 };
 
 Description.propTypes = {
   name: PropTypes.string.isRequired,
+  empty: PropTypes.bool,
   unit: PropTypes.string,
   idealValue: PropTypes.string,
 };

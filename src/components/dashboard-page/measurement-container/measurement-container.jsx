@@ -12,21 +12,22 @@ class MeasurementsContainer extends Component {
   }
 
   render() {
-    const { data, isFetching } = this.props;
+    const { data, isFetching, code, fromDate, toDate, icon, selectedDate, idealValues }
+      = this.props;
     const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
     return (
       <div>
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : null)
+          ? (isFetching ? <h2>Loading...</h2> : <Measurement empty code={code} />)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             <Measurement
-              icon={this.props.icon}
+              icon={icon}
               data={data}
-              code={this.props.code}
-              fromDate={this.props.fromDate}
-              toDate={this.props.toDate}
-              selectedDate={this.props.selectedDate}
-              idealValues={this.props.idealValues}
+              code={code}
+              fromDate={fromDate}
+              toDate={toDate}
+              selectedDate={selectedDate}
+              idealValues={idealValues}
             />
           </div>
         }

@@ -76,11 +76,21 @@ class Measurements extends Component {
   }
 
   render() {
-    const { code, data, idealValues, fromDate, toDate, selectedDate, icon } = this.props;
+    const { code, data, idealValues, fromDate, toDate, selectedDate, icon, empty } = this.props;
+    const name = getMeasurementName(code);
+
+    if (empty) {
+      return (
+        <div className="measurement">
+          <div className="measurement__chart">
+            <Description name={name} empty={empty} />
+          </div>
+        </div>
+      );
+    }
 
     const unit = getUnit(code);
     let points = data.entry.map((item) => this.getDataPoint(item, unit));
-    const name = getMeasurementName(code);
     const idealValue = this.getIdealValuesString(idealValues, unit);
     const latestValue = this.getDataPoint(data.entry[data.entry.length - 1], unit);
     const highAndLow = this.getHighAndLow(code, data.entry);
@@ -115,10 +125,11 @@ class Measurements extends Component {
 }
 
 Measurements.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.object,
   code: PropTypes.string.isRequired,
-  fromDate: PropTypes.instanceOf(Date).isRequired,
-  toDate: PropTypes.instanceOf(Date).isRequired,
+  fromDate: PropTypes.instanceOf(Date),
+  toDate: PropTypes.instanceOf(Date),
+  empty: PropTypes.bool,
   selectedDate: PropTypes.instanceOf(Date),
   icon: PropTypes.string,
   idealValues: PropTypes.array,
