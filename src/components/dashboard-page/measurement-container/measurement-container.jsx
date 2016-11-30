@@ -18,7 +18,7 @@ class MeasurementsContainer extends Component {
     return (
       <div>
         {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <Measurement empty code={code} />)
+          ? (isFetching ? <Measurement fetching code={code} /> : <Measurement empty code={code} />)
           : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
             <Measurement
               icon={icon}

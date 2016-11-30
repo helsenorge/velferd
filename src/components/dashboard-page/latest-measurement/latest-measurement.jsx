@@ -6,8 +6,15 @@ import iconCalendar from '../../../../svg/calendar.svg';
 import iconClock from '../../../../svg/clock.svg';
 import { getTransparentIcon } from '../../../helpers/questionnaire-response-helpers.js';
 
-const LatestMeasurement = ({ date, measurement, unit, questionnaireResponses }) => {
+const LatestMeasurement = ({ date, measurement, unit, questionnaireResponses, empty }) => {
   let value;
+
+  if (empty) {
+    return (
+      <div className="latest-measurement">
+      </div>
+      );
+  }
 
   if (measurement) {
     let formattedValue = measurement;
@@ -71,6 +78,7 @@ LatestMeasurement.propTypes = {
   measurement: PropTypes.array,
   questionnaireResponses: PropTypes.object,
   unit: PropTypes.string,
+  empty: PropTypes.bool,
 };
 
 export default LatestMeasurement;

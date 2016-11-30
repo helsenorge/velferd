@@ -5,6 +5,7 @@ import LatestMeasurement from './../../latest-measurement/latest-measurement.jsx
 import './measurement.scss';
 import ObservationCodes from '../../../../constants/observation-codes';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
+import Spinner from '../../../spinner/spinner.jsx';
 
 class Measurements extends Component {
 
@@ -76,7 +77,16 @@ class Measurements extends Component {
   }
 
   render() {
-    const { code, data, idealValues, fromDate, toDate, selectedDate, icon, empty } = this.props;
+    const {
+      code,
+      data,
+      idealValues,
+      fromDate,
+      toDate,
+      selectedDate,
+      icon,
+      empty,
+      fetching } = this.props;
     const name = getMeasurementName(code);
 
     if (empty) {
@@ -84,6 +94,20 @@ class Measurements extends Component {
         <div className="measurement">
           <div className="measurement__chart">
             <Description name={name} empty={empty} />
+          </div>
+        </div>
+      );
+    }
+
+    if (fetching) {
+      return (
+        <div className="measurement">
+          <div className="measurement__chart">
+            <Description name={name} />
+            <div className="measurement-chart">
+              <Spinner className="measurement__spinner" />
+            </div>
+            <LatestMeasurement empty />
           </div>
         </div>
       );
@@ -133,6 +157,7 @@ Measurements.propTypes = {
   selectedDate: PropTypes.instanceOf(Date),
   icon: PropTypes.string,
   idealValues: PropTypes.array,
+  fetching: PropTypes.bool,
 };
 
 export default Measurements;

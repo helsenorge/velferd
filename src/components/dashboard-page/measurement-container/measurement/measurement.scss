@@ -3,6 +3,13 @@
 .measurement {
   margin: 1rem 0;
   display: flex;
+
+  &__spinner {
+    margin: 0 auto;
+    align-self: center;
+    position: relative;
+    left: -3rem;
+  }
 }
 
 .measurement__chart {
