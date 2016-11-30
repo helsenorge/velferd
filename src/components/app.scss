@@ -3,4 +3,8 @@
   margin: 0 auto;
   max-width: 76rem;
   min-width: 1200px;
+
+  @media print {
+    min-width: auto;
+  }
 }

@@ -8,6 +8,7 @@ import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
 import ReasonCodes from '../../constants/reason-codes';
 import CarePlanCategories from '../../constants/care-plan-categories';
 import { getCarePlan } from '../../helpers/care-plan-helpers.js';
+import { getName } from '../../helpers/patient-helpers.js';
 import './care-plan-page.scss';
 
 class CarePlanPage extends Component {
@@ -132,19 +133,25 @@ class CarePlanPage extends Component {
   }
 
   render() {
-    const { isFetching, error } = this.props;
+    const { isFetching, error, patient } = this.props;
     const { carePlan, editing, saving } = this.state;
 
     let isEmpty = true;
     let planCategory = '';
     if (carePlan) {
       isEmpty = false;
-      planCategory = carePlan.category === CarePlanCategories.HeartFailure ? ' for hjertesvikt'
-        : ' for KOLS';
+      planCategory = carePlan.category === CarePlanCategories.HeartFailure ? 'hjertesvikt'
+        : 'KOLS';
     }
+    console.log(patient);
+    const name = getName(patient);
+
     return (
       <div className="care-plan-page">
-        <h2 className="care-plan-page__heading">Egenbehandlingsplan{planCategory}</h2>
+        <h2 className="care-plan-page__heading">Egenbehandlingsplan for&nbsp;
+          <span className="care-plan-page__heading-category">{planCategory}</span>
+          <span className="care-plan-page__heading-name">{name}</span>
+        </h2>
         {error && <p>{error}</p>}
         {isEmpty
           ? (isFetching ? <h2>Loading...</h2> :
@@ -176,6 +183,7 @@ class CarePlanPage extends Component {
 
 CarePlanPage.propTypes = {
   patientId: PropTypes.string.isRequired,
+  patient: PropTypes.object,
   isFetching: PropTypes.bool.isRequired,
   saveCompleted: PropTypes.bool,
   dispatch: PropTypes.func.isRequired,
@@ -197,6 +205,7 @@ function mapStateToProps(state) {
 
   return {
     patientId: patient.activePatient.id,
+    patient: patient.activePatient,
     carePlan: resource,
     isFetching,
     saveCompleted,

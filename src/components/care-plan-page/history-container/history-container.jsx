@@ -36,7 +36,7 @@ class HistoryContainer extends Component {
       'history-container__expandericon--open': isOpened,
     });
     return (
-      <div>
+      <div className="history-container">
         <Button
           className="history-container__expanderbutton"
           aria-controls="collapse"

@@ -24,11 +24,20 @@ const Footer = ({ comment, author, lastUpdated }) => {
 
   return (
     <div className="careplan-footer">
-      <div className="careplan-footer__lastupdated">
-        Sist endret {date} av {name}
+      <div className="careplan-footer__screen">
+        <div className="careplan-footer__lastupdated">
+          Sist endret {date} av {name}
+        </div>
+        <p className="careplan-footer__comment">Kommentar: {comment}</p>
+        <Button className="careplan-footer__button">Kopier kommentar</Button>
       </div>
-      <p className="careplan-footer__comment">Kommentar: {comment}</p>
-      <Button className="careplan-footer__button">Kopier kommentar</Button>
+      <div className="careplan-footer__print">
+        <b>Ved tvil eller manglende effekt av behandlingen, kontakt lege!</b>
+        <div className="careplan-footer__underskrift">
+          <span className="careplan-footer__date">Dato:</span>
+          <span className="careplan-footer__legens-underskrift">Legens underskrift:</span>
+        </div>
+      </div>
     </div>
   );
 };

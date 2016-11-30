@@ -39,6 +39,12 @@
     padding: 1.2rem 1rem;
     display: flex;
 
+    @media print {
+      font-size: 0.85rem;
+      border: 2px solid $quill-gray;
+      width: calc(100% / 3 - 0.5rem);
+    }
+
     &:nth-child(1) {
       background: $chrome-white;
     }
@@ -57,6 +63,10 @@
     width: 30px;
     height: 30px;
     vertical-align: middle;
+    @media print {
+      height: 20px;
+      width: 20px;
+    }
   }
 
   &__listheading {
@@ -65,6 +75,12 @@
     font-weight: 400;
     margin-top: 2.25rem;
     margin-bottom: 1.625rem;
+
+    @media print {
+      margin-top: 1.5rem;
+      margin-bottom: 1rem;
+      font-size: 0.85rem;
+    }
 
     &--medisiner {
       margin-top: 2rem;
@@ -80,8 +96,16 @@
     padding: 0;
     line-height: 1.5rem;
 
+    @media print {
+      font-size: 0.8rem;
+    }
+
     li {
       margin-bottom: 0.875rem;
+
+      @media print {
+        margin-bottom: 0.5rem;
+      }
     }
   }
 
@@ -93,11 +117,35 @@
       width: calc(100% / 3 - 1.3rem);
     }
 
+    @media print {
+      width: calc(100% / 3 - 0.5rem);
+    }
+
     padding-left: 3.5rem;
     padding-right: 2rem;
     flex: 0 0 auto;
     width: calc(100% / 3 - 1.2rem);
     background: #fff;
+
+    &:nth-child(4),
+    &:nth-child(5),
+    &:nth-child(6) {
+      @media print {
+        margin-top: 1rem;
+        border-top: 2px solid $quill-gray;
+        border-left: 2px solid $quill-gray;
+        border-right: 2px solid $quill-gray;
+      }
+    }
+
+    &:nth-child(7),
+    &:nth-child(8),
+    &:nth-child(9) {
+      @media print {
+        border-left: 2px solid $quill-gray;
+        border-right: 2px solid $quill-gray;
+      }
+    }
 
     &:nth-child(7)::before,
     &:nth-child(8)::before,
@@ -108,12 +156,21 @@
       height: 2px;
       background: $desert-storm;
       margin-top: 2.75rem;
+
+      @media print {
+        content: none;
+      }
     }
 
     &:nth-last-child(1),
     &:nth-last-child(2),
     &:nth-last-child(3) {
       padding-bottom: 3.875rem;
+      @media print {
+        border-left: 2px solid $quill-gray;
+        border-bottom: 2px solid $quill-gray;
+        border-right: 2px solid $quill-gray;
+      }
     }
   }
 }
