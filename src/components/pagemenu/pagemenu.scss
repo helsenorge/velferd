@@ -35,5 +35,9 @@
       background: #d5d5d5;
     }
   }
+
+  @media print {
+    display: none;
+  }
 }
 

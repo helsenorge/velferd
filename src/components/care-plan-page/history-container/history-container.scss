@@ -14,4 +14,8 @@
       transform: rotate(90deg);
     }
   }
+
+  @media print {
+    display: none;
+  }
 }

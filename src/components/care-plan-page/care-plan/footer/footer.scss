@@ -1,3 +1,5 @@
+@import '../../../../constants/constants';
+
 .careplan-footer {
   &__lastupdated {
     margin-top: 0.875rem;
@@ -11,5 +13,32 @@
 
   &__comment {
     margin-top: 0;
+  }
+
+  &__print {
+    display: none;
+  }
+
+  @media print {
+    &__screen {
+      display: none;
+    }
+
+    &__print {
+      display: block;
+      margin-top: 2rem;
+    }
+
+    &__underskrift {
+      margin-top: 0.5rem;
+      border: 2px solid $quill-gray;
+      background: #fff;
+      height: 6rem;
+      padding: 0.5rem;
+    }
+
+    &__date {
+      margin-right: 10rem;
+    }
   }
 }

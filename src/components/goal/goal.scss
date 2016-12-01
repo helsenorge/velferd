@@ -34,4 +34,9 @@
     resize: vertical;
     border: 2px solid $quill-gray;
   }
+
+  @media print {
+    border: 2px solid $quill-gray;
+    font-size: 1rem;
+  }
 }

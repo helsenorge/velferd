@@ -5,6 +5,7 @@ import LatestMeasurement from './../../latest-measurement/latest-measurement.jsx
 import './measurement.scss';
 import ObservationCodes from '../../../../constants/observation-codes';
 import { getMeasurementName, getUnit } from '../../../../helpers/observation-helpers';
+import Spinner from '../../../spinner/spinner.jsx';
 
 class Measurements extends Component {
 
@@ -76,11 +77,44 @@ class Measurements extends Component {
   }
 
   render() {
-    const { code, data, idealValues, fromDate, toDate, selectedDate, icon } = this.props;
+    const {
+      code,
+      data,
+      idealValues,
+      fromDate,
+      toDate,
+      selectedDate,
+      icon,
+      empty,
+      fetching } = this.props;
+    const name = getMeasurementName(code);
+
+    if (empty) {
+      return (
+        <div className="measurement">
+          <div className="measurement__chart">
+            <Description name={name} empty={empty} />
+          </div>
+        </div>
+      );
+    }
+
+    if (fetching) {
+      return (
+        <div className="measurement">
+          <div className="measurement__chart">
+            <Description name={name} />
+            <div className="measurement-chart">
+              <Spinner className="measurement__spinner" />
+            </div>
+            <LatestMeasurement empty />
+          </div>
+        </div>
+      );
+    }
 
     const unit = getUnit(code);
     let points = data.entry.map((item) => this.getDataPoint(item, unit));
-    const name = getMeasurementName(code);
     const idealValue = this.getIdealValuesString(idealValues, unit);
     const latestValue = this.getDataPoint(data.entry[data.entry.length - 1], unit);
     const highAndLow = this.getHighAndLow(code, data.entry);
@@ -115,13 +149,15 @@ class Measurements extends Component {
 }
 
 Measurements.propTypes = {
-  data: PropTypes.object.isRequired,
+  data: PropTypes.object,
   code: PropTypes.string.isRequired,
-  fromDate: PropTypes.instanceOf(Date).isRequired,
-  toDate: PropTypes.instanceOf(Date).isRequired,
+  fromDate: PropTypes.instanceOf(Date),
+  toDate: PropTypes.instanceOf(Date),
+  empty: PropTypes.bool,
   selectedDate: PropTypes.instanceOf(Date),
   icon: PropTypes.string,
   idealValues: PropTypes.array,
+  fetching: PropTypes.bool,
 };
 
 export default Measurements;

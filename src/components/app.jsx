@@ -6,12 +6,22 @@ import PageMenu from '../components/pagemenu/pagemenu.jsx';
 import Footer from '../components/footer/footer.jsx';
 import Login from '../components/login/login.jsx';
 import PatientFinder from '../components/patient-finder/patient-finder.jsx';
+import { setActivePatient } from '../actions/patient';
 import './app.scss';
 
 class App extends Component {
 
+  constructor(props) {
+    super(props);
+    this.resetPatient = this.resetPatient.bind(this);
+  }
+
   accessAllowed(authenticate, token) {
     return !authenticate || token !== null;
+  }
+
+  resetPatient() {
+    this.props.dispatch(setActivePatient(null));
   }
 
   render() {
@@ -23,7 +33,10 @@ class App extends Component {
 
     return (
       <div>
-        <PageHeader patient={activePatient} user={user} carePlanCategory={carePlanCategory} />
+        <PageHeader
+          patient={activePatient}
+          user={user} carePlanCategory={carePlanCategory} resetPatient={this.resetPatient}
+        />
         {activePatient && <PageMenu />}
         <article className="main">
           {activePatient ? children : (<PatientFinder />)}
