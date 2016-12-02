@@ -7,7 +7,7 @@ export function getMeasurementName(code) {
   case ObservationCodes.pulse:
     return 'Puls';
   case ObservationCodes.pulseOximeter:
-    return 'Puls oksymeter';
+    return 'Oksygenmetning';
   case ObservationCodes.bloodPressure:
     return 'Blodtrykk';
   case ObservationCodes.bloodPressureSystolic:
