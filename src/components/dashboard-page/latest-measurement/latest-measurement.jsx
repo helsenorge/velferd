@@ -17,10 +17,15 @@ const LatestMeasurement = ({ date, measurement, unit, questionnaireResponses, em
   }
 
   if (measurement) {
-    let formattedValue = measurement;
+    let formattedValue;
 
     if (measurement.length > 1) {
-      formattedValue = (<span>{measurement[0]}/<br />{measurement[1]}</span>);
+      formattedValue = (
+        <span>{Math.round(measurement[0])}/<br />{Math.round(measurement[1])}</span>
+      );
+    }
+    else if (measurement[0]) {
+      formattedValue = Math.round(measurement[0]);
     }
     value = (
       <div className="latest-measurement__valuewrapper">
