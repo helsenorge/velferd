@@ -19,7 +19,7 @@ const PageHeader = ({ patient, user, carePlanCategory, resetPatient }) => {
 
         {patient ? (<span><span className="pageheader__patient-name">{patientName}</span>
           <span className="pageheader__patient-meta">
-          {birthNumber} {careplanCategory && <span>, {careplanCategory}</span>}
+          &nbsp;{birthNumber} {careplanCategory && <span>, {careplanCategory}</span>}
           </span></span>) : <span><span className="pageheader__patient-name">&nbsp;</span>
             <span className="pageheader__patient-meta">
             &nbsp;
