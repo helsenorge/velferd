@@ -10,6 +10,7 @@ export function questionnaireResponses(state = {
   case REQUEST_QUESTIONNAIRE_RESPONSES:
     return Object.assign({}, state, {
       isFetching: true,
+      data: null,
     });
   case RECEIVE_QUESTIONNAIRE_RESPONSES:
     return Object.assign({}, state, {

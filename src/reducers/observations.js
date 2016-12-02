@@ -10,6 +10,7 @@ function observations(state = {
   case REQUEST_OBSERVATIONS:
     return Object.assign({}, state, {
       isFetching: true,
+      data: null,
     });
   case RECEIVE_OBSERVATIONS:
     return Object.assign({}, state, {
