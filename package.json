@@ -39,7 +39,7 @@
     "react-height": "^2.1.1",
     "react-motion": "^0.4.4",
     "react-redux": "^4.4.5",
-    "react-router": "^2.5.1",
+    "react-router": "^3.0.0",
     "redux": "^3.5.2",
     "redux-thunk": "^2.0.1",
     "scroll-to": "0.0.2"
