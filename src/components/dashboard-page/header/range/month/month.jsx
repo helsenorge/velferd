@@ -17,7 +17,7 @@ const monthNames = [
   'desember',
 ];
 
-const Month = ({ month, fromDate, toDate, activeRange }) => {
+const Month = ({ month, fromDate, toDate, activeRange, handleDateClick }) => {
   const monthName = monthNames[month];
   const dates = [];
   for (let d = new Date(fromDate);
@@ -40,7 +40,9 @@ const Month = ({ month, fromDate, toDate, activeRange }) => {
       <ol className="month__dates">
         {
           dates.map((date) => (
-            <li key={date.getTime()} className="month__date">{date.getDate()}.</li>
+            <li key={date.getTime()} className="month__date" onClick={() => handleDateClick(date)}>
+              {date.getDate()}.
+            </li>
             )
           )
         }
@@ -54,6 +56,7 @@ Month.propTypes = {
   activeRange: PropTypes.number.isRequired,
   fromDate: PropTypes.instanceOf(Date).isRequired,
   toDate: PropTypes.instanceOf(Date).isRequired,
+  handleDateClick: PropTypes.func.isRequired,
 };
 
 export default Month;
