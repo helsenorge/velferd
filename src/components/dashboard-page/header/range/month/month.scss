@@ -99,6 +99,16 @@
     box-shadow: 2px 0 0 0 $mercury;
     $width: 9.33333px;
 
+    //gjem box-shadow på høyre side
+    &:last-child::after {
+      content: "";
+      height: 100%;
+      width: 1px;
+      background: #f4f4f4;
+      position: absolute;
+      right: -1px;
+    }
+
     .month__dates {
       display: flex;
     }
@@ -171,10 +181,10 @@
     &:last-child::after {
       content: "";
       height: 100%;
-      width: 1px;
-      background: #f6f6f6;
+      width: 2px;
+      background: #f4f4f4;
       position: absolute;
-      right: -1px;
+      right: -2px;
     }
 
     .month__dates {
