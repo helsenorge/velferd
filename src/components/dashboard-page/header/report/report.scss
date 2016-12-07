@@ -1,26 +1,35 @@
 @import "../../../../constants/constants";
 
 .report {
-  background: #fff;
   margin: 4rem 0 2.5rem;
   width: 100%;
 
   &__expanderbutton {
     color: #269392;
     font-size: 1.125rem;
-    background: transparent;
+    background: #fff;
     border: 0;
     text-transform: uppercase;
     cursor: pointer;
     border: 1px solid $gallery;
     padding: 1rem;
     width: 100%;
+    padding-left: 2rem;
     text-align: left;
+
+    &:hover,
+    &:focus {
+      background: #F2F2F2;
+      border: 1px solid #D9D9D4;
+      outline: 0;
+    }
   }
 
   &__expander {
     background: #fff;
     padding: 1rem 2rem;
+    margin-top: 2px;
+    border: 1px solid $gallery;
   }
 
   &__header {
