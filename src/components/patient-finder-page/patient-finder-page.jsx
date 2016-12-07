@@ -9,9 +9,10 @@ import { fetchCarePlan } from '../../actions/care-plan';
 import { getBirthNumber, getName } from '../../helpers/patient-helpers.js';
 import TextInput from '../text-input/text-input.jsx';
 import Spinner from '../spinner/spinner.jsx';
-import './patient-finder.scss';
+import './patient-finder-page.scss';
 import Icon from '../icon/icon.jsx';
 import mfglass from '../../../svg/magnifying_glass.svg';
+import { hashHistory } from 'react-router';
 
 class PatientsFinder extends Component {
 
@@ -78,6 +79,7 @@ class PatientsFinder extends Component {
 
     dispatch(setActivePatient(patient));
     dispatch(fetchCarePlan(patient.id));
+    hashHistory.push('patient');
   }
 
   handleLastViewedPatientClick(patientId) {
@@ -85,6 +87,7 @@ class PatientsFinder extends Component {
 
     dispatch(fetchAndSetActivePatient(patientId));
     dispatch(fetchCarePlan(patientId));
+    hashHistory.push('patient');
   }
 
   groupPatientsByInitial(data) {

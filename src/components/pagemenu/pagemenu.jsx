@@ -7,7 +7,7 @@ const PageMenu = () => (
     <ul className="pagemenu__list">
       <li className="pagemenu__list-item">
         <IndexLink
-          to="/"
+          to="patient"
           className="pagemenu__link"
           activeClassName="pagemenu__link--active"
         >
@@ -16,7 +16,7 @@ const PageMenu = () => (
       </li>
       <li className="pagemenu__list-item">
         <Link
-          to="/careplan"
+          to="patient/careplan"
           className="pagemenu__link"
           activeClassName="pagemenu__link--active"
         >
