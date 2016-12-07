@@ -19,6 +19,32 @@
     display: none;
   }
 
+  &__copybutton {
+    border-radius: 100px;
+    background: #269392;
+    border: none;
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 300;
+    padding: 0.7rem 1.2rem;
+    min-width: 9.5rem;
+  }
+
+  &__button-text {
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in;
+    width: 0;
+
+    &--visible {
+      visibility: visible;
+      position: relative;
+      width: auto;
+      opacity: 1;
+    }
+  }
+
   @media print {
     &__screen {
       display: none;

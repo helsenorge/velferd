@@ -1,46 +1,66 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import { formatDateTime } from '../../../../helpers/date-helpers.js';
 import './footer.scss';
 import Button from '../../../button/button.jsx';
 import Clipboard from 'clipboard';
 
-const Footer = ({ comment, author, lastUpdated }) => {
-  const date = formatDateTime(lastUpdated);
+class Footer extends Component {
+  constructor(props) {
+    super(props);
 
-  const given = author.name.given ? author.name.given.join(' ') : '';
-  const family = author.name.family ? author.name.family.join(' ') : '';
-  const name = `${given} ${family}`;
+    const clipboard = new Clipboard('.careplan-footer__button', { // eslint-disable-line
+      text: () => {
+        this.refs.copy.classList.remove('careplan-footer__button-text--visible');
+        this.refs.copied.classList.add('careplan-footer__button-text--visible');
+        setTimeout(() => {
+          this.refs.copy.classList.add('careplan-footer__button-text--visible');
+          this.refs.copied.classList.remove('careplan-footer__button-text--visible');
+        }, 1500);
+        return this.props.comment;
+      },
+    });
+  }
 
-  const clipboard = new Clipboard('.careplan-footer__button', { // eslint-disable-line
-    text: (trigger) => {
-      const button = trigger;
-      button.innerText = 'Kommentar kopiert!';
-      setTimeout(() => {
-        button.innerText = 'Kopier kommentar';
-      }, 1000);
-      return comment;
-    },
-  });
+  render() {
+    const { lastUpdated, author, comment } = this.props;
+    const date = formatDateTime(lastUpdated);
 
-  return (
-    <div className="careplan-footer">
-      <div className="careplan-footer__screen">
-        <div className="careplan-footer__lastupdated">
-          Sist endret {date} av {name}
+    const given = author.name.given ? author.name.given.join(' ') : '';
+    const family = author.name.family ? author.name.family.join(' ') : '';
+    const name = `${given} ${family}`;
+    return (
+      <div className="careplan-footer">
+        <div className="careplan-footer__screen">
+          <div className="careplan-footer__lastupdated">
+            Sist endret {date} av {name}
+          </div>
+          <p className="careplan-footer__comment">Kommentar: {comment}</p>
+          <Button className="careplan-footer__button">
+            <span
+              className="careplan-footer__button-text careplan-footer__button-text--visible"
+              ref="copy"
+            >
+              Kopier kommentar
+            </span>
+            <span
+              className="careplan-footer__button-text"
+              ref="copied"
+            >
+              Kommentar kopiert!
+            </span>
+          </Button>
         </div>
-        <p className="careplan-footer__comment">Kommentar: {comment}</p>
-        <Button className="careplan-footer__button">Kopier kommentar</Button>
-      </div>
-      <div className="careplan-footer__print">
-        <b>Ved tvil eller manglende effekt av behandlingen, kontakt lege!</b>
-        <div className="careplan-footer__underskrift">
-          <span className="careplan-footer__date">Dato:</span>
-          <span className="careplan-footer__legens-underskrift">Legens underskrift:</span>
+        <div className="careplan-footer__print">
+          <b>Ved tvil eller manglende effekt av behandlingen, kontakt lege!</b>
+          <div className="careplan-footer__underskrift">
+            <span className="careplan-footer__date">Dato:</span>
+            <span className="careplan-footer__legens-underskrift">Legens underskrift:</span>
+          </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+}
 
 Footer.propTypes = {
   comment: PropTypes.string.isRequired,
