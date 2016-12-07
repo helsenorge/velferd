@@ -60,7 +60,7 @@ class Report extends Component {
           Rapport denne perioden
           <Icon glyph={iconChevron} className={iconClass} />
         </button>
-        <Collapse isOpened={this.state.expanded}>
+        <Collapse isOpened={this.state.expanded} className="report__expanderwrapper">
           <div className="report__expander">
             <div id="copy-target">
               <h3 className="report__header">
