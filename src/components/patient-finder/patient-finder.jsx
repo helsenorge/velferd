@@ -158,11 +158,13 @@ class PatientsFinder extends Component {
     return (
       <div className="patient-finder">
         <h2 className="patient-finder__heading">Velg pasient</h2>
-
-        <section>
-          <h3 className="patient-finder__recent-heading">Nylig sett på</h3>
-          <ul className="patient-finder__list">{recentlyViewed}</ul>
-        </section>
+        {
+          recentlyViewed.length > 0 ?
+          (<section>
+            <h3 className="patient-finder__recent-heading">Nylig sett på</h3>
+            <ul className="patient-finder__list">{recentlyViewed}</ul>
+          </section>) : null
+        }
 
         <section>
           <form onSubmit={this.handleKeyPress} className="patient-finder__search">
