@@ -56,6 +56,7 @@ class Range extends Component {
     const {
       handleBackClick,
       handleForwardClick,
+      handleDateClick,
       fromDate,
       toDate,
       activeRange,
@@ -95,6 +96,7 @@ class Range extends Component {
                 activeRange={activeRange}
                 fromDate={fromDate}
                 toDate={toDate}
+                handleDateClick={handleDateClick}
               />
             )}
           </div>

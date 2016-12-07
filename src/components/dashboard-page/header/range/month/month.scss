@@ -22,6 +22,7 @@
   &__date {
     text-align: center;
     border-left: 1px solid $mercury;
+    cursor: pointer;
   }
 
   &--14:not(:last-child),

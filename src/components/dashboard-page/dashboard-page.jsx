@@ -57,7 +57,7 @@ class DashboardPage extends Component {
     if (days !== dayRange) {
       const fromDate = new Date(toDate.getTime());
       fromDate.setDate(fromDate.getDate() - days);
-      this.setState({ fromDate: new Date(fromDate), dayRange: days });
+      this.setState({ fromDate: new Date(fromDate), dayRange: days, selectedDate: null });
     }
   }
 
