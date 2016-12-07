@@ -15,22 +15,28 @@ class MeasurementsContainer extends Component {
     const { data, isFetching, code, fromDate, toDate, icon, selectedDate, idealValues }
       = this.props;
     const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
+    let measurement = null;
+    if (isFetching) {
+      measurement = <Measurement fetching code={code} />;
+    }
+    else if (isEmpty) {
+      measurement = <Measurement empty code={code} />;
+    }
+    else {
+      measurement = (
+        <Measurement
+          icon={icon}
+          data={data}
+          code={code}
+          fromDate={fromDate}
+          toDate={toDate}
+          selectedDate={selectedDate}
+          idealValues={idealValues}
+        />);
+    }
     return (
       <div>
-        {isEmpty
-          ? (isFetching ? <Measurement fetching code={code} /> : <Measurement empty code={code} />)
-          : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            <Measurement
-              icon={icon}
-              data={data}
-              code={code}
-              fromDate={fromDate}
-              toDate={toDate}
-              selectedDate={selectedDate}
-              idealValues={idealValues}
-            />
-          </div>
-        }
+        {measurement}
       </div>
     );
   }

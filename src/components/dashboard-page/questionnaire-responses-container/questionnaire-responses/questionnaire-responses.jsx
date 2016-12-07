@@ -6,6 +6,7 @@ import LatestMeasurement from './../../latest-measurement/latest-measurement.jsx
 import Description from './../../description/description.jsx';
 import Icon from '../../../icon/icon.jsx';
 import { getIcon } from '../../../../helpers/questionnaire-response-helpers.js';
+import Spinner from '../../../spinner/spinner.jsx';
 
 class QuestionnaireResponses extends Component {
 
@@ -115,14 +116,29 @@ class QuestionnaireResponses extends Component {
   }
 
   render() {
-    const { data, fromDate, toDate, selectedDate, activeRange, empty } = this.props;
+    const { data, fromDate, toDate, selectedDate, activeRange, empty, loading } = this.props;
 
     if (empty) {
       return (
         <div className="questionnaire-responses">
           <div className="questionnaire-responses__chart">
-            <Description name="Egenvurdering" empty={empty} />
+            <Description name="Egenvurdering" empty />
           </div>
+          <LatestMeasurement empty />
+        </div>
+      );
+    }
+
+    if (loading) {
+      return (
+        <div className="questionnaire-responses">
+          <div className="questionnaire-responses__chart">
+            <Description name="Egenvurdering" />
+            <div className="questionnaire-responses__table-container">
+              <Spinner className="questionnaire-responses__spinner" />
+            </div>
+          </div>
+          <LatestMeasurement empty />
         </div>
       );
     }
@@ -157,6 +173,7 @@ class QuestionnaireResponses extends Component {
 }
 
 QuestionnaireResponses.propTypes = {
+  loading: PropTypes.bool,
   empty: PropTypes.bool,
   data: PropTypes.object,
   fromDate: React.PropTypes.instanceOf(Date),

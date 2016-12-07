@@ -15,6 +15,7 @@
 .measurement__chart {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   flex: 1 0 auto;
   min-width: 1010px;
   margin-right: 0.1rem;

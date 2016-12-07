@@ -14,22 +14,23 @@ class QuestionnaireResponsesContainer extends Component {
   render() {
     const { data, isFetching } = this.props;
     const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
-    return (
-      <div>
-        {isEmpty
-          ? (isFetching ? <h2>Loading...</h2> : <QuestionnaireResponses empty />)
-          : <div style={{ opacity: isFetching ? 0.5 : 1 }}>
-            <QuestionnaireResponses
-              data={data}
-              fromDate={this.props.fromDate}
-              toDate={this.props.toDate}
-              selectedDate={this.props.selectedDate}
-              activeRange={this.props.activeRange}
-            />
-          </div>
-        }
-      </div>
-    );
+    let qRespones = null;
+    if (isFetching) {
+      qRespones = <QuestionnaireResponses loading />;
+    }
+    else if (isEmpty) {
+      qRespones = <QuestionnaireResponses empty />;
+    }
+    else {
+      qRespones = (<QuestionnaireResponses
+        data={data}
+        fromDate={this.props.fromDate}
+        toDate={this.props.toDate}
+        selectedDate={this.props.selectedDate}
+        activeRange={this.props.activeRange}
+      />);
+    }
+    return qRespones;
   }
 }
 

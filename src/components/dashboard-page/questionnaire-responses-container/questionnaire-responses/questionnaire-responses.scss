@@ -10,12 +10,23 @@
     padding-left: 1rem;
     overflow: hidden;
     position: relative;
+    display: flex;
   }
 
   &__chart {
-    flex: 1 1 auto;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    flex: 0 1 auto;
     min-width: 1010px;
     margin-right: 0.1rem;
+    border: 1px solid $gallery;
+  }
+
+  &__spinner {
+    margin: 0 auto;
+    align-self: center;
     position: relative;
   }
 }

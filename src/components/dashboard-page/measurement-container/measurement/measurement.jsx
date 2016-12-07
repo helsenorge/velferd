@@ -107,8 +107,8 @@ class Measurements extends Component {
             <div className="measurement-chart">
               <Spinner className="measurement__spinner" />
             </div>
-            <LatestMeasurement empty />
           </div>
+          <LatestMeasurement empty />
         </div>
       );
     }
