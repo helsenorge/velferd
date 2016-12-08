@@ -116,15 +116,13 @@ class QuestionnaireResponses extends Component {
   }
 
   render() {
-    const { data, fromDate, toDate, selectedDate, activeRange, empty, loading } = this.props;
-
+    const { data, fromDate, toDate, selectedDate, activeRange, loading, empty } = this.props;
     if (empty) {
       return (
         <div className="questionnaire-responses">
           <div className="questionnaire-responses__chart">
             <Description name="Egenvurdering" empty />
           </div>
-          <LatestMeasurement empty />
         </div>
       );
     }
