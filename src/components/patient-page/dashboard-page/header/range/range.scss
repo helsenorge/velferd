@@ -1,0 +1,150 @@
+@import '../../../../../constants/constants';
+
+.range {
+  width: 100%;
+  padding-top: 1rem;
+  z-index: 10;
+
+  &--sticky {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: $page-background;
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.15);
+
+    .range__wrapper {
+      max-width: 76rem;
+      min-width: 1200px;
+      margin: 0 auto;
+    }
+  }
+
+  &__wrapper {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__months {
+    display: flex;
+    width: 840px;
+    overflow: hidden;
+
+    &--borders {
+      position: relative;
+
+      &::before {
+        content: "";
+        height: 50%;
+        width: 2px;
+        background: $mercury;
+        position: absolute;
+        left: 0;
+        top: 25%;
+        z-index: 1;
+      }
+
+      &::after {
+        content: "";
+        height: 50%;
+        width: 2px;
+        background: $mercury;
+        position: absolute;
+        right: 0;
+        top: 25%;
+        z-index: 1;
+      }
+    }
+  }
+}
+
+.range__button {
+  padding: 0;
+  background: transparent;
+  border: none;
+  font-size: 1.125rem;
+  cursor: pointer;
+
+  &--rev,
+  &--fwd {
+    width: 7.5rem;
+    color: $atoll;
+    align-items: center;
+  }
+
+  &--rev {
+    margin-right: 3rem;
+  }
+
+  &--fwd {
+    justify-content: space-between;
+    margin-left: 1.5rem;
+  }
+}
+
+.range__date {
+  font-size: 1.875rem;
+  font-weight: 400;
+}
+
+.range__month {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.range__date-buttons {
+  flex: 1 1 auto;
+  margin-left: 2.5rem;
+  margin-right: 2.7rem;
+  display: flex;
+  justify-content: space-between;
+
+  .range__button {
+    flex: 0 0 calc(100% / 7);
+    border-left: 1px solid $mercury;
+
+    &--selected,
+    &:hover,
+    &:focus {
+      background: #343434;
+      color: $page-background;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:last-child {
+      border-right: 1px solid $mercury;
+    }
+  }
+
+  &--14 {
+    margin-right: 2.9rem;
+
+    .range__button {
+      flex: 0 0 calc(100% / 14);
+    }
+  }
+}
+
+.range__controls {
+  display: flex;
+}
+
+.range__text--rev {
+  margin-left: 10px;
+}
+
+.range__text--fwd {
+  margin-right: 10px;
+}
+
+.range__arrow {
+  vertical-align: middle;
+}
+
+.range__arrow--fwd {
+  transform: rotate(180deg);
+}

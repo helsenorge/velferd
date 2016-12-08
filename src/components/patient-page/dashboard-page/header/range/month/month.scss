@@ -1,0 +1,318 @@
+@import '../../../../../../constants/constants';
+/* stylelint-disable function-calc-no-unspaced-operator */
+.month {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &__monthname {
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 7px;
+    padding-left: 0.5rem;
+  }
+
+  &__dates {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: none;
+  }
+
+  &__date {
+    text-align: center;
+    border-left: 1px solid $mercury;
+    cursor: pointer;
+  }
+
+  &--14:not(:last-child),
+  &--30:not(:last-child) {
+    &::after {
+      content: "";
+      width: 4px;
+      height: 100%;
+      background: $mercury;
+      position: absolute;
+      right: -2px;
+      top: 0;
+    }
+  }
+
+  &--14 {
+    $width: 60px;
+
+    .month__dates {
+      display: flex;
+    }
+
+    .month__date {
+      width: $width;
+    }
+
+    .month__monthname--1 {
+      position: relative;
+      left: -$width;
+    }
+
+    .month__monthname--0 {
+      width: 0;
+      position: relative;
+      left: calc(#{-$width} * 2);
+    }
+  }
+
+  &--30 {
+    $width: 28px;
+
+    .month__dates {
+      display: flex;
+    }
+
+    .month__date {
+      width: $width;
+    }
+
+    .month__monthname--3 {
+      position: relative;
+      left: -$width;
+    }
+
+    .month__monthname--2 {
+      position: relative;
+      left: calc(#{-$width} * 2);
+    }
+
+    .month__monthname--1 {
+      width: 0;
+      position: relative;
+      left: calc(#{-$width} * 3);
+    }
+
+    .month__monthname--0 {
+      width: 0;
+      position: relative;
+      left: calc(#{-$width} * 4);
+    }
+  }
+
+  &--90 {
+    box-shadow: 2px 0 0 0 $mercury;
+    $width: 9.33333px;
+
+    //gjem box-shadow på høyre side
+    &:last-child::after {
+      content: "";
+      height: 100%;
+      width: 1px;
+      background: #f4f4f4;
+      position: absolute;
+      right: -1px;
+    }
+
+    .month__dates {
+      display: flex;
+    }
+
+    .month__date {
+      overflow: hidden;
+      width: $width;
+      border: 0;
+      visibility: hidden;
+    }
+
+    .month__monthname {
+      position: relative;
+      top: 25%;
+      padding-left: 0.5rem;
+
+      &--10 {
+        position: relative;
+        left: calc(#{-$width});
+      }
+
+      &--9 {
+        position: relative;
+        left: calc(#{-$width} * 2);
+      }
+
+      &--8 {
+        position: relative;
+        left: calc(#{-$width} * 3);
+      }
+
+      &--7 {
+        position: relative;
+        left: calc(#{-$width} * 4);
+      }
+
+      &--6 {
+        position: relative;
+        left: calc(#{-$width} * 5);
+      }
+
+      &--5 {
+        position: relative;
+        width: 0;
+        left: calc(#{-$width} * 6);
+      }
+
+      &--4 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 7);
+      }
+
+      &--3,
+      &--2,
+      &--1,
+      &--0 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 8);
+      }
+    }
+  }
+
+  &--180 {
+    box-shadow: 2px 0 0 0 $mercury;
+    position: relative;
+    $width: 4.6666666667px;
+    //gjem box-shadow på høyre side
+    &:last-child::after {
+      content: "";
+      height: 100%;
+      width: 2px;
+      background: #f4f4f4;
+      position: absolute;
+      right: -2px;
+    }
+
+    .month__dates {
+      display: flex;
+    }
+
+    .month__date {
+      overflow: hidden;
+      width: $width;
+      border: 0;
+      visibility: hidden;
+    }
+
+    .month__monthname {
+      position: relative;
+      top: 25%;
+      padding-left: 0.5rem;
+
+      &--20 {
+        position: relative;
+        left: calc(#{-$width});
+      }
+
+      &--19 {
+        position: relative;
+        left: calc(#{-$width} * 2);
+      }
+
+      &--18 {
+        position: relative;
+        left: calc(#{-$width} * 3);
+      }
+
+      &--17 {
+        position: relative;
+        left: calc(#{-$width} * 4);
+      }
+
+      &--16 {
+        position: relative;
+        left: calc(#{-$width} * 5);
+      }
+
+      &--15 {
+        position: relative;
+        left: calc(#{-$width} * 6);
+      }
+
+      &--14 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 7);
+      }
+
+      &--13 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 8);
+      }
+
+      &--12 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 9);
+      }
+
+      &--11 {
+        position: relative;
+        width: 0;
+        left: calc(#{-$width} * 10);
+      }
+
+      &--10 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 11);
+      }
+
+      &--9 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 12);
+      }
+
+      &--8 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 13);
+      }
+
+      &--7 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 14);
+      }
+
+      &--6 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 15);
+      }
+
+      &--5 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 16);
+      }
+
+      &--4 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 17);
+      }
+
+      &--3 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 18);
+      }
+
+      &--2,
+      &--1,
+      &--0 {
+        width: 0;
+        position: relative;
+        left: calc(#{-$width} * 19);
+      }
+    }
+  }
+}
+/* stylelint-enable */

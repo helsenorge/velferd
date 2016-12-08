@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './components/app.jsx';
-import DashboardPage from './components/dashboard-page/dashboard-page.jsx';
-import CarePlan from './components/care-plan-page/care-plan-page.jsx';
+import DashboardPage from './components/patient-page/dashboard-page/dashboard-page.jsx';
+import CarePlan from './components/patient-page/care-plan-page/care-plan-page.jsx';
 import PatientFinder from './components/patient-finder-page/patient-finder-page.jsx';
 import Patient from './components/patient-page/patient-page.jsx';
 const AccessToken = () => (null);
