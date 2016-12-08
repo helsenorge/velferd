@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { setActivePatient,
-  fetchAndSetActivePatient,
+import { changePatient,
+  changePatientWithId,
   fetchPatients,
   fetchPatientByIdentifier } from '../../actions/patient';
-import { fetchCarePlan } from '../../actions/care-plan';
+// import { fetchCarePlan } from '../../actions/care-plan';
 import { getBirthNumber, getName } from '../../helpers/patient-helpers.js';
 import TextInput from '../text-input/text-input.jsx';
 import Spinner from '../spinner/spinner.jsx';
@@ -79,17 +79,14 @@ class PatientsFinder extends Component {
     this.saveLastViewed(fhirUrl, lastViewed);
     this.setState({ lastViewed });
 
-    dispatch(setActivePatient(patient));
-    dispatch(fetchCarePlan(patient.id));
-    hashHistory.push('patient');
+    dispatch(changePatient(patient))
+      .then(() => hashHistory.push('patient'));
   }
 
   handleLastViewedPatientClick(patientId) {
     const { dispatch } = this.props;
-
-    dispatch(fetchAndSetActivePatient(patientId));
-    dispatch(fetchCarePlan(patientId));
-    hashHistory.push('patient');
+    dispatch(changePatientWithId(patientId))
+      .then(() => hashHistory.push('patient'));
   }
 
   groupPatientsByInitial(data) {

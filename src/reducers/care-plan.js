@@ -2,6 +2,7 @@ import {
   INVALIDATE_CAREPLAN, REQUEST_CAREPLAN, RECEIVE_CAREPLAN, COMPLETE_SAVE_CAREPLAN,
   REQUEST_CAREPLAN_HISTORY, RECEIVE_CAREPLAN_HISTORY,
 } from '../actions/care-plan';
+import { RESET_PATIENT_DATA } from '../actions/patient';
 
 export function carePlan(state = {
   isFetching: false,
@@ -12,6 +13,13 @@ export function carePlan(state = {
   history: null,
 }, action) {
   switch (action.type) {
+  case RESET_PATIENT_DATA:
+    return Object.assign({}, state, {
+      isFetching: false,
+      data: null,
+      history: null,
+      error: null,
+    });
   case INVALIDATE_CAREPLAN:
     return Object.assign({}, state, {
       didInvalidate: true,

@@ -3,6 +3,7 @@ import {
   REQUEST_PATIENTS,
   RECEIVE_PATIENTS,
   SET_ACTIVE_PATIENT,
+  RESET_PATIENT_DATA,
 } from '../actions/patient';
 
 export function patient(state = {
@@ -11,6 +12,12 @@ export function patient(state = {
   activePatient: null,
 }, action) {
   switch (action.type) {
+  case RESET_PATIENT_DATA:
+    return Object.assign({}, state, {
+      isFetching: false,
+      data: null,
+      activePatient: null,
+    });
   case SET_ACTIVE_PATIENT:
     return Object.assign({}, state, {
       activePatient: action.patient,
