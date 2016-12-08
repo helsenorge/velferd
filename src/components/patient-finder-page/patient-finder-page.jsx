@@ -21,12 +21,13 @@ class PatientsFinder extends Component {
     this.search = this.search.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.updateSearchString = this.updateSearchString.bind(this);
-    this.state = { searchString: '', lastViewed: this.loadLastViewed() };
+    this.state = { searchString: '', lastViewed: this.loadLastViewed(props.fhirUrl) };
   }
 
-  loadLastViewed() {
+  loadLastViewed(fhirUrl) {
     try {
-      const serializedPatients = localStorage.getItem('lastViewed');
+      const key = `${fhirUrl}-lastViewed`;
+      const serializedPatients = localStorage.getItem(key);
       if (serializedPatients === null) {
         return {};
       }
@@ -37,10 +38,11 @@ class PatientsFinder extends Component {
     }
   }
 
-  saveLastViewed(lastViewed) {
+  saveLastViewed(fhirUrl, lastViewed) {
     try {
       const serializedPatients = JSON.stringify(lastViewed);
-      localStorage.setItem('lastViewed', serializedPatients);
+      const key = `${fhirUrl}-lastViewed`;
+      localStorage.setItem(key, serializedPatients);
     }
     catch (e) {
       // Ignore write errors.
@@ -70,11 +72,11 @@ class PatientsFinder extends Component {
   }
 
   handlePatientClick(patient, patientName) {
-    const { dispatch } = this.props;
+    const { dispatch, fhirUrl } = this.props;
     const { lastViewed } = this.state;
     lastViewed[patient.id] = patientName;
 
-    this.saveLastViewed(lastViewed);
+    this.saveLastViewed(fhirUrl, lastViewed);
     this.setState({ lastViewed });
 
     dispatch(setActivePatient(patient));
@@ -197,15 +199,18 @@ PatientsFinder.propTypes = {
   dispatch: PropTypes.func.isRequired,
   data: PropTypes.object,
   isFetching: PropTypes.bool,
+  fhirUrl: PropTypes.string,
 };
 
 function mapStateToProps(state) {
-  const { patient } = state;
+  const { patient, settings } = state;
   const { data, isFetching } = patient;
+  const { fhirUrl } = settings;
 
   return {
     data,
     isFetching,
+    fhirUrl,
   };
 }
 
