@@ -2,7 +2,6 @@ import {
   SET_FHIR_URL, SET_AUTHENTICATE,
 } from '../actions/settings';
 
-
 export function settings(state = {
   authenticate: false,
   fhirUrl: 'http://continua.cloudapp.net/baseDstu2',

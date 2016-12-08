@@ -1,0 +1,85 @@
+@import '../../../../../../constants/constants';
+
+.input-field {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+
+  &--deleting {
+    animation: leave 0.3s 1;
+  }
+
+  &--adding {
+    animation: enter 0.3s 1;
+  }
+
+  &__icon {
+    width: 30px;
+    height: 30px;
+    fill: $sunglo;
+    border: 2px solid $sunglo;
+    border-radius: 1000px;
+    padding: 5px;
+    margin-left: 10px;
+  }
+
+  &__delete:hover &__icon {
+    box-shadow: 0 0 0 4px $alto;
+  }
+
+  &__delete:focus &__icon {
+    box-shadow: 0 0 0 2px $alto;
+  }
+
+  &__delete-text {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  &__textarea {
+    flex: 1 1 auto;
+    width: 7rem;
+    resize: none;
+  }
+}
+
+@keyframes enter {
+  0% {
+    height: 0;
+    transform: scaleY(0);
+  }
+
+  70% {
+    height: 45px;
+    transform: scaleY(0);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scaleY(100%);
+    opacity: 1;
+  }
+}
+
+@keyframes leave {
+  0% {
+    transform: scaleY(100%);
+    opacity: 1;
+  }
+
+  80% {
+    height: 45px;
+    opacity: 0;
+    transform: scaleY(0);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scaleY(0);
+    height: 0;
+  }
+}

@@ -2,26 +2,14 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { getCategory } from '../helpers/care-plan-helpers.js';
 import PageHeader from '../components/pageheader/pageheader.jsx';
-import PageMenu from '../components/pagemenu/pagemenu.jsx';
 import Footer from '../components/footer/footer.jsx';
 import Login from '../components/login/login.jsx';
-import PatientFinder from '../components/patient-finder/patient-finder.jsx';
-import { setActivePatient } from '../actions/patient';
+
 import './app.scss';
 
 class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.resetPatient = this.resetPatient.bind(this);
-  }
-
   accessAllowed(authenticate, token) {
     return !authenticate || token !== null;
-  }
-
-  resetPatient() {
-    this.props.dispatch(setActivePatient(null));
   }
 
   render() {
@@ -35,11 +23,10 @@ class App extends Component {
       <div>
         <PageHeader
           patient={activePatient}
-          user={user} carePlanCategory={carePlanCategory} resetPatient={this.resetPatient}
+          user={user} carePlanCategory={carePlanCategory}
         />
-        {activePatient && <PageMenu />}
         <article className="main">
-          {activePatient ? children : (<PatientFinder />)}
+          {children}
         </article>
         <Footer fhirUrl={this.props.fhirUrl} />
       </div>

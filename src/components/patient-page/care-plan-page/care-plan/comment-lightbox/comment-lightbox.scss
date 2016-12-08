@@ -1,0 +1,29 @@
+@import '../../../../../constants/constants';
+
+.commentlightbox {
+  width: 36rem;
+
+  &__label {
+    display: block;
+    font-size: 1.25rem;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  &__paragraph {
+    margin-top: 0;
+    margin-bottom: 1rem;
+  }
+
+  &__textarea {
+    border: 2px solid $quill-gray;
+    width: 100%;
+    font-size: 1rem;
+    resize: none;
+  }
+
+  &__button {
+    margin-right: 1.875rem;
+    margin-top: 1.625rem;
+  }
+}
