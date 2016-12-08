@@ -25,9 +25,9 @@ class App extends Component {
           patient={activePatient}
           user={user} carePlanCategory={carePlanCategory}
         />
-        <article className="main">
+        <div>
           {children}
-        </article>
+        </div>
         <Footer fhirUrl={this.props.fhirUrl} />
       </div>
       );
