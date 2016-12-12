@@ -86,8 +86,19 @@ class Measurements extends Component {
       selectedDate,
       icon,
       empty,
+      error,
       fetching } = this.props;
     const name = getMeasurementName(code);
+
+    if (error) {
+      return (
+        <div className="measurement">
+          <div className="measurement__chart">
+            <Description name={name} error={error} />
+          </div>
+        </div>
+      );
+    }
 
     if (empty) {
       return (
@@ -158,6 +169,7 @@ Measurements.propTypes = {
   icon: PropTypes.string,
   idealValues: PropTypes.array,
   fetching: PropTypes.bool,
+  error: PropTypes.object,
 };
 
 export default Measurements;

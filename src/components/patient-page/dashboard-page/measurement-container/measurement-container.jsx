@@ -12,12 +12,16 @@ class MeasurementsContainer extends Component {
   }
 
   render() {
-    const { data, isFetching, code, fromDate, toDate, icon, selectedDate, idealValues }
+    const { data, isFetching, code, fromDate, toDate, icon, selectedDate, idealValues, error }
       = this.props;
     const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
     let measurement = null;
-    if (isFetching) {
-      measurement = <Measurement fetching code={code} />;
+
+    if (error) {
+      measurement = <Measurement code={code} error={error} />;
+    }
+    else if (isFetching) {
+      measurement = <Measurement fetching code={code} code={code} />;
     }
     else if (isEmpty) {
       measurement = <Measurement empty code={code} />;
@@ -54,6 +58,7 @@ MeasurementsContainer.propTypes = {
   selectedDate: PropTypes.instanceOf(Date),
   icon: PropTypes.string,
   idealValues: PropTypes.array,
+  error: PropTypes.object,
 };
 
 function mapStateToProps(state, ownProps) {
@@ -62,6 +67,7 @@ function mapStateToProps(state, ownProps) {
     isFetching,
     lastUpdated,
     data,
+    error,
   } = observationsByCode[ownProps.code] || {
     isFetching: true,
     data: null,
@@ -82,6 +88,7 @@ function mapStateToProps(state, ownProps) {
     isFetching,
     lastUpdated,
     idealValues,
+    error,
   };
 }
 
