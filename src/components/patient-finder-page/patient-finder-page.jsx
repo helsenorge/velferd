@@ -1,11 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import { connect } from 'react-redux';
-import { setActivePatient,
-  fetchAndSetActivePatient,
+import { changePatient,
+  changePatientWithId,
   fetchPatients,
   fetchPatientByIdentifier } from '../../actions/patient';
-import { fetchCarePlan } from '../../actions/care-plan';
+// import { fetchCarePlan } from '../../actions/care-plan';
 import { getBirthNumber, getName } from '../../helpers/patient-helpers.js';
 import TextInput from '../text-input/text-input.jsx';
 import Spinner from '../spinner/spinner.jsx';
@@ -21,12 +21,13 @@ class PatientsFinder extends Component {
     this.search = this.search.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
     this.updateSearchString = this.updateSearchString.bind(this);
-    this.state = { searchString: '', lastViewed: this.loadLastViewed() };
+    this.state = { searchString: '', lastViewed: this.loadLastViewed(props.fhirUrl) };
   }
 
-  loadLastViewed() {
+  loadLastViewed(fhirUrl) {
     try {
-      const serializedPatients = localStorage.getItem('lastViewed');
+      const key = `${fhirUrl}-lastViewed`;
+      const serializedPatients = localStorage.getItem(key);
       if (serializedPatients === null) {
         return {};
       }
@@ -37,10 +38,11 @@ class PatientsFinder extends Component {
     }
   }
 
-  saveLastViewed(lastViewed) {
+  saveLastViewed(fhirUrl, lastViewed) {
     try {
       const serializedPatients = JSON.stringify(lastViewed);
-      localStorage.setItem('lastViewed', serializedPatients);
+      const key = `${fhirUrl}-lastViewed`;
+      localStorage.setItem(key, serializedPatients);
     }
     catch (e) {
       // Ignore write errors.
@@ -70,24 +72,21 @@ class PatientsFinder extends Component {
   }
 
   handlePatientClick(patient, patientName) {
-    const { dispatch } = this.props;
+    const { dispatch, fhirUrl } = this.props;
     const { lastViewed } = this.state;
     lastViewed[patient.id] = patientName;
 
-    this.saveLastViewed(lastViewed);
+    this.saveLastViewed(fhirUrl, lastViewed);
     this.setState({ lastViewed });
 
-    dispatch(setActivePatient(patient));
-    dispatch(fetchCarePlan(patient.id));
-    hashHistory.push('patient');
+    dispatch(changePatient(patient))
+      .then(() => hashHistory.push('patient'));
   }
 
   handleLastViewedPatientClick(patientId) {
     const { dispatch } = this.props;
-
-    dispatch(fetchAndSetActivePatient(patientId));
-    dispatch(fetchCarePlan(patientId));
-    hashHistory.push('patient');
+    dispatch(changePatientWithId(patientId))
+      .then(() => hashHistory.push('patient'));
   }
 
   groupPatientsByInitial(data) {
@@ -197,15 +196,18 @@ PatientsFinder.propTypes = {
   dispatch: PropTypes.func.isRequired,
   data: PropTypes.object,
   isFetching: PropTypes.bool,
+  fhirUrl: PropTypes.string,
 };
 
 function mapStateToProps(state) {
-  const { patient } = state;
+  const { patient, settings } = state;
   const { data, isFetching } = patient;
+  const { fhirUrl } = settings;
 
   return {
     data,
     isFetching,
+    fhirUrl,
   };
 }
 

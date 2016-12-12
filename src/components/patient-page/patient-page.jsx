@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import PageMenu from '../../components/pagemenu/pagemenu.jsx';
+import PageMenu from './pagemenu/pagemenu.jsx';
 
 const PatientPage = ({ children }) => (
   <div>

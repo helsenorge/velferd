@@ -21,6 +21,10 @@
 
   &__back-link {
     cursor: pointer;
+    color: $silver;
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   @media print {

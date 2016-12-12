@@ -1,12 +1,18 @@
 import {
   REQUEST_OBSERVATIONS, RECEIVE_OBSERVATIONS,
 } from '../actions/observations';
+import { RESET_PATIENT_DATA } from '../actions/patient';
 
 function observations(state = {
   isFetching: false,
   data: null,
 }, action) {
   switch (action.type) {
+  case RESET_PATIENT_DATA:
+    return Object.assign({}, state, {
+      isFetching: false,
+      data: null,
+    });
   case REQUEST_OBSERVATIONS:
     return Object.assign({}, state, {
       isFetching: true,
