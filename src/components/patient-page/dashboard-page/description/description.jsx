@@ -2,13 +2,23 @@ import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import './description.scss';
 
-const Description = ({ name, unit, idealValue, empty }) => {
+const Description = ({ name, unit, idealValue, empty, error }) => {
   let referenceMarkup;
 
   if (idealValue) {
     referenceMarkup = (
       <span className="measurement-description__ideal-value">
         Pasientens idealnivå: {idealValue}
+      </span>
+      );
+  }
+
+  let errorMarkup;
+  if (error) {
+    console.error(error);
+    errorMarkup = (
+      <span className="measurement-description__empty-text">
+        Det har skjedd en teknisk feil
       </span>
       );
   }
@@ -31,6 +41,7 @@ const Description = ({ name, unit, idealValue, empty }) => {
   return (
     <div className={className}>
       <h3 className="measurement-description__heading">{name} {unit ? `(${unit})` : null}</h3>
+      {errorMarkup}
       {emptyMarkup}
       {referenceMarkup}
     </div>);
@@ -41,6 +52,7 @@ Description.propTypes = {
   empty: PropTypes.bool,
   unit: PropTypes.string,
   idealValue: PropTypes.string,
+  error: PropTypes.object,
 };
 
 export default Description;
