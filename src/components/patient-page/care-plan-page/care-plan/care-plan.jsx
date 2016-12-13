@@ -63,9 +63,9 @@ class CarePlan extends Component {
     this.setState({ lightboxOpen: false });
   }
 
-  save(evt) {
+  save(comment) {
     this.closeLightbox();
-    this.props.save(evt);
+    this.props.save(comment);
   }
 
   cancel() {
@@ -122,7 +122,6 @@ class CarePlan extends Component {
       <CommentLightbox
         onClose={this.closeLightbox}
         saveIt={this.save}
-        {...props}
       /> : null;
 
     return (

@@ -66,10 +66,7 @@ class CarePlanPage extends Component {
   updateCarePlanState(event) {
     const carePlan = this.state.carePlan;
 
-    if (event.target.name === 'comment') {
-      carePlan.comment = event.target.value;
-    }
-    else if (event.target.name === 'patient-goal') {
+    if (event.target.name === 'patient-goal') {
       carePlan.patientGoal = event.target.value;
     }
     else {
@@ -119,11 +116,12 @@ class CarePlanPage extends Component {
     this.setState({ editing: false, carePlan });
   }
 
-  saveCarePlan(event) {
+  saveCarePlan(comment) {
     const { dispatch, patientId } = this.props;
-    event.preventDefault();
     this.setState({ saving: true });
-    dispatch(saveCarePlan(patientId, this.state.carePlan));
+    const carePlan = this.state.carePlan;
+    carePlan.comment = comment;
+    dispatch(saveCarePlan(patientId, carePlan));
   }
 
   createCarePlan(type) {
