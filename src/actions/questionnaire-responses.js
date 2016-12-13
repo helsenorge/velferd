@@ -3,6 +3,7 @@ import { discardAuthToken } from '../actions/auth';
 
 export const REQUEST_QUESTIONNAIRE_RESPONSES = 'REQUEST_QUESTIONNAIRE_RESPONSES';
 export const RECEIVE_QUESTIONNAIRE_RESPONSES = 'RECEIVE_QUESTIONNAIRE_RESPONSES';
+export const RECEIVE_QUESTIONNAIRE_RESPONSES_FAILED = 'RECEIVE_QUESTIONNAIRE_RESPONSES_FAILED';
 
 function requestQuestionnaireResponses(patientId) {
   return {
@@ -17,6 +18,14 @@ function receiveQuestionnaireResponses(patientId, json) {
     patientId,
     data: json,
     receivedAt: Date.now(),
+  };
+}
+
+function receiveQuestionnaireResponsesFailed(patientId, error) {
+  return {
+    type: RECEIVE_QUESTIONNAIRE_RESPONSES_FAILED,
+    patientId,
+    error,
   };
 }
 
@@ -43,6 +52,7 @@ export function fetchQuestionnaireResponses(patientId) {
     `${fhirUrl}/QuestionnaireResponse?_count=500&_sort:asc=authored&patient=${patientId}`;
     return get(url, token, useXAuthTokenHeader)
       .then(response => response.json())
-      .then(json => dispatch(receiveQuestionnaireResponses(patientId, json)));
+      .then(json => dispatch(receiveQuestionnaireResponses(patientId, json)),
+      error => dispatch(receiveQuestionnaireResponsesFailed(patientId, error)));
   };
 }
