@@ -5,7 +5,6 @@ import { changePatient,
   changePatientWithId,
   fetchPatients,
   fetchPatientByIdentifier } from '../../actions/patient';
-// import { fetchCarePlan } from '../../actions/care-plan';
 import { getBirthNumber, getName } from '../../helpers/patient-helpers.js';
 import TextInput from '../text-input/text-input.jsx';
 import Spinner from '../spinner/spinner.jsx';
