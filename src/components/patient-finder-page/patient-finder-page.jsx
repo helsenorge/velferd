@@ -136,7 +136,7 @@ class PatientsFinder extends Component {
       }
     });
     const lettersClasses = classNames('patient-finder__letters', {
-      'patient-finder__letters--columns': data !== null && data.entry.length > 12,
+      'patient-finder__letters--columns': data !== null && data.entry && data.entry.length > 12,
     });
 
     const recentlyViewed = [];
