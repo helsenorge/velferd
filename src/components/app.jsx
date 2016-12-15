@@ -13,17 +13,18 @@ class App extends Component {
   }
 
   render() {
-    const { activePatient, authenticate, token, user, carePlanCategory, children } = this.props;
+    const { activePatient, authenticate, token, user,
+      carePlanCategory, children, location } = this.props;
 
     if (!this.accessAllowed(authenticate, token)) {
       return (<Login />);
     }
-
     return (
       <div>
         <PageHeader
           patient={activePatient}
           user={user} carePlanCategory={carePlanCategory}
+          isIndexPage={location.pathname === '/'}
         />
         <div>
           {children}
@@ -43,6 +44,7 @@ App.propTypes = {
   children: PropTypes.object,
   token: PropTypes.string,
   carePlanCategory: PropTypes.string,
+  location: PropTypes.object,
 };
 
 function mapStateToProps(state) {

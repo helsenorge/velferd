@@ -4,15 +4,14 @@ import { getBirthNumber, getName } from '../../helpers/patient-helpers.js';
 import { IndexLink } from 'react-router';
 import './pageheader.scss';
 
-const PageHeader = ({ patient, user, carePlanCategory }) => {
+const PageHeader = ({ patient, user, carePlanCategory, isIndexPage }) => {
   const patientName = getName(patient);
   const birthNumber = getBirthNumber(patient);
   const careplanCategory = getCategoryName(carePlanCategory);
-
   return (
     <header className="pageheader">
       <div className="pageheader__wrapper">
-        {patient ? (<div className="pageheader__back"><IndexLink
+        {patient && !isIndexPage ? (<div className="pageheader__back"><IndexLink
           className="pageheader__back-link" to="/"
         >&#8592; Velg pasient</IndexLink></div>) : <div className="pageheader__back"><span
           className="pageheader__back-link"
@@ -37,6 +36,7 @@ PageHeader.propTypes = {
   patient: PropTypes.object,
   user: PropTypes.object.isRequired,
   carePlanCategory: PropTypes.string,
+  isIndexPage: PropTypes.boolean,
 };
 
 export default PageHeader;

@@ -54,9 +54,6 @@ class QuestionnaireResponses extends Component {
       const answer = question.answers[date];
       const iconValue = answer ? getIcon(answer) : null;
       const cellContent = iconValue ? <Icon glyph={iconValue} width={20} height={20} /> : answer;
-
-      console.log(d);
-
       const cellClasses = classNames(
         'questionnaire-responses-table__data',
         { 'questionnaire-responses-table__data--selected':
