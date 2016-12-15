@@ -36,7 +36,7 @@ PageHeader.propTypes = {
   patient: PropTypes.object,
   user: PropTypes.object.isRequired,
   carePlanCategory: PropTypes.string,
-  isIndexPage: PropTypes.boolean,
+  isIndexPage: PropTypes.bool,
 };
 
 export default PageHeader;
