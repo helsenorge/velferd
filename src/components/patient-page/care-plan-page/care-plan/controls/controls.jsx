@@ -8,7 +8,10 @@ import iconEdit from '../../../../../../svg/edit.svg';
 import './controls.scss';
 
 const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false }) => {
-  const controlClasses = classNames('controls', { 'controls--footer': footer });
+  const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+
+  const controlClasses = classNames('controls', { 'controls--footer': footer,
+    'controls--ie11': isIE11 });
 
   const cardClasses = classNames({
     controls__card: true,
