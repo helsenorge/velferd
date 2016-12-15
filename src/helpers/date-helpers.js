@@ -1,4 +1,4 @@
-import monthNames from '../constants/month-names.js';
+import { monthNames, monthNamesAbbrev } from '../constants/month-names.js';
 
 export function formatDate(date) {
   const dateObject = new Date(date);
@@ -14,14 +14,14 @@ export function formatDate2(date) {
 
 export function formatDateTime(date) {
   const dateObject = new Date(date);
-  const dateString = `${dateObject.getDate()}.${monthNames[dateObject.getMonth()]}
+  const dateString = `${dateObject.getDate()}.${monthNamesAbbrev[dateObject.getMonth()]}
   ${dateObject.getFullYear()} kl. ${dateObject.getHours()}.${dateObject.getMinutes()}`;
   return dateString;
 }
 
 export function getMonth(date) {
   const dateObject = new Date(date);
-  return monthNames[dateObject.getMonth()];
+  return monthNamesAbbrev[dateObject.getMonth()];
 }
 
 export function getDate(date) {
