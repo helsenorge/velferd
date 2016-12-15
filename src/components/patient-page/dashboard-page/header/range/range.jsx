@@ -60,6 +60,7 @@ class Range extends Component {
       fromDate,
       toDate,
       activeRange,
+      selectedDate,
     } = this.props;
 
     const to = new Date(toDate.getTime());
@@ -97,6 +98,7 @@ class Range extends Component {
                 fromDate={fromDate}
                 toDate={toDate}
                 handleDateClick={handleDateClick}
+                selectedDate={selectedDate}
               />
             )}
           </div>

@@ -17,7 +17,7 @@ const monthNames = [
   'desember',
 ];
 
-const Month = ({ month, fromDate, toDate, activeRange, handleDateClick }) => {
+const Month = ({ month, fromDate, toDate, activeRange, handleDateClick, selectedDate }) => {
   const monthName = monthNames[month];
   const dates = [];
   for (let d = new Date(fromDate);
@@ -39,12 +39,20 @@ const Month = ({ month, fromDate, toDate, activeRange, handleDateClick }) => {
       <div className={monthNameClasses}>{monthName}</div>
       <ol className="month__dates">
         {
-          dates.map((date) => (
-            <li key={date.getTime()} className="month__date" onClick={() => handleDateClick(date)}>
-              {date.getDate()}.
-            </li>
-            )
-          )
+          dates.map((date) => {
+            const thisSelected = selectedDate && selectedDate.getTime() === date.getTime();
+            const dateClasses =
+              classNames('month__date', { 'month__date--active': thisSelected });
+            return (
+              <li
+                key={date.getTime()}
+                className={dateClasses}
+                onClick={() => handleDateClick(date)}
+              >
+                {date.getDate()}.
+              </li>
+            );
+          })
         }
       </ol>
     </div>
@@ -57,6 +65,7 @@ Month.propTypes = {
   fromDate: PropTypes.instanceOf(Date).isRequired,
   toDate: PropTypes.instanceOf(Date).isRequired,
   handleDateClick: PropTypes.func.isRequired,
+  selectedDate: PropTypes.instanceOf(Date),
 };
 
 export default Month;
