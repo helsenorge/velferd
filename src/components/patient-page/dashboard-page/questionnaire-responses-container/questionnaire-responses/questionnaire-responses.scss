@@ -56,7 +56,11 @@
     text-align: center;
 
     &--selected {
-      background: $transparent-astronaut;
+      background: #fff;
+    }
+
+    &--notselected {
+      background: rgba(0, 0, 0, 0.04);
     }
   }
 

@@ -55,10 +55,15 @@ class QuestionnaireResponses extends Component {
       const iconValue = answer ? getIcon(answer) : null;
       const cellContent = iconValue ? <Icon glyph={iconValue} width={20} height={20} /> : answer;
 
+      console.log(d);
+
       const cellClasses = classNames(
         'questionnaire-responses-table__data',
         { 'questionnaire-responses-table__data--selected':
-          selectedDate !== null && selectedDate === date });
+          selectedDate !== null && selectedDate.getTime() === d.getTime(),
+          'questionnaire-responses-table__data--notselected':
+          selectedDate !== null && selectedDate.getTime() !== d.getTime(),
+        });
 
       cells.push(
         <td className={cellClasses} key={date}>
