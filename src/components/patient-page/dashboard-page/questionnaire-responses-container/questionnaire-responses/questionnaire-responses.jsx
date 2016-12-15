@@ -116,7 +116,18 @@ class QuestionnaireResponses extends Component {
   }
 
   render() {
-    const { data, fromDate, toDate, selectedDate, activeRange, loading, empty } = this.props;
+    const { data, fromDate, toDate, selectedDate, activeRange, loading, empty, error } = this.props;
+
+    if (error) {
+      return (
+        <div className="questionnaire-responses">
+          <div className="questionnaire-responses__chart">
+            <Description name="Egenvurdering" error={error} />
+          </div>
+        </div>
+      );
+    }
+
     if (empty) {
       return (
         <div className="questionnaire-responses">
@@ -178,6 +189,7 @@ QuestionnaireResponses.propTypes = {
   toDate: React.PropTypes.instanceOf(Date),
   selectedDate: React.PropTypes.instanceOf(Date),
   activeRange: PropTypes.number,
+  error: PropTypes.object,
 };
 
 export default QuestionnaireResponses;

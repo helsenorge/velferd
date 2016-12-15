@@ -5,7 +5,6 @@ import { changePatient,
   changePatientWithId,
   fetchPatients,
   fetchPatientByIdentifier } from '../../actions/patient';
-// import { fetchCarePlan } from '../../actions/care-plan';
 import { getBirthNumber, getName } from '../../helpers/patient-helpers.js';
 import TextInput from '../text-input/text-input.jsx';
 import Spinner from '../spinner/spinner.jsx';
@@ -137,7 +136,7 @@ class PatientsFinder extends Component {
       }
     });
     const lettersClasses = classNames('patient-finder__letters', {
-      'patient-finder__letters--columns': data !== null && data.entry.length > 12,
+      'patient-finder__letters--columns': data !== null && data.entry && data.entry.length > 12,
     });
 
     const recentlyViewed = [];

@@ -12,17 +12,21 @@ class QuestionnaireResponsesContainer extends Component {
   }
 
   render() {
-    const { data, isFetching } = this.props;
+    const { data, isFetching, error } = this.props;
     const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
-    let qRespones = null;
-    if (isFetching) {
-      qRespones = <QuestionnaireResponses loading />;
+    let qResponses = null;
+
+    if (error) {
+      qResponses = <QuestionnaireResponses error={error} />;
+    }
+    else if (isFetching) {
+      qResponses = <QuestionnaireResponses loading />;
     }
     else if (isEmpty) {
-      qRespones = <QuestionnaireResponses empty />;
+      qResponses = <QuestionnaireResponses empty />;
     }
     else {
-      qRespones = (<QuestionnaireResponses
+      qResponses = (<QuestionnaireResponses
         data={data}
         fromDate={this.props.fromDate}
         toDate={this.props.toDate}
@@ -30,7 +34,7 @@ class QuestionnaireResponsesContainer extends Component {
         activeRange={this.props.activeRange}
       />);
     }
-    return qRespones;
+    return qResponses;
   }
 }
 
@@ -44,6 +48,7 @@ QuestionnaireResponsesContainer.propTypes = {
   toDate: React.PropTypes.instanceOf(Date).isRequired,
   selectedDate: React.PropTypes.instanceOf(Date),
   activeRange: PropTypes.number.isRequired,
+  error: PropTypes.object,
 };
 
 function mapStateToProps(state) {
@@ -52,6 +57,7 @@ function mapStateToProps(state) {
     isFetching,
     lastUpdated,
     data,
+    error,
   } = questionnaireResponses || {
     isFetching: true,
     data: null,
@@ -62,6 +68,7 @@ function mapStateToProps(state) {
     data,
     isFetching,
     lastUpdated,
+    error,
   };
 }
 

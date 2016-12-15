@@ -69,12 +69,29 @@ class Chart extends Component {
 
     chart.on('draw', (data) => {
       if (data.type === 'point') {
-        data.group.elem('text', {
-          x: data.x,
-          y: data.y - 10,
-          style: 'text-anchor: middle',
-          'clip-path': 'url(#chart-mask)',
-        }, 'ct-label').text(data.value.y);
+        let addLabel = true;
+        const nextPointIndex = data.index + 1;
+
+        if (nextPointIndex < data.series.length) {
+          const nextPoint = data.series[nextPointIndex];
+          const pointDate = new Date(data.value.x * 1000);
+          pointDate.setHours(0, 0, 0, 0);
+          const nextPointDate = new Date(nextPoint.x * 1000);
+          nextPointDate.setHours(0, 0, 0, 0);
+          // Don't add label if the next point is on the same day
+          if (pointDate.valueOf() === nextPointDate.valueOf()) {
+            addLabel = false;
+          }
+        }
+
+        if (addLabel) {
+          data.group.elem('text', {
+            x: data.x,
+            y: data.y - 10,
+            style: 'text-anchor: middle',
+            'clip-path': 'url(#chart-mask)',
+          }, 'ct-label').text(data.value.y);
+        }
       }
       if (data.type === 'line' ||
           data.type === 'point' ||
