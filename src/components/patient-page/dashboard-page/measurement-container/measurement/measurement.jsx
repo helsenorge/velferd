@@ -11,7 +11,7 @@ class Measurements extends Component {
 
   getHighAndLow(code, entries) {
     if (code === ObservationCodes.pulseOximeter) {
-      return { low: 70, high: 100 };
+      return { low: 70, high: 105 };
     }
     if (code === ObservationCodes.bloodPressure) {
       const values = { systolic: [], diastolic: [] };
