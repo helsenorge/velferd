@@ -22,9 +22,10 @@ const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false 
           <Button
             className="controls__button controls__button--print"
             lvl3
+            onClick={window.print}
           >
             <Icon glyph={iconPrint} />
-            <span className="button__text">Skriv ut egenbehandlingsplan</span>
+            <span className="button__text">Skriv ut</span>
           </Button>
           <Button
             onClick={edit}
