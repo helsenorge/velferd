@@ -20,20 +20,26 @@ const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false 
       <div className={cardClasses}>
         <div className="controls__front">
           <Button
-            className="controls__button controls__button--print"
-            lvl3
-            onClick={window.print}
-          >
-            <Icon glyph={iconPrint} />
-            <span className="button__text">Skriv ut</span>
-          </Button>
-          <Button
             onClick={edit}
             lvl3
             className="controls__button"
           >
             <Icon glyph={iconEdit} />
             <span className="button__text">Rediger</span>
+          </Button>
+          <Button
+            lvl3
+            className="controls__button"
+          >
+            <span className="button__text">Kopier til utklippstavlen</span>
+          </Button>
+          <Button
+            className="controls__button controls__button--print"
+            lvl3
+            onClick={window.print}
+          >
+            <Icon glyph={iconPrint} />
+            <span className="button__text">Skriv ut</span>
           </Button>
         </div>
         <div className="controls__back">
