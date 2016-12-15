@@ -5,6 +5,7 @@ import Button from '../../../../button/button.jsx';
 import Icon from '../../../../icon/icon.jsx';
 import iconPrint from '../../../../../../svg/print.svg';
 import iconEdit from '../../../../../../svg/edit.svg';
+import detectcss from 'detectcss';
 import './controls.scss';
 
 const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false }) => {
@@ -15,17 +16,14 @@ const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false 
     'controls__card--flipped': editing,
   });
 
+  if (detectcss.feature('transform-style')) {
+    console.log('supported');
+  }
+
   const html = (
     <div className={controlClasses}>
       <div className={cardClasses}>
         <div className="controls__front">
-          <Button
-            className="controls__button controls__button--print"
-            lvl3
-          >
-            <Icon glyph={iconPrint} />
-            <span className="button__text">Skriv ut egenbehandlingsplan</span>
-          </Button>
           <Button
             onClick={edit}
             lvl3
@@ -33,6 +31,20 @@ const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false 
           >
             <Icon glyph={iconEdit} />
             <span className="button__text">Rediger</span>
+          </Button>
+          <Button
+            lvl3
+            className="controls__button"
+          >
+            <span className="button__text">Kopier til utklippstavlen</span>
+          </Button>
+          <Button
+            className="controls__button controls__button--print"
+            lvl3
+            onClick={window.print}
+          >
+            <Icon glyph={iconPrint} />
+            <span className="button__text">Skriv ut</span>
           </Button>
         </div>
         <div className="controls__back">
