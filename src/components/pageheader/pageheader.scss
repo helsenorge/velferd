@@ -22,8 +22,13 @@
   &__back-link {
     cursor: pointer;
     color: $silver;
+    text-decoration: none;
+    border-bottom: 1px solid $silver;
+    display: inline-block;
+    line-height: 0.95;
+
     &:hover {
-      text-decoration: underline;
+      border-bottom-color: #fff;
     }
   }
 
