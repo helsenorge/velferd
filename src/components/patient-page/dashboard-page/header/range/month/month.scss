@@ -24,7 +24,8 @@
     border-left: 1px solid $mercury;
     cursor: pointer;
 
-    &--active {
+    &--active,
+    &:hover {
       background: #343434;
       color: #fff;
     }
