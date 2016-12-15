@@ -5,20 +5,18 @@ import Button from '../../../../button/button.jsx';
 import Icon from '../../../../icon/icon.jsx';
 import iconPrint from '../../../../../../svg/print.svg';
 import iconEdit from '../../../../../../svg/edit.svg';
-import detectcss from 'detectcss';
 import './controls.scss';
 
 const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false }) => {
-  const controlClasses = classNames('controls', { 'controls--footer': footer });
+  const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+
+  const controlClasses = classNames('controls', { 'controls--footer': footer,
+    'controls--ie11': isIE11 });
 
   const cardClasses = classNames({
     controls__card: true,
     'controls__card--flipped': editing,
   });
-
-  if (detectcss.feature('transform-style')) {
-    console.log('supported');
-  }
 
   const html = (
     <div className={controlClasses}>
