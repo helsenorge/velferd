@@ -14,11 +14,11 @@
   &--ie11 {
     .controls__back {
       display: none;
-      transform: initial;
+      transform: inherit;
     }
 
     .controls__card {
-      transform: initial;
+      transform: inherit;
     }
 
     .controls__card--flipped {
