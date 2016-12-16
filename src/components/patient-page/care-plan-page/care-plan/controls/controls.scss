@@ -11,6 +11,27 @@
     margin-top: 1rem;
   }
 
+  &--ie11 {
+    .controls__back {
+      display: none;
+      transform: inherit;
+    }
+
+    .controls__card {
+      transform: inherit;
+    }
+
+    .controls__card--flipped {
+      .controls__back {
+        display: block;
+      }
+
+      .controls__front {
+        display: none;
+      }
+    }
+  }
+
   &__card {
     width: 100%;
     height: 100%;

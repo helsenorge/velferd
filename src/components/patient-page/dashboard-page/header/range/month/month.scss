@@ -10,6 +10,7 @@
     font-weight: 600;
     margin-bottom: 7px;
     padding-left: 0.5rem;
+    display: flex;
   }
 
   &__dates {
@@ -17,6 +18,10 @@
     margin: 0;
     padding: 0;
     display: none;
+  }
+
+  &__year {
+    margin-left: 0.5rem;
   }
 
   &__date {
@@ -78,26 +83,32 @@
       width: $width;
     }
 
-    .month__monthname--3 {
+    .month__monthname--4 {
       position: relative;
       left: -$width;
     }
 
-    .month__monthname--2 {
+    .month__monthname--3 {
       position: relative;
       left: calc(#{-$width} * 2);
     }
 
-    .month__monthname--1 {
+    .month__monthname--2 {
       width: 0;
       position: relative;
       left: calc(#{-$width} * 3);
     }
 
-    .month__monthname--0 {
+    .month__monthname--1 {
       width: 0;
       position: relative;
       left: calc(#{-$width} * 4);
+    }
+
+    .month__monthname--0 {
+      width: 0;
+      position: relative;
+      left: calc(#{-$width} * 5);
     }
   }
 
@@ -131,41 +142,51 @@
       top: 25%;
       padding-left: 0.5rem;
 
-      &--10 {
+      &--12 {
         position: relative;
         left: calc(#{-$width});
       }
 
-      &--9 {
+      &--11 {
         position: relative;
         left: calc(#{-$width} * 2);
       }
 
-      &--8 {
+      &--10 {
         position: relative;
         left: calc(#{-$width} * 3);
       }
 
-      &--7 {
+      &--9 {
         position: relative;
         left: calc(#{-$width} * 4);
       }
 
-      &--6 {
+      &--8 {
         position: relative;
         left: calc(#{-$width} * 5);
+      }
+
+      &--7 {
+        position: relative;
+        left: calc(#{-$width} * 6);
+      }
+
+      &--6 {
+        position: relative;
+        left: calc(#{-$width} * 7);
       }
 
       &--5 {
         position: relative;
         width: 0;
-        left: calc(#{-$width} * 6);
+        left: calc(#{-$width} * 8);
       }
 
       &--4 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 7);
+        left: calc(#{-$width} * 9);
       }
 
       &--3,
@@ -174,7 +195,7 @@
       &--0 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 8);
+        left: calc(#{-$width} * 12);
       }
     }
   }
@@ -209,106 +230,126 @@
       top: 25%;
       padding-left: 0.5rem;
 
-      &--20 {
+      &--24 {
         position: relative;
         left: calc(#{-$width});
       }
 
-      &--19 {
+      &--23 {
         position: relative;
         left: calc(#{-$width} * 2);
       }
 
-      &--18 {
+      &--22 {
         position: relative;
         left: calc(#{-$width} * 3);
       }
 
-      &--17 {
+      &--21 {
         position: relative;
         left: calc(#{-$width} * 4);
       }
 
-      &--16 {
+      &--20 {
         position: relative;
         left: calc(#{-$width} * 5);
       }
 
-      &--15 {
+      &--19 {
         position: relative;
         left: calc(#{-$width} * 6);
+      }
+
+      &--18 {
+        position: relative;
+        left: calc(#{-$width} * 7);
+      }
+
+      &--17 {
+        position: relative;
+        left: calc(#{-$width} * 8);
+      }
+
+      &--16 {
+        position: relative;
+        left: calc(#{-$width} * 9);
+      }
+
+      &--15 {
+        position: relative;
+        left: calc(#{-$width} * 10);
       }
 
       &--14 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 7);
+        left: calc(#{-$width} * 11);
       }
 
       &--13 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 8);
+        left: calc(#{-$width} * 12);
       }
 
       &--12 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 9);
+        left: calc(#{-$width} * 13);
       }
 
       &--11 {
         position: relative;
         width: 0;
-        left: calc(#{-$width} * 10);
+        left: calc(#{-$width} * 14);
       }
 
       &--10 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 11);
+        left: calc(#{-$width} * 15);
       }
 
       &--9 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 12);
+        left: calc(#{-$width} * 16);
       }
 
       &--8 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 13);
+        left: calc(#{-$width} * 17);
       }
 
       &--7 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 14);
+        left: calc(#{-$width} * 18);
       }
 
       &--6 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 15);
+        left: calc(#{-$width} * 19);
       }
 
       &--5 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 16);
+        left: calc(#{-$width} * 20);
       }
 
       &--4 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 17);
+        left: calc(#{-$width} * 21);
       }
 
       &--3 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 18);
+        left: calc(#{-$width} * 22);
       }
 
       &--2,
@@ -316,7 +357,7 @@
       &--0 {
         width: 0;
         position: relative;
-        left: calc(#{-$width} * 19);
+        left: calc(#{-$width} * 23);
       }
     }
   }

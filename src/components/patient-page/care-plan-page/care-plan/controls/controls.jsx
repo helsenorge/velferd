@@ -21,7 +21,9 @@ const Controls = (
     },
   });
 
-  const controlClasses = classNames('controls', { 'controls--footer': footer });
+  const isIE11 = !!window.MSInputMethodContext && !!document.documentMode;
+  const controlClasses = classNames('controls', { 'controls--footer': footer,
+    'controls--ie11': isIE11 });
 
   const cardClasses = classNames({
     controls__card: true,

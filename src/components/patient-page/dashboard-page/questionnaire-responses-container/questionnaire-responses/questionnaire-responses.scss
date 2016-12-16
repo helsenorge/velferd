@@ -52,6 +52,20 @@
     padding-left: 0;
   }
 
+  &--borders .questionnaire-responses-table__question::after {
+    content: "";
+    height: 1px;
+    width: 30px;
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    background: $mercury;
+  }
+
+  &--borders .questionnaire-responses-table__data {
+    border-bottom: 1px solid $mercury;
+  }
+
   &__data {
     text-align: center;
 
