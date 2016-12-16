@@ -7,7 +7,7 @@ import HistoryContainer from './history-container/history-container.jsx';
 import CreateCarePlan from './create-care-plan/create-care-plan.jsx';
 import ReasonCodes from '../../../constants/reason-codes';
 import CarePlanCategories from '../../../constants/care-plan-categories';
-import { getCarePlan } from '../../../helpers/care-plan-helpers.js';
+import { getCarePlan, carePlanToText } from '../../../helpers/care-plan-helpers.js';
 import { getName } from '../../../helpers/patient-helpers.js';
 import './care-plan-page.scss';
 
@@ -23,6 +23,7 @@ class CarePlanPage extends Component {
     this.addCarePlanItem = this.addCarePlanItem.bind(this);
     this.cancel = this.cancel.bind(this);
     this.createCarePlan = this.createCarePlan.bind(this);
+    this.carePlanToText = this.carePlanToText.bind(this);
 
     this.state = {
       carePlan: null,
@@ -130,6 +131,11 @@ class CarePlanPage extends Component {
     this.setState({ editing: true });
   }
 
+  carePlanToText() {
+    const carePlan = this.state.carePlan;
+    return carePlanToText(carePlan);
+  }
+
   render() {
     const { isFetching, error, patient } = this.props;
     const { carePlan, editing, saving } = this.state;
@@ -170,6 +176,7 @@ class CarePlanPage extends Component {
             onChange={this.updateCarePlanState}
             deleteCarePlanItem={this.deleteCarePlanItem}
             addCarePlanItem={this.addCarePlanItem}
+            carePlanToText={this.carePlanToText}
           />
         }
         {carePlan && <HistoryContainer carePlanId={carePlan.id} />}

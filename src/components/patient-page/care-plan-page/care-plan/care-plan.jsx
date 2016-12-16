@@ -154,6 +154,7 @@ CarePlan.propTypes = {
   phases: PropTypes.array.isRequired,
   cancel: PropTypes.func.isRequired,
   save: React.PropTypes.func.isRequired,
+  carePlanToText: PropTypes.func.isRequired,
 };
 
 export default CarePlan;

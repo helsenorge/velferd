@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
+import Clipboard from 'clipboard';
 import Spinner from '../../../../spinner/spinner.jsx';
 import Button from '../../../../button/button.jsx';
 import Icon from '../../../../icon/icon.jsx';
@@ -7,7 +8,19 @@ import iconPrint from '../../../../../../svg/print.svg';
 import iconEdit from '../../../../../../svg/edit.svg';
 import './controls.scss';
 
-const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false }) => {
+const Controls = (
+  { carePlanToText, editing, edit, openLightbox, saving, cancel, footer = false }) => {
+  const clipboard = new Clipboard('.controls__button--copy', { // eslint-disable-line
+    text: (trigger) => {
+      const button = trigger;
+      button.innerText = 'Kopiert til utklippstavlen!';
+      setTimeout(() => {
+        button.innerText = 'Kopier til utklippstavlen';
+      }, 1500);
+      return carePlanToText();
+    },
+  });
+
   const controlClasses = classNames('controls', { 'controls--footer': footer });
 
   const cardClasses = classNames({
@@ -29,7 +42,7 @@ const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false 
           </Button>
           <Button
             lvl3
-            className="controls__button"
+            className="controls__button controls__button--copy"
           >
             <span className="button__text">Kopier til utklippstavlen</span>
           </Button>
@@ -72,6 +85,7 @@ const Controls = ({ editing, edit, openLightbox, saving, cancel, footer = false 
 };
 
 Controls.propTypes = {
+  carePlanToText: PropTypes.func.isRequired,
   editing: PropTypes.bool.isRequired,
   edit: PropTypes.func.isRequired,
   openLightbox: PropTypes.func.isRequired,

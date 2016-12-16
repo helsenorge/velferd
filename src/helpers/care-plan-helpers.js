@@ -1,5 +1,6 @@
 import ReasonCodes from '../constants/reason-codes';
 import CarePlanCategories from '../constants/care-plan-categories';
+import { getMeasurementName, getUnit } from '../helpers/observation-helpers';
 import shortId from 'shortid';
 
 export function getCategoryName(category) {
@@ -212,4 +213,46 @@ export function getCarePlan(resource) {
     comment,
     questionnaireId,
     measurements };
+}
+
+export function phaseToText(phase) {
+  let text = '';
+  text = phase.symptoms.reduce((result, value) => `${result}- ${value.text}\n`, text);
+  text += '\n';
+  text = phase.actions.reduce((result, value) => `${result}* ${value.text}\n`, text);
+  text += '\n';
+  text = phase.medications.reduce((result, value) => `${result}# ${value.text}\n`, text);
+  text += '\n';
+  return text;
+}
+
+export function measurementsToText(measurements) {
+  let text = '';
+  text = measurements.reduce((result, value) => {
+    if (!value.goal || value.goal.length === 0) {
+      return `${result}${getMeasurementName(value.code)}\n`;
+    }
+
+    const unit = getUnit(value.code);
+    const measurementText = value.goal.reduce((res, range) =>
+      `${res}${getMeasurementName(range.code)}: ${range.low.value}-${range.high.value} ${unit}\n`,
+       '');
+    return `${result}${measurementText}`;
+  }, text);
+  text += '\n';
+  return text;
+}
+
+export function carePlanToText(carePlan) {
+  let text = 'GRØNN – Stabil\n\n';
+  text += phaseToText(carePlan.phases[0]);
+  text += measurementsToText(carePlan.measurements);
+
+  text += 'GUL - Moderat forverring\n\n';
+  text += phaseToText(carePlan.phases[1]);
+
+  text += 'RØD - Alvorlig forverring\n\n';
+  text += phaseToText(carePlan.phases[2]);
+
+  return text;
 }
