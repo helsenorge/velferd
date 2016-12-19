@@ -66,8 +66,16 @@ const List = (
         );
       }
 
-      return (<span><b>{name}:</b> {range1.low.value}/{range2.low.value} -
-      {range1.high.value}/{range2.high.value} {unit}</span>);
+      return (
+        <div>
+          <div>
+            <b>{getMeasurementName(range1.code)}:</b> {range1.low.value}-{range1.high.value} {unit}
+          </div>
+          <div>
+            <b>{getMeasurementName(range2.code)}:</b> {range2.low.value}-{range2.high.value} {unit}
+          </div>
+        </div>
+        );
     }
 
     const range = measurement.goal[0];

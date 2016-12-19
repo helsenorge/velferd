@@ -1,21 +1,7 @@
 import React, { PropTypes } from 'react';
 import classNames from 'classnames';
 import './month.scss';
-
-const monthNames = [
-  'januar',
-  'februar',
-  'mars',
-  'april',
-  'mai',
-  'juni',
-  'juli',
-  'august',
-  'september',
-  'oktober',
-  'november',
-  'desember',
-];
+import { monthNames } from '../../../../../../constants/month-names';
 
 const Month = ({ month, fromDate, toDate, activeRange, handleDateClick, selectedDate }) => {
   const monthName = monthNames[month];
@@ -34,9 +20,13 @@ const Month = ({ month, fromDate, toDate, activeRange, handleDateClick, selected
   const monthNameClasses = classNames('month__monthname',
     `month__monthname--${daysFromLast}`
   );
+  const year = toDate.getFullYear();
   return (
     <div className={monthClasses}>
-      <div className={monthNameClasses}>{monthName}</div>
+      <div className={monthNameClasses}>
+        <div>{monthName}</div>
+        <div className="month__year">{monthName === monthNames[0] ? year : null}</div>
+      </div>
       <ol className="month__dates">
         {
           dates.map((date) => {

@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { getPhase, getPatientGoal, getQuestionnaireId,
   getMeasurement, getMeasurements, getCategory, getAuthor,
-  getLastUpdated } from './care-plan-helpers.js';
+  getLastUpdated, phaseToText, carePlanToText, getCarePlan } from './care-plan-helpers.js';
 import CarePlanCategories from '../constants/care-plan-categories';
 import data from '../mock/care-plan.json';
 
@@ -27,6 +27,24 @@ describe('careplan phase', () => {
     const phase = getPhase(data, 'green');
     expect(phase.medications).to.not.equal(undefined);
     expect(phase.medications.length).gt(0);
+  });
+
+  it('text representation should have symptoms', () => {
+    const phase = getPhase(data, 'green');
+    const text = phaseToText(phase);
+    expect(text.indexOf('- Ingen tungpust')).to.not.equal(-1);
+  });
+
+  it('text representation should have actions', () => {
+    const phase = getPhase(data, 'green');
+    const text = phaseToText(phase);
+    expect(text.indexOf('* Hold deg i aktivitet')).to.not.equal(-1);
+  });
+
+  it('text representation should have medications', () => {
+    const phase = getPhase(data, 'green');
+    const text = phaseToText(phase);
+    expect(text.indexOf('# Vanndrivende: Burinex, 2mg, 1 gang daglig')).to.not.equal(-1);
   });
 });
 
@@ -65,5 +83,18 @@ describe('careplan', () => {
   it('should have the date it was last updated', () => {
     const lastUpdated = getLastUpdated(data);
     expect(lastUpdated).to.not.equal(undefined);
+  });
+
+  it('text representation should have phases', () => {
+    const text = carePlanToText(getCarePlan(data));
+    expect(text.indexOf('GRØNN – Stabil')).to.not.equal(-1);
+    expect(text.indexOf('GUL - Moderat forverring')).to.not.equal(-1);
+    expect(text.indexOf('RØD - Alvorlig forverring')).to.not.equal(-1);
+  });
+
+  it('text representation should have measurements', () => {
+    const text = carePlanToText(getCarePlan(data));
+    expect(text.indexOf('Vekt: 75-77 kg')).to.not.equal(-1);
+    expect(text.indexOf('Puls: 60-80 bpm')).to.not.equal(-1);
   });
 });
