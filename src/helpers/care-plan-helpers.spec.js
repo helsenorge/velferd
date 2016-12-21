@@ -95,6 +95,6 @@ describe('careplan', () => {
   it('text representation should have measurements', () => {
     const text = carePlanToText(getCarePlan(data));
     expect(text.indexOf('Vekt: 75-77 kg')).to.not.equal(-1);
-    expect(text.indexOf('Puls: 60-80 bpm')).to.not.equal(-1);
+    expect(text.indexOf('Puls: 60-80 slag/min')).to.not.equal(-1);
   });
 });
