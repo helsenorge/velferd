@@ -99,6 +99,7 @@ export function changePatientWithId(patientId) {
       return dispatch(discardAuthToken());
     }
 
+    dispatch(resetPatientData());
     dispatch(requestPatient(patientId));
     dispatch(fetchCarePlan(patientId));
     const url = `${fhirUrl}/Patient/${patientId}`;
