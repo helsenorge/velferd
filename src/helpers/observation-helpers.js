@@ -24,7 +24,7 @@ export function getUnit(code) {
   case ObservationCodes.weight:
     return 'kg';
   case ObservationCodes.pulse:
-    return 'bpm';
+    return 'slag/min';
   case ObservationCodes.pulseOximeter:
     return '%';
   case ObservationCodes.bloodPressure:

@@ -12,6 +12,12 @@ export function formatDate2(date) {
   return `${dateObject.getDate()}.${month}.${dateObject.getFullYear()}`;
 }
 
+// Formats date as yyyy-mm-dd
+export function formatDate3(date) {
+  const pad = number => `0${number}`.slice(-2);
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`;
+}
+
 export function formatDateTime(date) {
   const dateObject = new Date(date);
   const dateString = `${dateObject.getDate()}.${monthNamesAbbrev[dateObject.getMonth()]}

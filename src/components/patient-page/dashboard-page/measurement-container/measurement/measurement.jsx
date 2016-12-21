@@ -125,10 +125,10 @@ class Measurements extends Component {
     }
 
     const unit = getUnit(code);
-    let points = data.entry.map((item) => this.getDataPoint(item, unit));
+    let points = data.map((item) => this.getDataPoint(item, unit));
     const idealValue = this.getIdealValuesString(idealValues, unit);
-    const latestValue = this.getDataPoint(data.entry[data.entry.length - 1], unit);
-    const highAndLow = this.getHighAndLow(code, data.entry);
+    const latestValue = this.getDataPoint(data[0], unit);
+    const highAndLow = this.getHighAndLow(code, data);
 
     return (
       <div className="measurement">
@@ -160,7 +160,7 @@ class Measurements extends Component {
 }
 
 Measurements.propTypes = {
-  data: PropTypes.object,
+  data: PropTypes.array,
   code: PropTypes.string.isRequired,
   fromDate: PropTypes.instanceOf(Date),
   toDate: PropTypes.instanceOf(Date),

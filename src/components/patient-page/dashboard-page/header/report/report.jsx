@@ -183,8 +183,8 @@ function mapStateToProps(state, ownProps) {
     if (observationsByCode.hasOwnProperty(key)) {
       const observations = observationsByCode[key];
 
-      if (observations.data && observations.data.entry) {
-        const entries = filterObservationsInRange(observations.data.entry, fromDate, toDate);
+      if (observations.data && observations.data.length > 0) {
+        const entries = filterObservationsInRange(observations.data, fromDate, toDate);
 
         if (entries.length > 0 && entries[0].resource.valueQuantity) {
           const values = entries.map(entry => parseInt(entry.resource.valueQuantity.value, 10));
