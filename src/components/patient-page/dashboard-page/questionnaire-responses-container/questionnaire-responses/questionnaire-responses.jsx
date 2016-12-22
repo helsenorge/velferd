@@ -82,7 +82,7 @@ class QuestionnaireResponses extends Component {
     let latestValue = { date: '', results: {} };
 
     if (entries && entries.length > 0) {
-      const entry = entries[entries.length - 1];
+      const entry = entries[0];
 
       if (entry.resource.group.question) {
         entry.resource.group.question.forEach((question) => {
@@ -154,9 +154,9 @@ class QuestionnaireResponses extends Component {
       );
     }
 
-    const questions = this.getQuestionsAndAnswers(data.entry);
+    const questions = this.getQuestionsAndAnswers(data);
     const rows = this.getRows(questions, fromDate, toDate, selectedDate);
-    const latestValue = this.getLatestValue(questions, data.entry);
+    const latestValue = this.getLatestValue(questions, data);
     const tableClasses = classNames('questionnaire-responses-table', {
       'questionnaire-responses-table--borders': activeRange < 90,
     });
@@ -186,7 +186,7 @@ class QuestionnaireResponses extends Component {
 QuestionnaireResponses.propTypes = {
   loading: PropTypes.bool,
   empty: PropTypes.bool,
-  data: PropTypes.object,
+  data: PropTypes.array,
   fromDate: React.PropTypes.instanceOf(Date),
   toDate: React.PropTypes.instanceOf(Date),
   selectedDate: React.PropTypes.instanceOf(Date),

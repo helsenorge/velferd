@@ -172,9 +172,8 @@ function mapStateToProps(state, ownProps) {
   const { fromDate, toDate } = ownProps;
 
   let questionnaireReport;
-  if (questionnaireResponses.data && questionnaireResponses.data.entry) {
-    const entries = filterQuestionnaireResponses(
-      questionnaireResponses.data.entry, fromDate, toDate);
+  if (questionnaireResponses.data && questionnaireResponses.data) {
+    const entries = filterQuestionnaireResponses(questionnaireResponses.data, fromDate, toDate);
     questionnaireReport = calculateQuestionnaireValues(entries);
   }
 

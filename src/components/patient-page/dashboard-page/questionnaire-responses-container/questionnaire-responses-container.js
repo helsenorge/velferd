@@ -7,13 +7,20 @@ import { bindActionCreators } from 'redux';
 class QuestionnaireResponsesContainer extends Component {
 
   componentDidMount() {
-    const { patientId } = this.props;
-    this.props.actions.fetchQuestionnaireResponses(patientId);
+    const { patientId, fromDate, toDate } = this.props;
+    this.props.actions.fetchQuestionnaireResponses(fromDate, toDate, patientId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.fromDate !== nextProps.fromDate || this.props.toDate !== nextProps.toDate) {
+      const { patientId, fromDate, toDate } = nextProps;
+      this.props.actions.fetchQuestionnaireResponses(fromDate, toDate, patientId);
+    }
   }
 
   render() {
     const { data, isFetching, error } = this.props;
-    const isEmpty = data === null || data.resourceType !== 'Bundle' || data.total === 0;
+    const isEmpty = data === null || data.length === 0;
     let qResponses = null;
 
     if (error) {
@@ -40,7 +47,7 @@ class QuestionnaireResponsesContainer extends Component {
 
 QuestionnaireResponsesContainer.propTypes = {
   patientId: PropTypes.string.isRequired,
-  data: PropTypes.object,
+  data: PropTypes.array,
   isFetching: PropTypes.bool.isRequired,
   lastUpdated: PropTypes.number,
   actions: PropTypes.object.isRequired,
@@ -60,7 +67,7 @@ function mapStateToProps(state) {
     error,
   } = questionnaireResponses || {
     isFetching: true,
-    data: null,
+    data: [],
   };
 
   return {
