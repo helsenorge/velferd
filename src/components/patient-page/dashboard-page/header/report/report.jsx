@@ -122,7 +122,9 @@ function calculateForCompoundMeasurement(entries) {
         if (!values[code]) {
           values[code] = [];
         }
-        values[code].push(component.valueQuantity.value);
+        if (component.valueQuantity) {
+          values[code].push(component.valueQuantity.value);
+        }
       }
     });
   });
@@ -167,16 +169,7 @@ function calculateQuestionnaireValues(entries) {
   };
 }
 
-function mapStateToProps(state, ownProps) {
-  const { observationsByCode, questionnaireResponses } = state;
-  const { fromDate, toDate } = ownProps;
-
-  let questionnaireReport;
-  if (questionnaireResponses.data && questionnaireResponses.data) {
-    const entries = filterQuestionnaireResponses(questionnaireResponses.data, fromDate, toDate);
-    questionnaireReport = calculateQuestionnaireValues(entries);
-  }
-
+function getMeasurementReports(observationsByCode, fromDate, toDate) {
   const measurementReports = [];
   Object.keys(observationsByCode).forEach((key) => {
     if (observationsByCode.hasOwnProperty(key)) {
@@ -195,8 +188,25 @@ function mapStateToProps(state, ownProps) {
       }
     }
   });
+  return measurementReports;
+}
 
-  return { measurementReports, questionnaireReport };
+function getQuestionnaireReport(questionnaireResponses, fromDate, toDate) {
+  let questionnaireReport;
+  if (questionnaireResponses.data) {
+    const entries = filterQuestionnaireResponses(questionnaireResponses.data, fromDate, toDate);
+    questionnaireReport = calculateQuestionnaireValues(entries);
+  }
+  return questionnaireReport;
+}
+
+function mapStateToProps(state, ownProps) {
+  const { fromDate, toDate } = ownProps;
+
+  return {
+    measurementReports: getMeasurementReports(state.observationsByCode, ownProps.fromDate, toDate),
+    questionnaireReport: getQuestionnaireReport(state.questionnaireResponses, fromDate, toDate),
+  };
 }
 
 export default connect(mapStateToProps)(Report);
