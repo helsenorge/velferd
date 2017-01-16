@@ -44,10 +44,15 @@ function receiveObservationsFailed(code, patientId, error) {
   };
 }
 
+function fixNextUrl(url, fhirUrl) {
+  const page = url.substring(url.indexOf('?'));
+  return `${fhirUrl}${page}`;
+}
+
 export function fetchNextObservations(code, patientId, url) {
   return (dispatch, getState) => {
     const { token, expiration, useXAuthTokenHeader } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
@@ -63,7 +68,7 @@ export function fetchNextObservations(code, patientId, url) {
         if (json.link) {
           const nextLink = json.link.filter(link => link.relation === 'next');
           if (nextLink && nextLink.length > 0) {
-            const nextURL = nextLink[0].url;
+            const nextURL = fixNextUrl(nextLink[0].url, fhirUrl);
             dispatch(fetchNextObservations(code, patientId, nextURL));
           }
         }
@@ -114,7 +119,7 @@ export function fetchObservations(code, from, to, patientId) {
         if (json.link) {
           const nextLink = json.link.filter(link => link.relation === 'next');
           if (nextLink && nextLink.length > 0) {
-            const url = nextLink[0].url;
+            const url = fixNextUrl(nextLink[0].url, fhirUrl);
             dispatch(fetchNextObservations(code, patientId, url));
           }
         }

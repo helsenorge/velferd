@@ -40,10 +40,15 @@ function receiveQuestionnaireResponsesFailed(patientId, error) {
   };
 }
 
+function fixNextUrl(url, fhirUrl) {
+  const page = url.substring(url.indexOf('?'));
+  return `${fhirUrl}${page}`;
+}
+
 export function fetchNextQuestionnaireResponses(patientId, url) {
   return (dispatch, getState) => {
     const { token, expiration, useXAuthTokenHeader } = getState().auth;
-    const { authenticate } = getState().settings;
+    const { authenticate, fhirUrl } = getState().settings;
 
     if (authenticate && (!token || (expiration && new Date().valueOf() > expiration.valueOf()))) {
       return dispatch(discardAuthToken());
@@ -59,7 +64,7 @@ export function fetchNextQuestionnaireResponses(patientId, url) {
         if (json.link) {
           const nextLink = json.link.filter(link => link.relation === 'next');
           if (nextLink && nextLink.length > 0) {
-            const nextURL = nextLink[0].url;
+            const nextURL = fixNextUrl(nextLink[0].url, fhirUrl);
             dispatch(fetchNextQuestionnaireResponses(patientId, nextURL));
           }
         }
@@ -68,11 +73,11 @@ export function fetchNextQuestionnaireResponses(patientId, url) {
   };
 }
 
-function fetchNexPageIfNeeded(data, dispatch, patientId) {
+function fetchNexPageIfNeeded(data, dispatch, patientId, fhirUrl) {
   if (data.link) {
     const nextLink = data.link.filter(link => link.relation === 'next');
     if (nextLink && nextLink.length > 0) {
-      const nextURL = nextLink[0].url;
+      const nextURL = fixNextUrl(nextLink[0].url, fhirUrl);
       dispatch(fetchNextQuestionnaireResponses(patientId, nextURL));
     }
   }
@@ -115,7 +120,7 @@ export function fetchQuestionnaireResponses(from, to, patientId) {
       .then(response => response.json())
       .then(json => {
         dispatch(receiveQuestionnaireResponses(patientId, json));
-        fetchNexPageIfNeeded(json, dispatch, patientId);
+        fetchNexPageIfNeeded(json, dispatch, patientId, fhirUrl);
       },
       error => dispatch(receiveQuestionnaireResponsesFailed(patientId, error)));
   };
