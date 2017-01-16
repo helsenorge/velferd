@@ -46,7 +46,7 @@ function receiveObservationsFailed(code, patientId, error) {
 
 function fixNextUrl(url, fhirUrl) {
   const page = url.substring(url.indexOf('?'));
-  return `${fhirUrl}${page}`;
+  return `${fhirUrl}/${page}`;
 }
 
 export function fetchNextObservations(code, patientId, url) {

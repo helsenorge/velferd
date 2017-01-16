@@ -42,7 +42,7 @@ function receiveQuestionnaireResponsesFailed(patientId, error) {
 
 function fixNextUrl(url, fhirUrl) {
   const page = url.substring(url.indexOf('?'));
-  return `${fhirUrl}${page}`;
+  return `${fhirUrl}/${page}`;
 }
 
 export function fetchNextQuestionnaireResponses(patientId, url) {
