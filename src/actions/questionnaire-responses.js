@@ -108,7 +108,7 @@ export function fetchQuestionnaireResponses(from, to, patientId) {
     }
 
     const url =
-    `${fhirUrl}/QuestionnaireResponse?_count=10000_sort:desc=authored&patient=${patientId}
+    `${fhirUrl}/QuestionnaireResponse?_count=10000&_sort:desc=authored&patient=${patientId}
       &authored=>=${formatDate3(requestFrom)}&authored=<=${formatDate3(requestTo)}`;
 
     dispatch(requestQuestionnaireResponses(
