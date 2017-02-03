@@ -107,7 +107,8 @@ export function fetchQuestionnaireResponses(from, to, patientId) {
       requestTo.setDate(requestTo.getDate() - 1);
     }
 
-    const url = `${fhirUrl}/QuestionnaireResponse?_sort:desc=authored&patient=${patientId}
+    const url =
+    `${fhirUrl}/QuestionnaireResponse?_count=10000_sort:desc=authored&patient=${patientId}
       &authored=>=${formatDate3(requestFrom)}&authored=<=${formatDate3(requestTo)}`;
 
     dispatch(requestQuestionnaireResponses(
