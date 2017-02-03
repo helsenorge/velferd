@@ -11,6 +11,8 @@ import { setAuthToken, setUseXAuthTokenHeader } from './actions/auth';
 
 const store = configureStore();
 
+const config = require('./config.json'); // eslint-disable-line
+
 if (window.location.search.indexOf('access_token=') !== -1) {
   const token = window.location.search.replace('?access_token=', '');
   store.dispatch(setAuthToken(token, null));
@@ -22,6 +24,10 @@ if (window.location.search.indexOf('access_token=') !== -1) {
 if (window.location.hostname === 'apps.ehelselab.com') {
   store.dispatch(setAuthenticate(true));
   store.dispatch(setFhirUrl('http://apps.ehelselab.com/fhir'));
+}
+
+if (config.fhirUrl) {
+  store.dispatch(setFhirUrl(config.fhirUrl));
 }
 
 ReactDOM.render(

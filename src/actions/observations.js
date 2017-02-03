@@ -101,7 +101,8 @@ export function fetchObservations(code, from, to, patientId) {
       requestTo.setDate(requestTo.getDate() - 1);
     }
 
-    const url = `${fhirUrl}/Observation?_sort:desc=date&code=${code}&patient._id=${patientId}
+    const url =
+    `${fhirUrl}/Observation?_count=10000&_sort:desc=date&code=${code}&patient._id=${patientId}
       &date=>=${formatDate3(requestFrom)}&date=<=${formatDate3(requestTo)}`;
 
     dispatch(requestObservations(

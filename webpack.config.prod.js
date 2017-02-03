@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'),
@@ -16,6 +17,7 @@ module.exports = {
     new webpack.DefinePlugin(GLOBALS),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin(),
+    new CopyWebpackPlugin([{ from: './src/config.json' }]),
   ],
   output: {
     filename: '[name].js',
